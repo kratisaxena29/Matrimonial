@@ -1,329 +1,242 @@
-/*-----------------------------------------
- [MASTER STYLE SHEET]
- * THEME NAME - Wedding Matrimony HTML5 Template
- * Author: RN53 Themes
- * Descriptios: Wedding Matrimony HTML5 Template. Can be Used For Various Perposes.
- * Version: v1
- -----------------------------------------------*/
+import React, { useEffect, useState } from 'react';
+import './MasterStyleSheet.css'; // You can style your components in this CSS file
+import $ from 'jquery'; // Import jQuery
 
-$(document).ready(function () {
-    "use strict";
+const MasterStyleSheet = () => {
+    const [windowScrollTop, setWindowScrollTop] = useState(0);
 
-    //MOBILE MENU HIDE AND SHOW
-    $('.desk-menu').on('click', function () {
-        $('.menu-pop1, .pop-bg').addClass('act');
-    });
-    $('.menu-pop-clo').on('click', function () {
-        $('.menu-pop, .pop-bg').removeClass('act');
-    });
-    //MOBILE MENU HIDE AND SHOW
-    $('.pop-bg').on('click', function () {
-        $('.pop-bg, .menu-pop, .mob-me-all').removeClass('act');
-        $("body").css('overflow', 'visible');
-    });
-    //ON LOAD START ANIMATIONS
-    $('.ban-wedd').addClass('anistart');
-
-    //SHAREPOPUP
-    $('.shar-1 .fa-share-alt').on('click', function () {
-        $(this).toggleClass("act");
-    });
-
-    //SHARE URL
-    var _cururl = window.location.href;
-    $("#shareurl").val(_cururl);
-
-    //AGENT WINDOW OPEN
-    $('.head-pro').on('click', function () {
-        $('.menu-pop2, .pop-bg').addClass('act');
-    });
-    $('.ser-open').on('click', function () {
-        $('.pop-search').show();
-    });
-    $('.ser-clo').on('click', function () {
-        $('.pop-search').hide();
-        $('.pop-bg').removeClass('act');
-    });
-
-    /*$('.mobile-menu').on('click', function () {
-        $('.pop-bg, .mob-me-all').addClass('act');
-        $("body").css('overflow','hidden');
-    });*/
-    $('.mob-menu span').on('click', function () {
-        var _Mobil = $(this).attr("data-mob");
-        $("." + _Mobil + "_menu").addClass('act');
-        $('.pop-bg').addClass('act');
-        $("body").css('overflow', 'hidden');
-    });
-    $('.mob-me-clo').on('click', function () {
-        $('.mob-me-all, .pop-bg').removeClass('act');
-        $("body").css('overflow', 'visible');
-    });
-
-    //FILTER ON ALL LISTING PAGE - MOBILE VIEW ONLY
-    $('.fil-mob').on('click', function () {
-        $('.fil-mob-view').slideDown();
-    });
-    $('.filter-clo').on('click', function () {
-        $('.fil-mob-view').slideUp();
-    });
-
-    //CHOOSEN SELECT
-    var _cform = $(".cform");
-    if (_cform.length > 0) {
-        $(function () {
-            $(".fvali").validate();
+    useEffect(() => {
+        // Mobile menu hide and show
+        $('.desk-menu').on('click', function () {
+            $('.menu-pop1, .pop-bg').addClass('act');
         });
-    }
 
+        $('.menu-pop-clo').on('click', function () {
+            $('.menu-pop, .pop-bg').removeClass('act');
+        });
 
-    //BOOTSTRAP TOOL TIP
-    //$('[data-toggle="tooltip"]').tooltip();
+        $('.pop-bg').on('click', function () {
+            $('.pop-bg, .menu-pop, .mob-me-all').removeClass('act');
+            $("body").css('overflow', 'visible');
+        });
 
-    //ENQUIRY AND REVIEW LIKE
-    $(".enq-sav i").on('click', function () {
-        $(this).toggleClass('sav-act');
-    });
+        // On load start animations
+        $('.ban-wedd').addClass('anistart');
 
-    //ENQUIRY AND REVIEW LIKE
-    $(".ldelik").on('click', function () {
-        $(this).toggleClass('sav-act');
-    });
+        // Share popup
+        $('.shar-1 .fa-share-alt').on('click', function () {
+            $(this).toggleClass("act");
+        });
 
-    //HOME PAGE BANNER BG SLIDER HEIGHT SET
-    if ($(window).width() < 1250) {
-        var _homSerHei = $(".hom-head").outerHeight();
-        $(".ban-sli li div img").css("height", _homSerHei + 70 + "px");
-    }
+        // Share URL
+        const cururl = window.location.href;
+        $("#shareurl").val(cururl);
 
-    //PROFILE PAGE GET NAME AND IMAGE
-    $(".cta-sendint, .cta-chat").on('click', function () {
-        var _proname = $(this).parent().siblings(".s2").find("h1").text();
-        var _proimg = $(this).parent().siblings(".s1").find("img").attr("src");
-        $(".intename1").text(_proname);
-        $(".intephoto1").attr("src", _proimg);
+        // Agent window open
+        $('.head-pro').on('click', function () {
+            $('.menu-pop2, .pop-bg').addClass('act');
+        });
 
-        var _pronameall = $(this).parent().siblings("h4").find("a").text();
-        var _proimgall = $(this).parent().parent().siblings(".pro-img").find("img").attr("src");
-        $(".intename2").text(_pronameall);
-        $(".intephoto2").attr("src", _proimgall);
-    });
+        // Search open and close
+        $('.ser-open').on('click', function () {
+            $('.pop-search').show();
+        });
 
-    //CHAT WINDOW AVAILABLE STATUS
-    $(".cta-chat").on('click', function () {
-        var _avlsts = $(this).parent().parent().parent(".all-pro-box").attr("data-useravil");
-        var _avltxt = $(this).parent().parent().parent(".all-pro-box").attr("data-aviltxt");
-        $(".avlsta").removeClass("avilyes avilno");
-        $(".avlsta").addClass(_avlsts);
-        $(".avlsta").text(_avltxt);
-    });
+        $('.ser-clo').on('click', function () {
+            $('.pop-search').hide();
+            $('.pop-bg').removeClass('act');
+        });
 
-    //CHAT WINDOW OPEN
-    $(".cta-chat").on('click', function () {
-        $(".chatbox").addClass("open")
-    });
-    //CHAT WINDOW CLOSE
-    $(".comm-msg-pop-clo").on('click', function () {
-        $(".chatbox").removeClass("open")
-    });
+        // Mobile menu
+        $('.mob-menu span').on('click', function () {
+            const mobil = $(this).attr("data-mob");
+            $("." + mobil + "_menu").addClass('act');
+            $('.pop-bg').addClass('act');
+            $("body").css('overflow', 'hidden');
+        });
 
-    //COPY RIGHTS YEAR
-    $('#cry').text("2023");
+        $('.mob-me-clo').on('click', function () {
+            $('.mob-me-all, .pop-bg').removeClass('act');
+            $("body").css('overflow', 'visible');
+        });
 
-    //PRE LOADING
-    $('#status').fadeOut();
-    $('#preloader').delay(350).fadeOut('slow');
-    $('body').delay(350).css({
-        'overflow': 'visible'
-    });
+        // Filter on all listing page - Mobile view only
+        $('.fil-mob').on('click', function () {
+            $('.fil-mob-view').slideDown();
+        });
 
-    //GALLERY IMAGE PATH GET & SET TO A TAG
-    $(".img-wrapper a").each(function () {
-        var _galImgPath = $(this).children("img").attr("src");
-        $(this).attr("href", _galImgPath);
-    })
+        $('.filter-clo').on('click', function () {
+            $('.fil-mob-view').slideUp();
+        });
 
-    //VIDEO PAGE VIDEO PLAY
-    $(".vid-play").on('click', function () {
-        $(".vid-play, .wedd-vid img").hide();
-        $(".wedd-vid iframe").show();
-        var _getVid = $(this).attr("data-video");
-        $(".wedd-vid iframe").attr("src", _getVid);
-    });
+        // Chosen select
+        const cform = $(".cform");
+        if (cform.length > 0) {
+            $(".fvali").validate();
+        }
 
-    //PROFILE SORT
-    $(".sort-grid").on('click', function () {
-        $(".sort-grid").removeClass("act");
-        $(this).addClass("act");
-    });
-    $(".sort-grid-2").on('click', function () {
-        $(".all-list-sh").removeClass("view-grid");
-    });
-    $(".sort-grid-1").on('click', function () {
-        $(".all-list-sh").addClass("view-grid");
-    });
+        // Enquiry and review like
+        $(".enq-sav i").on('click', function () {
+            $(this).toggleClass('sav-act');
+        });
 
-    //TOOL TIP
-    $('[data-toggle="tooltip"]').tooltip();
+        $(".ldelik").on('click', function () {
+            $(this).toggleClass('sav-act');
+        });
 
-    //CHOOSEN SELECT
-    var _chosel = $(".chosenini");
-    if (_chosel.length > 0) {
-        $(function () {
-            //$('.chosen-select').chosen();
+        // Home page banner bg slider height set
+        if ($(window).width() < 1250) {
+            const homSerHei = $(".hom-head").outerHeight();
+            $(".ban-sli li div img").css("height", homSerHei + 70 + "px");
+        }
+
+        // Profile page get name and image
+        $(".cta-sendint, .cta-chat").on('click', function () {
+            const proname = $(this).parent().siblings(".s2").find("h1").text();
+            const proimg = $(this).parent().siblings(".s1").find("img").attr("src");
+            $(".intename1").text(proname);
+            $(".intephoto1").attr("src", proimg);
+
+            const pronameall = $(this).parent().siblings("h4").find("a").text();
+            const proimgall = $(this).parent().parent().siblings(".pro-img").find("img").attr("src");
+            $(".intename2").text(pronameall);
+            $(".intephoto2").attr("src", proimgall);
+        });
+
+        // Chat window available status
+        $(".cta-chat").on('click', function () {
+            const avlsts = $(this).parent().parent().parent(".all-pro-box").attr("data-useravil");
+            const avltxt = $(this).parent().parent().parent(".all-pro-box").attr("data-aviltxt");
+            $(".avlsta").removeClass("avilyes avilno");
+            $(".avlsta").addClass(avlsts);
+            $(".avlsta").text(avltxt);
+        });
+
+        // Chat window open and close
+        $(".cta-chat").on('click', function () {
+            $(".chatbox").addClass("open")
+        });
+
+        $(".comm-msg-pop-clo").on('click', function () {
+            $(".chatbox").removeClass("open")
+        });
+
+        // Gallery image path get & set to a tag
+        $(".img-wrapper a").each(function () {
+            const galImgPath = $(this).children("img").attr("src");
+            $(this).attr("href", galImgPath);
+        });
+
+        // Video page video play
+        $(".vid-play").on('click', function () {
+            $(".vid-play, .wedd-vid img").hide();
+            $(".wedd-vid iframe").show();
+            const getVid = $(this).attr("data-video");
+            $(".wedd-vid iframe").attr("src", getVid);
+        });
+
+        // Profile sort
+        $(".sort-grid").on('click', function () {
+            $(".sort-grid").removeClass("act");
+            $(this).addClass("act");
+        });
+
+        $(".sort-grid-2").on('click', function () {
+            $(".all-list-sh").removeClass("view-grid");
+        });
+
+        $(".sort-grid-1").on('click', function () {
+            $(".all-list-sh").addClass("view-grid");
+        });
+
+        // Tool tip
+        $('[data-toggle="tooltip"]').tooltip();
+
+        // Chosen select
+        const chosel = $(".chosenini");
+        if (chosel.length > 0) {
             $('.chosen-select').chosen({
                 placeholder_text_single: "Select Project/Initiative...",
                 no_results_text: "Oops, nothing found!"
             });
+        }
+
+        // Scroll event
+        const handleWindowScroll = () => {
+            const windowpos = $(window).scrollTop();
+            setWindowScrollTop(windowpos);
+
+            // Home top menu fix
+            if (windowpos >= 200) {
+                $('.hom-top').addClass("act");
+            } else {
+                $('.hom-top').removeClass("act");
+            }
+
+            // Video page banner animation
+            const wtpx = "-" + windowpos / 3 + "px";
+            const wtpx1 = windowpos / 3 + "px";
+            $(".wedd-vid-tre-1").css({
+                transform: 'translateX(' + wtpx + ')'
+            });
+            $(".wedd-vid-tre-2").css({
+                transform: 'translateX(' + wtpx1 + ')'
+            });
+
+            // On scroll animation
+            $(".animate").each(function () {
+                const anisec = $(this).offset().top + $(this).outerHeight() - 10;
+                const whei = $(window).scrollTop() + $(window).height();
+                const aniname = $(this).attr("data-ani");
+                const anidely = $(this).attr("data-dely");
+                if (whei >= anisec) {
+                    $(this).addClass(aniname);
+                    $(this).addClass("anistart");
+                    $(this).css("animation-delay", anidely + "s");
+                }
+            });
+
+            // Home page animation
+            if ($(".home-about, .count").length) {
+                const homfotban = $(".count").offset().top - 350;
+                if (windowpos >= homfotban) {
+                    $(".count").addClass("act");
+                }
+            }
+        };
+
+        $(window).scroll(handleWindowScroll);
+
+        // Preloading
+        $('#status').fadeOut();
+        $('#preloader').delay(350).fadeOut('slow');
+        $('body').delay(350).css({
+            'overflow': 'visible'
         });
-    }
-});
+    }, [windowScrollTop]);
 
-var s = $(".hom-top");
-$(window).scroll(function () {
-    //HOME TOP MENU FIX
-    var windowpos = $(window).scrollTop();
-    if (windowpos >= 200) {
-        s.addClass("act");
-    } else {
-        s.removeClass("act");
-    }
+    // Share URL copy & paste
+    const shareurl = () => {
+        const copyText = document.getElementById("shareurl");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(copyText.value);
 
-    //VIDEO PAGE BANNER ANIMATION
-    var _wtpx = "-" + windowpos / 3 + "px";
-    var _wtpx1 = windowpos / 3 + "px";
-    $(".wedd-vid-tre-1").css({
-        transform: 'translateX(' + _wtpx + ')'
-    });
-    $(".wedd-vid-tre-2").css({
-        transform: 'translateX(' + _wtpx1 + ')'
-    });
-});
+        const tooltip = document.getElementById("myTooltip");
+        tooltip.innerHTML = "Copied";
+    };
 
-//HOME PAGE - ON SCROLL ANIMATION
-$(window).scroll(function () {
-    var windowpos1 = $(window).scrollTop();
-    //ANIMATE ADD CLASS
-    $(".animate").each(function () {
-        var _anisec = $(this).offset().top + $(this).outerHeight() - 10;
-        var _whei = $(window).scrollTop() + $(window).height();
-        var _aniname = $(this).attr("data-ani");
-        var _anidely = $(this).attr("data-dely");
-        if (_whei >= _anisec) {
-            $(this).addClass(_aniname);
-            $(this).addClass("anistart");
-            $(this).css("animation-delay", _anidely + "s");
-        }
-    });
-    //HOME PAGE ANIMATION
-    if ($(".home-about, .count").length) {
-        var _homfotban = $(".count").offset().top - 350;
-        if (windowpos1 >= _homfotban) {
-            $(".count").addClass("act");
-        }
-    }
+    const shareurlout = () => {
+        const tooltip = document.getElementById("myTooltip");
+        tooltip.innerHTML = "Copy to clipboard";
+    };
 
-});
+    // Render your component
+    return (
+        <div>
+            {/* Add your JSX here, using React components and elements */}
+        </div>
+    );
+};
 
-//SHARE URL COPY & PASTE
-function shareurl() {
-    var copyText = document.getElementById("shareurl");
-    copyText.select();
-    copyText.setSelectionRange(0, 99999);
-    navigator.clipboard.writeText(copyText.value);
-
-    var tooltip = document.getElementById("myTooltip");
-    tooltip.innerHTML = "Copied";
-}
-
-function shareurlout() {
-    var tooltip = document.getElementById("myTooltip");
-    tooltip.innerHTML = "Copy to clipboard";
-}
-
-//IF THIS(.slid-inn) CLASS NAME AVAILABE ANY PAGE AFTER ONLY BELOW SLIDER SCRIPT RUNS
-var $lis = $('.slid-inn');
-if ($lis.length > 0) {
-    //COMMON SLIDER
-    $('.slider3').slick({
-        infinite: true,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 3000,
-        responsive: [{
-            breakpoint: 992,
-            settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                centerMode: false
-            }
-        }]
-
-    });
-
-    //HOME PAGE WRECENT COUPLES
-    $('.couple-sli').slick({
-        infinite: true,
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 3000,
-        responsive: [{
-                breakpoint: 769,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                    centerMode: false
-                }
-            },
-            {
-                breakpoint: 550,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    centerMode: false
-                }
-            }
-        ]
-
-    });
-    //HOME PAGE BANNER SLIDER
-    $('.ban-sli').slick({
-        infinite: true,
-        fade: true,
-        cssEase: 'linear',
-        autoplay: true,
-        autoplaySpeed: 6000
-    });
-
-    //HOME PAGE WRECENT COUPLES
-    $('.hom-qui-acc-sli').slick({
-        infinite: true,
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        autoplay: true,
-        dots: true,
-        autoplaySpeed: 3000,
-        responsive: [{
-                breakpoint: 992,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
-                    centerMode: false
-                }
-            },
-            {
-                breakpoint: 550,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    centerMode: false,
-                    arrows: false
-                }
-            }
-        ]
-
-    });
-
-}
+export default MasterStyleSheet;

@@ -4,6 +4,10 @@ import "../styles/animate.css"
 import "../styles/bootstrap.css"
 import "../styles/fontAwesome.css"
 import profile from "../images/profiles/1.jpg"
+import "../js/Gallery"
+import "../js/Chart"
+import "../js/Chart"
+// import "../js/"
 function Home() {
   return (
     <div className="body">
@@ -676,9 +680,9 @@ function Home() {
                     </li>
                   </ul>
                 </div>
-                <div className="cta-full-wid">
+                {/* <div className="cta-full-wid">
                   <a href="#!" className="cta-dark">More customer reviews</a>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -932,7 +936,7 @@ function Home() {
         </section>
         {/* END */}
         {/* RECENT COUPLES */}
-        <section>
+        {/* <section>
           <div className="hom-couples-all">
             <div className="container">
               <div className="row">
@@ -1029,10 +1033,10 @@ function Home() {
               </ul>
             </div>
           </div>
-        </section>
+        </section> */}
         {/* END */}
         {/* TEAM START */}
-        <section>
+        {/* <section>
           <div className="ab-team">
             <div className="container">
               <div className="row">
@@ -1102,7 +1106,7 @@ function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
         {/* END */}
         {/* GALLERY START */}
         <section>
