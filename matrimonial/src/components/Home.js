@@ -5,8 +5,8 @@ import "../styles/bootstrap.css"
 import "../styles/fontAwesome.css"
 import profile from "../images/profiles/1.jpg"
 import "../js/Gallery"
-import "../js/Chart"
-import "../js/Chart"
+// import "../js/Chart"
+// import "../js/Chart"
 // import "../js/"
 function Home() {
   return (
