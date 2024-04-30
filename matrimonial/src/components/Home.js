@@ -4,7 +4,7 @@ import "../styles/animate.css"
 import "../styles/bootstrap.css"
 import "../styles/fontAwesome.css"
 import profile from "../images/profiles/1.jpg"
-import "../js/Gallery"
+// import "../js/Gallery"
 // import "../js/Chart"
 // import "../js/Chart"
 // import "../js/"
@@ -766,7 +766,7 @@ function Home() {
                         suffered alteration in some form, by injected humour, or randomised words which
                         don't look even slightly believable.</p>
                     </div>
-                    <div className="ab-wel-tit-2">
+                    {/* <div className="ab-wel-tit-2">
                       <ul>
                         <li>
                           <div>
@@ -781,7 +781,7 @@ function Home() {
                           </div>
                         </li>
                       </ul>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
@@ -838,7 +838,7 @@ function Home() {
         </section>
         {/* END */}
         {/* MOMENTS START */}
-        <section>
+        {/* <section>
           <div className="wedd-tline">
             <div className="container">
               <div className="row">
@@ -933,7 +933,7 @@ function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
         {/* END */}
         {/* RECENT COUPLES */}
         {/* <section>
@@ -1109,7 +1109,7 @@ function Home() {
         </section> */}
         {/* END */}
         {/* GALLERY START */}
-        <section>
+        {/* <section>
           <div className="wedd-gall home-wedd-gall">
             <div className>
               <div className="gall-inn">
@@ -1202,7 +1202,7 @@ function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
         {/* END */}
         {/* BLOG POSTS START */}
         <section>
@@ -1276,10 +1276,10 @@ function Home() {
         {/* FOOTER */}
         <section className="wed-hom-footer">
           <div className="container">
-            <div className="row foot-supp">
+            {/* <div className="row foot-supp">
               <h2><span>Free support:</span> +92 (8800) 68 - 8960 &nbsp;&nbsp;|&nbsp;&nbsp; <span>Email:</span>
                 info@example.com</h2>
-            </div>
+            </div> */}
             <div className="row wed-foot-link wed-foot-link-1">
               <div className="col-md-4">
                 <h4>Get In Touch</h4>
