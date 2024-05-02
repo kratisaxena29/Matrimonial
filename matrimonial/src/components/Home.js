@@ -29,7 +29,7 @@ function Home() {
             </form>
             <div className="rel-sear">
               <h4>Top searches:</h4>
-              <a href="all-profiles.html">Browse all profiles</a>
+              {/* <a href="all-profiles.html">Browse all profiles</a> */}
               <a href="all-profiles.html">Mens profile</a>
               <a href="all-profiles.html">Female profile</a>
               <a href="all-profiles.html">New profiles</a>
