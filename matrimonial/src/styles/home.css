@@ -404,13 +404,16 @@ img{
 /* HOME BANNER
 /*-------------------------------------------------------*/
 .hom-head {
-    padding: 8% 0 50px 0;
+    /* padding: 8% 0 50px 0; */
+    display: flex;
+    flex-direction: row;
     position: relative;
     width: 100%;
     float: left;
     height:
         calc(100vh - 100px);
     margin-top: var(--mtop);z-index: 2;
+    background-color: #F7E7CE;
 }
 
 @keyframes bannscrl {
@@ -425,6 +428,7 @@ img{
 
 .hom-top .container {
     position: relative;
+    background-color: #6D0B32;
 }
 
 .hom-head::after {
@@ -488,9 +492,9 @@ img{
 }
 
 .hom-top {
-    padding: 15px 0px;
+    /* padding: 15px 0px; */
     width: 100%;
-    background: rgb(255, 255, 255);
+    background: #6D0B32;
     box-shadow: rgba(51, 51, 51, 0.14) 0px 11px 11px -11px;
     float: left;
     transition: all 0.4s ease;
@@ -698,15 +702,26 @@ img{
 }
 
 .hom-nav .bl {
-    margin: 0px;
+    margin-top: 18px;
     width: calc(100% - 450px);
     float: left;
-    padding: 0px 40px;
+    /* padding: 0px 0px 40px; */
 }
 
 .hom-nav .bl ul {
-    margin: 0px auto;
-    display: table;
+float:right;
+}
+.custom-button {
+    background-color: #F68C1E;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    width:100px;
+    height:40px;
+    cursor: pointer;
+    margin-left: 30px;
+    align-items: "center";
 }
 
 .hom-nav .bl li {
@@ -726,6 +741,8 @@ img{
     line-height: 40px;
     padding: 15px 3px;
     text-transform: uppercase;
+    color:#FFF;
+    margin-top: 30px;
 }
 
 .smenu-open {
@@ -1488,13 +1505,55 @@ i.fa-instagram:hover {
 }
 
 .ban-tit {
+    padding-top: 70px;
     text-align: center;
     width: 100%;
     position: relative;
 }
-
+.form-container {
+    text-align: center;
+    margin-left: -10px;
+    background-color: white;
+    padding: 97px;
+    padding-top: 40px;
+    margin: 50px;
+    border-radius: 10px;
+    height:550px;
+    /* width: 600px; */
+  }
+  
+  .form {
+    display: inline-block;
+    text-align: left;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 250px;
+  }
+  
+  .register-button {
+    background-color: #F68C1E;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: inline-block;
+  }
 .ban-tit h1 b {
-    color: #f00;
+    color: #EC184A;
     font-size: 72px;
     font-weight: 700;
 }
@@ -1503,7 +1562,7 @@ i.fa-instagram:hover {
     font-weight: 700;
     font-size: 65px;
     line-height: 70px;
-    color: #fff;
+    color: #EC184A;
     margin-bottom: 20px;
 }
 
@@ -1513,7 +1572,7 @@ i.fa-instagram:hover {
     padding: 0px 6px;
     text-transform: uppercase;
     font-family: var(--tit-font);
-    color: #fff;
+    color: #EC184A;
 }
 
 .ban-tit span i.no1 {
@@ -1526,7 +1585,7 @@ i.fa-instagram:hover {
     padding-bottom: 15px;
     font-weight: 400;
     font-size: 20px;
-    color: #fff;
+    color: #EC184A;
 }
 
 
@@ -2848,14 +2907,14 @@ table td{}
 }
 
 .cr {
-    background: rgb(219 229 234);
+    background: #76001C;
     float: left;
     width: 100%;
     position: relative;
 }
 
 .cr * {
-    color: #415764;
+    color: #FFF;
     font-weight: 400;
     font-size: 14px;
 }
@@ -4407,17 +4466,17 @@ span.mail::before {
 .cta-line:hover{}
 
 .cta-3 {
-    background: var(--cta-dark);
+    background: #530014;
     color: rgb(255, 255, 255);
     padding: 6px 30px;
-    border-radius: 2px;
+    border-radius: 10px;
     cursor: pointer;
     font-weight: 600;
     font-size: 13px;
     line-height: 30px;
     display: inline-block;
-    border: 1px solid var(--cta-dark);
     text-transform: uppercase;
+    text-decoration: none;
     /* letter-spacing: 1px; */
 }
 
@@ -4459,7 +4518,7 @@ span.mail::before {
 .fot-ban-inn {
     float: left;
     width: 100%;
-    background: #ffeebf;
+    background: #F7C5D1;
     border-radius: 15px;
     margin: 135px 0px 0px;
 }
@@ -5317,8 +5376,7 @@ span.mail::before {
 }
 
 .ban-inn {
-    background: #2a2c3c;
-    background: linear-gradient(to right, #2a262691, #2a2c3c);
+    background: #F7C5D1;
     padding: 40px 20px 110px 20px;
     float: left;
     width: 100%;
@@ -5329,20 +5387,20 @@ span.mail::before {
 .ab-ban h1 {
     font-size: 80px;
     line-height: 100px;
-    color: #fff;
+    color: #76001C;
     margin-bottom: 20px;
-    background: -webkit-linear-gradient(45deg, #00ff72, #66b5ff 80%);
+    background: #76001C;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 800;
 }
 
 .ban-inn .ban-tit span {
-    color: #ffb400;
+    color: #76001C;
 }
 
 .ban-inn .ban-tit p {
-    color: #fff;
+    color: #76001C;
 }
 
 .ban-home {
@@ -9995,11 +10053,7 @@ h2.db-tit{
         padding: 0 0 80px 0;
     }
 
-    .hom-head {
-        height: initial;
-        background: url(../images/ban-bg.jpg) 0px center / cover no-repeat;
-        padding: 80px 0;
-    }
+
 
     .hom-head::before {
         height: 100%;
@@ -10009,15 +10063,7 @@ h2.db-tit{
         height: 275px;
     }
 
-    .hom-head::after {
-        width: 100%;
-        height: 100%;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        background-image: linear-gradient(358deg, black, #0000005e);
-    }
+
 
     .home-acces-main.inn::before {
         top: 0
