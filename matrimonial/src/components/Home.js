@@ -3,7 +3,14 @@ import "../styles/home.css";
 import "../styles/animate.css"
 import "../styles/bootstrap.css"
 import "../styles/fontAwesome.css"
-import profile from "../images/profiles/1.jpg"
+import couple1 from "../images/gallery/couple-1.jpg"
+import couple2 from "../images/gallery/couple-2.jpg"
+import couple3 from "../images/gallery/couple-3.jpg"
+import couple4 from "../images/gallery/couple-4.png"
+import couple5 from "../images/gallery/couple-5.png"
+import couple6 from "../images/gallery/couple-6.png"
+import couple7 from "../images/gallery/couple-7.jpg"
+import couple8 from "../images/gallery/couple-8.jpg"
 import img1 from "../images/gallery/1.jpg"
 import logo from "../images/logo.png"
 // import "../js/Gallery"
@@ -59,19 +66,6 @@ function Home() {
                 </ul>
               </div>
               {/*MOBILE MENU*/}
-              <div className="mob-menu">
-                <div className="mob-me-ic">
-                  <span className="ser-open mobile-ser">
-                    <img src="images/icon/search.svg" alt="" />
-                  </span>
-                  <span className="mobile-exprt" data-mob="dashbord">
-                    <img src="images/icon/users.svg" alt="" />
-                  </span>
-                  <span className="mobile-menu" data-mob="mobile">
-                    <img src="images/icon/menu.svg" alt="" />
-                  </span>
-                </div>
-              </div>
               {/*END MOBILE MENU*/}
             </div>
           </div>
@@ -671,276 +665,61 @@ function Home() {
               <ul>
                 <li>
                   <div>
-                    <img src={img1} alt="" loading="lazy" />
-                    <h4>Ashley Jen</h4>
+                    <img src={couple1} alt="" loading="lazy" />
+                    <h4>Harman & Palak</h4>
                     {/* <p>Marketing Manager</p> */}
-                    <ul className="social-light">
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-facebook" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-twitter" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-whatsapp" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-linkedin" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-instagram" aria-hidden="true" />
-                        </a>
-                      </li>
-                    </ul>
                   </div>
                 </li>
                 <li>
                   <div>
-                    <img src={img1} alt="" loading="lazy" />
-                    <h4>Ashley Jen</h4>
+                    <img src={couple3} alt="" loading="lazy" />
+                    <h4>Amit & Shruti</h4>
                     {/* <p>Marketing Manager</p> */}
-                    <ul className="social-light">
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-facebook" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-twitter" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-whatsapp" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-linkedin" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-instagram" aria-hidden="true" />
-                        </a>
-                      </li>
-                    </ul>
                   </div>
                 </li>
                 <li>
                   <div>
-                    <img src={img1} alt="" loading="lazy" />
-                    <h4>Emily Arrov</h4>
+                    <img src={couple2} alt="" loading="lazy" />
+                    <h4>Arshdeep & Kirat</h4>
                     {/* <p>Creative Manager</p> */}
-                    <ul className="social-light">
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-facebook" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-twitter" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-whatsapp" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-linkedin" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-instagram" aria-hidden="true" />
-                        </a>
-                      </li>
-                    </ul>
                   </div>
                 </li>
                 <li>
                   <div>
-                    <img src={img1} alt="" loading="lazy" />
-                    <h4>Julia sear</h4>
+                    <img src={couple4} alt="" loading="lazy" />
+                    <h4>Shivam & Raman</h4>
                     {/* <p>Client Coordinator</p> */}
-                    <ul className="social-light">
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-facebook" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-twitter" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-whatsapp" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-linkedin" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-instagram" aria-hidden="true" />
-                        </a>
-                      </li>
-                    </ul>
+                    
                   </div>
                 </li>
               </ul>
               <ul>
                 <li>
                   <div>
-                    <img src={img1} alt="" loading="lazy" />
-                    <h4>Ashley Jen</h4>
+                    <img src={couple5} alt="" loading="lazy" />
+                    <h4>Yash and Palavi</h4>
                     {/* <p>Marketing Manager</p> */}
-                    <ul className="social-light">
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-facebook" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-twitter" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-whatsapp" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-linkedin" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-instagram" aria-hidden="true" />
-                        </a>
-                      </li>
-                    </ul>
                   </div>
                 </li>
                 <li>
                   <div>
-                    <img src={img1} alt="" loading="lazy" />
-                    <h4>Ashley Jen</h4>
+                    <img src={couple6} alt="" loading="lazy" />
+                    <h4>Mahesh & Sravani</h4>
                     {/* <p>Marketing Manager</p> */}
-                    <ul className="social-light">
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-facebook" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-twitter" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-whatsapp" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-linkedin" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-instagram" aria-hidden="true" />
-                        </a>
-                      </li>
-                    </ul>
                   </div>
                 </li>
                 <li>
                   <div>
-                    <img src={img1} alt="" loading="lazy" />
-                    <h4>Emily Arrov</h4>
+                    <img src={couple7} alt="" loading="lazy" />
+                    <h4>Jashan & Samriti</h4>
                     {/* <p>Creative Manager</p> */}
-                    <ul className="social-light">
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-facebook" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-twitter" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-whatsapp" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-linkedin" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-instagram" aria-hidden="true" />
-                        </a>
-                      </li>
-                    </ul>
                   </div>
                 </li>
                 <li>
                   <div>
-                    <img src={img1} alt="" loading="lazy" />
-                    <h4>Julia sear</h4>
+                    <img src={couple8} alt="" loading="lazy" />
+                    <h4>Aneesh & Harpreet</h4>
                     {/* <p>Client Coordinator</p> */}
-                    <ul className="social-light">
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-facebook" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-twitter" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-whatsapp" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-linkedin" aria-hidden="true" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#!">
-                          <i className="fa fa-instagram" aria-hidden="true" />
-                        </a>
-                      </li>
-                    </ul>
                   </div>
                 </li>
               </ul>
