@@ -8779,14 +8779,36 @@ span.mail::before {
 /*-------------------------------------------------------*/
 /* CONTACT
 /*-------------------------------------------------------*/
-.pg-cont..ban-inn {}
+/* .pg-cont..ban-inn {} */
 
 .pg-cont.ab-sec2 ul li div h4 {
     font-size: 16px;
     text-transform: uppercase;
     color: #000;
 }
-
+.nav-content {
+    display: flex;
+  }
+  
+  .left-nav {
+    width: 50%;
+  }
+  
+  .right-nav {
+    width: 50%;
+  }
+  
+  .left-nav-content {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .right-nav-content {
+    padding: 10px;
+  }
+  
 .pg-cont.ab-sec2 ul li div p {
     font-size: 14px;
     font-weight: 400;
