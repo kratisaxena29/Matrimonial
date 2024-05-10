@@ -1,10 +1,22 @@
 import React from "react";
 import logo from "../../images/logo.png";
-import { Typography, TextField, Button, Select, MenuItem, createTheme, ThemeProvider, InputLabel, FormControl } from "@mui/material";
+import {
+  Typography,
+  TextField,
+  Button,
+  Select,
+  MenuItem,
+  createTheme,
+  ThemeProvider,
+  InputLabel,
+  FormControl,
+} from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
-import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import SchoolIcon from "@mui/icons-material/School";
+import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 
-function ProfileDetails() {
+function PartnerLiving() {
   const theme = createTheme({
     components: {
       MuiPopover: {
@@ -50,13 +62,12 @@ function ProfileDetails() {
             }}
           >
             {/* MUI icon */}
-            <WorkspacePremiumIcon
+            <MonitorHeartIcon
               style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }}
             />
             {/* Big text */}
             <Typography variant="h4" component="div" sx={{ color: "#6B0D37" }}>
-              "Chosen by Countless Indian Hearts Worldwide: A Premier
-              Matrimonial Platform"
+              "Crafting a Lifestyle: Exploring the Art of Living Well."
             </Typography>
           </div>
           {/* Right part */}
@@ -70,12 +81,23 @@ function ProfileDetails() {
             }}
           >
             <div>
+            <Typography
+                sx={{
+                  textAlign: "center",
+                  fontWeight: "bold",
+                  marginBottom: 5,
+                }}
+                variant="h5"
+                gutterBottom
+              >
+                Please fill your desired partner details
+              </Typography>
               <Typography
                 sx={{ textAlign: "center" }}
                 variant="h5"
                 gutterBottom
               >
-                Profile Details
+                Style of living
               </Typography>
               <div
                 style={{
@@ -84,12 +106,12 @@ function ProfileDetails() {
                   justifyContent: "center",
                   gap: "80px",
                   marginBottom: "40px",
+                  //   marginTop: "20px",
                 }}
               >
-                <TextField label="Name" variant="standard" />
-                <FormControl variant="standard" sx={{ minWidth: 200 }}>
+                <FormControl variant="standard" sx={{ minWidth: 300 }}>
                   <InputLabel id="demo-simple-select-standard-label">
-                    Gender
+                    Diet
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-standard-label"
@@ -98,9 +120,37 @@ function ProfileDetails() {
                     // onChange={handleChange}
                     label="Age"
                   >
-                    <MenuItem value="Male">Male</MenuItem>
-                    <MenuItem value="Female">Female</MenuItem>
-                    <MenuItem value="Others">Others</MenuItem>
+                    <MenuItem value="Vegetarian">Vegetarian</MenuItem>
+                    <MenuItem value="Vegan">Vegan</MenuItem>
+                    <MenuItem value="Non-vegetarian">Non-vegetarian</MenuItem>
+                    <MenuItem value="Pescatarian">Pescatarian</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "80px",
+                  marginBottom: "40px",
+                }}
+                // sx={{ minWidth: 300, marginTop:"10px" }}
+              >
+                <FormControl variant="standard" sx={{ minWidth: 300 }}>
+                  <InputLabel id="demo-simple-select-standard-label">
+                    Alcohal
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-standard-label"
+                    id="demo-simple-select-standard"
+                    // value={age}
+                    // onChange={handleChange}
+                    label="Age"
+                  >
+                    <MenuItem value="Social Drinker">Social Drinker</MenuItem>
+                    <MenuItem value="Regular Drinker">Regular Drinker</MenuItem>
+                    <MenuItem value="Non-drinker">Non-drinker</MenuItem>
                   </Select>
                 </FormControl>
               </div>
@@ -113,38 +163,9 @@ function ProfileDetails() {
                   marginBottom: "40px",
                 }}
               >
-                <TextField label="Age" variant="standard" />
-                {/* Dropdown for Marital Status */}
-                <FormControl variant="standard" sx={{ minWidth: 200 }}>
+                <FormControl variant="standard" sx={{ minWidth: 300 }}>
                   <InputLabel id="demo-simple-select-standard-label">
-                    Marital Status
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                    // value={age}
-                    // onChange={handleChange}
-                    label="Age"
-                  >
-                    <MenuItem value="Single">Single</MenuItem>
-                    <MenuItem value="Married">Married</MenuItem>
-                    <MenuItem value="Divorced">Divorced</MenuItem>
-                    <MenuItem value="Widowed">Widowed</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "80px",
-                  marginBottom: "40px",
-                }}
-              >
-                <FormControl variant="standard" sx={{ minWidth: 200 }}>
-                  <InputLabel id="demo-simple-select-standard-label">
-                    Disability
+                    Smoke
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-standard-label"
@@ -157,20 +178,8 @@ function ProfileDetails() {
                     <MenuItem value="No">No</MenuItem>
                   </Select>
                 </FormControl>
-                <FormControl variant="standard" sx={{ minWidth: 200 }}>
-                  <InputLabel id="demo-simple-select-standard-label">
-                    Nationality
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                    // value={age}
-                    // onChange={handleChange}
-                    label="Age"
-                  >
-                    <MenuItem value="Indian">Indian</MenuItem>
-                  </Select>
-                </FormControl>
+
+                {/* <TextField label="Height" variant="standard" /> */}
               </div>
               <div
                 style={{
@@ -181,8 +190,11 @@ function ProfileDetails() {
                   marginBottom: "40px",
                 }}
               >
-                <TextField label="City" variant="standard" />
-                <TextField label="Religion" variant="standard" />
+                <TextField
+                  sx={{ minWidth: 300 }}
+                  label="Interests"
+                  variant="standard"
+                />{" "}
               </div>
               <div
                 style={{
@@ -238,4 +250,4 @@ function ProfileDetails() {
   );
 }
 
-export default ProfileDetails;
+export default PartnerLiving;

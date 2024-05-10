@@ -2,9 +2,10 @@ import React from "react";
 import logo from "../../images/logo.png";
 import { Typography, TextField, Button, Select, MenuItem, createTheme, ThemeProvider, InputLabel, FormControl } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
-import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import SchoolIcon from '@mui/icons-material/School';
 
-function ProfileDetails() {
+function EducationCareer() {
   const theme = createTheme({
     components: {
       MuiPopover: {
@@ -50,13 +51,13 @@ function ProfileDetails() {
             }}
           >
             {/* MUI icon */}
-            <WorkspacePremiumIcon
+            <SchoolIcon
               style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }}
             />
             {/* Big text */}
             <Typography variant="h4" component="div" sx={{ color: "#6B0D37" }}>
-              "Chosen by Countless Indian Hearts Worldwide: A Premier
-              Matrimonial Platform"
+              "Love knows no boundaries, and neither do we. Explore endless
+              possibilities in finding your soulmate"
             </Typography>
           </div>
           {/* Right part */}
@@ -75,7 +76,7 @@ function ProfileDetails() {
                 variant="h5"
                 gutterBottom
               >
-                Profile Details
+                Education and Career
               </Typography>
               <div
                 style={{
@@ -84,12 +85,15 @@ function ProfileDetails() {
                   justifyContent: "center",
                   gap: "80px",
                   marginBottom: "40px",
+                  //   marginTop: "20px",
                 }}
               >
-                <TextField label="Name" variant="standard" />
-                <FormControl variant="standard" sx={{ minWidth: 200 }}>
+                <FormControl
+                  variant="standard"
+                  sx={{ minWidth: 300, marginTop: "10px" }}
+                >
                   <InputLabel id="demo-simple-select-standard-label">
-                    Gender
+                    Highest Education
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-standard-label"
@@ -98,11 +102,20 @@ function ProfileDetails() {
                     // onChange={handleChange}
                     label="Age"
                   >
-                    <MenuItem value="Male">Male</MenuItem>
-                    <MenuItem value="Female">Female</MenuItem>
-                    <MenuItem value="Others">Others</MenuItem>
+                    <MenuItem value="Bachelor's Degree">
+                      Bachelor's Degree
+                    </MenuItem>
+                    <MenuItem value="Master's Degree">Master's Degree</MenuItem>
+                    <MenuItem value="Post Master's Degree">
+                      Post Master's Degree
+                    </MenuItem>
+                    <MenuItem value="PHD">PHD</MenuItem>
+                    <MenuItem value="Non-Bachelor's Degree">
+                      Non-Bachelor's Degree
+                    </MenuItem>
                   </Select>
                 </FormControl>
+                {/* <TextField label=" Sub Caste" variant="standard" /> */}
               </div>
               <div
                 style={{
@@ -112,26 +125,15 @@ function ProfileDetails() {
                   gap: "80px",
                   marginBottom: "40px",
                 }}
+                // sx={{ minWidth: 300, marginTop:"10px" }}
               >
-                <TextField label="Age" variant="standard" />
+                <TextField
+                  sx={{ minWidth: 300 }}
+                  label="Current Employment "
+                  variant="standard"
+                />
+                {/* <TextField label="Mother Tongue" variant="standard" />x x */}
                 {/* Dropdown for Marital Status */}
-                <FormControl variant="standard" sx={{ minWidth: 200 }}>
-                  <InputLabel id="demo-simple-select-standard-label">
-                    Marital Status
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                    // value={age}
-                    // onChange={handleChange}
-                    label="Age"
-                  >
-                    <MenuItem value="Single">Single</MenuItem>
-                    <MenuItem value="Married">Married</MenuItem>
-                    <MenuItem value="Divorced">Divorced</MenuItem>
-                    <MenuItem value="Widowed">Widowed</MenuItem>
-                  </Select>
-                </FormControl>
               </div>
               <div
                 style={{
@@ -142,35 +144,13 @@ function ProfileDetails() {
                   marginBottom: "40px",
                 }}
               >
-                <FormControl variant="standard" sx={{ minWidth: 200 }}>
-                  <InputLabel id="demo-simple-select-standard-label">
-                    Disability
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                    // value={age}
-                    // onChange={handleChange}
-                    label="Age"
-                  >
-                    <MenuItem value="Yes">Yes</MenuItem>
-                    <MenuItem value="No">No</MenuItem>
-                  </Select>
-                </FormControl>
-                <FormControl variant="standard" sx={{ minWidth: 200 }}>
-                  <InputLabel id="demo-simple-select-standard-label">
-                    Nationality
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                    // value={age}
-                    // onChange={handleChange}
-                    label="Age"
-                  >
-                    <MenuItem value="Indian">Indian</MenuItem>
-                  </Select>
-                </FormControl>
+                <TextField
+                  sx={{ minWidth: 300 }}
+                  label="Profession"
+                  variant="standard"
+                />
+
+                {/* <TextField label="Height" variant="standard" /> */}
               </div>
               <div
                 style={{
@@ -181,8 +161,26 @@ function ProfileDetails() {
                   marginBottom: "40px",
                 }}
               >
-                <TextField label="City" variant="standard" />
-                <TextField label="Religion" variant="standard" />
+                <TextField
+                  sx={{ minWidth: 300 }}
+                  label="Annual Income"
+                  variant="standard"
+                />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "80px",
+                  marginBottom: "40px",
+                }}
+              >
+                <TextField
+                  sx={{ minWidth: 300 }}
+                  label="Years of Experience"
+                  variant="standard"
+                />
               </div>
               <div
                 style={{
@@ -238,4 +236,4 @@ function ProfileDetails() {
   );
 }
 
-export default ProfileDetails;
+export default EducationCareer;

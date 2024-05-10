@@ -2,9 +2,9 @@ import React from "react";
 import logo from "../../images/logo.png";
 import { Typography, TextField, Button, Select, MenuItem, createTheme, ThemeProvider, InputLabel, FormControl } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
-import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
+import Diversity3Icon from '@mui/icons-material/Diversity3';
 
-function ProfileDetails() {
+function PartnerFamily() {
   const theme = createTheme({
     components: {
       MuiPopover: {
@@ -50,13 +50,13 @@ function ProfileDetails() {
             }}
           >
             {/* MUI icon */}
-            <WorkspacePremiumIcon
+            <Diversity3Icon
               style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }}
             />
             {/* Big text */}
             <Typography variant="h4" component="div" sx={{ color: "#6B0D37" }}>
-              "Chosen by Countless Indian Hearts Worldwide: A Premier
-              Matrimonial Platform"
+              "Embark on a journey of companionship, where every moment is a
+              step closer to finding your perfect match."
             </Typography>
           </div>
           {/* Right part */}
@@ -71,25 +71,36 @@ function ProfileDetails() {
           >
             <div>
               <Typography
+                sx={{
+                  textAlign: "center",
+                  fontWeight: "bold",
+                  marginBottom: 5,
+                }}
+                variant="h5"
+                gutterBottom
+              >
+                Please fill your desired partner details
+              </Typography>
+              <Typography
                 sx={{ textAlign: "center" }}
                 variant="h5"
                 gutterBottom
               >
-                Profile Details
+                Family Details
               </Typography>
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  gap: "80px",
+                  gap: "65px",
                   marginBottom: "40px",
+                  marginTop: "40px",
                 }}
               >
-                <TextField label="Name" variant="standard" />
                 <FormControl variant="standard" sx={{ minWidth: 200 }}>
                   <InputLabel id="demo-simple-select-standard-label">
-                    Gender
+                    Age from
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-standard-label"
@@ -98,23 +109,12 @@ function ProfileDetails() {
                     // onChange={handleChange}
                     label="Age"
                   >
-                    <MenuItem value="Male">Male</MenuItem>
-                    <MenuItem value="Female">Female</MenuItem>
-                    <MenuItem value="Others">Others</MenuItem>
+                    <MenuItem value="18-25">18-25 years</MenuItem>
+                    <MenuItem value="25-30">25-30 years</MenuItem>
+                    <MenuItem value="30-35">30-35 years</MenuItem>
+                    <MenuItem value="35-40">35-40 years</MenuItem>
                   </Select>
-                </FormControl>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "80px",
-                  marginBottom: "40px",
-                }}
-              >
-                <TextField label="Age" variant="standard" />
-                {/* Dropdown for Marital Status */}
+                </FormControl>{" "}
                 <FormControl variant="standard" sx={{ minWidth: 200 }}>
                   <InputLabel id="demo-simple-select-standard-label">
                     Marital Status
@@ -129,9 +129,34 @@ function ProfileDetails() {
                     <MenuItem value="Single">Single</MenuItem>
                     <MenuItem value="Married">Married</MenuItem>
                     <MenuItem value="Divorced">Divorced</MenuItem>
-                    <MenuItem value="Widowed">Widowed</MenuItem>
                   </Select>
-                </FormControl>
+                </FormControl>{" "}
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "80px",
+                  marginBottom: "40px",
+                }}
+              >
+                <TextField label="Religion" variant="standard" />
+
+                <TextField label="Caste" variant="standard" />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "80px",
+                  marginBottom: "40px",
+                }}
+              >
+                <TextField label="Mother Tongue" variant="standard" />
+
+                <TextField label="Height" variant="standard" />
               </div>
               <div
                 style={{
@@ -143,47 +168,37 @@ function ProfileDetails() {
                 }}
               >
                 <FormControl variant="standard" sx={{ minWidth: 200 }}>
-                  <InputLabel id="demo-simple-select-standard-label">
-                    Disability
+                  <InputLabel
+                    id="demo-simple-select-standard-label"
+                    sx={{  }} // Allow text to break into multiple lines
+                  >
+                    Horoscope match?
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
-                    // value={age}
-                    // onChange={handleChange}
-                    label="Age"
+                    label="Is horoscope match necessary?"
                   >
                     <MenuItem value="Yes">Yes</MenuItem>
                     <MenuItem value="No">No</MenuItem>
                   </Select>
                 </FormControl>
                 <FormControl variant="standard" sx={{ minWidth: 200 }}>
-                  <InputLabel id="demo-simple-select-standard-label">
-                    Nationality
+                  <InputLabel
+                    id="demo-simple-select-standard-label"
+                    sx={{  }} // Allow text to break into multiple lines
+                  >
+                    Pet Friendly
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
-                    // value={age}
-                    // onChange={handleChange}
-                    label="Age"
+                    label="Is horoscope match necessary?"
                   >
-                    <MenuItem value="Indian">Indian</MenuItem>
+                    <MenuItem value="Yes">Yes</MenuItem>
+                    <MenuItem value="No">No</MenuItem>
                   </Select>
-                </FormControl>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "80px",
-                  marginBottom: "40px",
-                }}
-              >
-                <TextField label="City" variant="standard" />
-                <TextField label="Religion" variant="standard" />
-              </div>
+                </FormControl>              </div>
               <div
                 style={{
                   display: "flex",
@@ -238,4 +253,4 @@ function ProfileDetails() {
   );
 }
 
-export default ProfileDetails;
+export default PartnerFamily;

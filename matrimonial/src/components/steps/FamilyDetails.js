@@ -2,9 +2,9 @@ import React from "react";
 import logo from "../../images/logo.png";
 import { Typography, TextField, Button, Select, MenuItem, createTheme, ThemeProvider, InputLabel, FormControl } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
-import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
+import Diversity1Icon from '@mui/icons-material/Diversity1';
 
-function ProfileDetails() {
+function FamilyDetails() {
   const theme = createTheme({
     components: {
       MuiPopover: {
@@ -50,13 +50,13 @@ function ProfileDetails() {
             }}
           >
             {/* MUI icon */}
-            <WorkspacePremiumIcon
+            <Diversity1Icon
               style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }}
             />
             {/* Big text */}
             <Typography variant="h4" component="div" sx={{ color: "#6B0D37" }}>
-              "Chosen by Countless Indian Hearts Worldwide: A Premier
-              Matrimonial Platform"
+              "Explore a realm where dreams meet reality, and soulmates are
+              found with just a click."
             </Typography>
           </div>
           {/* Right part */}
@@ -75,7 +75,7 @@ function ProfileDetails() {
                 variant="h5"
                 gutterBottom
               >
-                Profile Details
+                Family Details
               </Typography>
               <div
                 style={{
@@ -84,12 +84,12 @@ function ProfileDetails() {
                   justifyContent: "center",
                   gap: "80px",
                   marginBottom: "40px",
+                  marginTop: "40px",
                 }}
               >
-                <TextField label="Name" variant="standard" />
-                <FormControl variant="standard" sx={{ minWidth: 200 }}>
+                <FormControl variant="standard" sx={{ minWidth: 425 }}>
                   <InputLabel id="demo-simple-select-standard-label">
-                    Gender
+                    Family Type
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-standard-label"
@@ -98,98 +98,58 @@ function ProfileDetails() {
                     // onChange={handleChange}
                     label="Age"
                   >
-                    <MenuItem value="Male">Male</MenuItem>
-                    <MenuItem value="Female">Female</MenuItem>
+                    <MenuItem value="Nuclear">Nuclear</MenuItem>
+                    <MenuItem value="Joint">Joint</MenuItem>
+                    <MenuItem value="Extended">Extended</MenuItem>
                     <MenuItem value="Others">Others</MenuItem>
                   </Select>
-                </FormControl>
+                </FormControl>{" "}
               </div>
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  gap: "80px",
+                  gap: "40px",
                   marginBottom: "40px",
                 }}
               >
-                <TextField label="Age" variant="standard" />
-                {/* Dropdown for Marital Status */}
-                <FormControl variant="standard" sx={{ minWidth: 200 }}>
-                  <InputLabel id="demo-simple-select-standard-label">
-                    Marital Status
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                    // value={age}
-                    // onChange={handleChange}
-                    label="Age"
-                  >
-                    <MenuItem value="Single">Single</MenuItem>
-                    <MenuItem value="Married">Married</MenuItem>
-                    <MenuItem value="Divorced">Divorced</MenuItem>
-                    <MenuItem value="Widowed">Widowed</MenuItem>
-                  </Select>
-                </FormControl>
+                <TextField label="Father's Profession" variant="standard" />
+
+                <TextField label="Mother's Profession" variant="standard" />
               </div>
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  gap: "80px",
+                  gap: "40px",
                   marginBottom: "40px",
                 }}
               >
-                <FormControl variant="standard" sx={{ minWidth: 200 }}>
-                  <InputLabel id="demo-simple-select-standard-label">
-                    Disability
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                    // value={age}
-                    // onChange={handleChange}
-                    label="Age"
-                  >
-                    <MenuItem value="Yes">Yes</MenuItem>
-                    <MenuItem value="No">No</MenuItem>
-                  </Select>
-                </FormControl>
-                <FormControl variant="standard" sx={{ minWidth: 200 }}>
-                  <InputLabel id="demo-simple-select-standard-label">
-                    Nationality
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                    // value={age}
-                    // onChange={handleChange}
-                    label="Age"
-                  >
-                    <MenuItem value="Indian">Indian</MenuItem>
-                  </Select>
-                </FormControl>
+                <TextField label="Brother" variant="standard" />
+
+                <TextField label="Brother's Profession" variant="standard" />
               </div>
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  gap: "80px",
+                  gap: "40px",
                   marginBottom: "40px",
                 }}
               >
-                <TextField label="City" variant="standard" />
-                <TextField label="Religion" variant="standard" />
+                <TextField label="Sister" variant="standard" />
+
+                <TextField label="Sister's Profession" variant="standard" />
               </div>
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  gap: "80px",
+                  gap: "40px",
                   marginBottom: "40px",
                 }}
               >
@@ -238,4 +198,4 @@ function ProfileDetails() {
   );
 }
 
-export default ProfileDetails;
+export default FamilyDetails;

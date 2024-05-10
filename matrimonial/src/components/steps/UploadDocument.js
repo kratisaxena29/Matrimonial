@@ -2,9 +2,11 @@ import React from "react";
 import logo from "../../images/logo.png";
 import { Typography, TextField, Button, Select, MenuItem, createTheme, ThemeProvider, InputLabel, FormControl } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
-import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import StarsIcon from '@mui/icons-material/Stars';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
-function ProfileDetails() {
+function UploadDocument() {
   const theme = createTheme({
     components: {
       MuiPopover: {
@@ -50,13 +52,13 @@ function ProfileDetails() {
             }}
           >
             {/* MUI icon */}
-            <WorkspacePremiumIcon
+            <StarsIcon
               style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }}
             />
             {/* Big text */}
             <Typography variant="h4" component="div" sx={{ color: "#6B0D37" }}>
-              "Chosen by Countless Indian Hearts Worldwide: A Premier
-              Matrimonial Platform"
+              "Join us in the quest for love, where every profile is a chapter
+              waiting to be written in the book of destiny."{" "}
             </Typography>
           </div>
           {/* Right part */}
@@ -71,11 +73,23 @@ function ProfileDetails() {
           >
             <div>
               <Typography
+                sx={{
+                  textAlign: "center",
+                  fontWeight: "bold",
+                  marginBottom: 5,
+                }}
+                variant="h5"
+                gutterBottom
+              >
+                Upload Documents
+              </Typography>
+              <Typography
                 sx={{ textAlign: "center" }}
                 variant="h5"
                 gutterBottom
               >
-                Profile Details
+                (Kindly upload the documents for Id Verification like Pan Card/
+                Voter Id/ Aadhaar Card)
               </Typography>
               <div
                 style={{
@@ -83,26 +97,13 @@ function ProfileDetails() {
                   alignItems: "center",
                   justifyContent: "center",
                   gap: "80px",
-                  marginBottom: "40px",
+                  marginBottom: "5px",
+                  marginTop: "40px",
                 }}
               >
-                <TextField label="Name" variant="standard" />
-                <FormControl variant="standard" sx={{ minWidth: 200 }}>
-                  <InputLabel id="demo-simple-select-standard-label">
-                    Gender
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                    // value={age}
-                    // onChange={handleChange}
-                    label="Age"
-                  >
-                    <MenuItem value="Male">Male</MenuItem>
-                    <MenuItem value="Female">Female</MenuItem>
-                    <MenuItem value="Others">Others</MenuItem>
-                  </Select>
-                </FormControl>
+                <CloudUploadIcon
+                  sx={{ color: "#76001C", width: 60, height: 60 }}
+                />
               </div>
               <div
                 style={{
@@ -110,79 +111,24 @@ function ProfileDetails() {
                   alignItems: "center",
                   justifyContent: "center",
                   gap: "80px",
-                  marginBottom: "40px",
+                  marginBottom: "50px",
                 }}
               >
-                <TextField label="Age" variant="standard" />
-                {/* Dropdown for Marital Status */}
-                <FormControl variant="standard" sx={{ minWidth: 200 }}>
-                  <InputLabel id="demo-simple-select-standard-label">
-                    Marital Status
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                    // value={age}
-                    // onChange={handleChange}
-                    label="Age"
-                  >
-                    <MenuItem value="Single">Single</MenuItem>
-                    <MenuItem value="Married">Married</MenuItem>
-                    <MenuItem value="Divorced">Divorced</MenuItem>
-                    <MenuItem value="Widowed">Widowed</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "80px",
-                  marginBottom: "40px",
-                }}
-              >
-                <FormControl variant="standard" sx={{ minWidth: 200 }}>
-                  <InputLabel id="demo-simple-select-standard-label">
-                    Disability
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                    // value={age}
-                    // onChange={handleChange}
-                    label="Age"
-                  >
-                    <MenuItem value="Yes">Yes</MenuItem>
-                    <MenuItem value="No">No</MenuItem>
-                  </Select>
-                </FormControl>
-                <FormControl variant="standard" sx={{ minWidth: 200 }}>
-                  <InputLabel id="demo-simple-select-standard-label">
-                    Nationality
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                    // value={age}
-                    // onChange={handleChange}
-                    label="Age"
-                  >
-                    <MenuItem value="Indian">Indian</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "80px",
-                  marginBottom: "40px",
-                }}
-              >
-                <TextField label="City" variant="standard" />
-                <TextField label="Religion" variant="standard" />
+                <Button
+                  type="submit"
+                  variant="contained"
+                  sx={{
+                    mt: 4,
+                    mb: 2,
+                    width: 150,
+                    height: 40,
+                    textTransform: "inherit",
+                    fontSize: "18px",
+                    backgroundColor: "#76001C",
+                  }}
+                >
+                  Upload
+                </Button>
               </div>
               <div
                 style={{
@@ -206,7 +152,7 @@ function ProfileDetails() {
                     backgroundColor: "#FB6A6B",
                   }}
                 >
-                  Next
+                  Submit
                 </Button>
               </div>
             </div>
@@ -238,4 +184,4 @@ function ProfileDetails() {
   );
 }
 
-export default ProfileDetails;
+export default UploadDocument;
