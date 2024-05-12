@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
+import { useNavigate } from 'react-router-dom';
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
@@ -33,8 +34,11 @@ function VerifyOtp() {
 
   const handleVerifyClick = () => {
     console.log("Verify button clicked");
+    navigate('/confirmation-otp')
+  
   };
 
+  const navigate = useNavigate();
   const rootStyle = {
     display: "flex",
     flexDirection: "column",

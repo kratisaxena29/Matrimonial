@@ -3,6 +3,7 @@ import "../styles/home.css";
 import "../styles/animate.css"
 import "../styles/bootstrap.css"
 import "../styles/fontAwesome.css"
+import { useNavigate } from 'react-router-dom';
 import couple1 from "../images/gallery/couple-1.jpg"
 import couple2 from "../images/gallery/couple-2.jpg"
 import couple3 from "../images/gallery/couple-3.jpg"
@@ -18,25 +19,16 @@ import logo from "../images/logo.png"
 // import "../js/Chart"
 // import "../js/"
 function Home() {
+
+  const navigate = useNavigate();
+
   return (
     <div className="body">
-      {/* <div id="preloader">
-          <div className="plod">
-            <span className="lod1"><img src="../images/loder/1.png" alt="" loading="lazy" /></span>
-            <span className="lod2"><img src="images/loder/2.png" alt="" loading="lazy" /></span>
-            <span className="lod3"><img src="images/loder/3.png" alt="" loading="lazy" /></span>
-          </div>
-        </div> */}
+     
       <div className="pop-bg" />
-      {/* END PRELOADER */}
-      {/* POPUP SEARCH */}
-      {/* END */}
-      {/* TOP MENU */}
+    
 
-      {/* END */}
-      {/* MENU POPUP */}
-      {/* END */}
-      {/* MAIN MENU */}
+     
       <div className="hom-top">
         <div className="container">
           <div className="row">
@@ -319,7 +311,7 @@ function Home() {
                       <input type="number" id="phone" />
                     </div>
                   </form>
-                    <button type="submit" className="register-button" style={{textAlign:"center", marginRight:"0px"}}>
+                    <button onClick={()=>navigate('/verify-otp')} type="submit" className="register-button" style={{textAlign:"center", marginRight:"0px"}}>
                       Register
                     </button>
                 </div>
@@ -412,9 +404,7 @@ function Home() {
                   </li>
                 </ul>
               </div>
-              {/* <div className="cta-full-wid">
-                  <a href="#!" className="cta-dark">More customer reviews</a>
-                </div> */}
+             
             </div>
           </div>
         </div>

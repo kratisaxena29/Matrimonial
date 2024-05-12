@@ -15,7 +15,11 @@ import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import SchoolIcon from "@mui/icons-material/School";
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
+import { useNavigate } from "react-router-dom";
+
+
 function Horoscope() {
+  const navigate = useNavigate()
   const theme = createTheme({
     components: {
       MuiPopover: {
@@ -176,6 +180,7 @@ function Horoscope() {
                 }}
               >
                 <Button
+                onClick={() => navigate('/lifestyle')}
                   type="submit"
                   variant="contained"
                   sx={{

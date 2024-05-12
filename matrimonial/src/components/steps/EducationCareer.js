@@ -4,8 +4,10 @@ import { Typography, TextField, Button, Select, MenuItem, createTheme, ThemeProv
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import SchoolIcon from '@mui/icons-material/School';
+import { useNavigate } from "react-router-dom";
 
 function EducationCareer() {
+  const navigate = useNavigate()
   const theme = createTheme({
     components: {
       MuiPopover: {
@@ -192,6 +194,7 @@ function EducationCareer() {
                 }}
               >
                 <Button
+                onClick={() => navigate('/horoscope')}
                   type="submit"
                   variant="contained"
                   sx={{

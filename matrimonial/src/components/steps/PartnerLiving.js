@@ -15,8 +15,10 @@ import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import SchoolIcon from "@mui/icons-material/School";
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
+import { useNavigate } from "react-router-dom";
 
 function PartnerLiving() {
+  const navigate = useNavigate()
   const theme = createTheme({
     components: {
       MuiPopover: {
@@ -206,6 +208,7 @@ function PartnerLiving() {
                 }}
               >
                 <Button
+                onClick={() => navigate('/upload-document')}
                   type="submit"
                   variant="contained"
                   sx={{

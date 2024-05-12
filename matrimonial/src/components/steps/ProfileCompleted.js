@@ -2,7 +2,11 @@ import { Button, Typography } from "@mui/material";
 import React from "react";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+import { useNavigate } from "react-router-dom";
+
 function ProfileCompleted() {
+
+  const navigate = useNavigate()
   const textStyle = {
     marginBottom: 8,
     color: "#363640",
@@ -28,6 +32,7 @@ function ProfileCompleted() {
       Congratulations! You Profile has been completed
       </Typography>
       <Button
+       onClick={() => navigate('/')}
         type="submit"
         variant="contained"
         sx={{

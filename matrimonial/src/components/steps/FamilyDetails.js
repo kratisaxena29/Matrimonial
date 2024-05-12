@@ -1,10 +1,12 @@
 import React from "react";
 import logo from "../../images/logo.png";
+import { useNavigate } from "react-router-dom";
 import { Typography, TextField, Button, Select, MenuItem, createTheme, ThemeProvider, InputLabel, FormControl } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import Diversity1Icon from '@mui/icons-material/Diversity1';
 
 function FamilyDetails() {
+  const navigate = useNavigate()
   const theme = createTheme({
     components: {
       MuiPopover: {
@@ -154,6 +156,7 @@ function FamilyDetails() {
                 }}
               >
                 <Button
+                onClick={() => navigate('/partner-family')}
                   type="submit"
                   variant="contained"
                   sx={{

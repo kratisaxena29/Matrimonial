@@ -5,8 +5,10 @@ import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import StarsIcon from '@mui/icons-material/Stars';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { useNavigate } from "react-router-dom";
 
 function UploadDocument() {
+  const navigate = useNavigate()
   const theme = createTheme({
     components: {
       MuiPopover: {
@@ -115,6 +117,7 @@ function UploadDocument() {
                 }}
               >
                 <Button
+               
                   type="submit"
                   variant="contained"
                   sx={{
@@ -140,6 +143,7 @@ function UploadDocument() {
                 }}
               >
                 <Button
+                 onClick={() => navigate('/profile-completed')}
                   type="submit"
                   variant="contained"
                   sx={{

@@ -15,8 +15,10 @@ import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import SchoolIcon from "@mui/icons-material/School";
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
+import { useNavigate } from "react-router-dom";
 
 function LifeStyle() {
+  const navigate = useNavigate()
   const theme = createTheme({
     components: {
       MuiPopover: {
@@ -196,6 +198,7 @@ function LifeStyle() {
                 }}
               >
                 <Button
+                   onClick={() => navigate('/family-details')}
                   type="submit"
                   variant="contained"
                   sx={{

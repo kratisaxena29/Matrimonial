@@ -3,8 +3,10 @@ import logo from "../../images/logo.png";
 import { Typography, TextField, Button, Select, MenuItem, createTheme, ThemeProvider, InputLabel, FormControl } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import Diversity3Icon from '@mui/icons-material/Diversity3';
+import { useNavigate } from "react-router-dom";
 
 function PartnerFamily() {
+  const navigate = useNavigate()
   const theme = createTheme({
     components: {
       MuiPopover: {
@@ -209,6 +211,7 @@ function PartnerFamily() {
                 }}
               >
                 <Button
+                onClick={() => navigate('/partner-education')}
                   type="submit"
                   variant="contained"
                   sx={{

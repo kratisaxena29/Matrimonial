@@ -1,10 +1,13 @@
 import React from "react";
 import logo from "../../images/logo.png";
+
 import { Typography, TextField, Button, Select, MenuItem, createTheme, ThemeProvider, InputLabel, FormControl } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { useNavigate } from "react-router-dom";
 
 function AdditionalDetails() {
+  const navigate = useNavigate()
   const theme = createTheme({
     components: {
       MuiPopover: {
@@ -152,6 +155,7 @@ function AdditionalDetails() {
                 }}
               >
                 <Button
+                onClick={() => navigate('/education-career')}
                   type="submit"
                   variant="contained"
                   sx={{

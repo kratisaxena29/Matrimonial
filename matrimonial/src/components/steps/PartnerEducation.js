@@ -4,8 +4,10 @@ import { Typography, TextField, Button, Select, MenuItem, createTheme, ThemeProv
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import StarsIcon from '@mui/icons-material/Stars';
+import { useNavigate } from "react-router-dom";
 
 function PartnerEducation() {
+  const navigate = useNavigate()
   const theme = createTheme({
     components: {
       MuiPopover: {
@@ -203,6 +205,7 @@ function PartnerEducation() {
                 }}
               >
                 <Button
+                onClick={() => navigate('/partner-living')}
                   type="submit"
                   variant="contained"
                   sx={{

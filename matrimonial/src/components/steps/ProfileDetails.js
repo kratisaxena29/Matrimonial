@@ -1,10 +1,12 @@
 import React from "react";
 import logo from "../../images/logo.png";
+import { useNavigate } from 'react-router-dom';
 import { Typography, TextField, Button, Select, MenuItem, createTheme, ThemeProvider, InputLabel, FormControl } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 
 function ProfileDetails() {
+  const navigate = useNavigate();
   const theme = createTheme({
     components: {
       MuiPopover: {
@@ -194,6 +196,7 @@ function ProfileDetails() {
                 }}
               >
                 <Button
+                onClick={() => navigate('/additional-details')}
                   type="submit"
                   variant="contained"
                   sx={{
