@@ -155,7 +155,7 @@ function FamilyDetails() {
                   marginBottom: "40px",
                 }}
               >
-                <Button
+                {/* <Button
                   onClick={() => navigate('/')}
                   variant="outlined"
                   color="error"
@@ -171,7 +171,7 @@ function FamilyDetails() {
                   }}
                 >
                   Cancel
-                </Button>
+                </Button> */}
                 <Button
                   onClick={() => navigate('/lifestyle')}
                   variant="outlined"

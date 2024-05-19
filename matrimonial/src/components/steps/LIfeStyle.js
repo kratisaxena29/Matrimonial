@@ -197,7 +197,7 @@ function LifeStyle() {
                   marginBottom: "40px",
                 }}
               >
-                <Button
+                {/* <Button
                   onClick={() => navigate('/')}
                   variant="outlined"
                   color="error"
@@ -213,7 +213,7 @@ function LifeStyle() {
                   }}
                 >
                   Cancel
-                </Button>
+                </Button> */}
                 <Button
                   onClick={() => navigate('/horoscope')}
                   variant="outlined"

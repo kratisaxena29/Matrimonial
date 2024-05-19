@@ -230,7 +230,7 @@ function ProfileDetails() {
                     // color: "#FB6A6B",
                   }}
                 >
-                  Cancel
+                  Back
                 </Button>
                 <Button
                   onClick={() => navigate('/additional-details')}

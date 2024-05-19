@@ -204,7 +204,7 @@ function PartnerEducation() {
                   marginBottom: "40px",
                 }}
               >
-                <Button
+                {/* <Button
                   onClick={() => navigate('/')}
                   variant="outlined"
                   color="error"
@@ -220,7 +220,7 @@ function PartnerEducation() {
                   }}
                 >
                   Cancel
-                </Button>
+                </Button> */}
                 <Button
                   onClick={() => navigate('/partner-family')}
                   variant="outlined"
