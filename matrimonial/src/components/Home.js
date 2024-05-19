@@ -47,7 +47,7 @@ function Home() {
                   </li>
                   <li>
                     <a
-                      href="plans.html"
+                     onClick={() => navigate('/plan')}
                       className="smenu-pare"
                       style={{ textDecoration: "none" }}
                     >

@@ -34,6 +34,7 @@ function App() {
         <Route path="/partner-education" element={<PartnerEducation />} />
         <Route path="/partner-living" element={<PartnerLiving />} />
         <Route path="/upload-document" element={<UploadDocument />} />
+        <Route path="/plan" element={<Plan />} />
         <Route path="/profile-completed" element={<ProfileCompleted />} />
       </Routes>
     </Router>

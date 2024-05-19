@@ -36,7 +36,7 @@ function Plan() {
             </Typography> */}
           </Box>
           <Box sx={{display:"flex", flexDirection:"row", gap:"20px"}}>
-            <Button color="inherit">Explore</Button>
+            {/* <Button color="inherit">Explore</Button>
             <Button color="inherit">Plans</Button>
             <Button
               color="inherit"
@@ -48,7 +48,7 @@ function Plan() {
               }}
             >
               Login
-            </Button>
+            </Button> */}
           </Box>
         </Toolbar>
       </AppBar>
@@ -370,7 +370,7 @@ function Plan() {
             </IconButton>
           </Box>
           <Typography variant="body1" color="white">
-            &copy; 2024 <span style={{ color: "#FFBF00" }}>SoulMatch</span> All
+            &copy; 2024 <span style={{ color: "#FF83DC" }}>SoulMatch</span> All
             rights reserved.
           </Typography>
           <Box style={{ display: "flex", alignItems: "center" }}>
