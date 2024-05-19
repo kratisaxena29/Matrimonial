@@ -242,7 +242,7 @@ function PartnerLiving() {
             <Instagram style={{ marginRight: "10px" }} />
             <Twitter style={{ marginRight: "10px" }} />
           </div>
-          <div>&copy; 2024 SoulMatch All rights reserved.</div>
+          <div>&copy; 2024 <span style={{ color: "#FFBF00	"}}>SoulMatch</span> All rights reserved.</div>
           <div>
             <Email style={{ marginRight: "10px" }} />
             <span style={{ color: "#FFF" }}>Email Address</span>

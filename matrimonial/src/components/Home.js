@@ -750,7 +750,7 @@ function Home() {
               <p>
                 Copyright © <span id="cry">2024</span>{" "}
                 <a
-                  style={{ textDecoration: "none", color: "#FF83DC" }}
+                  style={{ textDecoration: "none", color: "#FFBF00	" }}
                   href="#!"
                   target="_blank"
                 >

@@ -370,7 +370,7 @@ function Plan() {
             </IconButton>
           </Box>
           <Typography variant="body1" color="white">
-            &copy; 2024 <span style={{ color: "#FF83DC" }}>SoulMatch</span> All
+            &copy; 2024 <span style={{ color: "#FFBF00" }}>SoulMatch</span> All
             rights reserved.
           </Typography>
           <Box style={{ display: "flex", alignItems: "center" }}>

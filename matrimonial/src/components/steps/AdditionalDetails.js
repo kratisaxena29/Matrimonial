@@ -89,8 +89,36 @@ function AdditionalDetails() {
                   marginBottom: "40px",
                 }}
               >
-                <TextField label="Caste" variant="standard" />
-                <TextField label=" Sub Caste" variant="standard" />
+                <FormControl variant="standard" sx={{ minWidth: 195 }}>
+                  <InputLabel id="caste-select-label">Caste</InputLabel>
+                  <Select
+                    labelId="caste-select-label"
+                    id="caste-select"
+                    // value={caste}
+                    // onChange={handleCasteChange}
+                    label="Caste"
+                  >
+                    <MenuItem value="General">General</MenuItem>
+                    <MenuItem value="OBC">OBC</MenuItem>
+                    <MenuItem value="SC">SC</MenuItem>
+                    <MenuItem value="ST">ST</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl variant="standard" sx={{ minWidth: 195 }}>
+                  <InputLabel id="sub-caste-select-label">Sub Caste</InputLabel>
+                  <Select
+                    labelId="sub-caste-select-label"
+                    id="sub-caste-select"
+                    // value={subCaste}
+                    // onChange={handleSubCasteChange}
+                    label="Sub Caste"
+                  >
+                    <MenuItem value="SubCaste1">Sub Caste 1</MenuItem>
+                    <MenuItem value="SubCaste2">Sub Caste 2</MenuItem>
+                    <MenuItem value="SubCaste3">Sub Caste 3</MenuItem>
+                    <MenuItem value="SubCaste4">Sub Caste 4</MenuItem>
+                  </Select>
+                </FormControl>
               </div>
               <div
                 style={{
@@ -114,10 +142,8 @@ function AdditionalDetails() {
                   marginBottom: "40px",
                 }}
               >
-                <TextField label="Gothra" variant="standard" />
-               
                 <TextField label="Height" variant="standard" />
-                
+                <TextField label="Weight" variant="standard" />
               </div>
               <div
                 style={{
@@ -128,7 +154,22 @@ function AdditionalDetails() {
                   marginBottom: "40px",
                 }}
               >
-                <TextField label="Weight" variant="standard" />
+                <FormControl variant="standard" sx={{ minWidth: 195 }}>
+                  <InputLabel id="gothra-select-label">Gothra</InputLabel>
+                  <Select
+                    labelId="gothra-select-label"
+                    id="gothra-select"
+                    // value={gothra}
+                    // onChange={handleGothraChange}
+                    label="Gothra"
+                  >
+                    <MenuItem value="Gothra1">Gothra 1</MenuItem>
+                    <MenuItem value="Gothra2">Gothra 2</MenuItem>
+                    <MenuItem value="Gothra3">Gothra 3</MenuItem>
+                    <MenuItem value="Gothra4">Gothra 4</MenuItem>
+                  </Select>
+                </FormControl>
+
                 <FormControl variant="standard" sx={{ minWidth: 200 }}>
                   <InputLabel id="demo-simple-select-standard-label">
                     Pet Friendly
@@ -155,7 +196,7 @@ function AdditionalDetails() {
                 }}
               >
                 <Button
-                onClick={() => navigate('/education-career')}
+                  onClick={() => navigate("/education-career")}
                   type="submit"
                   variant="contained"
                   sx={{
@@ -189,7 +230,7 @@ function AdditionalDetails() {
             <Instagram style={{ marginRight: "10px" }} />
             <Twitter style={{ marginRight: "10px" }} />
           </div>
-          <div>&copy; 2024 SoulMatch All rights reserved.</div>
+          <div>&copy; 2024 <span style={{ color: "#FFBF00	"}}>SoulMatch</span> All rights reserved.</div>
           <div>
             <Email style={{ marginRight: "10px" }} />
             <span style={{ color: "#FFF" }}>Email Address</span>

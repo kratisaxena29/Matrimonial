@@ -144,6 +144,52 @@ function ProfileDetails() {
                   marginBottom: "40px",
                 }}
               >
+                <FormControl variant="standard" sx={{ minWidth: 195 }}>
+                  <InputLabel id="demo-simple-select-standard-label">
+                    Nationality
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-standard-label"
+                    id="demo-simple-select-standard"
+                    // value={age}
+                    // onChange={handleChange}
+                    label="Age"
+                  >
+                    <MenuItem value="Indian">Indian</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl variant="standard" sx={{ minWidth: 195 }}>
+                  <InputLabel id="city-select-label">City</InputLabel>
+                  <Select
+                    labelId="city-select-label"
+                    id="city-select"
+                    // value={city}
+                    // onChange={handleCityChange}
+                    label="City"
+                  >
+                    <MenuItem value="Mohali">Mohali</MenuItem>
+                    <MenuItem value="Delhi">Delhi</MenuItem>
+                    <MenuItem value="Hyderabad">Hyderabad</MenuItem>
+                    <MenuItem value="Banglore">Banglore</MenuItem>
+                    <MenuItem value="Chennai">Chennai</MenuItem>
+                    <MenuItem value="Kolkata">Kolkata</MenuItem>
+                    <MenuItem value="Jaipur">Jaipur</MenuItem>
+                    <MenuItem value="Varanasi">Varanasi</MenuItem>
+                    <MenuItem value="Agra">Agra</MenuItem>
+                    <MenuItem value="Mumbai">Mumbai</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "80px",
+                  marginBottom: "40px",
+                }}
+              >
+                <TextField label="Religion" variant="standard" />
                 <FormControl variant="standard" sx={{ minWidth: 200 }}>
                   <InputLabel id="demo-simple-select-standard-label">
                     Disability
@@ -159,32 +205,6 @@ function ProfileDetails() {
                     <MenuItem value="No">No</MenuItem>
                   </Select>
                 </FormControl>
-                <FormControl variant="standard" sx={{ minWidth: 200 }}>
-                  <InputLabel id="demo-simple-select-standard-label">
-                    Nationality
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                    // value={age}
-                    // onChange={handleChange}
-                    label="Age"
-                  >
-                    <MenuItem value="Indian">Indian</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "80px",
-                  marginBottom: "40px",
-                }}
-              >
-                <TextField label="City" variant="standard" />
-                <TextField label="Religion" variant="standard" />
               </div>
               <div
                 style={{
@@ -196,7 +216,7 @@ function ProfileDetails() {
                 }}
               >
                 <Button
-                onClick={() => navigate('/additional-details')}
+                  onClick={() => navigate("/additional-details")}
                   type="submit"
                   variant="contained"
                   sx={{
@@ -230,7 +250,7 @@ function ProfileDetails() {
             <Instagram style={{ marginRight: "10px" }} />
             <Twitter style={{ marginRight: "10px" }} />
           </div>
-          <div>&copy; 2024 SoulMatch All rights reserved.</div>
+          <div>&copy; 2024 <span style={{ color: "#FFBF00	"}}>SoulMatch</span> All rights reserved.</div>
           <div>
             <Email style={{ marginRight: "10px" }} />
             <span style={{ color: "#FFF" }}>Email Address</span>

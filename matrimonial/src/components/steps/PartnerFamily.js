@@ -95,12 +95,12 @@ function PartnerFamily() {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  gap: "65px",
+                  gap: "80px",
                   marginBottom: "40px",
                   marginTop: "40px",
                 }}
               >
-                <FormControl variant="standard" sx={{ minWidth: 200 }}>
+                <FormControl variant="standard" sx={{ minWidth: 195 }}>
                   <InputLabel id="demo-simple-select-standard-label">
                     Age from
                   </InputLabel>
@@ -117,7 +117,7 @@ function PartnerFamily() {
                     <MenuItem value="35-40">35-40 years</MenuItem>
                   </Select>
                 </FormControl>{" "}
-                <FormControl variant="standard" sx={{ minWidth: 200 }}>
+                <FormControl variant="standard" sx={{ minWidth: 195 }}>
                   <InputLabel id="demo-simple-select-standard-label">
                     Marital Status
                   </InputLabel>
@@ -145,7 +145,21 @@ function PartnerFamily() {
               >
                 <TextField label="Religion" variant="standard" />
 
-                <TextField label="Caste" variant="standard" />
+                <FormControl variant="standard" sx={{ minWidth: 195 }}>
+                  <InputLabel id="caste-select-label">Caste</InputLabel>
+                  <Select
+                    labelId="caste-select-label"
+                    id="caste-select"
+                    // value={caste}
+                    // onChange={handleCasteChange}
+                    label="Caste"
+                  >
+                    <MenuItem value="General">General</MenuItem>
+                    <MenuItem value="OBC">OBC</MenuItem>
+                    <MenuItem value="SC">SC</MenuItem>
+                    <MenuItem value="ST">ST</MenuItem>
+                  </Select>
+                </FormControl>
               </div>
               <div
                 style={{
@@ -169,7 +183,7 @@ function PartnerFamily() {
                   marginBottom: "40px",
                 }}
               >
-                <FormControl variant="standard" sx={{ minWidth: 200 }}>
+                <FormControl variant="standard" sx={{ minWidth: 195 }}>
                   <InputLabel
                     id="demo-simple-select-standard-label"
                     sx={{  }} // Allow text to break into multiple lines
@@ -185,7 +199,7 @@ function PartnerFamily() {
                     <MenuItem value="No">No</MenuItem>
                   </Select>
                 </FormControl>
-                <FormControl variant="standard" sx={{ minWidth: 200 }}>
+                <FormControl variant="standard" sx={{ minWidth: 195 }}>
                   <InputLabel
                     id="demo-simple-select-standard-label"
                     sx={{  }} // Allow text to break into multiple lines
@@ -245,7 +259,7 @@ function PartnerFamily() {
             <Instagram style={{ marginRight: "10px" }} />
             <Twitter style={{ marginRight: "10px" }} />
           </div>
-          <div>&copy; 2024 SoulMatch All rights reserved.</div>
+          <div>&copy; 2024 <span style={{ color: "#FFBF00	"}}>SoulMatch</span> All rights reserved.</div>
           <div>
             <Email style={{ marginRight: "10px" }} />
             <span style={{ color: "#FFF" }}>Email Address</span>
