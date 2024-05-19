@@ -150,13 +150,46 @@ function FamilyDetails() {
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "center",
-                  gap: "40px",
+                  justifyContent: "space-between",
+                  gap: "20px",
                   marginBottom: "40px",
                 }}
               >
                 <Button
-                onClick={() => navigate('/partner-family')}
+                  onClick={() => navigate('/')}
+                  variant="outlined"
+                  color="error"
+                  sx={{
+                    mt: 4,
+                    mb: 2,
+                    width: 150,
+                    height: 40,
+                    textTransform: "inherit",
+                    fontSize: "18px",
+                    // borderColor: "red",
+                    // color: "#FB6A6B",
+                  }}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={() => navigate('/lifestyle')}
+                  variant="outlined"
+                  sx={{
+                    mt: 4,
+                    mb: 2,
+                    width: 150,
+                    height: 40,
+                    textTransform: "inherit",
+                    fontSize: "18px",
+                    borderColor: "#FB6A6B",
+                    color: "#FB6A6B",
+                  }}
+                >
+                  Back
+                </Button>
+                <Button
+                  onClick={() => navigate('/partner-family')}
                   type="submit"
                   variant="contained"
                   sx={{

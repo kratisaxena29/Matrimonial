@@ -1,0 +1,42 @@
+.plan-card {
+    background-color: white;
+    color: #EC184A;
+    transition: all 0.3s ease;
+}
+
+.plan-card:hover {
+    background-color: #EC184A;
+    color: white;
+    transition: all 0.3s ease;
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.plan-card .MuiSvgIcon-root {
+    color: #EC184A;
+    transition: all 0.3s ease;
+}
+
+.plan-card:hover .MuiSvgIcon-root {
+    color: white;
+}
+
+.plan-card .MuiTypography-body1 {
+    color: #EC184A;
+    transition: all 0.3s ease;
+}
+
+.plan-card:hover .MuiTypography-body1 {
+    color: white;
+}
+
+.plan-card .MuiButton-contained {
+    color: white;
+    background-color: #EC184A;
+}
+
+.plan-card:hover .MuiButton-contained {
+
+    color: #EC184A;
+    background-color: white;
+}
