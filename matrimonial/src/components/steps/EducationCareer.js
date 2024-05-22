@@ -193,7 +193,7 @@ function EducationCareer() {
                   marginBottom: "40px",
                 }}
               >
-                <Button
+                {/* <Button
                   onClick={() => navigate('/')}
                   variant="outlined"
                   color="error"
@@ -209,7 +209,7 @@ function EducationCareer() {
                   }}
                 >
                   Cancel
-                </Button>
+                </Button> */}
                 <Button
                   onClick={() => navigate('/additional-details')}
                   variant="outlined"

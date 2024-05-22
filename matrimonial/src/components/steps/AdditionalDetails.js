@@ -195,7 +195,7 @@ function AdditionalDetails() {
                   marginBottom: "40px",
                 }}
               >
-                <Button
+                {/* <Button
                   onClick={() => navigate('/')}
                   variant="outlined"
                   color="error"
@@ -211,7 +211,7 @@ function AdditionalDetails() {
                   }}
                 >
                   Cancel
-                </Button>
+                </Button> */}
                 <Button
                   onClick={() => navigate('/profile-details')}
                   variant="outlined"
