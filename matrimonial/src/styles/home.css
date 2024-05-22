@@ -3732,9 +3732,9 @@ span.mail::before {
 }
 
 .links {
-    float: left;
-    padding: 0px;
-    border: 0px;
+    /* float: center; */
+    /* padding: 0px;
+    border: 0px; */
 }
 
 .links a,

@@ -14,6 +14,9 @@ import couple7 from "../images/gallery/couple-7.jpg"
 import couple8 from "../images/gallery/couple-8.jpg"
 import img1 from "../images/gallery/1.jpg"
 import logo from "../images/logo.png"
+import loder1 from "../images/loder/1.png"
+import loder2 from "../images/loder/2.png"
+import loder3 from "../images/loder/3.png"
 // import "../js/Gallery"
 // import "../js/Chart"
 // import "../js/Chart"
@@ -24,8 +27,20 @@ function Home() {
 
   return (
     <div className="body">
-     
-      <div className="pop-bg" />
+ {/* <div id="preloader">
+    <div className="plod">
+      <span className="lod1">
+        <img src={loder1} alt="" loading="lazy" />
+      </span>
+      <span className="lod2">
+        <img src={loder2} alt="" loading="lazy" />
+      </span>
+      <span className="lod3">
+        <img src={loder3} alt="" loading="lazy" />
+      </span>
+    </div>
+  </div> */}
+      {/* <div className="pop-bg" /> */}
     
 
      
