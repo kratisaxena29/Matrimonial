@@ -20,8 +20,11 @@ import {
 } from "@mui/icons-material";
 import logo from "../images/logo.png";
 import "../css/plan.css";
+import { useNavigate } from "react-router-dom";
 
 function Plan() {
+
+  const navigate = useNavigate()
   return (
     <div style={{ paddingTop: "0px", paddingBottom: "80px" }}>
       <AppBar position="fixed" style={{ backgroundColor: "#6D0B32" }}>
@@ -36,8 +39,9 @@ function Plan() {
           <Box sx={{ display: "flex", flexDirection: "row", gap: "20px" }}>
             {/* Buttons can be uncommented as needed */}
             {/* <Button color="inherit">Explore</Button>
-            <Button color="inherit">Plans</Button>
+            <Button color="inherit">Plans</Button> */}
             <Button
+             onClick={() => navigate('/profiles')}
               color="inherit"
               variant="outlined"
               style={{
@@ -46,8 +50,8 @@ function Plan() {
                 border: "none",
               }}
             >
-              Login
-            </Button> */}
+              FREE
+            </Button>
           </Box>
         </Toolbar>
       </AppBar>
@@ -140,7 +144,8 @@ function Plan() {
                     </Grid>
                   </Grid>
                 </Box>
-                <Button
+                <Button 
+               
                   variant="contained"
                   className="plan-button"
                   style={{

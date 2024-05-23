@@ -19,27 +19,28 @@ import Profiles from './components/Profiles';
 
 function App() {
   return (
-    <Profiles/>
+    // <Profiles/>
     // <Plan/>
-    // <Router>
-    //   <Routes>
-    //     <Route path="/" element={<Home />} />
-    //     <Route path="/verify-otp" element={<VerifyOtp />} />
-    //     <Route path="/confirmation-otp" element={<ConfirmationOtp />} />
-    //     <Route path="/profile-details" element={<ProfileDetails />} />
-    //     <Route path="/additional-details" element={<AdditionalDetails />} />
-    //     <Route path="/education-career" element={<EducationCareer />} />
-    //     <Route path="/horoscope" element={<Horoscope />} />
-    //     <Route path="/lifestyle" element={<LifeStyle />} />
-    //     <Route path="/family-details" element={<FamilyDetails />} />
-    //     <Route path="/partner-family" element={<PartnerFamily />} />
-    //     <Route path="/partner-education" element={<PartnerEducation />} />
-    //     <Route path="/partner-living" element={<PartnerLiving />} />
-    //     <Route path="/upload-document" element={<UploadDocument />} />
-    //     <Route path="/plan" element={<Plan />} />
-    //     <Route path="/profile-completed" element={<ProfileCompleted />} />
-    //   </Routes>
-    // </Router>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/verify-otp" element={<VerifyOtp />} />
+        <Route path="/confirmation-otp" element={<ConfirmationOtp />} />
+        <Route path="/profile-details" element={<ProfileDetails />} />
+        <Route path="/additional-details" element={<AdditionalDetails />} />
+        <Route path="/education-career" element={<EducationCareer />} />
+        <Route path="/horoscope" element={<Horoscope />} />
+        <Route path="/lifestyle" element={<LifeStyle />} />
+        <Route path="/family-details" element={<FamilyDetails />} />
+        <Route path="/partner-family" element={<PartnerFamily />} />
+        <Route path="/partner-education" element={<PartnerEducation />} />
+        <Route path="/partner-living" element={<PartnerLiving />} />
+        <Route path="/upload-document" element={<UploadDocument />} />
+        <Route path="/plan" element={<Plan />} />
+        <Route path="/profiles" element={<Profiles />} />
+        <Route path="/profile-completed" element={<ProfileCompleted />} />
+      </Routes>
+    </Router>
   );
 }
 

@@ -15,23 +15,15 @@ function Profiles() {
                 </a>
               </div>
               {/* EXPLORE MENU */}
-              <div className="bl">
+              {/* <div className="bl">
                 <ul>
                   <li className="smenu-pare">
                     <span className="">Explore</span>
                   </li>
-                  {/* <li>
-                    <a
-                     onClick={() => navigate('/plan')}
-                      className="smenu-pare"
-                      style={{ textDecoration: "none" }}
-                    >
-                      Plans
-                    </a>
-                  </li> */}
+                  
                   <button class="custom-button">Login</button>
                 </ul>
-              </div>
+              </div> */}
               {/*MOBILE MENU*/}
               {/*END MOBILE MENU*/}
             </div>
