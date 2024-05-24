@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "../styles/home.css";
 import "../styles/animate.css"
 import "../styles/bootstrap.css"
@@ -23,7 +23,18 @@ import loder3 from "../images/loder/3.png"
 // import "../js/"
 function Home() {
 
+  const [firstName , setfirstName] = useState("")
+  const [lastName , setLastName] = useState("")
+  const [email , setEmail] = useState("")
   const navigate = useNavigate();
+
+  const handleRegister =  () => {
+    console.log("firstName..",firstName)
+    console.log("lastname...",lastName)
+    console.log("...email..",email)
+    navigate('/verify-otp')
+    
+  }
 
   return (
     <div className="body">
@@ -315,18 +326,33 @@ function Home() {
                   <form className="form">
                     <div className="form-group">
                       <label htmlFor="first">First Name</label>
-                      <input type="text" id="first" />
+                      <input 
+                      type="text"
+                       id="first" 
+                       value={firstName}
+                       onChange={(event) => setfirstName(event.target.value)}
+                       />
                     </div>
                     <div className="form-group">
                       <label htmlFor="text">Last Name</label>
-                      <input type="text" id="last" />
+                      <input 
+                      type="text" 
+                      id="last" 
+                      value={lastName}
+                      onChange={(event) => setLastName(event.target.value)}
+                      />
                     </div>
                     <div className="form-group">
-                      <label htmlFor="phone">Phone Number</label>
-                      <input type="number" id="phone" />
+                      <label htmlFor="phone">Email</label>
+                      <input 
+                      type="text" 
+                      id="phone" 
+                      value = {email}
+                      onChange={(event) => setEmail(event.target.value)}
+                      />
                     </div>
                   </form>
-                    <button onClick={()=>navigate('/verify-otp')} type="submit" className="register-button" style={{textAlign:"center", marginRight:"0px"}}>
+                    <button onClick={handleRegister} type="submit" className="register-button" style={{textAlign:"center", marginRight:"0px"}}>
                       Register
                     </button>
                 </div>
