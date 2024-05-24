@@ -1,37 +1,29 @@
 import React from 'react'
 import logo from "../images/logo.png"
-
+import Profile1 from "../images/profiles/profile1.jpg"
+import Profile2 from "../images/profiles/Profile6.jpg"
+import Profile3 from "../images/profiles/Profile7.jpg"
+import Profile4 from "../images/profiles/Profile8.jpg"
+import Profile5 from "../images/profiles/Profile5.jpg"
 function Profiles() {
   return (
     <div>
-          <div className="hom-top">
-        <div className="container">
-          <div className="row">
-            <div className="hom-nav">
-              {/* LOGO */}
-              <div className="logo">
-                <a href="index.html" className="logo-brand">
-                  <img src={logo} alt="" loading="lazy" className="ic-logo" />
-                </a>
-              </div>
-              {/* EXPLORE MENU */}
-              {/* <div className="bl">
-                <ul>
-                  <li className="smenu-pare">
-                    <span className="">Explore</span>
-                  </li>
-                  
-                  <button class="custom-button">Login</button>
-                </ul>
-              </div> */}
-              {/*MOBILE MENU*/}
-              {/*END MOBILE MENU*/}
-            </div>
-          </div>
-        </div>
-      </div>
+         <nav
+          style={{
+            backgroundColor: "#6D0B32",
+            padding: "10px 20px",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <img
+            src={logo}
+            alt="Logo"
+            style={{ height: "60px", marginRight: "40px" }}
+          />
+        </nav>
       <div>
-  <section style={{paddingTop:"40px"}}>
+  <section style={{paddingTop:"0px"}}>
     <div className="all-weddpro all-jobs all-serexp chosenini">
       <div className="container">
         <div className="row">
@@ -215,7 +207,7 @@ function Profiles() {
           <div className="col-md-9">
             <div className="short-all">
               <div className="short-lhs">
-                Showing <b>32</b> profiles
+                Showing <b>5</b> profiles
               </div>
               {/* <div className="short-rhs">
                 <ul>
@@ -253,10 +245,10 @@ function Profiles() {
                     {/*PROFILE IMAGE*/}
                     <div className="pro-img">
                       <a href="profile-details.html">
-                        <img src="images/profiles/4.jpg" alt="" />
+                        <img src={Profile1} alt="" />
                       </a>
                       <div className="pro-ave" title="User currently available">
-                        <span className="pro-ave-yes" />
+                        <span />
                       </div>
                       {/* <div className="pro-avl-status">
                         <h5>Available Online</h5>
@@ -309,10 +301,10 @@ function Profiles() {
                     {/*PROFILE IMAGE*/}
                     <div className="pro-img">
                       <a href="profile-details.html">
-                        <img src="images/profiles/10.jpg" alt="" />
+                        <img src={Profile2}alt="" />
                       </a>
                       <div className="pro-ave" title="User currently available">
-                        <span className="pro-ave-yes" />
+                        <span />
                       </div>
                       {/* <div className="pro-avl-status">
                         <span className="marqu">
@@ -367,10 +359,10 @@ function Profiles() {
                     {/*PROFILE IMAGE*/}
                     <div className="pro-img">
                       <a href="profile-details.html">
-                        <img src="images/profiles/11.jpg" alt="" />
+                        <img src={Profile3} alt="" />
                       </a>
                       <div className="pro-ave" title="User currently available">
-                        <span className="pro-ave-yes" />
+                        <span />
                       </div>
                       {/* <div className="pro-avl-status">
                         <h5>Available Online</h5>
@@ -424,10 +416,10 @@ function Profiles() {
                     {/*PROFILE IMAGE*/}
                     <div className="pro-img">
                       <a href="profile-details.html">
-                        <img src="images/profiles/12.jpg" alt="" />
+                        <img src={Profile4} alt="" />
                       </a>
                       <div className="pro-ave" title="User currently available">
-                        <span className="pro-ave-yes" />
+                        <span />
                       </div>
                       {/* <div className="pro-avl-status">
                         <h5>Last login 10 mins ago</h5>
@@ -483,10 +475,10 @@ function Profiles() {
                     {/*PROFILE IMAGE*/}
                     <div className="pro-img">
                       <a href="profile-details.html">
-                        <img src="images/profiles/13.jpg" alt="" />
+                        <img src={Profile5} alt="" />
                       </a>
                       <div className="pro-ave" title="User currently available">
-                        <span className="pro-ave-yes" />
+                        <span />
                       </div>
                       {/* <div className="pro-avl-status">
                         <h5>Last login 10 mins ago</h5>
