@@ -133,7 +133,7 @@ function Home() {
                       Plans
                     </a>
                   </li> */}
-                  <button class="custom-button">Login</button>
+                  <button onClick={() => navigate('/login')} class="custom-button" >Login</button>
                 </ul>
               </div>
               {/*MOBILE MENU*/}

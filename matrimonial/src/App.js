@@ -16,6 +16,7 @@ import UploadDocument from './components/steps/UploadDocument';
 import ProfileCompleted from './components/steps/ProfileCompleted';
 import Plan from './components/Plan';
 import Profiles from './components/Profiles';
+import Login from './components/Login';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
         <Route path="/plan" element={<Plan />} />
         <Route path="/profiles" element={<Profiles />} />
         <Route path="/profile-completed" element={<ProfileCompleted />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
   );
