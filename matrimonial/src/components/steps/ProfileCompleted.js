@@ -32,7 +32,7 @@ function ProfileCompleted() {
       Congratulations! You Profile has been completed
       </Typography>
       <Button
-       onClick={() => navigate('/')}
+       onClick={() => navigate('/plan')}
         type="submit"
         variant="contained"
         sx={{
@@ -45,7 +45,7 @@ function ProfileCompleted() {
         }}
         endIcon={<ArrowForwardIosRoundedIcon sx={{color:"#FFF"}} />}
       >
-        Home
+        Start
       </Button>
     </div>
   );

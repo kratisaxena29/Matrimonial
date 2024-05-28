@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../images/logo.png";
 import {
   Typography,
@@ -18,6 +18,12 @@ import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import { useNavigate } from "react-router-dom";
 
 function LifeStyle() {
+const [diet,setDiet] = useState("")
+const [alcohol,setAlcohol] = useState("")
+const [smoke, setSmoke] = useState("")
+const [Interest,setInterest] = useState("")
+
+
   const navigate = useNavigate()
   const theme = createTheme({
     components: {
@@ -108,8 +114,8 @@ function LifeStyle() {
                   <Select
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
-                    // value={age}
-                    // onChange={handleChange}
+                     value={diet}
+                    onChange={(event) => setDiet(event.target.value)}
                     label="Age"
                   >
                     <MenuItem value="Vegetarian">Vegetarian</MenuItem>
@@ -131,13 +137,13 @@ function LifeStyle() {
               >
                 <FormControl variant="standard" sx={{ minWidth: 300 }}>
                   <InputLabel id="demo-simple-select-standard-label">
-                    Alcohal
+                    Alcohol
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
-                    // value={age}
-                    // onChange={handleChange}
+                    value={alcohol}
+                     onChange={(event) => setAlcohol(event.target.value)}
                     label="Age"
                   >
                     <MenuItem value="Social Drinker">Social Drinker</MenuItem>
@@ -162,8 +168,8 @@ function LifeStyle() {
                   <Select
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
-                    // value={age}
-                    // onChange={handleChange}
+                     value={smoke}
+                    onChange={(event) => setSmoke(event.target.value)}
                     label="Age"
                   >
                     <MenuItem value="Yes">Yes</MenuItem>

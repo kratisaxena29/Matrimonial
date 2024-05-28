@@ -1,13 +1,59 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../images/logo.png";
 
 import { Typography, TextField, Button, Select, MenuItem, createTheme, ThemeProvider, InputLabel, FormControl } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function AdditionalDetails() {
+  const [caste , setCaste] = useState("")
+ const [subCaste,setSubCaste] = useState("")
+ const [origin , setOrigin] = useState("")
+ const [mothertongue , setMotherTongue] = useState("")
+ const [height , setHeight] = useState("")
+ const [weight, setWeight] = useState("")
+ const [gothra , setGothra] = useState("")
+ const [petFriendly , setpetFriendly] = useState("")
+
+
   const navigate = useNavigate()
+  const location = useLocation()
+  console.log("...location...",location)
+
+
+
+  const handleAdditionalDetails = async() => {
+    console.log("..caste ...",caste)
+    console.log("...subCaste...",subCaste)
+    console.log("...origin...",origin)
+    console.log("..mothertongue...",mothertongue)
+    console.log("..height...",height)
+    console.log("...weight..",weight)
+    console.log("...gothra..",gothra)
+    console.log("...petfriendly...",petFriendly)
+     navigate('/education-career',{
+      state : {
+        caste : caste,
+        subCaste : subCaste,
+        origin : origin,
+        mothertongue : mothertongue,
+        height : height,
+        weight : weight,
+        gothra : gothra,
+        petFriendly : petFriendly,
+        age : location.state.age,
+        city : location.state.city,
+        disability : location.state.disability,
+        gender : location.state.gender,
+        martialStatus : location.state.martialStatus,
+        name : location.state.name,
+        nationality : location.state.nationality,
+        religion : location.state.religion
+
+      }
+     })
+  }
   const theme = createTheme({
     components: {
       MuiPopover: {
@@ -94,8 +140,8 @@ function AdditionalDetails() {
                   <Select
                     labelId="caste-select-label"
                     id="caste-select"
-                    // value={caste}
-                    // onChange={handleCasteChange}
+                     value={caste}
+                     onChange={(event) => setCaste(event.target.value)}
                     label="Caste"
                   >
                     <MenuItem value="General">General</MenuItem>
@@ -109,8 +155,8 @@ function AdditionalDetails() {
                   <Select
                     labelId="sub-caste-select-label"
                     id="sub-caste-select"
-                    // value={subCaste}
-                    // onChange={handleSubCasteChange}
+                     value={subCaste}
+                     onChange={(event) => setSubCaste(event.target.value)}
                     label="Sub Caste"
                   >
                     <MenuItem value="SubCaste1">Sub Caste 1</MenuItem>
@@ -129,8 +175,18 @@ function AdditionalDetails() {
                   marginBottom: "40px",
                 }}
               >
-                <TextField label="Origin" variant="standard" />
-                <TextField label="Mother Tongue" variant="standard" />
+                <TextField 
+                label="Origin" 
+                variant="standard" 
+                value={origin}
+                onChange={(event) => setOrigin(event.target.value)}
+                />
+                <TextField 
+                label="Mother Tongue" 
+                variant="standard" 
+                value={mothertongue}
+                onChange={(event) => setMotherTongue(event.target.value)}
+                />
                 {/* Dropdown for Marital Status */}
               </div>
               <div
@@ -142,8 +198,18 @@ function AdditionalDetails() {
                   marginBottom: "40px",
                 }}
               >
-                <TextField label="Height" variant="standard" />
-                <TextField label="Weight" variant="standard" />
+                <TextField 
+                label="Height" 
+                variant="standard" 
+                value={height}
+                onChange={(event) => setHeight(event.target.value)}
+                />
+                <TextField 
+                label="Weight" 
+                variant="standard" 
+                value={weight}
+                onChange={(event) => setWeight(event.target.value)}
+                />
               </div>
               <div
                 style={{
@@ -159,8 +225,8 @@ function AdditionalDetails() {
                   <Select
                     labelId="gothra-select-label"
                     id="gothra-select"
-                    // value={gothra}
-                    // onChange={handleGothraChange}
+                     value={gothra}
+                     onChange={(event) => setGothra(event.target.value)}
                     label="Gothra"
                   >
                     <MenuItem value="Gothra1">Gothra 1</MenuItem>
@@ -177,8 +243,8 @@ function AdditionalDetails() {
                   <Select
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
-                    // value={age}
-                    // onChange={handleChange}
+                     value={petFriendly}
+                     onChange={(event) => setpetFriendly(event.target.value)}
                     label="Age"
                   >
                     <MenuItem value="Yes">Yes</MenuItem>
@@ -229,7 +295,7 @@ function AdditionalDetails() {
                   Back
                 </Button>
                 <Button
-                  onClick={() => navigate('/education-career')}
+                  onClick={handleAdditionalDetails}
                   type="submit"
                   variant="contained"
                   sx={{

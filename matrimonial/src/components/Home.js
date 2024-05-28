@@ -12,11 +12,14 @@ import couple5 from "../images/gallery/couple-5.png"
 import couple6 from "../images/gallery/couple-6.png"
 import couple7 from "../images/gallery/couple-7.jpg"
 import couple8 from "../images/gallery/couple-8.jpg"
-import img1 from "../images/gallery/1.jpg"
 import logo from "../images/logo.png"
-import loder1 from "../images/loder/1.png"
-import loder2 from "../images/loder/2.png"
-import loder3 from "../images/loder/3.png"
+import axios from 'axios';
+
+// import img1 from "../images/gallery/1.jpg"
+
+// import loder1 from "../images/loder/1.png"
+// import loder2 from "../images/loder/2.png"
+// import loder3 from "../images/loder/3.png"
 // import "../js/Gallery"
 // import "../js/Chart"
 // import "../js/Chart"
@@ -26,16 +29,66 @@ function Home() {
   const [firstName , setfirstName] = useState("")
   const [lastName , setLastName] = useState("")
   const [email , setEmail] = useState("")
+
+  const API_BASE_URL = 'http://localhost:3002';
+
   const navigate = useNavigate();
 
-  const handleRegister =  () => {
+  const handleRegister =  async() => {
     console.log("firstName..",firstName)
     console.log("lastname...",lastName)
     console.log("...email..",email)
-    navigate('/verify-otp')
-    
+  
+    try {
+      // const baseUrl = process.env.REACT_APP_COUCAL_API_BASE_URL;
+      const response = await axios.post(
+        `${API_BASE_URL}/user-register`,
+        {
+         firstName : firstName,
+         lastName : lastName,
+         email : email
+        
+        },
+        {
+          headers: {
+            // Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+       
+      );
+      console.log("API Response:", response.data.response.email);
+      navigate('/verify-otp',{state: {email : response.data.response.email}})
+      handleEmailOtp()
+      
+    } catch (error) {
+      console.error("Error while making API call:", error);
+    }
   }
 
+
+  const handleEmailOtp = async() => {
+    try {
+      const response = await axios.post(
+        `${API_BASE_URL}/email-otp`,
+        {
+          "subject" : "Hey! Your One Time Password",
+         email : email
+        
+        },
+        {
+          headers: {
+            // Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+       
+      );
+      console.log("...otp response..",response)
+    } catch (error) {
+      console.log("...catch..",error)
+    }
+  }
   return (
     <div className="body">
  {/* <div id="preloader">
@@ -68,10 +121,10 @@ function Home() {
               {/* EXPLORE MENU */}
               <div className="bl">
                 <ul>
-                  <li className="smenu-pare">
+                  {/* <li className="smenu-pare">
                     <span className="">Explore</span>
-                  </li>
-                  <li>
+                  </li> */}
+                  {/* <li>
                     <a
                      onClick={() => navigate('/plan')}
                       className="smenu-pare"
@@ -79,7 +132,7 @@ function Home() {
                     >
                       Plans
                     </a>
-                  </li>
+                  </li> */}
                   <button class="custom-button">Login</button>
                 </ul>
               </div>
@@ -473,215 +526,6 @@ function Home() {
           </div>
         </div>
       </section>
-      {/* END */}
-      {/* START */}
-
-      {/* END */}
-      {/* ABOUT START */}
-
-      {/* END */}
-      {/* COUNTS START */}
-
-      {/* END */}
-      {/* MOMENTS START */}
-      {/* <section>
-          <div className="wedd-tline">
-            <div className="container">
-              <div className="row">
-                <div className="home-tit">
-                  <p>Moments</p>
-                  <h2><span>How it works</span></h2>
-                  <span className="leaf1" />
-                  <span className="tit-ani-" />
-                </div>
-                <div className="inn">
-                  <ul>
-                    <li>
-                      <div className="tline-inn">
-                        <div className="tline-im animate animate__animated animate__slower" data-ani="animate__fadeInUp">
-                          <img src="images/icon/rings.png" alt="" loading="lazy" />
-                        </div>
-                        <div className="tline-con animate animate__animated animate__slow" data-ani="animate__fadeInUp">
-                          <h5>Register</h5>
-                          <span>Timing: 7:00 PM</span>
-                          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                            Lorem Ipsum has been the industry's standard dummy text ever.</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="tline-inn tline-inn-reve">
-                        <div className="tline-con animate animate__animated animate__slower" data-ani="animate__fadeInUp">
-                          <h5>Find your Match</h5>
-                          <span>Timing: 7:00 PM</span>
-                          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                            Lorem Ipsum has been the industry's standard dummy text ever.</p>
-                        </div>
-                        <div className="tline-im animate animate__animated animate__slow" data-ani="animate__fadeInUp">
-                          <img src="images/icon/wedding-2.png" alt="" loading="lazy" />
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="tline-inn">
-                        <div className="tline-im animate animate__animated animate__slower" data-ani="animate__fadeInUp">
-                          <img src="images/icon/love-birds.png" alt="" loading="lazy" />
-                        </div>
-                        <div className="tline-con animate animate__animated animate__slow" data-ani="animate__fadeInUp">
-                          <h5>Send Interest</h5>
-                          <span>Timing: 7:00 PM</span>
-                          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                            Lorem Ipsum has been the industry's standard dummy text ever.</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="tline-inn tline-inn-reve">
-                        <div className="tline-con animate animate__animated animate__slower" data-ani="animate__fadeInUp">
-                          <h5>Get Profile Information</h5>
-                          <span>Timing: 7:00 PM</span>
-                          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                            Lorem Ipsum has been the industry's standard dummy text ever.</p>
-                        </div>
-                        <div className="tline-im animate animate__animated animate__slow" data-ani="animate__fadeInUp">
-                          <img src="images/icon/network.png" alt="" loading="lazy" />
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="tline-inn">
-                        <div className="tline-im animate animate__animated animate__slower" data-ani="animate__fadeInUp">
-                          <img src="images/icon/chat.png" alt="" loading="lazy" />
-                        </div>
-                        <div className="tline-con animate animate__animated animate__slow" data-ani="animate__fadeInUp">
-                          <h5>Start Meetups</h5>
-                          <span>Timing: 7:00 PM</span>
-                          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                            Lorem Ipsum has been the industry's standard dummy text ever.</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div className="tline-inn tline-inn-reve">
-                        <div className="tline-con animate animate__animated animate__slower" data-ani="animate__fadeInUp">
-                          <h5>Getting Marriage</h5>
-                          <span>Timing: 7:00 PM</span>
-                          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                            Lorem Ipsum has been the industry's standard dummy text ever.</p>
-                        </div>
-                        <div className="tline-im animate animate__animated animate__slow" data-ani="animate__fadeInUp">
-                          <img src="images/icon/wedding-couple.png" alt="" loading="lazy" />
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section> */}
-      {/* END */}
-      {/* RECENT COUPLES */}
-      {/* <section>
-          <div className="hom-couples-all">
-            <div className="container">
-              <div className="row">
-                <div className="home-tit">
-                  <p>trusted brand</p>
-                  <h2><span>Recent Couples</span></h2>
-                  <span className="leaf1" />
-                  <span className="tit-ani-" />
-                </div>
-              </div>
-            </div>
-            <div className="hom-coup-test">
-              <ul className="couple-sli">
-                <li>
-                  <div className="hom-coup-box">
-                    <span className="leaf" />
-                    <img src="images/couples/6.jpg" alt="" loading="lazy" />
-                    <div className="bx">
-                      <h4>Dany &amp; July <span>New York</span></h4>
-                      <a href="wedding-video.html" className="sml-cta cta-dark">View more</a>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div className="hom-coup-box">
-                    <span className="leaf" />
-                    <img src="images/couples/7.jpg" alt="" loading="lazy" />
-                    <div className="bx">
-                      <h4>Dany &amp; July <span>New York</span></h4>
-                      <a href="wedding-video.html" className="sml-cta cta-dark">View more</a>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div className="hom-coup-box">
-                    <span className="leaf" />
-                    <img src="images/couples/8.jpg" alt="" loading="lazy" />
-                    <div className="bx">
-                      <h4>Dany &amp; July <span>New York</span></h4>
-                      <a href="wedding-video.html" className="sml-cta cta-dark">View more</a>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div className="hom-coup-box">
-                    <span className="leaf" />
-                    <img src="images/couples/9.jpg" alt="" loading="lazy" />
-                    <div className="bx">
-                      <h4>Dany &amp; July <span>New York</span></h4>
-                      <a href="wedding-video.html" className="sml-cta cta-dark">View more</a>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div className="hom-coup-box">
-                    <span className="leaf" />
-                    <img src="images/couples/10.jpg" alt="" loading="lazy" />
-                    <div className="bx">
-                      <h4>Dany &amp; July <span>New York</span></h4>
-                      <a href="wedding-video.html" className="sml-cta cta-dark">View more</a>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div className="hom-coup-box">
-                    <span className="leaf" />
-                    <img src="images/couples/3.jpg" alt="" loading="lazy" />
-                    <div className="bx">
-                      <h4>Dany &amp; July <span>New York</span></h4>
-                      <a href="wedding-video.html" className="sml-cta cta-dark">View more</a>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div className="hom-coup-box">
-                    <span className="leaf" />
-                    <img src="images/couples/4.jpg" alt="" loading="lazy" />
-                    <div className="bx">
-                      <h4>Dany &amp; July <span>New York</span></h4>
-                      <a href="wedding-video.html" className="sml-cta cta-dark">View more</a>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div className="hom-coup-box">
-                    <span className="leaf" />
-                    <img src="images/couples/5.jpg" alt="" loading="lazy" />
-                    <div className="bx">
-                      <h4>Dany &amp; July <span>New York</span></h4>
-                      <a href="wedding.html" className="sml-cta cta-dark">View more</a>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section> */}
-      {/* END */}
-      {/* TEAM START */}
       <section>
         <div className="ab-team">
           <div className="container">
@@ -770,7 +614,8 @@ function Home() {
                   <p>
                     Take the first step towards finding your perfect soulmate
                   </p>
-                  <a href="sign-up.html" className="cta-3">
+                  <a onClick={() => navigate('/profile-details')}  className="cta-3">
+                  
                     Register Now
                   </a>
                 </div>

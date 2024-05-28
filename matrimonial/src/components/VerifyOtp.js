@@ -4,10 +4,18 @@ import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import { useNavigate } from 'react-router-dom';
 import Typography from "@mui/material/Typography";
+import { useLocation } from 'react-router-dom';
 import Box from "@mui/material/Box";
-
+import axios from "axios";
 function VerifyOtp() {
+  
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+
+  const location = useLocation();
+  const { email } = location.state || {};
+  console.log("Location object:", location);
+  console.log("Extracted email:", email);
+  console.log("..your otp data ", otp)
   const inputRefs = useRef([]);
 
   const handleChange = (index, value) => {
@@ -32,9 +40,34 @@ function VerifyOtp() {
     }
   };
 
-  const handleVerifyClick = () => {
+  const handleVerifyClick = async() => {
     console.log("Verify button clicked");
-    navigate('/confirmation-otp')
+    const API_BASE_URL = 'http://localhost:3002';
+    const combinedOtp = otp.join('');
+    console.log("Combined OTP:", combinedOtp);
+    try {
+      // const baseUrl = process.env.REACT_APP_COUCAL_API_BASE_URL;
+      const response = await axios.post(
+        `${API_BASE_URL}/verify-otp`,
+        {
+         
+         email : email,
+        otp : combinedOtp
+        },
+        {
+          headers: {
+            // Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+       
+      );
+      console.log("API Response:", response);
+      navigate('/confirmation-otp')
+      
+    } catch (error) {
+      console.error("Error while making API call:", error);
+    }
   
   };
 

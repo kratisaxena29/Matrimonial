@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../images/logo.png";
 import { useNavigate } from "react-router-dom";
 import { Typography, TextField, Button, Select, MenuItem, createTheme, ThemeProvider, InputLabel, FormControl } from "@mui/material";
@@ -6,7 +6,10 @@ import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import Diversity1Icon from '@mui/icons-material/Diversity1';
 
 function FamilyDetails() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [numSisters, setNumSisters] = useState(0);
+  const [numBrothers, setNumBrothers] = useState(0);
+
   const theme = createTheme({
     components: {
       MuiPopover: {
@@ -18,24 +21,64 @@ function FamilyDetails() {
       },
     },
   });
-  return (
-    <ThemeProvider theme={theme}>
-      <div
-        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
-      >
-        <nav
+
+  const handleSisterChange = (event) => {
+    setNumSisters(Number(event.target.value));
+  };
+
+  const handleBrotherChange = (event) => {
+    setNumBrothers(Number(event.target.value));
+  };
+
+  const renderSisterFields = () => {
+    let sisterFields = [];
+    for (let i = 0; i < numSisters; i++) {
+      sisterFields.push(
+        <div
+          key={i}
           style={{
-            backgroundColor: "#6D0B32",
-            padding: "10px 20px",
             display: "flex",
             alignItems: "center",
+            justifyContent: "center",
+            gap: "40px",
+            marginBottom: "40px",
           }}
         >
-          <img
-            src={logo}
-            alt="Logo"
-            style={{ height: "60px", marginRight: "40px" }}
-          />
+          <TextField label={`Sister ${i + 1} Name`} variant="standard" />
+          <TextField label={`Sister ${i + 1} Profession`} variant="standard" />
+        </div>
+      );
+    }
+    return sisterFields;
+  };
+
+  const renderBrotherFields = () => {
+    let brotherFields = [];
+    for (let i = 0; i < numBrothers; i++) {
+      brotherFields.push(
+        <div
+          key={i}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "40px",
+            marginBottom: "40px",
+          }}
+        >
+          <TextField label={`Brother ${i + 1} Name`} variant="standard" />
+          <TextField label={`Brother ${i + 1} Profession`} variant="standard" />
+        </div>
+      );
+    }
+    return brotherFields;
+  };
+
+  return (
+    <ThemeProvider theme={theme}>
+      <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+        <nav style={{ backgroundColor: "#6D0B32", padding: "10px 20px", display: "flex", alignItems: "center" }}>
+          <img src={logo} alt="Logo" style={{ height: "60px", marginRight: "40px" }} />
         </nav>
         <div style={{ display: "flex", flex: 1 }}>
           {/* Left part */}
@@ -52,126 +95,46 @@ function FamilyDetails() {
             }}
           >
             {/* MUI icon */}
-            <Diversity1Icon
-              style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }}
-            />
+            <Diversity1Icon style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }} />
             {/* Big text */}
             <Typography variant="h4" component="div" sx={{ color: "#6B0D37" }}>
-              "Explore a realm where dreams meet reality, and true love are
-              found with just a click."
+              "Explore a realm where dreams meet reality, and true love are found with just a click."
             </Typography>
           </div>
           {/* Right part */}
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              padding: "50px",
-            }}
-          >
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "50px" }}>
             <div>
-              <Typography
-                sx={{ textAlign: "center" }}
-                variant="h5"
-                gutterBottom
-              >
+              <Typography sx={{ textAlign: "center" }} variant="h5" gutterBottom>
                 Family Details
               </Typography>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "80px",
-                  marginBottom: "40px",
-                  marginTop: "40px",
-                }}
-              >
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px", marginTop: "40px" }}>
                 <FormControl variant="standard" sx={{ minWidth: 425 }}>
-                  <InputLabel id="demo-simple-select-standard-label">
-                    Family Type
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                    // value={age}
-                    // onChange={handleChange}
-                    label="Age"
-                  >
+                  <InputLabel id="demo-simple-select-standard-label">Family Type</InputLabel>
+                  <Select labelId="demo-simple-select-standard-label" id="demo-simple-select-standard" label="Family Type">
                     <MenuItem value="Nuclear">Nuclear</MenuItem>
                     <MenuItem value="Joint">Joint</MenuItem>
                     <MenuItem value="Extended">Extended</MenuItem>
                     <MenuItem value="Others">Others</MenuItem>
                   </Select>
-                </FormControl>{" "}
+                </FormControl>
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "40px",
-                  marginBottom: "40px",
-                }}
-              >
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "40px", marginBottom: "40px" }}>
+                <TextField label="Father's Name" variant="standard" />
                 <TextField label="Father's Profession" variant="standard" />
-
+              </div>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "40px", marginBottom: "40px" }}>
+                <TextField label="Mother's Name" variant="standard" />
                 <TextField label="Mother's Profession" variant="standard" />
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "40px",
-                  marginBottom: "40px",
-                }}
-              >
-                <TextField label="Brother" variant="standard" />
-
-                <TextField label="Brother's Profession" variant="standard" />
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "40px", marginBottom: "40px" }}>
+                <TextField label="Brother" variant="standard" type="number" onChange={handleBrotherChange} />
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "40px",
-                  marginBottom: "40px",
-                }}
-              >
-                <TextField label="Sister" variant="standard" />
-
-                <TextField label="Sister's Profession" variant="standard" />
+              {renderBrotherFields()}
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "40px", marginBottom: "40px" }}>
+                <TextField label="Sister" variant="standard" type="number" onChange={handleSisterChange} />
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  gap: "20px",
-                  marginBottom: "40px",
-                }}
-              >
-                {/* <Button
-                  onClick={() => navigate('/')}
-                  variant="outlined"
-                  color="error"
-                  sx={{
-                    mt: 4,
-                    mb: 2,
-                    width: 150,
-                    height: 40,
-                    textTransform: "inherit",
-                    fontSize: "18px",
-                    // borderColor: "red",
-                    // color: "#FB6A6B",
-                  }}
-                >
-                  Cancel
-                </Button> */}
+              {renderSisterFields()}
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "20px", marginBottom: "40px" }}>
                 <Button
                   onClick={() => navigate('/lifestyle')}
                   variant="outlined"
@@ -208,22 +171,13 @@ function FamilyDetails() {
             </div>
           </div>
         </div>
-        <footer
-          style={{
-            backgroundColor: "#530014",
-            padding: "20px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            color: "#fff",
-          }}
-        >
+        <footer style={{ backgroundColor: "#530014", padding: "20px", display: "flex", alignItems: "center", justifyContent: "space-between", color: "#fff" }}>
           <div>
             <Facebook style={{ marginRight: "10px" }} />
             <Instagram style={{ marginRight: "10px" }} />
             <Twitter style={{ marginRight: "10px" }} />
           </div>
-          <div>&copy; 2024 <span style={{ color: "#FFBF00	"}}>SoulMatch</span> All rights reserved.</div>
+          <div>&copy; 2024 <span style={{ color: "#FFBF00" }}>SoulMatch</span> All rights reserved.</div>
           <div>
             <Email style={{ marginRight: "10px" }} />
             <span style={{ color: "#FFF" }}>Email Address</span>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../images/logo.png";
 import {
   Typography,
@@ -18,6 +18,11 @@ import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import { useNavigate } from "react-router-dom";
 
 function PartnerLiving() {
+  const [diet,setDiet] = useState("")
+  const[alcohol , setAlcohol] = useState("")
+  const [smoke , setSmoke] = useState("")
+  const [interest , setInterest] = useState("")
+
   const navigate = useNavigate()
   const theme = createTheme({
     components: {
@@ -118,9 +123,9 @@ function PartnerLiving() {
                   <Select
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
-                    // value={age}
-                    // onChange={handleChange}
-                    label="Age"
+                     value={diet}
+                     onChange={(event) => setDiet(event.target.value)}
+                    
                   >
                     <MenuItem value="Vegetarian">Vegetarian</MenuItem>
                     <MenuItem value="Vegan">Vegan</MenuItem>
@@ -141,13 +146,13 @@ function PartnerLiving() {
               >
                 <FormControl variant="standard" sx={{ minWidth: 300 }}>
                   <InputLabel id="demo-simple-select-standard-label">
-                    Alcohal
+                    Alcohol
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
-                    // value={age}
-                    // onChange={handleChange}
+                     value={alcohol}
+                    onChange={(event) => setAlcohol(event.target.value)}
                     label="Age"
                   >
                     <MenuItem value="Social Drinker">Social Drinker</MenuItem>
@@ -172,8 +177,8 @@ function PartnerLiving() {
                   <Select
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
-                    // value={age}
-                    // onChange={handleChange}
+                     value={smoke}
+                     onChange={(event) => setSmoke(event.target.value)}
                     label="Age"
                   >
                     <MenuItem value="Yes">Yes</MenuItem>
@@ -196,6 +201,8 @@ function PartnerLiving() {
                   sx={{ minWidth: 300 }}
                   label="Interests"
                   variant="standard"
+                  value={interest}
+                  onChange={(event) => setInterest(event.target.value)}
                 />{" "}
               </div>
               <div

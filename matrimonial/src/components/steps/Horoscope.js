@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../images/logo.png";
 import {
   Typography,
@@ -19,6 +19,11 @@ import { useNavigate } from "react-router-dom";
 
 
 function Horoscope() {
+  const [dateofBirth , setDateofBirth] = useState("")
+  const [timeofBirth , setTimeofBirth] = useState("")
+  const [placeofBirth , setPlaceofBirth] = useState("")
+  const [areyouManglik , setAreyouManglik] = useState("")
+
   const navigate = useNavigate()
   const theme = createTheme({
     components: {
@@ -106,6 +111,8 @@ function Horoscope() {
                   sx={{ minWidth: 300 }}
                   label="Date of Birth"
                   variant="standard"
+                  value = {dateofBirth}
+                  onChange={(event) => setDateofBirth(event.target.value) }
                 />
               </div>
               <div
@@ -122,6 +129,8 @@ function Horoscope() {
                   sx={{ minWidth: 300 }}
                   label="Time of Birth"
                   variant="standard"
+                  value={timeofBirth}
+                  onChange={setTimeofBirth}
                 />
                 {/* <TextField label="Mother Tongue" variant="standard" />x x */}
                 {/* Dropdown for Marital Status */}
@@ -139,6 +148,8 @@ function Horoscope() {
                   sx={{ minWidth: 300 }}
                   label="Place of Birth"
                   variant="standard"
+                  value={placeofBirth}
+                  onChange={setPlaceofBirth}
                 />
 
                 {/* <TextField label="Height" variant="standard" /> */}
@@ -159,8 +170,8 @@ function Horoscope() {
                   <Select
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
-                    // value={age}
-                    // onChange={handleChange}
+                     value={areyouManglik}
+                     onChange={(event) => setAreyouManglik(event.target.value)}
                     label="Age"
                   >
                     <MenuItem value="Yes">

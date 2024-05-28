@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../images/logo.png";
 import { Typography, TextField, Button, Select, MenuItem, createTheme, ThemeProvider, InputLabel, FormControl } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
@@ -7,6 +7,12 @@ import StarsIcon from '@mui/icons-material/Stars';
 import { useNavigate } from "react-router-dom";
 
 function PartnerEducation() {
+  const [highestEduction , setHighestEduction] = useState("")
+  const [currentEmployes, setCurrentEmployes] = useState("")
+  const [profession , setProfession] = useState("")
+  const [AnnualIncome , setAnnualIncome] = useState("")
+  const [yearsOfExperience , setYearsofExperience] = useState("")
+
   const navigate = useNavigate()
   const theme = createTheme({
     components: {
@@ -105,15 +111,16 @@ function PartnerEducation() {
                   variant="standard"
                   sx={{ minWidth: 300, marginTop: "10px" }}
                 >
-                  <InputLabel id="demo-simple-select-standard-label">
+                  <InputLabel id="demo-simple-select-standard-label" 
+
+                  >
                     Highest Education
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
-                    // value={age}
-                    // onChange={handleChange}
-                    label="Age"
+                    value = {highestEduction}
+                    onChange = {(event) => setHighestEduction(event.target.value)}
                   >
                     <MenuItem value="Bachelor's Degree">
                       Bachelor's Degree
@@ -144,6 +151,9 @@ function PartnerEducation() {
                   sx={{ minWidth: 300 }}
                   label="Current Employment "
                   variant="standard"
+                  value={currentEmployes}
+                  onChange={(event) => setCurrentEmployes(event.target.value)}
+
                 />
                 {/* <TextField label="Mother Tongue" variant="standard" />x x */}
                 {/* Dropdown for Marital Status */}
@@ -161,6 +171,8 @@ function PartnerEducation() {
                   sx={{ minWidth: 300 }}
                   label="Profession"
                   variant="standard"
+                  value={profession}
+                  onChange={(event) => setProfession(event.target.value)}
                 />
 
                 {/* <TextField label="Height" variant="standard" /> */}
@@ -178,6 +190,8 @@ function PartnerEducation() {
                   sx={{ minWidth: 300 }}
                   label="Annual Income"
                   variant="standard"
+                  value={AnnualIncome}
+                  onChange={(event) => setAnnualIncome(event.target.value)}
                 />
               </div>
               <div
@@ -193,6 +207,8 @@ function PartnerEducation() {
                   sx={{ minWidth: 300 }}
                   label="Years of Experience"
                   variant="standard"
+                  value={yearsOfExperience}
+                  onChange={(event) => setYearsofExperience(event.target.value)}
                 />
               </div>
               <div
