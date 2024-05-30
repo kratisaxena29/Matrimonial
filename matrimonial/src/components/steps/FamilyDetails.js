@@ -1,14 +1,26 @@
 import React, { useState } from "react";
 import logo from "../../images/logo.png";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Typography, TextField, Button, Select, MenuItem, createTheme, ThemeProvider, InputLabel, FormControl } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import Diversity1Icon from '@mui/icons-material/Diversity1';
 
 function FamilyDetails() {
-  const navigate = useNavigate();
+  const [familyType , setFamilyType] = useState("");
+  const [fatherName,setFatherName] = useState("");
+  const [fatherProf,setFatherProf] = useState("");
+  const [motherName , setMotherName] = useState("");
+  const [motherProf, setMotherProf] = useState("");
   const [numSisters, setNumSisters] = useState(0);
   const [numBrothers, setNumBrothers] = useState(0);
+  const [sisterNames , setSisterNames] = useState([]);
+  const [sisterProfs , setSisterProfs] = useState([]);
+  const [brotherNames , setBrotherNames] = useState([]);
+  const [brotherProfs , setBrotherProfs] = useState([]);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  console.log(".. family location ...", location.state);
 
   const theme = createTheme({
     components: {
@@ -23,11 +35,41 @@ function FamilyDetails() {
   });
 
   const handleSisterChange = (event) => {
-    setNumSisters(Number(event.target.value));
+    const count = Number(event.target.value);
+    setNumSisters(count);
+    setSisterNames(Array(count).fill(""));
+    setSisterProfs(Array(count).fill(""));
   };
 
   const handleBrotherChange = (event) => {
-    setNumBrothers(Number(event.target.value));
+    const count = Number(event.target.value);
+    setNumBrothers(count);
+    setBrotherNames(Array(count).fill(""));
+    setBrotherProfs(Array(count).fill(""));
+  };
+
+  const handleSisterNameChange = (index, value) => {
+    const newSisterNames = [...sisterNames];
+    newSisterNames[index] = value;
+    setSisterNames(newSisterNames);
+  };
+
+  const handleSisterProfChange = (index, value) => {
+    const newSisterProfs = [...sisterProfs];
+    newSisterProfs[index] = value;
+    setSisterProfs(newSisterProfs);
+  };
+
+  const handleBrotherNameChange = (index, value) => {
+    const newBrotherNames = [...brotherNames];
+    newBrotherNames[index] = value;
+    setBrotherNames(newBrotherNames);
+  };
+
+  const handleBrotherProfChange = (index, value) => {
+    const newBrotherProfs = [...brotherProfs];
+    newBrotherProfs[index] = value;
+    setBrotherProfs(newBrotherProfs);
   };
 
   const renderSisterFields = () => {
@@ -44,8 +86,18 @@ function FamilyDetails() {
             marginBottom: "40px",
           }}
         >
-          <TextField label={`Sister ${i + 1} Name`} variant="standard" />
-          <TextField label={`Sister ${i + 1} Profession`} variant="standard" />
+          <TextField 
+            label={`Sister ${i + 1} Name`} 
+            variant="standard" 
+            value={sisterNames[i]}
+            onChange={(event) => handleSisterNameChange(i, event.target.value)}
+          />
+          <TextField 
+            label={`Sister ${i + 1} Profession`} 
+            variant="standard" 
+            value={sisterProfs[i]}
+            onChange={(event) => handleSisterProfChange(i, event.target.value)}
+          />
         </div>
       );
     }
@@ -66,13 +118,55 @@ function FamilyDetails() {
             marginBottom: "40px",
           }}
         >
-          <TextField label={`Brother ${i + 1} Name`} variant="standard" />
-          <TextField label={`Brother ${i + 1} Profession`} variant="standard" />
+          <TextField 
+            label={`Brother ${i + 1} Name`} 
+            variant="standard" 
+            value={brotherNames[i]}
+            onChange={(event) => handleBrotherNameChange(i, event.target.value)}
+          />
+          <TextField 
+            label={`Brother ${i + 1} Profession`} 
+            variant="standard" 
+            value={brotherProfs[i]}
+            onChange={(event) => handleBrotherProfChange(i, event.target.value)}
+          />
         </div>
       );
     }
     return brotherFields;
   };
+
+  const handleNext = async() => {
+    console.log(".familyType..", familyType);
+    console.log("..FatherName..", fatherName);
+    console.log(".fatherProf..", fatherProf);
+    console.log(".motherName..,", motherName);
+    console.log(".motherProf..", motherProf);
+    console.log("..numSisters.", numSisters);
+    console.log(".numBrothers..", numBrothers);
+    console.log("..sisterNames..", sisterNames);
+    console.log("..sisterProfs..", sisterProfs);
+    console.log(".brotherNames..", brotherNames);
+    console.log(".brotherProfs..", brotherProfs);
+    
+    // Add your navigation logic here
+    navigate('/partner-family', {
+      state: {
+        ...location.state,
+        familyType,
+        fatherName,
+        fatherProf,
+        motherName,
+        motherProf,
+        numSisters,
+        numBrothers,
+        sisterNames,
+        sisterProfs,
+        brotherNames,
+        brotherProfs,
+      }
+    });
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -110,7 +204,13 @@ function FamilyDetails() {
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px", marginTop: "40px" }}>
                 <FormControl variant="standard" sx={{ minWidth: 425 }}>
                   <InputLabel id="demo-simple-select-standard-label">Family Type</InputLabel>
-                  <Select labelId="demo-simple-select-standard-label" id="demo-simple-select-standard" label="Family Type">
+                  <Select 
+                    labelId="demo-simple-select-standard-label" 
+                    id="demo-simple-select-standard" 
+                    label="Family Type"
+                    value={familyType}
+                    onChange={(event) => setFamilyType(event.target.value)}
+                  >
                     <MenuItem value="Nuclear">Nuclear</MenuItem>
                     <MenuItem value="Joint">Joint</MenuItem>
                     <MenuItem value="Extended">Extended</MenuItem>
@@ -119,19 +219,49 @@ function FamilyDetails() {
                 </FormControl>
               </div>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "40px", marginBottom: "40px" }}>
-                <TextField label="Father's Name" variant="standard" />
-                <TextField label="Father's Profession" variant="standard" />
+                <TextField 
+                  label="Father's Name" 
+                  variant="standard" 
+                  value={fatherName}
+                  onChange={(event) => setFatherName(event.target.value)}
+                />
+                <TextField 
+                  label="Father's Profession" 
+                  variant="standard" 
+                  value={fatherProf}
+                  onChange={(event) => setFatherProf(event.target.value)}
+                />
               </div>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "40px", marginBottom: "40px" }}>
-                <TextField label="Mother's Name" variant="standard" />
-                <TextField label="Mother's Profession" variant="standard" />
+                <TextField 
+                  label="Mother's Name" 
+                  variant="standard" 
+                  value={motherName}
+                  onChange={(event) => setMotherName(event.target.value)}
+                />
+                <TextField 
+                  label="Mother's Profession" 
+                  variant="standard" 
+                  value={motherProf}
+                  onChange={(event) => setMotherProf(event.target.value)}
+                />
               </div>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "40px", marginBottom: "40px" }}>
-                <TextField label="Brother" variant="standard" type="number" onChange={handleBrotherChange} />
+                <TextField 
+                  label="Brother"
+                  variant="standard" 
+                  type="number" 
+                  onChange={handleBrotherChange} 
+                />
               </div>
               {renderBrotherFields()}
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "40px", marginBottom: "40px" }}>
-                <TextField label="Sister" variant="standard" type="number" onChange={handleSisterChange} />
+                <TextField 
+                  label="Sister" 
+                  variant="standard" 
+                  type="number" 
+                  onChange={handleSisterChange} 
+                />
               </div>
               {renderSisterFields()}
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "20px", marginBottom: "40px" }}>
@@ -152,7 +282,7 @@ function FamilyDetails() {
                   Back
                 </Button>
                 <Button
-                  onClick={() => navigate('/partner-family')}
+                  onClick={handleNext}
                   type="submit"
                   variant="contained"
                   sx={{

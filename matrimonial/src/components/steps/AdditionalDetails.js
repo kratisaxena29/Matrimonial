@@ -46,11 +46,11 @@ function AdditionalDetails() {
         city : location.state.city,
         disability : location.state.disability,
         gender : location.state.gender,
-        martialStatus : location.state.martialStatus,
+        maritalStatus : location.state.maritalStatus,
         name : location.state.name,
         nationality : location.state.nationality,
-        religion : location.state.religion
-
+        religion : location.state.religion,
+        email : location.state.email
       }
      })
   }

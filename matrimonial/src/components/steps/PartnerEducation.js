@@ -4,15 +4,17 @@ import { Typography, TextField, Button, Select, MenuItem, createTheme, ThemeProv
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import StarsIcon from '@mui/icons-material/Stars';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function PartnerEducation() {
-  const [highestEduction , setHighestEduction] = useState("")
-  const [currentEmployes, setCurrentEmployes] = useState("")
-  const [profession , setProfession] = useState("")
-  const [AnnualIncome , setAnnualIncome] = useState("")
-  const [yearsOfExperience , setYearsofExperience] = useState("")
+  const [part_highestEduction , setHighestEduction] = useState("")
+  const [part_currentEmployes, setCurrentEmployes] = useState("")
+  const [part_profession , setProfession] = useState("")
+  const [part_AnnualIncome , setAnnualIncome] = useState("")
+  const [part_yearsOfExperience , setYearsofExperience] = useState("")
 
+  const location = useLocation()
+  console.log("... partner Eduction location..",location.state)
   const navigate = useNavigate()
   const theme = createTheme({
     components: {
@@ -25,6 +27,20 @@ function PartnerEducation() {
       },
     },
   });
+
+  const handleNext = async() => {
+    navigate('/partner-living',{
+      state:{
+        ...location.state,
+        part_highestEduction,
+        part_currentEmployes,
+        part_profession,
+        part_AnnualIncome,
+        part_yearsOfExperience
+      }
+    })
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <div
@@ -119,7 +135,7 @@ function PartnerEducation() {
                   <Select
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
-                    value = {highestEduction}
+                    value = {part_highestEduction}
                     onChange = {(event) => setHighestEduction(event.target.value)}
                   >
                     <MenuItem value="Bachelor's Degree">
@@ -151,7 +167,7 @@ function PartnerEducation() {
                   sx={{ minWidth: 300 }}
                   label="Current Employment "
                   variant="standard"
-                  value={currentEmployes}
+                  value={part_currentEmployes}
                   onChange={(event) => setCurrentEmployes(event.target.value)}
 
                 />
@@ -171,7 +187,7 @@ function PartnerEducation() {
                   sx={{ minWidth: 300 }}
                   label="Profession"
                   variant="standard"
-                  value={profession}
+                  value={part_profession}
                   onChange={(event) => setProfession(event.target.value)}
                 />
 
@@ -190,7 +206,7 @@ function PartnerEducation() {
                   sx={{ minWidth: 300 }}
                   label="Annual Income"
                   variant="standard"
-                  value={AnnualIncome}
+                  value={part_AnnualIncome}
                   onChange={(event) => setAnnualIncome(event.target.value)}
                 />
               </div>
@@ -207,7 +223,7 @@ function PartnerEducation() {
                   sx={{ minWidth: 300 }}
                   label="Years of Experience"
                   variant="standard"
-                  value={yearsOfExperience}
+                  value={part_yearsOfExperience}
                   onChange={(event) => setYearsofExperience(event.target.value)}
                 />
               </div>
@@ -254,7 +270,7 @@ function PartnerEducation() {
                   Back
                 </Button>
                 <Button
-                  onClick={() => navigate('/partner-living')}
+                  onClick={handleNext}
                   type="submit"
                   variant="contained"
                   sx={{

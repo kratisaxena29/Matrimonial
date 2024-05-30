@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../images/logo.png";
-import { Typography, TextField, Button, Select, MenuItem, createTheme, ThemeProvider, InputLabel, FormControl } from "@mui/material";
+import { Typography, Button, createTheme, ThemeProvider } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import StarsIcon from '@mui/icons-material/Stars';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function UploadDocument() {
-  const navigate = useNavigate()
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const location = useLocation();
+  console.log("..uploadDocument location ...", location.state);
+console.log(".selectedFile..",selectedFile)
   const theme = createTheme({
     components: {
       MuiPopover: {
@@ -20,6 +24,27 @@ function UploadDocument() {
       },
     },
   });
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
+      setSelectedFile(file);
+      setError('');
+    } else {
+      setSelectedFile(null);
+      setError('Please upload a valid image file (JPEG or PNG)');
+    }
+  };
+
+  const handleUpload = () => {
+    if (selectedFile) {
+      console.log("Selected file:", selectedFile);
+      // Add your upload logic here
+    } else {
+      setError('No file selected or invalid file type');
+    }
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <div
@@ -53,14 +78,12 @@ function UploadDocument() {
               justifyContent: "center",
             }}
           >
-            {/* MUI icon */}
             <StarsIcon
               style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }}
             />
-            {/* Big text */}
             <Typography variant="h4" component="div" sx={{ color: "#6B0D37" }}>
               "Join us in the quest for love, where every profile is a chapter
-              waiting to be written in the book of destiny."{" "}
+              waiting to be written in the book of destiny."
             </Typography>
           </div>
           {/* Right part */}
@@ -116,23 +139,36 @@ function UploadDocument() {
                   marginBottom: "50px",
                 }}
               >
-                <Button
-               
-                  type="submit"
-                  variant="contained"
-                  sx={{
-                    mt: 4,
-                    mb: 2,
-                    width: 150,
-                    height: 40,
-                    textTransform: "inherit",
-                    fontSize: "18px",
-                    backgroundColor: "#76001C",
-                  }}
-                >
-                  Upload
-                </Button>
+                <input
+                  accept="image/jpeg,image/png"
+                  type="file"
+                  onChange={handleFileChange}
+                  style={{ display: 'none' }}
+                  id="upload-button"
+                />
+                <label htmlFor="upload-button">
+                  <Button
+                    variant="contained"
+                    component="span"
+                    sx={{
+                      mt: 4,
+                      mb: 2,
+                      width: 150,
+                      height: 40,
+                      textTransform: "inherit",
+                      fontSize: "18px",
+                      backgroundColor: "#76001C",
+                    }}
+                  >
+                    Upload
+                  </Button>
+                </label>
               </div>
+              {error && (
+                <Typography color="error" sx={{ textAlign: "center", mb: 2 }}>
+                  {error}
+                </Typography>
+              )}
               <div
                 style={{
                   display: "flex",
@@ -143,7 +179,13 @@ function UploadDocument() {
                 }}
               >
                 <Button
-                 onClick={() => navigate('/profile-completed')}
+                  onClick={() => {
+                    if (selectedFile) {
+                      navigate('/profile-completed');
+                    } else {
+                      setError('Please upload a valid file before submitting');
+                    }
+                  }}
                   type="submit"
                   variant="contained"
                   sx={{
@@ -177,7 +219,7 @@ function UploadDocument() {
             <Instagram style={{ marginRight: "10px" }} />
             <Twitter style={{ marginRight: "10px" }} />
           </div>
-          <div>&copy; 2024 <span style={{ color: "#FFBF00	"}}>SoulMatch</span> All rights reserved.</div>
+          <div>&copy; 2024 <span style={{ color: "#FFBF00" }}>SoulMatch</span> All rights reserved.</div>
           <div>
             <Email style={{ marginRight: "10px" }} />
             <span style={{ color: "#FFF" }}>Email Address</span>

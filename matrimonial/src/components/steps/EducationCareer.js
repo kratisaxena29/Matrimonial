@@ -29,6 +29,35 @@ const [yearsOfExperience , setYearsofExperience] = useState("")
       },
     },
   });
+
+  const handleNext = async() => {
+    navigate('/horoscope' , {
+      state: {
+        highestEduction : highestEduction,
+        currentEmployes : currentEmployes,
+        profession : profession,
+        annualIncome : annualIncome,
+        yearsOfExperience : yearsOfExperience,
+        caste : location.state.caste,
+        subCaste : location.state.subCaste,
+        origin : location.state.origin,
+        mothertongue : location.state.mothertongue,
+        height : location.state.height,
+        weight : location.state.weight,
+        gothra : location.state.gothra,
+        petFriendly : location.state.petFriendly,
+        age : location.state.age,
+        city : location.state.city,
+        disability : location.state.disability,
+        gender : location.state.gender,
+        maritalStatus : location.state.maritalStatus,
+        name : location.state.name,
+        nationality : location.state.nationality,
+        religion : location.state.religion,
+        email : location.state.email
+      }
+    })
+  }
   return (
     <ThemeProvider theme={theme}>
       <div
@@ -245,7 +274,7 @@ const [yearsOfExperience , setYearsofExperience] = useState("")
                   Back
                 </Button>
                 <Button
-                  onClick={() => navigate('/horoscope')}
+                  onClick={handleNext}
                   type="submit"
                   variant="contained"
                   sx={{

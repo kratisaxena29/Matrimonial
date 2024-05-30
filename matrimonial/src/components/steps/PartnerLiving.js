@@ -15,14 +15,17 @@ import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import SchoolIcon from "@mui/icons-material/School";
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function PartnerLiving() {
-  const [diet,setDiet] = useState("")
-  const[alcohol , setAlcohol] = useState("")
-  const [smoke , setSmoke] = useState("")
-  const [interest , setInterest] = useState("")
+  const [part_diet, setDiet] = useState("")
+  const [part_alcohol, setAlcohol] = useState("")
+  const [part_smoke, setSmoke] = useState("")
+  const [part_interest, setInterest] = useState("")
 
+  const location = useLocation()
+  console.log("..location. partner living ...", location.state)
   const navigate = useNavigate()
   const theme = createTheme({
     components: {
@@ -35,6 +38,100 @@ function PartnerLiving() {
       },
     },
   });
+  const handleNext = async () => {
+    try {
+      const API_BASE_URL = 'http://localhost:3002'
+
+const filterBrothersName = JSON.stringify(location.state.brotherNames)
+const filterBrothersProf = JSON.stringify(location.state.brotherProfs)
+const filtersisterName = JSON.stringify(location.state.sisterNames)
+const filtersisterProf = JSON.stringify(location.state.sisterProfs)
+
+      const response = await axios.post(
+        `${API_BASE_URL}/profile-register`,
+        {
+
+          email : location.state.email,
+          name : location.state.name,
+          gender : location.state.gender,
+          age : location.state.age,
+          martialStatus: location.state.maritalStatus,
+          nationality : location.state.nationality,
+          city : location.state.city,
+          religion : location.state.religion,
+          disability : location.state.disability,
+          disabilityDetail : location.state.disabilityDetails,
+          caste : location.state.caste,
+          subCaste :location.state.subCaste,
+          origin : location.state.origin,
+          motherTongue : location.state.mothertongue,
+          height : location.state.height,
+          weight : location.state.weight,
+          gothra : location.state.gothra,
+          petFriendly : location.state.petFriendly,
+          heighestEduction : location.state.highestEduction,
+          currentEmployee : location.state.currentEmployes,
+          profession : location.state.profession,
+          annualIncome : location.state.annualIncome,
+          yearsofExperience : location.state.yearsOfExperience,
+          dateOfBirth : location.state.dateofBirth,
+          timeOfBirth : location.state.timeofBirth,
+          placeofBirth : location.state.placeofBirth,
+          areYouManglik : location.state.areyouManglik,
+          diet : location.state.diet,
+          alcohol  : location.state.alcohol,
+          smoke : location.state.smoke,
+          interest : location.state.Interest,
+          family_Type : location.state.familyType,
+          FathersName : location.state.fatherName,
+          Fathers_prof : location.state.fatherProf,
+          MothersName : location.state.motherName,
+          Mothers_prof : location.state.motherProf,
+          sister : location.state.numSisters,
+          sisterName : filtersisterName,
+          sisterProfession : filtersisterProf,
+          brother : location.state.numBrothers,
+          brotherName : filterBrothersName,
+          brotherProfession : filterBrothersProf,
+          Part_ageFrom : location.state.part_ageFrom,
+          Part_martialStatus : location.state.part_martialStatus,
+          Part_Religion : location.state.part_religion,
+          Part_Caste : location.state.part_caste,
+          Part_motherTongue : location.state.part_mothertongue,
+          Part_height : location.state.part_height,
+          Part_horoscopeMatch : location.state.part_horoscopeMatch,
+          Part_petFriendly : location.state.part_petFriendly,
+          Part_heighestEduction : location.state.part_highestEduction,
+          Part_currentEmployee : location.state.part_currentEmployes,
+          Part_profession : location.state.part_profession,
+          Part_annualIncome : location.state.part_AnnualIncome,
+          Part_yearsOfExpereience : location.state.part_yearsOfExperience,
+          Part_deit : part_diet,
+          Part_alcohol : part_alcohol ,
+          Part_smoke : part_smoke,
+          Part_interest : part_interest
+
+        },
+         {
+          headers: {
+            // Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        },
+      )
+        console.log("...response ...",response)
+        navigate('/upload-document', {
+          state: {
+            ...location.state,
+            
+          }
+        })
+      
+    } catch (error) {
+      console.log("...catch..", error)
+    }
+   
+  }
   return (
     <ThemeProvider theme={theme}>
       <div
@@ -88,7 +185,7 @@ function PartnerLiving() {
             }}
           >
             <div>
-            <Typography
+              <Typography
                 sx={{
                   textAlign: "center",
                   fontWeight: "bold",
@@ -123,9 +220,9 @@ function PartnerLiving() {
                   <Select
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
-                     value={diet}
-                     onChange={(event) => setDiet(event.target.value)}
-                    
+                    value={part_diet}
+                    onChange={(event) => setDiet(event.target.value)}
+
                   >
                     <MenuItem value="Vegetarian">Vegetarian</MenuItem>
                     <MenuItem value="Vegan">Vegan</MenuItem>
@@ -142,7 +239,7 @@ function PartnerLiving() {
                   gap: "80px",
                   marginBottom: "40px",
                 }}
-                // sx={{ minWidth: 300, marginTop:"10px" }}
+              // sx={{ minWidth: 300, marginTop:"10px" }}
               >
                 <FormControl variant="standard" sx={{ minWidth: 300 }}>
                   <InputLabel id="demo-simple-select-standard-label">
@@ -151,7 +248,7 @@ function PartnerLiving() {
                   <Select
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
-                     value={alcohol}
+                    value={part_alcohol}
                     onChange={(event) => setAlcohol(event.target.value)}
                     label="Age"
                   >
@@ -177,8 +274,8 @@ function PartnerLiving() {
                   <Select
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
-                     value={smoke}
-                     onChange={(event) => setSmoke(event.target.value)}
+                    value={part_smoke}
+                    onChange={(event) => setSmoke(event.target.value)}
                     label="Age"
                   >
                     <MenuItem value="Yes">Yes</MenuItem>
@@ -201,7 +298,7 @@ function PartnerLiving() {
                   sx={{ minWidth: 300 }}
                   label="Interests"
                   variant="standard"
-                  value={interest}
+                  value={part_interest}
                   onChange={(event) => setInterest(event.target.value)}
                 />{" "}
               </div>
@@ -248,7 +345,7 @@ function PartnerLiving() {
                   Back
                 </Button>
                 <Button
-                  onClick={() => navigate('/upload-document')}
+                  onClick={handleNext}
                   type="submit"
                   variant="contained"
                   sx={{
@@ -282,7 +379,7 @@ function PartnerLiving() {
             <Instagram style={{ marginRight: "10px" }} />
             <Twitter style={{ marginRight: "10px" }} />
           </div>
-          <div>&copy; 2024 <span style={{ color: "#FFBF00	"}}>SoulMatch</span> All rights reserved.</div>
+          <div>&copy; 2024 <span style={{ color: "#FFBF00	" }}>SoulMatch</span> All rights reserved.</div>
           <div>
             <Email style={{ marginRight: "10px" }} />
             <span style={{ color: "#FFF" }}>Email Address</span>

@@ -15,7 +15,7 @@ import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import SchoolIcon from "@mui/icons-material/School";
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 function Horoscope() {
@@ -24,6 +24,8 @@ function Horoscope() {
   const [placeofBirth , setPlaceofBirth] = useState("")
   const [areyouManglik , setAreyouManglik] = useState("")
 
+  const location = useLocation()
+  console.log("..horoscope location...",location)
   const navigate = useNavigate()
   const theme = createTheme({
     components: {
@@ -36,6 +38,40 @@ function Horoscope() {
       },
     },
   });
+
+  const handleNext = async() =>{
+    navigate('/lifestyle',{
+      state : {
+        dateofBirth : dateofBirth,
+        timeofBirth : timeofBirth,
+        placeofBirth : placeofBirth,
+        areyouManglik : areyouManglik ,
+        highestEduction : location.state.highestEduction,
+        currentEmployes : location.state.currentEmployes,
+        profession : location.state.profession,
+        annualIncome : location.state.annualIncome,
+        yearsOfExperience : location.state.yearsOfExperience,
+        caste : location.state.caste,
+        subCaste : location.state.subCaste,
+        origin : location.state.origin,
+        mothertongue : location.state.mothertongue,
+        height : location.state.height,
+        weight : location.state.weight,
+        gothra : location.state.gothra,
+        petFriendly : location.state.petFriendly,
+        age : location.state.age,
+        city : location.state.city,
+        disability : location.state.disability,
+        gender : location.state.gender,
+        maritalStatus : location.state.maritalStatus,
+        name : location.state.name,
+        nationality : location.state.nationality,
+        religion : location.state.religion,
+        email : location.state.email
+      }
+    })
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <div
@@ -130,7 +166,7 @@ function Horoscope() {
                   label="Time of Birth"
                   variant="standard"
                   value={timeofBirth}
-                  onChange={setTimeofBirth}
+                  onChange={(event) => setTimeofBirth(event.target.value)}
                 />
                 {/* <TextField label="Mother Tongue" variant="standard" />x x */}
                 {/* Dropdown for Marital Status */}
@@ -149,7 +185,7 @@ function Horoscope() {
                   label="Place of Birth"
                   variant="standard"
                   value={placeofBirth}
-                  onChange={setPlaceofBirth}
+                  onChange={(event) => setPlaceofBirth(event.target.value)}
                 />
 
                 {/* <TextField label="Height" variant="standard" /> */}
@@ -224,7 +260,7 @@ function Horoscope() {
                   Back
                 </Button>
                 <Button
-                  onClick={() => navigate('/lifestyle')}
+                  onClick={handleNext}
                   type="submit"
                   variant="contained"
                   sx={{

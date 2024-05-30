@@ -15,15 +15,15 @@ import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import SchoolIcon from "@mui/icons-material/School";
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function LifeStyle() {
 const [diet,setDiet] = useState("")
 const [alcohol,setAlcohol] = useState("")
 const [smoke, setSmoke] = useState("")
 const [Interest,setInterest] = useState("")
-
-
+const location = useLocation()
+console.log("...lifestyle...",location.state)
   const navigate = useNavigate()
   const theme = createTheme({
     components: {
@@ -36,6 +36,43 @@ const [Interest,setInterest] = useState("")
       },
     },
   });
+
+  const handleNext = () => {
+    navigate('/family-details',{
+      state: {
+        diet : diet,
+        alcohol : alcohol,
+        smoke : smoke,
+        Interest : Interest,
+        dateofBirth : location.state.dateofBirth,
+        timeofBirth : location.state.timeofBirth,
+        placeofBirth : location.state.placeofBirth,
+        areyouManglik : location.state.areyouManglik ,
+        highestEduction : location.state.highestEduction,
+        currentEmployes : location.state.currentEmployes,
+        profession : location.state.profession,
+        annualIncome : location.state.annualIncome,
+        yearsOfExperience : location.state.yearsOfExperience,
+        caste : location.state.caste,
+        subCaste : location.state.subCaste,
+        origin : location.state.origin,
+        mothertongue : location.state.mothertongue,
+        height : location.state.height,
+        weight : location.state.weight,
+        gothra : location.state.gothra,
+        petFriendly : location.state.petFriendly,
+        age : location.state.age,
+        city : location.state.city,
+        disability : location.state.disability,
+        gender : location.state.gender,
+        maritalStatus : location.state.maritalStatus,
+        name : location.state.name,
+        nationality : location.state.nationality,
+        religion : location.state.religion,
+        email : location.state.email
+      }
+    })
+  }
   return (
     <ThemeProvider theme={theme}>
       <div
@@ -192,6 +229,8 @@ const [Interest,setInterest] = useState("")
                   sx={{ minWidth: 300 }}
                   label="Interests"
                   variant="standard"
+                  value={Interest}
+                  onChange={(event) => setInterest(event.target.value)}
                 />{" "}
               </div>
               <div
@@ -237,7 +276,7 @@ const [Interest,setInterest] = useState("")
                   Back
                 </Button>
                 <Button
-                  onClick={() => navigate('/family-details')}
+                  onClick={handleNext}
                   type="submit"
                   variant="contained"
                   sx={{

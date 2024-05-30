@@ -7,15 +7,16 @@ import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 
 function ProfileDetails() {
 
-  const [name , setName] = useState("");
+  const [name, setName] = useState("");
   const [gender, setGender] = useState("");
-  const [age , setAge] = useState("");
-  const [martialStatus , setMartialStatus] = useState("");
-  const [nationality , setNationality] = useState("");
-  const [city , setCity] = useState("");
+  const [age, setAge] = useState("");
+  const [maritalStatus, setMaritalStatus] = useState("");
+  const [nationality, setNationality] = useState("");
+  const [city, setCity] = useState("");
   const [religion, setReligion] = useState("");
   const [disability, setDisability] = useState("");
   const [disabilityDetails, setDisabilityDetails] = useState("");
+  const [email, setEmail] = useState(""); // New state variable for email
 
   const navigate = useNavigate();
   const theme = createTheme({
@@ -34,25 +35,29 @@ function ProfileDetails() {
     console.log("..name..", name);
     console.log("gender..", gender);
     console.log("..age..", age);
-    console.log("..martial stutus..", martialStatus);
+    console.log("..marital status..", maritalStatus);
     console.log("..nationality...", nationality);
     console.log("..city..", city);
     console.log("..religion..", religion);
-    console.log("...disabiltity...", disability);
+    console.log("...disability...", disability);
     if (disability === "Yes") {
       console.log("...disability details...", disabilityDetails);
     }
-    navigate('/additional-details', { state: {
-      name,
-      gender,
-      age,
-      martialStatus,
-      nationality,
-      city,
-      religion,
-      disability,
-      disabilityDetails: disability === "Yes" ? disabilityDetails : ""
-    }});
+    console.log("..email..", email);
+    navigate('/additional-details', {
+      state: {
+        name,
+        gender,
+        age,
+        maritalStatus,
+        nationality,
+        city,
+        religion,
+        disability,
+        disabilityDetails: disability === "Yes" ? disabilityDetails : "",
+        email, // Include email in the navigation state
+      }
+    });
   }
 
   return (
@@ -90,7 +95,10 @@ function ProfileDetails() {
                 <TextField label="Age" variant="standard" value={age} onChange={(event) => setAge(event.target.value)} />
                 <FormControl variant="standard" sx={{ minWidth: 200 }}>
                   <InputLabel id="demo-simple-select-standard-label">Marital Status</InputLabel>
-                  <Select labelId="demo-simple-select-standard-label" id="demo-simple-select-standard" value={martialStatus} onChange={(event) => setMartialStatus(event.target.value)} label="Marital Status">
+                  <Select labelId="demo-simple-select-standard-label" id="demo-simple-select-standard" 
+                  value={maritalStatus} 
+                  onChange={(event) => setMaritalStatus(event.target.value)} 
+                  label="Marital Status">
                     <MenuItem value="Single">Single</MenuItem>
                     <MenuItem value="Married">Married</MenuItem>
                     <MenuItem value="Divorced">Divorced</MenuItem>
@@ -144,6 +152,15 @@ function ProfileDetails() {
                   />
                 </div>
               )}
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "40px" }}>
+                <TextField
+                  label="Email"
+                  variant="standard"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  fullWidth
+                />
+              </div>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "20px", marginBottom: "40px" }}>
                 <Button
                   onClick={() => navigate('/')}

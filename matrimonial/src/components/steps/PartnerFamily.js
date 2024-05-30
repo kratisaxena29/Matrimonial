@@ -3,17 +3,19 @@ import logo from "../../images/logo.png";
 import { Typography, TextField, Button, Select, MenuItem, createTheme, ThemeProvider, InputLabel, FormControl } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import Diversity3Icon from '@mui/icons-material/Diversity3';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function PartnerFamily() {
-  const [ageFrom , setageFrom] = useState("")
-  const [martialStatus , setmartialStatus] = useState("")
-  const [religion , setReligion] = useState("")
-  const [caste , setCaste] = useState("")
-  const [mothertongue , setMothertongue] = useState("")
-  const [height , setheight] = useState("")
-  const [horoscopeMatch , setHoroscopematch] = useState("")
-
+  const [part_ageFrom , setageFrom] = useState("")
+  const [part_martialStatus , setmartialStatus] = useState("")
+  const [part_religion , setReligion] = useState("")
+  const [part_caste , setCaste] = useState("")
+  const [part_mothertongue , setMothertongue] = useState("")
+  const [part_height , setheight] = useState("")
+  const [part_horoscopeMatch , setHoroscopematch] = useState("")
+const [part_petFriendly ,setpart_petFriendly] = useState("")
+  const location = useLocation()
+  console.log("...partner location ", location.state)
   const navigate = useNavigate();
   const theme = createTheme({
     components: {
@@ -26,6 +28,22 @@ function PartnerFamily() {
       },
     },
   });
+
+const handleNext = async() => {
+  navigate('/partner-education',{
+    state : {
+      ...location.state,
+      part_ageFrom,
+      part_martialStatus,
+      part_religion,
+      part_caste,
+      part_mothertongue,
+      part_height,
+      part_horoscopeMatch,
+      part_petFriendly
+    }
+  })
+}
 
   return (
     <ThemeProvider theme={theme}>
@@ -58,8 +76,10 @@ function PartnerFamily() {
                   <Select labelId="demo-simple-select-standard-label" 
                   id="demo-simple-select-standard" 
                   label="Age"
-                  value={ageFrom}>
-                    onChange = {(event) => setageFrom(event.target.value)}
+                  value={part_ageFrom}
+                  onChange = {(event) => setageFrom(event.target.value)}
+                  >
+                    
                     <MenuItem value="18-25">18-25 years</MenuItem>
                     <MenuItem value="25-30">25-30 years</MenuItem>
                     <MenuItem value="30-35">30-35 years</MenuItem>
@@ -72,7 +92,7 @@ function PartnerFamily() {
                   labelId="demo-simple-select-standard-label" 
                   id="demo-simple-select-standard" 
                   label="Marital Status"
-                  value={martialStatus}
+                  value={part_martialStatus}
                   onChange={(event) => setmartialStatus(event.target.value)}
                   >
                     <MenuItem value="Single">Single</MenuItem>
@@ -88,7 +108,7 @@ function PartnerFamily() {
                   labelId="religion-select-label" 
                   id="religion-select" 
                   label="Religion"
-                  value={religion}
+                  value={part_religion}
                   onChange={(event) => setReligion(event.target.value)}
                   >
                     <MenuItem value="Hindu">Hindu</MenuItem>
@@ -106,7 +126,7 @@ function PartnerFamily() {
                   labelId="caste-select-label" 
                   id="caste-select" 
                   label="Caste"
-                  value={caste}
+                  value={part_caste}
                   onChange={(event) => setCaste(event.target.value)}
                   >
                     <MenuItem value="General">General</MenuItem>
@@ -120,13 +140,13 @@ function PartnerFamily() {
                 <TextField 
                 label="Mother Tongue" 
                 variant="standard" 
-                value={mothertongue}
+                value={part_mothertongue}
                 onChange={(event) => setMothertongue(event.target.value)}
                 />
                 <TextField 
                 label="Height" 
                 variant="standard"
-                value={height}
+                value={part_height}
                 onChange={(event) => setheight(event.target.value)} 
                 />
               </div>
@@ -137,7 +157,7 @@ function PartnerFamily() {
                   labelId="demo-simple-select-standard-label" 
                   id="demo-simple-select-standard" 
                   label="Horoscope match?"
-                  value={horoscopeMatch}
+                  value={part_horoscopeMatch}
                   onChange={(event) => setHoroscopematch(event.target.value)}
                   >
                     <MenuItem value="Yes">Yes</MenuItem>
@@ -146,7 +166,8 @@ function PartnerFamily() {
                 </FormControl>
                 <FormControl variant="standard" sx={{ minWidth: 195 }}>
                   <InputLabel id="demo-simple-select-standard-label">Pet Friendly</InputLabel>
-                  <Select labelId="demo-simple-select-standard-label" id="demo-simple-select-standard" label="Pet Friendly">
+                  <Select labelId="demo-simple-select-standard-label" id="demo-simple-select-standard" label="Pet Friendly" value={part_petFriendly}
+                  onChange={(event) => setpart_petFriendly(event.target.value)}>
                     <MenuItem value="Yes">Yes</MenuItem>
                     <MenuItem value="No">No</MenuItem>
                   </Select>
@@ -156,7 +177,7 @@ function PartnerFamily() {
                 <Button onClick={() => navigate('/family-details')} variant="outlined" sx={{ mt: 4, mb: 2, width: 150, height: 40, textTransform: "inherit", fontSize: "18px", borderColor: "#FB6A6B", color: "#FB6A6B" }}>
                   Back
                 </Button>
-                <Button onClick={() => navigate('/partner-education')} type="submit" variant="contained" sx={{ mt: 4, mb: 2, width: 150, height: 40, textTransform: "inherit", fontSize: "18px", backgroundColor: "#FB6A6B" }}>
+                <Button onClick={handleNext} type="submit" variant="contained" sx={{ mt: 4, mb: 2, width: 150, height: 40, textTransform: "inherit", fontSize: "18px", backgroundColor: "#FB6A6B" }}>
                   Next
                 </Button>
               </div>
