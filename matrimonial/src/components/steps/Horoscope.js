@@ -10,23 +10,25 @@ import {
   ThemeProvider,
   InputLabel,
   FormControl,
+  FormHelperText,
 } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import SchoolIcon from "@mui/icons-material/School";
-import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
+import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 import { useLocation, useNavigate } from "react-router-dom";
 
-
 function Horoscope() {
-  const [dateofBirth , setDateofBirth] = useState("")
-  const [timeofBirth , setTimeofBirth] = useState("")
-  const [placeofBirth , setPlaceofBirth] = useState("")
-  const [areyouManglik , setAreyouManglik] = useState("")
+  const [dateofBirth, setDateofBirth] = useState("");
+  const [timeofBirth, setTimeofBirth] = useState("");
+  const [placeofBirth, setPlaceofBirth] = useState("");
+  const [areyouManglik, setAreyouManglik] = useState("");
+  const [message, setMessage] = useState("");
+  const [messageDisabled, setMessageDisabled] = useState(false);
 
-  const location = useLocation()
-  console.log("..horoscope location...",location)
-  const navigate = useNavigate()
+  const [errors, setErrors] = useState({});
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const theme = createTheme({
     components: {
       MuiPopover: {
@@ -39,44 +41,63 @@ function Horoscope() {
     },
   });
 
-  const handleNext = async() =>{
-    navigate('/lifestyle',{
-      state : {
-        dateofBirth : dateofBirth,
-        timeofBirth : timeofBirth,
-        placeofBirth : placeofBirth,
-        areyouManglik : areyouManglik ,
-        highestEduction : location.state.highestEduction,
-        currentEmployes : location.state.currentEmployes,
-        profession : location.state.profession,
-        annualIncome : location.state.annualIncome,
-        yearsOfExperience : location.state.yearsOfExperience,
-        caste : location.state.caste,
-        subCaste : location.state.subCaste,
-        origin : location.state.origin,
-        mothertongue : location.state.mothertongue,
-        height : location.state.height,
-        weight : location.state.weight,
-        gothra : location.state.gothra,
-        petFriendly : location.state.petFriendly,
-        age : location.state.age,
-        city : location.state.city,
-        disability : location.state.disability,
-        gender : location.state.gender,
-        maritalStatus : location.state.maritalStatus,
-        name : location.state.name,
-        nationality : location.state.nationality,
-        religion : location.state.religion,
-        email : location.state.email
-      }
-    })
-  }
+  const validate = () => {
+    const newErrors = {};
+    if (!dateofBirth) newErrors.dateofBirth = "Date of Birth is required";
+    if (!timeofBirth) newErrors.timeofBirth = "Time of Birth is required";
+    if (!placeofBirth) newErrors.placeofBirth = "Place of Birth is required";
+    if (!areyouManglik) newErrors.areyouManglik = "This field is required";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleNext = () => {
+    if (validate()) {
+      navigate("/lifestyle", {
+        state: {
+          dateofBirth,
+          timeofBirth,
+          placeofBirth,
+          areyouManglik,
+          highestEduction: location.state.highestEduction,
+          currentEmployes: location.state.currentEmployes,
+          profession: location.state.profession,
+          annualIncome: location.state.annualIncome,
+          yearsOfExperience: location.state.yearsOfExperience,
+          caste: location.state.caste,
+          subCaste: location.state.subCaste,
+          origin: location.state.origin,
+          mothertongue: location.state.mothertongue,
+          height: location.state.height,
+          weight: location.state.weight,
+          gothra: location.state.gothra,
+          petFriendly: location.state.petFriendly,
+          age: location.state.age,
+          city: location.state.city,
+          disability: location.state.disability,
+          gender: location.state.gender,
+          maritalStatus: location.state.maritalStatus,
+          name: location.state.name,
+          nationality: location.state.nationality,
+          religion: location.state.religion,
+          email: location.state.email,
+          message
+        },
+      });
+    }
+  };
+
+  const handleInputChange = (event) => {
+    setMessage(event.target.value);
+  };
+
+  const handleTyping = () => {
+    setMessageDisabled(true);
+  };
 
   return (
     <ThemeProvider theme={theme}>
-      <div
-        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
-      >
+      <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
         <nav
           style={{
             backgroundColor: "#6D0B32",
@@ -85,11 +106,7 @@ function Horoscope() {
             alignItems: "center",
           }}
         >
-          <img
-            src={logo}
-            alt="Logo"
-            style={{ height: "60px", marginRight: "40px" }}
-          />
+          <img src={logo} alt="Logo" style={{ height: "60px", marginRight: "40px" }} />
         </nav>
         <div style={{ display: "flex", flex: 1 }}>
           {/* Left part */}
@@ -105,14 +122,9 @@ function Horoscope() {
               justifyContent: "center",
             }}
           >
-            {/* MUI icon */}
-            <VolunteerActivismIcon
-              style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }}
-            />
-            {/* Big text */}
+            <VolunteerActivismIcon style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }} />
             <Typography variant="h4" component="div" sx={{ color: "#6B0D37" }}>
-              "Let us be the bridge to your happily ever after. Start your
-              journey to love with us today."
+              "Let us be the bridge to your happily ever after. Start your journey to love with us today."
             </Typography>
           </div>
           {/* Right part */}
@@ -126,11 +138,7 @@ function Horoscope() {
             }}
           >
             <div>
-              <Typography
-                sx={{ textAlign: "center" }}
-                variant="h5"
-                gutterBottom
-              >
+              <Typography sx={{ textAlign: "center" }} variant="h5" gutterBottom>
                 Horoscope Details
               </Typography>
               <div
@@ -140,15 +148,16 @@ function Horoscope() {
                   justifyContent: "center",
                   gap: "80px",
                   marginBottom: "40px",
-                  //   marginTop: "20px",
                 }}
               >
                 <TextField
                   sx={{ minWidth: 300 }}
                   label="Date of Birth"
                   variant="standard"
-                  value = {dateofBirth}
-                  onChange={(event) => setDateofBirth(event.target.value) }
+                  value={dateofBirth}
+                  onChange={(event) => setDateofBirth(event.target.value)}
+                  error={Boolean(errors.dateofBirth)}
+                  helperText={errors.dateofBirth}
                 />
               </div>
               <div
@@ -159,7 +168,6 @@ function Horoscope() {
                   gap: "80px",
                   marginBottom: "40px",
                 }}
-                // sx={{ minWidth: 300, marginTop:"10px" }}
               >
                 <TextField
                   sx={{ minWidth: 300 }}
@@ -167,9 +175,9 @@ function Horoscope() {
                   variant="standard"
                   value={timeofBirth}
                   onChange={(event) => setTimeofBirth(event.target.value)}
+                  error={Boolean(errors.timeofBirth)}
+                  helperText={errors.timeofBirth}
                 />
-                {/* <TextField label="Mother Tongue" variant="standard" />x x */}
-                {/* Dropdown for Marital Status */}
               </div>
               <div
                 style={{
@@ -186,10 +194,11 @@ function Horoscope() {
                   variant="standard"
                   value={placeofBirth}
                   onChange={(event) => setPlaceofBirth(event.target.value)}
+                  error={Boolean(errors.placeofBirth)}
+                  helperText={errors.placeofBirth}
                 />
-
-                {/* <TextField label="Height" variant="standard" /> */}
               </div>
+
               <div
                 style={{
                   display: "flex",
@@ -199,22 +208,18 @@ function Horoscope() {
                   marginBottom: "40px",
                 }}
               >
-               <FormControl variant="standard" sx={{ minWidth: 300 }}>
-                  <InputLabel id="demo-simple-select-standard-label">
-                  Are you Manglik? 
-                  </InputLabel>
+                <FormControl variant="standard" sx={{ minWidth: 300 }} error={Boolean(errors.areyouManglik)}>
+                  <InputLabel id="manglik-label">Are you Manglik?</InputLabel>
                   <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                     value={areyouManglik}
-                     onChange={(event) => setAreyouManglik(event.target.value)}
-                    label="Age"
+                    labelId="manglik-label"
+                    id="manglik-select"
+                    value={areyouManglik}
+                    onChange={(event) => setAreyouManglik(event.target.value)}
                   >
-                    <MenuItem value="Yes">
-                      Yes
-                    </MenuItem>
+                    <MenuItem value="Yes">Yes</MenuItem>
                     <MenuItem value="No">No</MenuItem>
                   </Select>
+                  {errors.areyouManglik && <FormHelperText>{errors.areyouManglik}</FormHelperText>}
                 </FormControl>
               </div>
               <div
@@ -226,23 +231,6 @@ function Horoscope() {
                   marginBottom: "40px",
                 }}
               >
-                {/* <Button
-                  onClick={() => navigate('/')}
-                  variant="outlined"
-                  color="error"
-                  sx={{
-                    mt: 4,
-                    mb: 2,
-                    width: 150,
-                    height: 40,
-                    textTransform: "inherit",
-                    fontSize: "18px",
-                    // borderColor: "red",
-                    // color: "#FB6A6B",
-                  }}
-                >
-                  Cancel
-                </Button> */}
                 <Button
                   onClick={() => navigate('/education-career')}
                   variant="outlined"
@@ -294,7 +282,7 @@ function Horoscope() {
             <Instagram style={{ marginRight: "10px" }} />
             <Twitter style={{ marginRight: "10px" }} />
           </div>
-          <div>&copy; 2024 <span style={{ color: "#FFBF00	"}}>SoulMatch</span> All rights reserved.</div>
+          <div>&copy; 2024 <span style={{ color: "#FFBF00" }}>SoulMatch</span> All rights reserved.</div>
           <div>
             <Email style={{ marginRight: "10px" }} />
             <span style={{ color: "#FFF" }}>Email Address</span>

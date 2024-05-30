@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import logo from "../../images/logo.png";
 import { useNavigate } from 'react-router-dom';
-import { Typography, TextField, Button, Select, MenuItem, createTheme, ThemeProvider, InputLabel, FormControl } from "@mui/material";
+import { Typography, TextField, Button, Select, MenuItem, createTheme, ThemeProvider, InputLabel, FormControl, FormHelperText } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 
@@ -18,6 +18,8 @@ function ProfileDetails() {
   const [disabilityDetails, setDisabilityDetails] = useState("");
   const [email, setEmail] = useState(""); // New state variable for email
 
+  const [errors, setErrors] = useState({});
+
   const navigate = useNavigate();
   const theme = createTheme({
     components: {
@@ -31,7 +33,26 @@ function ProfileDetails() {
     },
   });
 
+  const validate = () => {
+    const newErrors = {};
+    if (!name) newErrors.name = "Name is required";
+    if (!gender) newErrors.gender = "Gender is required";
+    if (!age) newErrors.age = "Age is required";
+    if (!maritalStatus) newErrors.maritalStatus = "Marital status is required";
+    if (!nationality) newErrors.nationality = "Nationality is required";
+    if (!city) newErrors.city = "City is required";
+    if (!religion) newErrors.religion = "Religion is required";
+    if (disability === "Yes" && !disabilityDetails) newErrors.disabilityDetails = "Please provide details about your disability";
+    if (!email) newErrors.email = "Email is required";
+    if (email && !/\S+@\S+\.\S+/.test(email)) newErrors.email = "Email is invalid";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleProfileNext = async () => {
+    if (!validate()) return;
+
     console.log("..name..", name);
     console.log("gender..", gender);
     console.log("..age..", age);
@@ -58,7 +79,12 @@ function ProfileDetails() {
         email, // Include email in the navigation state
       }
     });
-  }
+  };
+
+  const handleChange = (setter, fieldName) => (event) => {
+    setter(event.target.value);
+    setErrors(prevErrors => ({ ...prevErrors, [fieldName]: "" }));
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -81,43 +107,81 @@ function ProfileDetails() {
                 Profile Details
               </Typography>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
-                <TextField label="Name" variant="standard" value={name} onChange={(event) => setName(event.target.value)} />
-                <FormControl variant="standard" sx={{ minWidth: 200 }}>
+                <TextField
+                  label="Name"
+                  variant="standard"
+                  value={name}
+                  onChange={handleChange(setName, "name")}
+                  error={!!errors.name}
+                  helperText={errors.name}
+                />
+                <FormControl variant="standard" sx={{ minWidth: 200 }} error={!!errors.gender}>
                   <InputLabel id="demo-simple-select-standard-label">Gender</InputLabel>
-                  <Select labelId="demo-simple-select-standard-label" id="demo-simple-select-standard" value={gender} onChange={(event) => setGender(event.target.value)} label="Gender">
+                  <Select
+                    labelId="demo-simple-select-standard-label"
+                    id="demo-simple-select-standard"
+                    value={gender}
+                    onChange={handleChange(setGender, "gender")}
+                    label="Gender"
+                  >
                     <MenuItem value="Male">Male</MenuItem>
                     <MenuItem value="Female">Female</MenuItem>
                     <MenuItem value="Others">Others</MenuItem>
                   </Select>
+                  {errors.gender && <FormHelperText>{errors.gender}</FormHelperText>}
                 </FormControl>
               </div>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
-                <TextField label="Age" variant="standard" value={age} onChange={(event) => setAge(event.target.value)} />
-                <FormControl variant="standard" sx={{ minWidth: 200 }}>
+                <TextField
+                  label="Age"
+                  variant="standard"
+                  value={age}
+                  onChange={handleChange(setAge, "age")}
+                  error={!!errors.age}
+                  helperText={errors.age}
+                />
+                <FormControl variant="standard" sx={{ minWidth: 200 }} error={!!errors.maritalStatus}>
                   <InputLabel id="demo-simple-select-standard-label">Marital Status</InputLabel>
-                  <Select labelId="demo-simple-select-standard-label" id="demo-simple-select-standard" 
-                  value={maritalStatus} 
-                  onChange={(event) => setMaritalStatus(event.target.value)} 
-                  label="Marital Status">
+                  <Select
+                    labelId="demo-simple-select-standard-label"
+                    id="demo-simple-select-standard"
+                    value={maritalStatus}
+                    onChange={handleChange(setMaritalStatus, "maritalStatus")}
+                    label="Marital Status"
+                  >
                     <MenuItem value="Single">Single</MenuItem>
                     <MenuItem value="Married">Married</MenuItem>
                     <MenuItem value="Divorced">Divorced</MenuItem>
                     <MenuItem value="Widowed">Widowed</MenuItem>
                     <MenuItem value="Annulled">Annulled</MenuItem>
                   </Select>
+                  {errors.maritalStatus && <FormHelperText>{errors.maritalStatus}</FormHelperText>}
                 </FormControl>
               </div>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
-                <FormControl variant="standard" sx={{ minWidth: 195 }}>
+                <FormControl variant="standard" sx={{ minWidth: 195 }} error={!!errors.nationality}>
                   <InputLabel id="demo-simple-select-standard-label">Nationality</InputLabel>
-                  <Select labelId="demo-simple-select-standard-label" id="demo-simple-select-standard" value={nationality} onChange={(event) => setNationality(event.target.value)} label="Nationality">
+                  <Select
+                    labelId="demo-simple-select-standard-label"
+                    id="demo-simple-select-standard"
+                    value={nationality}
+                    onChange={handleChange(setNationality, "nationality")}
+                    label="Nationality"
+                  >
                     <MenuItem value="Indian">Indian</MenuItem>
                     <MenuItem value="NRI">NRI</MenuItem>
                   </Select>
+                  {errors.nationality && <FormHelperText>{errors.nationality}</FormHelperText>}
                 </FormControl>
-                <FormControl variant="standard" sx={{ minWidth: 195 }}>
+                <FormControl variant="standard" sx={{ minWidth: 195 }} error={!!errors.city}>
                   <InputLabel id="city-select-label">City</InputLabel>
-                  <Select labelId="city-select-label" id="city-select" value={city} onChange={(event) => setCity(event.target.value)} label="City">
+                  <Select
+                    labelId="city-select-label"
+                    id="city-select"
+                    value={city}
+                    onChange={handleChange(setCity, "city")}
+                    label="City"
+                  >
                     <MenuItem value="Mohali">Mohali</MenuItem>
                     <MenuItem value="Delhi">Delhi</MenuItem>
                     <MenuItem value="Hyderabad">Hyderabad</MenuItem>
@@ -129,38 +193,58 @@ function ProfileDetails() {
                     <MenuItem value="Agra">Agra</MenuItem>
                     <MenuItem value="Mumbai">Mumbai</MenuItem>
                   </Select>
+                  {errors.city && <FormHelperText>{errors.city}</FormHelperText>}
                 </FormControl>
               </div>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
-                <TextField label="Religion" variant="standard" value={religion} onChange={(event) => setReligion(event.target.value)} />
-                <FormControl variant="standard" sx={{ minWidth: 200 }}>
+                <TextField
+                  label="Religion"
+                  variant="standard"
+                  value={religion}
+                  onChange={handleChange(setReligion, "religion")}
+                  error={!!errors.religion}
+                  helperText={errors.religion}
+                />
+                <FormControl variant="standard" sx={{ minWidth: 200 }} error={!!errors.disability}>
                   <InputLabel id="demo-simple-select-standard-label">Disability</InputLabel>
-                  <Select labelId="demo-simple-select-standard-label" id="demo-simple-select-standard" value={disability} onChange={(event) => setDisability(event.target.value)} label="Disability">
+                  <Select
+                    labelId="demo-simple-select-standard-label"
+                    id="demo-simple-select-standard"
+                    value={disability}
+                    onChange={handleChange(setDisability, "disability")}
+                    label="Disability"
+                  >
                     <MenuItem value="Yes">Yes</MenuItem>
                     <MenuItem value="No">No</MenuItem>
                   </Select>
+                  {errors.disability && <FormHelperText>{errors.disability}</FormHelperText>}
                 </FormControl>
               </div>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "40px",gap:"80px" }}>
               {disability === "Yes" && (
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "40px" }}>
                   <TextField
-                    label="Please provide details about your disability"
+                    label="Enter details about your disability"
                     variant="standard"
                     value={disabilityDetails}
-                    onChange={(event) => setDisabilityDetails(event.target.value)}
-                    fullWidth
+                    onChange={handleChange(setDisabilityDetails, "disabilityDetails")}
+                    sx={{minWidth:200}}
+                    error={!!errors.disabilityDetails}
+                    helperText={errors.disabilityDetails}
                   />
-                </div>
               )}
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "40px" }}>
+              {/* <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "40px" }}> */}
                 <TextField
                   label="Email"
                   variant="standard"
                   value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  fullWidth
-                />
-              </div>
+                  onChange={handleChange(setEmail, "email")}
+                  // fullWidth
+                  sx={{ width: disability === "Yes" ? 200 : 470 }}
+                  error={!!errors.email}
+                  helperText={errors.email}
+                  />
+              {/* </div> */}
+                  </div>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "20px", marginBottom: "40px" }}>
                 <Button
                   onClick={() => navigate('/')}

@@ -1,59 +1,69 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "../../images/logo.png";
 
-import { Typography, TextField, Button, Select, MenuItem, createTheme, ThemeProvider, InputLabel, FormControl } from "@mui/material";
+import {
+  Typography,
+  TextField,
+  Button,
+  Select,
+  MenuItem,
+  createTheme,
+  ThemeProvider,
+  InputLabel,
+  FormControl,
+  FormHelperText
+} from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useLocation, useNavigate } from "react-router-dom";
 
 function AdditionalDetails() {
-  const [caste , setCaste] = useState("")
- const [subCaste,setSubCaste] = useState("")
- const [origin , setOrigin] = useState("")
- const [mothertongue , setMotherTongue] = useState("")
- const [height , setHeight] = useState("")
- const [weight, setWeight] = useState("")
- const [gothra , setGothra] = useState("")
- const [petFriendly , setpetFriendly] = useState("")
+  const [caste, setCaste] = useState("");
+  const [subCaste, setSubCaste] = useState("");
+  const [origin, setOrigin] = useState("");
+  const [motherTongue, setMotherTongue] = useState("");
+  const [height, setHeight] = useState("");
+  const [weight, setWeight] = useState("");
+  const [gothra, setGothra] = useState("");
+  const [petFriendly, setPetFriendly] = useState("");
+  const [formValid, setFormValid] = useState(false);
 
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const navigate = useNavigate()
-  const location = useLocation()
-  console.log("...location...",location)
+  // Validation logic
+  useEffect(() => {
+    if (caste && subCaste && origin && motherTongue && height && weight && gothra && petFriendly) {
+      setFormValid(true);
+    } else {
+      setFormValid(false);
+    }
+  }, [caste, subCaste, origin, motherTongue, height, weight, gothra, petFriendly]);
 
-
-
-  const handleAdditionalDetails = async() => {
-    console.log("..caste ...",caste)
-    console.log("...subCaste...",subCaste)
-    console.log("...origin...",origin)
-    console.log("..mothertongue...",mothertongue)
-    console.log("..height...",height)
-    console.log("...weight..",weight)
-    console.log("...gothra..",gothra)
-    console.log("...petfriendly...",petFriendly)
-     navigate('/education-career',{
-      state : {
-        caste : caste,
-        subCaste : subCaste,
-        origin : origin,
-        mothertongue : mothertongue,
-        height : height,
-        weight : weight,
-        gothra : gothra,
-        petFriendly : petFriendly,
-        age : location.state.age,
-        city : location.state.city,
-        disability : location.state.disability,
-        gender : location.state.gender,
-        maritalStatus : location.state.maritalStatus,
-        name : location.state.name,
-        nationality : location.state.nationality,
-        religion : location.state.religion,
-        email : location.state.email
+  const handleAdditionalDetails = async () => {
+    navigate('/education-career', {
+      state: {
+        caste,
+        subCaste,
+        origin,
+        motherTongue,
+        height,
+        weight,
+        gothra,
+        petFriendly,
+        age: location.state.age,
+        city: location.state.city,
+        disability: location.state.disability,
+        gender: location.state.gender,
+        maritalStatus: location.state.maritalStatus,
+        name: location.state.name,
+        nationality: location.state.nationality,
+        religion: location.state.religion,
+        email: location.state.email
       }
-     })
-  }
+    });
+  };
+
   const theme = createTheme({
     components: {
       MuiPopover: {
@@ -65,11 +75,10 @@ function AdditionalDetails() {
       },
     },
   });
+
   return (
     <ThemeProvider theme={theme}>
-      <div
-        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
-      >
+      <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
         <nav
           style={{
             backgroundColor: "#6D0B32",
@@ -135,13 +144,13 @@ function AdditionalDetails() {
                   marginBottom: "40px",
                 }}
               >
-                <FormControl variant="standard" sx={{ minWidth: 195 }}>
+                <FormControl variant="standard" sx={{ minWidth: 195 }} error={!caste}>
                   <InputLabel id="caste-select-label">Caste</InputLabel>
                   <Select
                     labelId="caste-select-label"
                     id="caste-select"
-                     value={caste}
-                     onChange={(event) => setCaste(event.target.value)}
+                    value={caste}
+                    onChange={(event) => setCaste(event.target.value)}
                     label="Caste"
                   >
                     <MenuItem value="General">General</MenuItem>
@@ -149,14 +158,15 @@ function AdditionalDetails() {
                     <MenuItem value="SC">SC</MenuItem>
                     <MenuItem value="ST">ST</MenuItem>
                   </Select>
+                  {!caste && <FormHelperText>Please select your caste</FormHelperText>}
                 </FormControl>
-                <FormControl variant="standard" sx={{ minWidth: 195 }}>
+                <FormControl variant="standard" sx={{ minWidth: 195 }} error={!subCaste}>
                   <InputLabel id="sub-caste-select-label">Sub Caste</InputLabel>
                   <Select
                     labelId="sub-caste-select-label"
                     id="sub-caste-select"
-                     value={subCaste}
-                     onChange={(event) => setSubCaste(event.target.value)}
+                    value={subCaste}
+                    onChange={(event) => setSubCaste(event.target.value)}
                     label="Sub Caste"
                   >
                     <MenuItem value="SubCaste1">Sub Caste 1</MenuItem>
@@ -164,6 +174,7 @@ function AdditionalDetails() {
                     <MenuItem value="SubCaste3">Sub Caste 3</MenuItem>
                     <MenuItem value="SubCaste4">Sub Caste 4</MenuItem>
                   </Select>
+                  {!subCaste && <FormHelperText>Please select your sub-caste</FormHelperText>}
                 </FormControl>
               </div>
               <div
@@ -175,40 +186,21 @@ function AdditionalDetails() {
                   marginBottom: "40px",
                 }}
               >
-                <TextField 
-                label="Origin" 
-                variant="standard" 
-                value={origin}
-                onChange={(event) => setOrigin(event.target.value)}
+                <TextField
+                  label="Origin"
+                  variant="standard"
+                  value={origin}
+                  onChange={(event) => setOrigin(event.target.value)}
+                  error={!origin}
+                  helperText={!origin && "Please enter your origin"}
                 />
-                <TextField 
-                label="Mother Tongue" 
-                variant="standard" 
-                value={mothertongue}
-                onChange={(event) => setMotherTongue(event.target.value)}
-                />
-                {/* Dropdown for Marital Status */}
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "80px",
-                  marginBottom: "40px",
-                }}
-              >
-                <TextField 
-                label="Height" 
-                variant="standard" 
-                value={height}
-                onChange={(event) => setHeight(event.target.value)}
-                />
-                <TextField 
-                label="Weight" 
-                variant="standard" 
-                value={weight}
-                onChange={(event) => setWeight(event.target.value)}
+                <TextField
+                  label="Mother Tongue"
+                  variant="standard"
+                  value={motherTongue}
+                  onChange={(event) => setMotherTongue(event.target.value)}
+                  error={!motherTongue}
+                  helperText={!motherTongue && "Please enter your mother tongue"}
                 />
               </div>
               <div
@@ -220,13 +212,39 @@ function AdditionalDetails() {
                   marginBottom: "40px",
                 }}
               >
-                <FormControl variant="standard" sx={{ minWidth: 195 }}>
+                <TextField
+                  label="Height"
+                  variant="standard"
+                  value={height}
+                  onChange={(event) => setHeight(event.target.value)}
+                  error={!height}
+                  helperText={!height && "Please enter your height"}
+                />
+                <TextField
+                  label="Weight"
+                  variant="standard"
+                  value={weight}
+                  onChange={(event) => setWeight(event.target.value)}
+                  error={!weight}
+                  helperText={!weight && "Please enter your weight"}
+                />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "80px",
+                  marginBottom: "40px",
+                }}
+              >
+                <FormControl variant="standard" sx={{ minWidth: 195 }} error={!gothra}>
                   <InputLabel id="gothra-select-label">Gothra</InputLabel>
                   <Select
                     labelId="gothra-select-label"
                     id="gothra-select"
-                     value={gothra}
-                     onChange={(event) => setGothra(event.target.value)}
+                    value={gothra}
+                    onChange={(event) => setGothra(event.target.value)}
                     label="Gothra"
                   >
                     <MenuItem value="Gothra1">Gothra 1</MenuItem>
@@ -234,22 +252,22 @@ function AdditionalDetails() {
                     <MenuItem value="Gothra3">Gothra 3</MenuItem>
                     <MenuItem value="Gothra4">Gothra 4</MenuItem>
                   </Select>
+                  {!gothra && <FormHelperText>Please select your gothra</FormHelperText>}
                 </FormControl>
 
-                <FormControl variant="standard" sx={{ minWidth: 200 }}>
-                  <InputLabel id="demo-simple-select-standard-label">
-                    Pet Friendly
-                  </InputLabel>
+                <FormControl variant="standard" sx={{ minWidth: 200 }} error={!petFriendly}>
+                  <InputLabel id="pet-friendly-select-label">Pet Friendly</InputLabel>
                   <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                     value={petFriendly}
-                     onChange={(event) => setpetFriendly(event.target.value)}
-                    label="Age"
+                    labelId="pet-friendly-select-label"
+                    id="pet-friendly-select"
+                    value={petFriendly}
+                    onChange={(event) => setPetFriendly(event.target.value)}
+                    label="Pet Friendly"
                   >
                     <MenuItem value="Yes">Yes</MenuItem>
                     <MenuItem value="No">No</MenuItem>
                   </Select>
+                  {!petFriendly && <FormHelperText>Please select if you are pet friendly</FormHelperText>}
                 </FormControl>
               </div>
               <div
@@ -261,23 +279,6 @@ function AdditionalDetails() {
                   marginBottom: "40px",
                 }}
               >
-                {/* <Button
-                  onClick={() => navigate('/')}
-                  variant="outlined"
-                  color="error"
-                  sx={{
-                    mt: 4,
-                    mb: 2,
-                    width: 150,
-                    height: 40,
-                    textTransform: "inherit",
-                    fontSize: "18px",
-                    // borderColor: "red",
-                    // color: "#FB6A6B",
-                  }}
-                >
-                  Cancel
-                </Button> */}
                 <Button
                   onClick={() => navigate('/profile-details')}
                   variant="outlined"
@@ -307,6 +308,7 @@ function AdditionalDetails() {
                     fontSize: "18px",
                     backgroundColor: "#FB6A6B",
                   }}
+                  disabled={!formValid}
                 >
                   Next
                 </Button>
@@ -329,7 +331,7 @@ function AdditionalDetails() {
             <Instagram style={{ marginRight: "10px" }} />
             <Twitter style={{ marginRight: "10px" }} />
           </div>
-          <div>&copy; 2024 <span style={{ color: "#FFBF00	"}}>SoulMatch</span> All rights reserved.</div>
+          <div>&copy; 2024 <span style={{ color: "#FFBF00" }}>SoulMatch</span> All rights reserved.</div>
           <div>
             <Email style={{ marginRight: "10px" }} />
             <span style={{ color: "#FFF" }}>Email Address</span>
