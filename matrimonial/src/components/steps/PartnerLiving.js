@@ -19,14 +19,65 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function PartnerLiving() {
-  const [part_diet, setDiet] = useState("")
-  const [part_alcohol, setAlcohol] = useState("")
-  const [part_smoke, setSmoke] = useState("")
-  const [part_interest, setInterest] = useState("")
+  const [part_diet, setDiet] = useState("");
+  const [part_alcohol, setAlcohol] = useState("");
+  const [part_smoke, setSmoke] = useState("");
+  const [part_interest, setInterest] = useState("");
+  const [errors, setErrors] = useState({
+    diet: "",
+    alcohol: "",
+    smoke: "",
+    interest: ""
+  });
 
-  const location = useLocation()
-  console.log("..location. partner living ...", location.state)
-  const navigate = useNavigate()
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Validation functions
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = {
+      diet: "",
+      alcohol: "",
+      smoke: "",
+      interest: ""
+    };
+
+    if (!part_diet) {
+      newErrors.diet = "Please select a diet";
+      valid = false;
+    }
+    if (!part_alcohol) {
+      newErrors.alcohol = "Please select alcohol consumption";
+      valid = false;
+    }
+    if (!part_smoke) {
+      newErrors.smoke = "Please select smoking status";
+      valid = false;
+    }
+    if (!part_interest.trim()) {
+      newErrors.interest = "Interest is required";
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
+  const handleNext = async () => {
+    if (validateForm()) {
+      try {
+        // Your axios post request here
+        navigate('/upload-document', {
+          state: {
+            ...location.state,
+          }
+        });
+      } catch (error) {
+        console.log("Error:", error);
+      }
+    }
+  };
   const theme = createTheme({
     components: {
       MuiPopover: {
@@ -38,100 +89,7 @@ function PartnerLiving() {
       },
     },
   });
-  const handleNext = async () => {
-    try {
-      const API_BASE_URL = 'http://localhost:3002'
 
-const filterBrothersName = JSON.stringify(location.state.brotherNames)
-const filterBrothersProf = JSON.stringify(location.state.brotherProfs)
-const filtersisterName = JSON.stringify(location.state.sisterNames)
-const filtersisterProf = JSON.stringify(location.state.sisterProfs)
-
-      const response = await axios.post(
-        `${API_BASE_URL}/profile-register`,
-        {
-
-          email : location.state.email,
-          name : location.state.name,
-          gender : location.state.gender,
-          age : location.state.age,
-          martialStatus: location.state.maritalStatus,
-          nationality : location.state.nationality,
-          city : location.state.city,
-          religion : location.state.religion,
-          disability : location.state.disability,
-          disabilityDetail : location.state.disabilityDetails,
-          caste : location.state.caste,
-          subCaste :location.state.subCaste,
-          origin : location.state.origin,
-          motherTongue : location.state.mothertongue,
-          height : location.state.height,
-          weight : location.state.weight,
-          gothra : location.state.gothra,
-          petFriendly : location.state.petFriendly,
-          heighestEduction : location.state.highestEduction,
-          currentEmployee : location.state.currentEmployes,
-          profession : location.state.profession,
-          annualIncome : location.state.annualIncome,
-          yearsofExperience : location.state.yearsOfExperience,
-          dateOfBirth : location.state.dateofBirth,
-          timeOfBirth : location.state.timeofBirth,
-          placeofBirth : location.state.placeofBirth,
-          areYouManglik : location.state.areyouManglik,
-          diet : location.state.diet,
-          alcohol  : location.state.alcohol,
-          smoke : location.state.smoke,
-          interest : location.state.Interest,
-          family_Type : location.state.familyType,
-          FathersName : location.state.fatherName,
-          Fathers_prof : location.state.fatherProf,
-          MothersName : location.state.motherName,
-          Mothers_prof : location.state.motherProf,
-          sister : location.state.numSisters,
-          sisterName : filtersisterName,
-          sisterProfession : filtersisterProf,
-          brother : location.state.numBrothers,
-          brotherName : filterBrothersName,
-          brotherProfession : filterBrothersProf,
-          Part_ageFrom : location.state.part_ageFrom,
-          Part_martialStatus : location.state.part_martialStatus,
-          Part_Religion : location.state.part_religion,
-          Part_Caste : location.state.part_caste,
-          Part_motherTongue : location.state.part_mothertongue,
-          Part_height : location.state.part_height,
-          Part_horoscopeMatch : location.state.part_horoscopeMatch,
-          Part_petFriendly : location.state.part_petFriendly,
-          Part_heighestEduction : location.state.part_highestEduction,
-          Part_currentEmployee : location.state.part_currentEmployes,
-          Part_profession : location.state.part_profession,
-          Part_annualIncome : location.state.part_AnnualIncome,
-          Part_yearsOfExpereience : location.state.part_yearsOfExperience,
-          Part_deit : part_diet,
-          Part_alcohol : part_alcohol ,
-          Part_smoke : part_smoke,
-          Part_interest : part_interest
-
-        },
-         {
-          headers: {
-            // Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        },
-      )
-        console.log("...response ...",response)
-        navigate('/upload-document', {
-          state: {
-            ...location.state,
-            
-          }
-        })
-      
-    } catch (error) {
-      console.log("...catch..", error)
-    }
-   
-  }
   return (
     <ThemeProvider theme={theme}>
       <div
@@ -222,13 +180,16 @@ const filtersisterProf = JSON.stringify(location.state.sisterProfs)
                     id="demo-simple-select-standard"
                     value={part_diet}
                     onChange={(event) => setDiet(event.target.value)}
-
+                    error={!!errors.diet}
                   >
                     <MenuItem value="Vegetarian">Vegetarian</MenuItem>
                     <MenuItem value="Vegan">Vegan</MenuItem>
                     <MenuItem value="Non-vegetarian">Non-vegetarian</MenuItem>
                     <MenuItem value="Pescatarian">Pescatarian</MenuItem>
                   </Select>
+                  {errors.diet && (
+                    <Typography color="error">{errors.diet}</Typography>
+                  )}
                 </FormControl>
               </div>
               <div
@@ -239,7 +200,7 @@ const filtersisterProf = JSON.stringify(location.state.sisterProfs)
                   gap: "80px",
                   marginBottom: "40px",
                 }}
-              // sx={{ minWidth: 300, marginTop:"10px" }}
+                // sx={{ minWidth: 300, marginTop:"10px" }}
               >
                 <FormControl variant="standard" sx={{ minWidth: 300 }}>
                   <InputLabel id="demo-simple-select-standard-label">
@@ -250,12 +211,15 @@ const filtersisterProf = JSON.stringify(location.state.sisterProfs)
                     id="demo-simple-select-standard"
                     value={part_alcohol}
                     onChange={(event) => setAlcohol(event.target.value)}
-                    label="Age"
+                    error={!!errors.alcohol}
                   >
                     <MenuItem value="Social Drinker">Social Drinker</MenuItem>
                     <MenuItem value="Regular Drinker">Regular Drinker</MenuItem>
                     <MenuItem value="Non-drinker">Non-drinker</MenuItem>
                   </Select>
+                  {errors.alcohol && (
+                    <Typography color="error">{errors.alcohol}</Typography>
+                  )}
                 </FormControl>
               </div>
               <div
@@ -276,11 +240,14 @@ const filtersisterProf = JSON.stringify(location.state.sisterProfs)
                     id="demo-simple-select-standard"
                     value={part_smoke}
                     onChange={(event) => setSmoke(event.target.value)}
-                    label="Age"
+                    error={!!errors.smoke}
                   >
                     <MenuItem value="Yes">Yes</MenuItem>
                     <MenuItem value="No">No</MenuItem>
                   </Select>
+                  {errors.smoke && (
+                    <Typography color="error">{errors.smoke}</Typography>
+                  )}
                 </FormControl>
 
                 {/* <TextField label="Height" variant="standard" /> */}
@@ -288,9 +255,10 @@ const filtersisterProf = JSON.stringify(location.state.sisterProfs)
               <div
                 style={{
                   display: "flex",
+                  flexDirection:"column",
                   alignItems: "center",
                   justifyContent: "center",
-                  gap: "80px",
+                  gap: "20px",
                   marginBottom: "40px",
                 }}
               >
@@ -300,7 +268,11 @@ const filtersisterProf = JSON.stringify(location.state.sisterProfs)
                   variant="standard"
                   value={part_interest}
                   onChange={(event) => setInterest(event.target.value)}
-                />{" "}
+                  error={!!errors.interest}
+                />
+                {errors.interest && (
+                  <Typography color="error">{errors.interest}</Typography>
+                )}
               </div>
               <div
                 style={{
@@ -329,7 +301,7 @@ const filtersisterProf = JSON.stringify(location.state.sisterProfs)
                   Cancel
                 </Button> */}
                 <Button
-                  onClick={() => navigate('/partner-education')}
+                  onClick={() => navigate("/partner-education")}
                   variant="outlined"
                   sx={{
                     mt: 4,
@@ -379,7 +351,10 @@ const filtersisterProf = JSON.stringify(location.state.sisterProfs)
             <Instagram style={{ marginRight: "10px" }} />
             <Twitter style={{ marginRight: "10px" }} />
           </div>
-          <div>&copy; 2024 <span style={{ color: "#FFBF00	" }}>SoulMatch</span> All rights reserved.</div>
+          <div>
+            &copy; 2024 <span style={{ color: "#FFBF00	" }}>SoulMatch</span> All
+            rights reserved.
+          </div>
           <div>
             <Email style={{ marginRight: "10px" }} />
             <span style={{ color: "#FFF" }}>Email Address</span>

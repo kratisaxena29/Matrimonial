@@ -88,11 +88,24 @@ function Horoscope() {
   };
 
   const handleInputChange = (event) => {
-    setMessage(event.target.value);
-  };
-
-  const handleTyping = () => {
-    setMessageDisabled(true);
+    const { name, value } = event.target;
+    switch (name) {
+      case 'dateofBirth':
+        setDateofBirth(value);
+        break;
+      case 'timeofBirth':
+        setTimeofBirth(value);
+        break;
+      case 'placeofBirth':
+        setPlaceofBirth(value);
+        break;
+      case 'areyouManglik':
+        setAreyouManglik(value);
+        break;
+      default:
+        break;
+    }
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
 
   return (
@@ -153,9 +166,10 @@ function Horoscope() {
                 <TextField
                   sx={{ minWidth: 300 }}
                   label="Date of Birth"
+                  name="dateofBirth"
                   variant="standard"
                   value={dateofBirth}
-                  onChange={(event) => setDateofBirth(event.target.value)}
+                  onChange={handleInputChange}
                   error={Boolean(errors.dateofBirth)}
                   helperText={errors.dateofBirth}
                 />
@@ -172,9 +186,10 @@ function Horoscope() {
                 <TextField
                   sx={{ minWidth: 300 }}
                   label="Time of Birth"
+                  name="timeofBirth"
                   variant="standard"
                   value={timeofBirth}
-                  onChange={(event) => setTimeofBirth(event.target.value)}
+                  onChange={handleInputChange}
                   error={Boolean(errors.timeofBirth)}
                   helperText={errors.timeofBirth}
                 />
@@ -191,9 +206,10 @@ function Horoscope() {
                 <TextField
                   sx={{ minWidth: 300 }}
                   label="Place of Birth"
+                  name="placeofBirth"
                   variant="standard"
                   value={placeofBirth}
-                  onChange={(event) => setPlaceofBirth(event.target.value)}
+                  onChange={handleInputChange}
                   error={Boolean(errors.placeofBirth)}
                   helperText={errors.placeofBirth}
                 />
@@ -213,8 +229,9 @@ function Horoscope() {
                   <Select
                     labelId="manglik-label"
                     id="manglik-select"
+                    name="areyouManglik"
                     value={areyouManglik}
-                    onChange={(event) => setAreyouManglik(event.target.value)}
+                    onChange={handleInputChange}
                   >
                     <MenuItem value="Yes">Yes</MenuItem>
                     <MenuItem value="No">No</MenuItem>

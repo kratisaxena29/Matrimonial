@@ -10,21 +10,21 @@ import {
   ThemeProvider,
   InputLabel,
   FormControl,
+  FormHelperText,
 } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import SchoolIcon from "@mui/icons-material/School";
-import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
+import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function LifeStyle() {
-const [diet,setDiet] = useState("")
-const [alcohol,setAlcohol] = useState("")
-const [smoke, setSmoke] = useState("")
-const [Interest,setInterest] = useState("")
-const location = useLocation()
-console.log("...lifestyle...",location.state)
-  const navigate = useNavigate()
+  const [diet, setDiet] = useState("");
+  const [alcohol, setAlcohol] = useState("");
+  const [smoke, setSmoke] = useState("");
+  const [interest, setInterest] = useState("");
+  const [errors, setErrors] = useState({});
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const theme = createTheme({
     components: {
       MuiPopover: {
@@ -37,42 +37,76 @@ console.log("...lifestyle...",location.state)
     },
   });
 
+  const validate = () => {
+    const newErrors = {};
+    if (!diet) newErrors.diet = "Diet is required";
+    if (!alcohol) newErrors.alcohol = "Alcohol consumption status is required";
+    if (!smoke) newErrors.smoke = "Smoking status is required";
+    if (!interest) newErrors.interest = "Interests are required";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleNext = () => {
-    navigate('/family-details',{
-      state: {
-        diet : diet,
-        alcohol : alcohol,
-        smoke : smoke,
-        Interest : Interest,
-        dateofBirth : location.state.dateofBirth,
-        timeofBirth : location.state.timeofBirth,
-        placeofBirth : location.state.placeofBirth,
-        areyouManglik : location.state.areyouManglik ,
-        highestEduction : location.state.highestEduction,
-        currentEmployes : location.state.currentEmployes,
-        profession : location.state.profession,
-        annualIncome : location.state.annualIncome,
-        yearsOfExperience : location.state.yearsOfExperience,
-        caste : location.state.caste,
-        subCaste : location.state.subCaste,
-        origin : location.state.origin,
-        mothertongue : location.state.mothertongue,
-        height : location.state.height,
-        weight : location.state.weight,
-        gothra : location.state.gothra,
-        petFriendly : location.state.petFriendly,
-        age : location.state.age,
-        city : location.state.city,
-        disability : location.state.disability,
-        gender : location.state.gender,
-        maritalStatus : location.state.maritalStatus,
-        name : location.state.name,
-        nationality : location.state.nationality,
-        religion : location.state.religion,
-        email : location.state.email
-      }
-    })
-  }
+    if (validate()) {
+      navigate("/family-details", {
+        state: {
+          diet: diet,
+          alcohol: alcohol,
+          smoke: smoke,
+          interest: interest,
+          dateofBirth: location.state.dateofBirth,
+          timeofBirth: location.state.timeofBirth,
+          placeofBirth: location.state.placeofBirth,
+          areyouManglik: location.state.areyouManglik,
+          highestEduction: location.state.highestEduction,
+          currentEmployes: location.state.currentEmployes,
+          profession: location.state.profession,
+          annualIncome: location.state.annualIncome,
+          yearsOfExperience: location.state.yearsOfExperience,
+          caste: location.state.caste,
+          subCaste: location.state.subCaste,
+          origin: location.state.origin,
+          mothertongue: location.state.mothertongue,
+          height: location.state.height,
+          weight: location.state.weight,
+          gothra: location.state.gothra,
+          petFriendly: location.state.petFriendly,
+          age: location.state.age,
+          city: location.state.city,
+          disability: location.state.disability,
+          gender: location.state.gender,
+          maritalStatus: location.state.maritalStatus,
+          name: location.state.name,
+          nationality: location.state.nationality,
+          religion: location.state.religion,
+          email: location.state.email,
+        },
+      });
+    }
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    switch (name) {
+      case "diet":
+        setDiet(value);
+        break;
+      case "alcohol":
+        setAlcohol(value);
+        break;
+      case "smoke":
+        setSmoke(value);
+        break;
+      case "interest":
+        setInterest(value);
+        break;
+      default:
+        break;
+    }
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <div
@@ -144,22 +178,26 @@ console.log("...lifestyle...",location.state)
                   //   marginTop: "20px",
                 }}
               >
-                <FormControl variant="standard" sx={{ minWidth: 300 }}>
-                  <InputLabel id="demo-simple-select-standard-label">
-                    Diet
-                  </InputLabel>
+                <FormControl
+                  variant="standard"
+                  sx={{ minWidth: 300 }}
+                  error={Boolean(errors.diet)}
+                >
+                  <InputLabel id="diet-label">Diet</InputLabel>
                   <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                     value={diet}
-                    onChange={(event) => setDiet(event.target.value)}
-                    label="Age"
+                    labelId="diet-label"
+                    id="diet"
+                    name="diet"
+                    value={diet}
+                    onChange={handleInputChange}
+                    label="Diet"
                   >
                     <MenuItem value="Vegetarian">Vegetarian</MenuItem>
                     <MenuItem value="Vegan">Vegan</MenuItem>
                     <MenuItem value="Non-vegetarian">Non-vegetarian</MenuItem>
                     <MenuItem value="Pescatarian">Pescatarian</MenuItem>
                   </Select>
+                  {errors.diet && <FormHelperText>{errors.diet}</FormHelperText>}
                 </FormControl>
               </div>
               <div
@@ -170,23 +208,28 @@ console.log("...lifestyle...",location.state)
                   gap: "80px",
                   marginBottom: "40px",
                 }}
-                // sx={{ minWidth: 300, marginTop:"10px" }}
               >
-                <FormControl variant="standard" sx={{ minWidth: 300 }}>
-                  <InputLabel id="demo-simple-select-standard-label">
-                    Alcohol
-                  </InputLabel>
+                <FormControl
+                  variant="standard"
+                  sx={{ minWidth: 300 }}
+                  error={Boolean(errors.alcohol)}
+                >
+                  <InputLabel id="alcohol-label">Alcohol</InputLabel>
                   <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
+                    labelId="alcohol-label"
+                    id="alcohol"
+                    name="alcohol"
                     value={alcohol}
-                     onChange={(event) => setAlcohol(event.target.value)}
-                    label="Age"
+                    onChange={handleInputChange}
+                    label="Alcohol"
                   >
                     <MenuItem value="Social Drinker">Social Drinker</MenuItem>
                     <MenuItem value="Regular Drinker">Regular Drinker</MenuItem>
                     <MenuItem value="Non-drinker">Non-drinker</MenuItem>
                   </Select>
+                  {errors.alcohol && (
+                    <FormHelperText>{errors.alcohol}</FormHelperText>
+                  )}
                 </FormControl>
               </div>
               <div
@@ -198,23 +241,27 @@ console.log("...lifestyle...",location.state)
                   marginBottom: "40px",
                 }}
               >
-                <FormControl variant="standard" sx={{ minWidth: 300 }}>
-                  <InputLabel id="demo-simple-select-standard-label">
-                    Smoke
-                  </InputLabel>
+                <FormControl
+                  variant="standard"
+                  sx={{ minWidth: 300 }}
+                  error={Boolean(errors.smoke)}
+                >
+                  <InputLabel id="smoke-label">Smoke</InputLabel>
                   <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                     value={smoke}
-                    onChange={(event) => setSmoke(event.target.value)}
-                    label="Age"
+                    labelId="smoke-label"
+                    id="smoke"
+                    name="smoke"
+                    value={smoke}
+                    onChange={handleInputChange}
+                    label="Smoke"
                   >
                     <MenuItem value="Yes">Yes</MenuItem>
                     <MenuItem value="No">No</MenuItem>
                   </Select>
+                  {errors.smoke && (
+                    <FormHelperText>{errors.smoke}</FormHelperText>
+                  )}
                 </FormControl>
-
-                {/* <TextField label="Height" variant="standard" /> */}
               </div>
               <div
                 style={{
@@ -228,10 +275,13 @@ console.log("...lifestyle...",location.state)
                 <TextField
                   sx={{ minWidth: 300 }}
                   label="Interests"
+                  name="interest"
                   variant="standard"
-                  value={Interest}
-                  onChange={(event) => setInterest(event.target.value)}
-                />{" "}
+                  value={interest}
+                  onChange={handleInputChange}
+                  error={Boolean(errors.interest)}
+                  helperText={errors.interest}
+                />
               </div>
               <div
                 style={{
@@ -242,25 +292,8 @@ console.log("...lifestyle...",location.state)
                   marginBottom: "40px",
                 }}
               >
-                {/* <Button
-                  onClick={() => navigate('/')}
-                  variant="outlined"
-                  color="error"
-                  sx={{
-                    mt: 4,
-                    mb: 2,
-                    width: 150,
-                    height: 40,
-                    textTransform: "inherit",
-                    fontSize: "18px",
-                    // borderColor: "red",
-                    // color: "#FB6A6B",
-                  }}
-                >
-                  Cancel
-                </Button> */}
                 <Button
-                  onClick={() => navigate('/horoscope')}
+                  onClick={() => navigate("/horoscope")}
                   variant="outlined"
                   sx={{
                     mt: 4,
@@ -310,7 +343,11 @@ console.log("...lifestyle...",location.state)
             <Instagram style={{ marginRight: "10px" }} />
             <Twitter style={{ marginRight: "10px" }} />
           </div>
-          <div>&copy; 2024 <span style={{ color: "#FFBF00	"}}>SoulMatch</span> All rights reserved.</div>
+          <div>
+            &copy; 2024{" "}
+            <span style={{ color: "#FFBF00" }}>SoulMatch</span> All rights
+            reserved.
+          </div>
           <div>
             <Email style={{ marginRight: "10px" }} />
             <span style={{ color: "#FFF" }}>Email Address</span>
