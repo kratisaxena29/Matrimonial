@@ -15,7 +15,7 @@ import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import SchoolIcon from "@mui/icons-material/School";
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
-import { useLocation, useNavigate } from "react-router-dom";
+import { json, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function PartnerLiving() {
@@ -67,12 +67,90 @@ function PartnerLiving() {
   const handleNext = async () => {
     if (validateForm()) {
       try {
-        // Your axios post request here
+
+        
+  const API_BASE_URL = 'http://localhost:3002';
+  const brotherNamedata = JSON.stringify(location.state.brotherNames)
+  const brotherProfdata = JSON.stringify(location.state.brotherProfs)
+  const sisterNamedata = JSON.stringify(location.state.sisterNames)
+  const sisterprofdata = JSON.stringify(location.state.sisterProfs)
+        const response = await axios.post(
+          `${API_BASE_URL}/profile-register`,
+          {
+              email : location.state.email,
+             name : location.state.name,
+             gender : location.state.gender,
+             age : location.state.age,
+             martialStatus : location.state.maritalStatus,
+             nationality : location.state.nationality,
+             city : location.state.city,
+             religion : location.state.religion,
+             disability : location.state.disability,
+             disabilityDetail : location.state.disability,
+             caste : location.state.caste,
+             subCaste : location.state.subCaste,
+             origin : location.state.origin,
+             motherTongue : location.state.motherTongue,
+             height : location.state.height,
+             weight : location.state.weight,
+             gothra : location.state.gothra, 
+             petFriendly : location.state.petFriendly,
+             heighestEduction : location.state.highestEduction,
+             currentEmployee : location.state.currentEmployes,
+             profession : location.state.profession,
+             annualIncome : location.state.annualIncome,
+             yearsofExperience : location.state.yearsOfExperience,
+             dateOfBirth : location.state.dateofBirth,
+             timeOfBirth : location.state.timeofBirth, 
+             placeofBirth : location.state.placeofBirth,
+             areYouManglik : location.state.areyouManglik,
+             diet : location.state.diet,
+             alcohol : location.state.alcohol,
+             smoke : location.state.smoke,
+             interest : location.state.interest,
+             family_Type : location.state.familyType,
+             FathersName : location.state.fatherName,
+             Fathers_prof : location.state.fatherProf,
+             MothersName : location.state.motherName,
+             Mothers_prof : location.state.motherProf,
+             sister : location.state.numSisters,
+             sisterName : sisterNamedata,
+             sisterProfession : sisterprofdata,
+             brother : location.state.numBrothers,
+             brotherName : brotherNamedata,
+             brotherProfession : brotherProfdata,
+             Part_ageFrom : location.state.part_ageFrom,
+             Part_martialStatus : location.state.part_martialStatus,
+            Part_Religion : location.state.part_religion,
+              Part_Caste : location.state.part_caste,
+              Part_motherTongue : location.state.part_mothertongue,
+              Part_height : location.state.part_height,
+              Part_horoscopeMatch : location.state.part_horoscopeMatch,
+              Part_petFriendly : location.state.part_petFriendly,
+              Part_heighestEduction : location.state.part_highestEducation,
+              Part_currentEmployee : location.state.part_currentEmployment,
+              Part_profession : location.state.part_profession,
+              Part_annualIncome : location.state.part_annualIncome,
+              Part_yearsOfExpereience : location.state.part_yearsOfExperience,
+              Part_deit : part_diet,
+              Part_alcohol : part_alcohol,
+              Part_smoke : part_smoke,
+              Part_interest : part_interest
+          },
+          {
+            headers: {
+              // Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+         
+        );
         navigate('/upload-document', {
           state: {
             ...location.state,
           }
         });
+        console.log("..response..",response)
       } catch (error) {
         console.log("Error:", error);
       }

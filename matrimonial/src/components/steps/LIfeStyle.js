@@ -67,7 +67,7 @@ function LifeStyle() {
           caste: location.state.caste,
           subCaste: location.state.subCaste,
           origin: location.state.origin,
-          mothertongue: location.state.mothertongue,
+          mothertongue: location.state.motherTongue,
           height: location.state.height,
           weight: location.state.weight,
           gothra: location.state.gothra,

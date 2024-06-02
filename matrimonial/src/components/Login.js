@@ -57,7 +57,9 @@ const Login = () => {
         
         console.log("In 404 console..email")
         toast.warning("Please verify your email");
-        navigate('/verify-otp')
+        navigate('/verify-otp',{state : {
+          email : formData.email
+        }})
       } 
       else if (error.response.data.ErrorCode == 405) {
         console.log("In 404 console..profile")
