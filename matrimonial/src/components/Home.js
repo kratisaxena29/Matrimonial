@@ -14,6 +14,8 @@ import couple7 from "../images/gallery/couple-7.jpg"
 import couple8 from "../images/gallery/couple-8.jpg"
 import logo from "../images/logo.png"
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // import img1 from "../images/gallery/1.jpg"
 
@@ -29,42 +31,44 @@ function Home() {
   const [firstName , setfirstName] = useState("")
   const [lastName , setLastName] = useState("")
   const [email , setEmail] = useState("")
+  const [password , setPassword] = useState("")
 
   const API_BASE_URL = 'http://localhost:3002';
 
   const navigate = useNavigate();
 
-  const handleRegister =  async() => {
-    console.log("firstName..",firstName)
-    console.log("lastname...",lastName)
-    console.log("...email..",email)
+  const handleRegister = async () => {
+    console.log("firstName..", firstName)
+    console.log("lastname...", lastName)
+    console.log("...email..", email)
   
     try {
-      // const baseUrl = process.env.REACT_APP_COUCAL_API_BASE_URL;
       const response = await axios.post(
         `${API_BASE_URL}/user-register`,
         {
-         firstName : firstName,
-         lastName : lastName,
-         email : email
-        
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password
         },
         {
           headers: {
-            // Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         }
-       
       );
+      toast.success("User registered successfully!");
       console.log("API Response:", response.data.response.email);
-      navigate('/verify-otp',{state: {email : response.data.response.email}})
-      handleEmailOtp()
       
+
+       navigate('/verify-otp', { state: { email: response.data.response.email } });
+      handleEmailOtp();
     } catch (error) {
-      console.error("Error while making API call:", error);
+      console.error("Error while making API call:", error.response.data.Error);
+      toast.error(error.response.data.Error);
     }
   }
+
 
 
   const handleEmailOtp = async() => {
@@ -91,6 +95,7 @@ function Home() {
   }
   return (
     <div className="body">
+      <ToastContainer/>
  {/* <div id="preloader">
     <div className="plod">
       <span className="lod1">
@@ -403,6 +408,15 @@ function Home() {
                       value = {email}
                       onChange={(event) => setEmail(event.target.value)}
                       />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="first">Password</label>
+                      <input 
+                      type="Password"
+                       id="first" 
+                       value={password}
+                       onChange={(event) => setPassword(event.target.value)}
+                       />
                     </div>
                   </form>
                     <button onClick={handleRegister} type="submit" className="register-button" style={{textAlign:"center", marginRight:"0px"}}>

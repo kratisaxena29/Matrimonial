@@ -7,15 +7,16 @@ import Typography from "@mui/material/Typography";
 import { useLocation } from 'react-router-dom';
 import Box from "@mui/material/Box";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 function VerifyOtp() {
-  
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+  const [resendTimer, setResendTimer] = useState(0);
 
   const location = useLocation();
   const { email } = location.state || {};
-  console.log("Location object:", location);
-  console.log("Extracted email:", email);
-  console.log("..your otp data ", otp)
   const inputRefs = useRef([]);
 
   const handleChange = (index, value) => {
@@ -40,36 +41,61 @@ function VerifyOtp() {
     }
   };
 
-  const handleVerifyClick = async() => {
+  const handleEmailOtp = async () => {
+    try {
+      const API_BASE_URL = 'http://localhost:3002';
+      const response = await axios.post(
+        `${API_BASE_URL}/email-otp`,
+        {
+          "subject": "Hey! Your One Time Password",
+          email: email
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("...otp response..", response);
+      setResendTimer(120); // Set the timer to 2 minutes (120 seconds)
+    } catch (error) {
+      console.log("...catch..", error);
+    }
+  };
+
+  const handleVerifyClick = async () => {
     console.log("Verify button clicked");
     const API_BASE_URL = 'http://localhost:3002';
     const combinedOtp = otp.join('');
     console.log("Combined OTP:", combinedOtp);
     try {
-      // const baseUrl = process.env.REACT_APP_COUCAL_API_BASE_URL;
       const response = await axios.post(
         `${API_BASE_URL}/verify-otp`,
         {
-         
-         email : email,
-        otp : combinedOtp
+          email: email,
+          otp: combinedOtp
         },
         {
           headers: {
-            // Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         }
-       
       );
       console.log("API Response:", response);
-      navigate('/confirmation-otp')
-      
+      navigate('/confirmation-otp');
     } catch (error) {
       console.error("Error while making API call:", error);
+      toast.error("Wrong OTP")
     }
-  
   };
+
+  useEffect(() => {
+    let timer;
+    if (resendTimer > 0) {
+      timer = setTimeout(() => setResendTimer(resendTimer - 1), 1000);
+    }
+    return () => clearTimeout(timer);
+  }, [resendTimer]);
 
   const navigate = useNavigate();
   const rootStyle = {
@@ -93,7 +119,7 @@ function VerifyOtp() {
       </Typography>
       <Typography variant="h6" style={{ color: "#363640", fontWeight: "400" }}>
         Enter the OTP sent to
-        <strong>&nbsp;+91 7080978401</strong>
+        <strong>&nbsp;{email}</strong>
       </Typography>
       <Box style={{ display: "flex", justifyContent: "center", marginTop: 20 }}>
         <Grid container spacing={4} justifyContent="center">
@@ -142,21 +168,31 @@ function VerifyOtp() {
         Verify
       </Button>
 
-      <Button
-        type="button"
-        onClick={handleVerifyClick}
-        variant="text"
-        sx={{
-          mb: 2,
-          height: 50,
-          textTransform: "inherit",
-          fontSize: "18px",
-          width: 250,
-          color: "#9C9C9C",
-        }}
-      >
-        Resend Code
-      </Button>
+      {resendTimer > 0 ? (
+        <Typography
+          variant="body1"
+          style={{ color: "#9C9C9C", marginTop: 20 }}
+        >
+          Resend Code in {resendTimer} seconds
+        </Typography>
+      ) : (
+        <Button
+          type="button"
+          onClick={handleEmailOtp}
+          variant="text"
+          sx={{
+            mb: 2,
+            height: 50,
+            textTransform: "inherit",
+            fontSize: "18px",
+            width: 250,
+            color: "#9C9C9C",
+          }}
+        >
+          Resend Code
+        </Button>
+      )}
+        <ToastContainer />
     </div>
   );
 }

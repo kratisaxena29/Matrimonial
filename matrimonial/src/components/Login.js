@@ -3,6 +3,9 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useNavigate } from "react-router-dom";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
+import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -28,9 +31,42 @@ const Login = () => {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault();
     console.log(formData);
+    const API_BASE_URL = 'http://localhost:3002';
+    try {
+      const response = await axios.post(
+        `${API_BASE_URL}/login`,
+        {
+          email: formData.email,
+          password : formData.password
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("API Response:", response);
+      navigate('/profiles')
+    } catch (error) {
+      console.error("Error while making API call:", error.response);
+      toast.error(error.response.data.Error);
+      if(error.response.data.ErrorCode == 404){
+        
+        console.log("In 404 console..email")
+        toast.warning("Please verify your email");
+        navigate('/verify-otp')
+      } 
+      else if (error.response.data.ErrorCode == 405) {
+        console.log("In 404 console..profile")
+        
+        toast.warning("Please complete your profile");
+        navigate('/profile-details')
+      } 
+
+    }
     // You can send this formData to your backend for further processing
   };
 
@@ -208,6 +244,7 @@ const Login = () => {
           </a>
         </p>
       </div>
+      <ToastContainer />
     </div>
   );
 };
