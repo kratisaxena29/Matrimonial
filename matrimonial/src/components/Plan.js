@@ -145,7 +145,7 @@ function Plan() {
                   </Grid>
                 </Box>
                 <Button 
-               
+               onClick={() => navigate('/payment')}
                   variant="contained"
                   className="plan-button"
                   style={{

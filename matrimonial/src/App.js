@@ -18,32 +18,35 @@ import Plan from './components/Plan';
 import Profiles from './components/Profiles';
 import Login from './components/Login';
 import Chat from './components/Chat';
+import { Payment } from '@mui/icons-material';
 
 function App() {
   return (
     // <Profiles/>
-    <Chat/>
-    // <Router>
-    //   <Routes>
-    //     <Route path="/" element={<Home />} />
-    //     <Route path="/verify-otp" element={<VerifyOtp />} />
-    //     <Route path="/confirmation-otp" element={<ConfirmationOtp />} />
-    //     <Route path="/profile-details" element={<ProfileDetails />} />
-    //     <Route path="/additional-details" element={<AdditionalDetails />} />
-    //     <Route path="/education-career" element={<EducationCareer />} />
-    //     <Route path="/horoscope" element={<Horoscope />} />
-    //     <Route path="/lifestyle" element={<LifeStyle />} />
-    //     <Route path="/family-details" element={<FamilyDetails />} />
-    //     <Route path="/partner-family" element={<PartnerFamily />} />
-    //     <Route path="/partner-education" element={<PartnerEducation />} />
-    //     <Route path="/partner-living" element={<PartnerLiving />} />
-    //     <Route path="/upload-document" element={<UploadDocument />} />
-    //     <Route path="/plan" element={<Plan />} />
-    //     <Route path="/profiles" element={<Profiles />} />
-    //     <Route path="/profile-completed" element={<ProfileCompleted />} />
-    //     <Route path="/login" element={<Login />} />
-    //   </Routes>
-    // </Router>
+   
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/verify-otp" element={<VerifyOtp />} />
+        <Route path="/confirmation-otp" element={<ConfirmationOtp />} />
+        <Route path="/profile-details" element={<ProfileDetails />} />
+        <Route path="/additional-details" element={<AdditionalDetails />} />
+        <Route path="/education-career" element={<EducationCareer />} />
+        <Route path="/horoscope" element={<Horoscope />} />
+        <Route path="/lifestyle" element={<LifeStyle />} />
+        <Route path="/family-details" element={<FamilyDetails />} />
+        <Route path="/partner-family" element={<PartnerFamily />} />
+        <Route path="/partner-education" element={<PartnerEducation />} />
+        <Route path="/partner-living" element={<PartnerLiving />} />
+        <Route path="/upload-document" element={<UploadDocument />} />
+        <Route path="/plan" element={<Plan />} />
+        <Route path="/profiles" element={<Profiles />} />
+        <Route path="/profile-completed" element={<ProfileCompleted />} />
+        <Route path="/chat" element={<Chat />} />
+        <Route path="/payment" element={<Payment />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </Router>
   );
 }
 
