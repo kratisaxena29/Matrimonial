@@ -46,7 +46,7 @@ function LifeStyle() {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
+// data
   const handleNext = () => {
     if (validate()) {
       navigate("/family-details", {
