@@ -12676,3 +12676,16 @@ h2.db-tit{
     margin-bottom: 120px;
     position: relative;
 }
+/* Add this CSS to make the nav bar fixed */
+.nav-bar-fixed {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure it stays on top of other elements */
+  }
+  
+  /* Add top padding to the main content to prevent overlap */
+  .main-content {
+    padding-top: 80px; /* Adjust based on the height of your nav bar */
+  }
+  
