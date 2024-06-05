@@ -95,6 +95,9 @@ useEffect(() => {
     });
 }, [age]);
 
+const handleProfileDetails = async () => {
+  navigate('/PersonDetails')
+}
 
   return (
     <div>
@@ -221,7 +224,7 @@ useEffect(() => {
                         <li key={profile._id}>
                           <div className="all-pro-box user-avil-onli" data-useravil="avilyes" data-aviltxt="Available online">
                             <div className="pro-img">
-                              <a href="profile-details.html">
+                              <a  onClick={handleProfileDetails}>
                                 <img src={profile.fileUpload || noProfile} alt="" />
                               </a>
                               <div className="pro-ave" title="User currently available">
@@ -230,13 +233,13 @@ useEffect(() => {
                             </div>
                             <div className="pro-detail">
                               <h4>
-                                <a href="profile-details.html">{profile.name}</a>
+                                <a onClick={handleProfileDetails}>{profile.name}</a>
                               </h4>
                               <div className="pro-bio">
                                 <span>{profile.heighestEduction}</span>
                                 <span>{profile.profession}</span>
-                                <span>{profile.age} years old</span>
-                                <span>Height: {profile.height} cms</span>
+                                <span>{profile.age}</span>
+                                <span>Height: {profile.height}</span>
                               </div>
                               <div className="links" style={{}}>
                                 <span onClick={handleChat} className="cta-chat">Chat now</span>
