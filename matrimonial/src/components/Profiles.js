@@ -5,27 +5,33 @@ import Profile2 from "../images/profiles/Profile6.jpg";
 import Profile3 from "../images/profiles/Profile7.jpg";
 import Profile4 from "../images/profiles/Profile8.jpg";
 import Profile5 from "../images/profiles/Profile5.jpg";
-import noProfile from "../images/profiles/noProfile.jpg"
+import noProfile from "../images/profiles/noProfile.jpg";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function Profiles() {
   const [selectedPhoto, setSelectedPhoto] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
-  const [age , setAge] = useState("")
-  const [profiles, setProfiles] = useState([]);  // State to store profiles
+  const [age, setAge] = useState("");
+  const [profiles, setProfiles] = useState([]);
   const navigate = useNavigate();
 
-  console.log("...age..",age)
+  console.log("...age..", age);
+
   const handleChat = async () => {
     navigate('/chat');
+  };
+
+  const handleInterest = (profileId) => {
+    // Implement the logic for handling the interest action
+    console.log("Interest button clicked for profile:", profileId);
+    // You can add your interest action logic here
   };
 
   const uploadImage = (event) => {
     const file = event.target.files[0];
     if (file) {
       setSelectedPhoto(file);
-      // Trigger the upload function
       uploadImageToServer(file);
     }
   };
@@ -49,9 +55,7 @@ function Profiles() {
       if (response.ok) {
         const data = await response.json();
         console.log("File uploaded successfully:", data.fileUpload);
-        // Set the photo URL state with the URL returned from the backend
-        // setPhotoUrl(data.fileUpload);
-        handlegetImageUrl() 
+        handlegetImageUrl();
       } else {
         console.error('Error uploading file:', response.statusText);
       }
@@ -59,45 +63,42 @@ function Profiles() {
       console.error('Error uploading file:', error);
     }
   };
-const handlegetImageUrl = async () => {
-  axios.get('http://127.0.0.1:3002/getimagepath?email=kratiwork7@gmail.com')
-  .then(response => {
-    console.log(".get image url response...", response.data.response.imageUrl);
-    setPhotoUrl(response.data.response.imageUrl)
-  })
-  .catch(error => {
-    console.log("...error..", error);
-  });
-}
+
+  const handlegetImageUrl = async () => {
+    axios.get('http://127.0.0.1:3002/getimagepath?email=kratiwork7@gmail.com')
+      .then(response => {
+        console.log(".get image url response...", response.data.response.imageUrl);
+        setPhotoUrl(response.data.response.imageUrl);
+      })
+      .catch(error => {
+        console.log("...error..", error);
+      });
+  };
+
   useEffect(() => {
-    handlegetImageUrl()
+    handlegetImageUrl();
+  }, []);
 
-}, []);
+  useEffect(() => {
+    let apiUrl = 'http://127.0.0.1:3002/getAllprofile?email=kratiwork7@gmail.com';
 
-useEffect(() => {
-  // Construct the base URL
-  let apiUrl = 'http://127.0.0.1:3002/getAllprofile?email=kratiwork7@gmail.com';
+    if (age) {
+      apiUrl += `&ageRange=${age}`;
+    }
 
-  // Check if age is selected
-  if (age) {
-    // If age is selected, include it in the URL
-    apiUrl += `&ageRange=${age}`;
-  }
+    axios.get(apiUrl)
+      .then(response => {
+        console.log("..response...", response.data);
+        setProfiles(response.data.response);
+      })
+      .catch(error => {
+        console.log("...error..", error);
+      });
+  }, [age]);
 
-  // Fetch profiles from the API using Axios
-  axios.get(apiUrl)
-    .then(response => {
-      console.log("..response...", response.data);
-      setProfiles(response.data.response);  // Update the profiles state
-    })
-    .catch(error => {
-      console.log("...error..", error);
-    });
-}, [age]);
-
-const handleProfileDetails = async () => {
-  navigate('/PersonDetails')
-}
+  const handleProfileDetails = async () => {
+    navigate('/PersonDetails');
+  };
 
   return (
     <div>
@@ -167,8 +168,8 @@ const handleProfileDetails = async () => {
                     </h4>
                     <div className="form-group">
                       <select className="chosen-select"
-                      value={age}
-                      onChange={(event) => setAge(event.target.value)}
+                        value={age}
+                        onChange={(event) => setAge(event.target.value)}
                       >
                         <option value="">Select age</option>
                         <option value="18-30">18 to 30</option>
@@ -224,7 +225,7 @@ const handleProfileDetails = async () => {
                         <li key={profile._id}>
                           <div className="all-pro-box user-avil-onli" data-useravil="avilyes" data-aviltxt="Available online">
                             <div className="pro-img">
-                              <a  onClick={handleProfileDetails}>
+                              <a onClick={handleProfileDetails}>
                                 <img src={profile.fileUpload || noProfile} alt="" />
                               </a>
                               <div className="pro-ave" title="User currently available">
@@ -243,6 +244,7 @@ const handleProfileDetails = async () => {
                               </div>
                               <div className="links" style={{}}>
                                 <span onClick={handleChat} className="cta-chat">Chat now</span>
+                                <span onClick={() => handleInterest(profile._id)} className="cta-interest">Interested</span>
                               </div>
                             </div>
                             <span className="enq-sav" data-toggle="tooltip" title="Click to save this profile.">
