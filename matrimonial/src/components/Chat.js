@@ -1,5 +1,4 @@
-// src/App.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Grid,
@@ -20,30 +19,12 @@ import {
 import SendIcon from "@mui/icons-material/Send";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import SearchIcon from "@mui/icons-material/Search";
-
-const sampleChats = [
-  {
-    name: "Aanchal",
-    lastMessage: "See you tomorrow",
-    messages: [
-      { sender: "Aanchal", text: "Hey!" },
-      { sender: "You", text: "Hello!" },
-    ],
-  },
-  {
-    name: "Aryan",
-    lastMessage: "What time?",
-    messages: [
-      { sender: "Aryan", text: "Are we still on for tonight?" },
-      { sender: "You", text: "Yes!" },
-    ],
-  },
-];
+import axios from "axios";
 
 const ChatApp = () => {
   const [selectedChatIndex, setSelectedChatIndex] = useState(0);
   const [newMessage, setNewMessage] = useState("");
-  const [chats, setChats] = useState(sampleChats);
+  const [chats, setChats] = useState([]);
 
   const handleSelectChat = (index) => {
     setSelectedChatIndex(index);
@@ -61,6 +42,25 @@ const ChatApp = () => {
     setChats(updatedChats);
     setNewMessage("");
   };
+
+  useEffect(() => {
+    let apiUrl = 'http://127.0.0.1:3002/getallProfileById?email=kratiwork7@gmail.com';
+
+    axios.get(apiUrl)
+      .then(response => {
+        console.log("..response...", response.data);
+        const profiles = response.data.response.allProfilesDetails;
+        const formattedChats = profiles.map(profile => ({
+          name: profile.name,
+          lastMessage: "",
+          messages: [],
+        }));
+        setChats(formattedChats);
+      })
+      .catch(error => {
+        console.log("...error..", error);
+      });
+  }, []);
 
   return (
     <Box
@@ -86,7 +86,6 @@ const ChatApp = () => {
           <Box
             sx={{
               padding: 2,
-            //   backgroundColor: "#FFC0CB",
               borderBottom: "1px solid #e0e0e0",
               zIndex: 1,
             }}
@@ -98,12 +97,12 @@ const ChatApp = () => {
           <Box
             sx={{
               padding: 1,
-              margin:1,
+              margin: 1,
               display: "flex",
               alignItems: "center",
               backgroundColor: "#F7E7CE",
               borderBottom: "1px solid #e0e0e0",
-                borderRadius:2,
+              borderRadius: 2,
               position: "sticky",
               top: 0,
               zIndex: 1,
@@ -170,10 +169,10 @@ const ChatApp = () => {
                   color: "#FFF",
                 }}
               >
-                {chats[selectedChatIndex].name.charAt(0)}
+                {chats[selectedChatIndex]?.name?.charAt(0) || ""}
               </Avatar>
               <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                {chats[selectedChatIndex].name}
+                {chats[selectedChatIndex]?.name || ""}
               </Typography>
               <IconButton edge="end" color="inherit" aria-label="menu">
                 <MoreVertIcon />
@@ -189,7 +188,7 @@ const ChatApp = () => {
             }}
           >
             <List>
-              {chats[selectedChatIndex].messages.map((message, index) => (
+              {chats[selectedChatIndex]?.messages?.map((message, index) => (
                 <ListItem
                   key={index}
                   sx={{

@@ -14,18 +14,48 @@ function Profiles() {
   const [photoUrl, setPhotoUrl] = useState("");
   const [age, setAge] = useState("");
   const [profiles, setProfiles] = useState([]);
+  const [interestedProfiles, setInterestedProfiles] = useState([]);
   const navigate = useNavigate();
 
   console.log("...age..", age);
 
   const handleChat = async () => {
-    navigate('/chat');
+    try {
+      const API_BASE_URL = 'http://localhost:3002';
+      const response = await axios.post(
+        `${API_BASE_URL}/allProfileId`,
+        {
+          
+          email: "kratiwork7@gmail.com",
+          AllprofilesId : interestedProfiles
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+  
+      console.log("API Response:", response);
+      navigate('/chat');
+    } catch (error) {
+      console.log("..error...",error)
+    }
+   
   };
 
   const handleInterest = (profileId) => {
-    // Implement the logic for handling the interest action
     console.log("Interest button clicked for profile:", profileId);
-    // You can add your interest action logic here
+
+    // Update the state and then log the updated state inside the callback
+    setInterestedProfiles(prevState => {
+      const updatedProfiles = [...prevState, profileId];
+      console.log("..updatedProfile..", updatedProfiles);
+      return updatedProfiles;
+    });
+
+    // Note: Logging here will not reflect the updated state immediately due to the asynchronous nature of setState
+    //  console.log("..interestedProfiles..", interestedProfiles);
   };
 
   const uploadImage = (event) => {
@@ -99,6 +129,10 @@ function Profiles() {
   const handleProfileDetails = async () => {
     navigate('/PersonDetails');
   };
+
+  useEffect(() => {
+    console.log("..interestedProfiles after update..", interestedProfiles);
+  }, [interestedProfiles]);
 
   return (
     <div>
