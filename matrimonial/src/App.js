@@ -20,9 +20,15 @@ import Login from './components/Login';
 import Chat from './components/Chat';
 import { Payment } from '@mui/icons-material';
 import PersonDetails from './components/PersonDetails';
+import ForgotOtp from './components/ForgotOtp';
+import ResetPassword from './components/ResetPassword';
+import PasswordResetSuccess from './components/PasswordResetSuccess';
 
 function App() {
   return (
+    // <PasswordResetSuccess/>
+    // <ResetPassword/>
+    // <ForgotOtp/>
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
