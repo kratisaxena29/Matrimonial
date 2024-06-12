@@ -17,11 +17,14 @@ import { useNavigate } from 'react-router-dom';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#1976d2',
+      main: '#F68C1E',
     },
     secondary: {
-      main: '#f50057',
+      main: '#F68C1E',
     },
+  },
+  typography: {
+    fontFamily: 'Arial, sans-serif',
   },
 });
 
@@ -50,7 +53,7 @@ function ForgotPassword() {
     return () => clearInterval(interval);
   }, [timer]);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleResendCode = () => {
     setTimer(60);
     setShowResendButton(false);
@@ -99,8 +102,9 @@ function ForgotPassword() {
   };
 
   const handleSendVverification = async () => {
-    navigate('/forgot-otp')
-  }
+    navigate('/forgot-otp');
+  };
+
   const handleBackspace = (index, event) => {
     if (event.key === "Backspace" && index > 0 && otp[index] === "") {
       const newOtp = [...otp];
@@ -121,30 +125,31 @@ function ForgotPassword() {
   };
 
   return (
-    <div>
+    <div style={{ background: '#F7E7CE', height: '100vh', paddingTop: '5%' }}>
       {stage === 1 && (
         <ThemeProvider theme={theme}>
-          <Container component="main" maxWidth="xs">
+          <Container component="main" maxWidth="xs" style={{ backgroundColor: '#fff', borderRadius: '8px', padding: '40px', boxShadow: '0px 0px 20px 0px rgba(0,0,0,0.1)' }}>
             <CssBaseline />
             <Box
               sx={{
-                marginTop: 10,
+                marginTop: 0,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 width: "100%",
               }}
             >
-              <Avatar sx={{ bgcolor: "#E1EBEE", width: 56, height: 56 }}>
-                <VpnKeyRoundedIcon
-                  sx={{ width: 30, height: 30, color: "#002D62" }}
-                />
-              </Avatar>
+             <Avatar sx={{ bgcolor: "#FFE5CC", width: 56, height: 56 }}>
+  <VpnKeyRoundedIcon
+    sx={{ width: 30, height: 30, color: "#F68C1E" }}
+  />
+</Avatar>
+
               <Typography
                 component="h1"
                 variant="h4"
                 marginTop={2}
-                style={{ color: "#363640", fontWeight: "600" }}
+                style={{ color: "#EC184A", fontWeight: "normal" }}
               >
                 Forgot Password?
               </Typography>
@@ -169,28 +174,31 @@ function ForgotPassword() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  sx={{ width: "100%" }}
+                  sx={{ width: "100%", marginBottom: '20px' }}
                   value={email}
                 />
                 <Button
-                onClick={handleSendVverification}
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{
-                    mt: 4,
-                    mb: 2,
-                    height: 50,
-                    textTransform: "inherit",
-                    fontSize: "18px",
-                  }}
-                >
-                  Send Verification Code
-                </Button>
+  onClick={handleSendVverification}
+  type="submit"
+  fullWidth
+  variant="contained"
+  sx={{
+    height: 50,
+    textTransform: "inherit",
+    fontSize: "18px",
+    backgroundColor: '#F68C1E',
+    color: "white",
+    "&:hover": {
+      backgroundColor: '#e07b17'
+    }
+  }}
+>
+  Send Verification Code
+</Button>
+
               </Box>
             </Box>
           </Container>
-          
         </ThemeProvider>
       )}
 
@@ -243,6 +251,10 @@ function ForgotPassword() {
               textTransform: "inherit",
               fontSize: "18px",
               width: 250,
+              backgroundColor: '#F68C1E',
+              "&:hover": {
+                backgroundColor: '#e07b17'
+              }
             }}
           >
             Verify
@@ -269,11 +281,11 @@ function ForgotPassword() {
 
       {stage === 3 && (
         <ThemeProvider theme={theme}>
-          <Container component="main" maxWidth="xs">
+          <Container component="main" maxWidth="xs" style={{ backgroundColor: '#fff', borderRadius: '8px', padding: '40px', boxShadow: '0px 0px 20px 0px rgba(0,0,0,0.1)' }}>
             <CssBaseline />
             <Box
               sx={{
-                marginTop: 10,
+                marginTop: 0,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -289,7 +301,7 @@ function ForgotPassword() {
                 component="h1"
                 variant="h4"
                 marginTop={2}
-                style={{ color: "#363640", fontWeight: "600" }}
+                style={{ color: "#EC184A", fontWeight: "600" }}
               >
                 Create a new password
               </Typography>
@@ -347,6 +359,10 @@ function ForgotPassword() {
                     height: 50,
                     textTransform: "inherit",
                     fontSize: "18px",
+                    backgroundColor: '#F68C1E',
+                    "&:hover": {
+                      backgroundColor: '#e07b17'
+                    }
                   }}
                 >
                   Reset Password
@@ -354,7 +370,6 @@ function ForgotPassword() {
               </Box>
             </Box>
           </Container>
-          
         </ThemeProvider>
       )}
     </div>

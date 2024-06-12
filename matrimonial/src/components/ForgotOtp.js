@@ -82,7 +82,7 @@ const navigate = useNavigate()
       <Typography
         variant="h4"
         gutterBottom
-        style={{ color: "#363640", fontWeight: "600" }}
+        style={{ color: "#EC184A", fontWeight: "600" }}
       >
        Forgot Password
       </Typography>
@@ -130,7 +130,11 @@ const navigate = useNavigate()
           textTransform: "inherit",
           fontSize: "18px",
           width: 250,
-          backgroundColor: "#FB6A6B",
+          backgroundColor: '#F68C1E',
+          color: "white",
+          "&:hover": {
+            backgroundColor: '#e07b17'
+          },
           borderRadius: "5px",
         }}
       >

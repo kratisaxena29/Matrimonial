@@ -71,13 +71,21 @@ function PasswordResetSuccess() {
             <Typography
               component="h1"
               variant="h5"
-              sx={{ marginTop: 2, fontWeight: "bold", textAlign: "center" }}
+              sx={{
+                color: "#2E7D32",
+                marginTop: 2,
+                fontWeight: "600",
+                textAlign: "center",
+              }}
             >
               Password Reset Successful
             </Typography>
             <CardContent>
-              <Typography variant="subtitle2" sx={{ textAlign: "center" }}>
-                Your password has been successfully reset. Please login
+              <Typography variant="subtitle1" sx={{ textAlign: "center", width:"500px" }}>
+                Your password has been successfully reset.
+              </Typography>
+              <Typography variant="subtitle1" sx={{ textAlign: "center" }}>
+                Please login
               </Typography>
             </CardContent>
             <Button
@@ -89,6 +97,10 @@ function PasswordResetSuccess() {
                 height: 50,
                 textTransform: "inherit",
                 fontSize: "18px",
+                backgroundColor: "#F68C1E",
+                "&:hover": {
+                  backgroundColor: "#e07b17",
+                },
               }}
               onClick={handleLoginClick}
             >
