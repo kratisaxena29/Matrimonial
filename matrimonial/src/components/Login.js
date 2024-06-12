@@ -85,6 +85,9 @@ const Login = () => {
     }
   };
 
+  const handleforgotPassword = async() => {
+    navigate('/reset-password')
+  }
   return (
     <div
       style={{
@@ -225,7 +228,7 @@ const Login = () => {
               }}
             >
               <a
-                href="#"
+              onClick={handleforgotPassword}
                 style={{
                   color: "#F68C1E",
                   textDecoration: "none",

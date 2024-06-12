@@ -51,6 +51,9 @@ function App() {
         <Route path="/payment" element={<Payment />} />
         <Route path="/login" element={<Login />} />
         <Route path="/PersonDetails" element={<PersonDetails />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/forgot-otp" element={<ForgotOtp />} />
+        <Route path="/success" element={<PasswordResetSuccess />} />
       </Routes>
     </Router>
   );

@@ -18,7 +18,7 @@ function ForgotOtp() {
 //   const location = useLocation();
   const { email } =  {};
   const inputRefs = useRef([]);
-
+const navigate = useNavigate()
   const handleChange = (index, value) => {
     if (value.length > 1) {
       value = value.charAt(0);
@@ -51,11 +51,12 @@ function ForgotOtp() {
 
   const handleVerifyClick = async () => {
     console.log("Verify button clicked");
-    try {
-        console.log("verifed")
-    } catch (error) {
-      toast.error("Wrong OTP")
-    }
+    navigate('/success')
+    // try {
+    //     console.log("verifed")
+    // } catch (error) {
+    //   toast.error("Wrong OTP")
+    // }
   };
 
   useEffect(() => {

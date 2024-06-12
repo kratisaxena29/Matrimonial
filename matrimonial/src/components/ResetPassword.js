@@ -12,6 +12,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VpnKeyRoundedIcon from "@mui/icons-material/VpnKeyRounded";
 import HttpsRoundedIcon from "@mui/icons-material/HttpsRounded";
 import Grid from "@mui/material/Grid";
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme({
   palette: {
@@ -49,6 +50,7 @@ function ForgotPassword() {
     return () => clearInterval(interval);
   }, [timer]);
 
+  const navigate = useNavigate()
   const handleResendCode = () => {
     setTimer(60);
     setShowResendButton(false);
@@ -96,6 +98,9 @@ function ForgotPassword() {
     }
   };
 
+  const handleSendVverification = async () => {
+    navigate('/forgot-otp')
+  }
   const handleBackspace = (index, event) => {
     if (event.key === "Backspace" && index > 0 && otp[index] === "") {
       const newOtp = [...otp];
@@ -168,6 +173,7 @@ function ForgotPassword() {
                   value={email}
                 />
                 <Button
+                onClick={handleSendVverification}
                   type="submit"
                   fullWidth
                   variant="contained"
