@@ -142,7 +142,7 @@ function Profiles() {
           padding: "10px 20px",
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between"
+          justifyContent: "space-between",
         }}
       >
         <img
@@ -153,7 +153,7 @@ function Profiles() {
         <input
           type="file"
           id="fileInput"
-          style={{ display: 'none' }}
+          style={{ display: "none" }}
           onChange={uploadImage}
         />
         <div
@@ -169,10 +169,18 @@ function Profiles() {
             color: "#FFFFFF",
             fontWeight: "bold",
             fontSize: "20px",
-            cursor: "pointer"
+            cursor: "pointer",
           }}
         >
-          {photoUrl ? <img src={photoUrl} alt="Uploaded Profile" style={{ height: "100%", width: "100%", borderRadius: "50%" }} /> : "Upload"}
+          {photoUrl ? (
+            <img
+              src={photoUrl}
+              alt="Uploaded Profile"
+              style={{ height: "100%", width: "100%", borderRadius: "50%" }}
+            />
+          ) : (
+            "Upload"
+          )}
         </div>
       </nav>
       <div>
@@ -185,7 +193,8 @@ function Profiles() {
                   {/* Filter Options */}
                   <div className="filt-com lhs-cate">
                     <h4>
-                      <i className="fa fa-search" aria-hidden="true" /> I'm looking for
+                      <i className="fa fa-search" aria-hidden="true" /> I'm
+                      looking for
                     </h4>
                     <div className="form-group">
                       <select className="chosen-select">
@@ -201,7 +210,8 @@ function Profiles() {
                       Age
                     </h4>
                     <div className="form-group">
-                      <select className="chosen-select"
+                      <select
+                        className="chosen-select"
                         value={age}
                         onChange={(event) => setAge(event.target.value)}
                       >
@@ -246,6 +256,27 @@ function Profiles() {
                       </select>
                     </div>
                   </div>
+                  <div className="filt-com lhs-cate">
+                    <h4>
+                      <i className="fa fa-users" aria-hidden="true" />
+                      Select Caste
+                    </h4>
+                    <div className="form-group">
+                      <select
+                        id="caste-select"
+                        className="chosen-select"
+                        // value={caste}
+                        // onChange={(event) => setCaste(event.target.value)}
+                      >
+                        <option value="aggrawal">Aggrawal</option>
+                        <option value="sharma">Sharma</option>
+                        <option value="gupta">Gupta</option>
+                        <option value="verma">Verma</option>
+                        <option value="singh">Singh</option>
+                        <option value="jain">Jain</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
                 <div className="col-md-9">
                   <div className="short-all">
@@ -255,20 +286,32 @@ function Profiles() {
                   </div>
                   <div className="all-list-sh">
                     <ul>
-                      {profiles.map(profile => (
+                      {profiles.map((profile) => (
                         <li key={profile._id}>
-                          <div className="all-pro-box user-avil-onli" data-useravil="avilyes" data-aviltxt="Available online">
+                          <div
+                            className="all-pro-box user-avil-onli"
+                            data-useravil="avilyes"
+                            data-aviltxt="Available online"
+                          >
                             <div className="pro-img">
                               <a onClick={handleProfileDetails}>
-                                <img src={profile.fileUpload || noProfile} alt="" />
+                                <img
+                                  src={profile.fileUpload || noProfile}
+                                  alt=""
+                                />
                               </a>
-                              <div className="pro-ave" title="User currently available">
+                              <div
+                                className="pro-ave"
+                                title="User currently available"
+                              >
                                 <span />
                               </div>
                             </div>
                             <div className="pro-detail">
                               <h4>
-                                <a onClick={handleProfileDetails}>{profile.name}</a>
+                                <a onClick={handleProfileDetails}>
+                                  {profile.name}
+                                </a>
                               </h4>
                               <div className="pro-bio">
                                 <span>{profile.heighestEduction}</span>
@@ -277,12 +320,26 @@ function Profiles() {
                                 <span>Height: {profile.height}</span>
                               </div>
                               <div className="links" style={{}}>
-                                <span onClick={handleChat} className="cta-chat">Chat now</span>
-                                <span onClick={() => handleInterest(profile._id)} className="cta-interest">Interested</span>
+                                <span onClick={handleChat} className="cta-chat">
+                                  Chat now
+                                </span>
+                                <span
+                                  onClick={() => handleInterest(profile._id)}
+                                  className="cta-interest"
+                                >
+                                  Interested
+                                </span>
                               </div>
                             </div>
-                            <span className="enq-sav" data-toggle="tooltip" title="Click to save this profile.">
-                              <i className="fa fa-thumbs-o-up" aria-hidden="true" />
+                            <span
+                              className="enq-sav"
+                              data-toggle="tooltip"
+                              title="Click to save this profile."
+                            >
+                              <i
+                                className="fa fa-thumbs-o-up"
+                                aria-hidden="true"
+                              />
                             </span>
                           </div>
                         </li>

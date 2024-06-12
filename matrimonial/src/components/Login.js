@@ -6,6 +6,7 @@ import { IconButton, InputAdornment, TextField } from "@mui/material";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import logo from "../images/logo_maroon.png"
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -101,31 +102,52 @@ const Login = () => {
           borderRadius: "8px",
           boxShadow: "0px 0px 20px 0px rgba(0,0,0,0.1)",
           background: "#fff",
+          // display:"flex",
+          // flexDirection:"column",
+          // justifyContent:"center",
+          // alignItems:"center"
         }}
       >
-        <h2
+        <div
           style={{
-            textAlign: "center",
-            marginBottom: "20px",
-            fontSize: "35px",
-            color: "#EC184A",
-            textTransform: "uppercase",
-            fontWeight: "600",
-          }}
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            }}
         >
-          Welcome Back!
-        </h2>
-        <h2
-          style={{
-            textAlign: "center",
-            marginBottom: "30px",
-            fontSize: "25px",
-            color: "#CD6900",
-            fontWeight: "400",
-          }}
-        >
-          Sign in to your account
-        </h2>
+            <img
+              src={logo}
+              width={100}
+              height={100}
+              alt="logo"
+              loading="lazy"
+              className="ic-logo"
+            />
+          <h2
+            style={{
+              textAlign: "center",
+              marginBottom: "30px",
+              fontSize: "35px",
+              color: "#EC184A",
+              textTransform: "uppercase",
+              fontWeight: "600",
+            }}
+          >
+            Welcome Back!
+          </h2>
+          {/* <h2
+            style={{
+              textAlign: "center",
+              marginBottom: "30px",
+              fontSize: "25px",
+              color: "#CD6900",
+              fontWeight: "400",
+            }}
+          >
+            Sign in to your account
+          </h2> */}
+        </div>
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: "30px" }}>
             <label
@@ -143,13 +165,14 @@ const Login = () => {
               type="email"
               id="email"
               name="email"
+              placeholder="Enter Email ID"
               value={formData.email}
               onChange={handleChange}
               fullWidth
               required
             />
           </div>
-          <div style={{ position: "relative", marginBottom: "30px" }}>
+          <div style={{ position: "relative", marginBottom: "10px" }}>
             <label
               style={{
                 display: "block",
@@ -165,6 +188,7 @@ const Login = () => {
               type={showPassword ? "text" : "password"}
               id="password"
               name="password"
+              placeholder="Enter password"
               value={formData.password}
               onChange={handleChange}
               style={{ width: "100%" }}
@@ -192,6 +216,25 @@ const Login = () => {
               </p>
             )}
           </div>
+            <p
+              style={{
+                textAlign: "right",
+                marginBottom: "30px",
+                fontSize: "14px",
+                color: "#555",
+              }}
+            >
+              <a
+                href="#"
+                style={{
+                  color: "#F68C1E",
+                  textDecoration: "none",
+                  transition: "color 0.3s",
+                }}
+              >
+                Forgot Password?
+              </a>
+            </p>
 
           <button
             type="submit"
@@ -206,35 +249,16 @@ const Login = () => {
               cursor: "pointer",
               transition: "background 0.3s",
             }}
-            onMouseOver={(e) => e.target.style.background = "#e07b17"}
-            onMouseOut={(e) => e.target.style.background = "#F68C1E"}
+            onMouseOver={(e) => (e.target.style.background = "#e07b17")}
+            onMouseOut={(e) => (e.target.style.background = "#F68C1E")}
           >
             Login
           </button>
-          <p
-            style={{
-              textAlign: "right",
-              marginTop: "10px",
-              fontSize: "14px",
-              color: "#555",
-            }}
-          >
-            {/* <a
-              href="#"
-              style={{
-                color: "#F68C1E",
-                textDecoration: "none",
-                transition: "color 0.3s",
-              }}
-            >
-              Forgot Password?
-            </a> */}
-          </p>
         </form>
         <p style={{ textAlign: "center", marginTop: "10px" }}>
           Don't have an account?&nbsp;
           <a
-            onClick={() => navigate('/')}
+            onClick={() => navigate("/")}
             style={{
               textDecoration: "none",
               color: "#F68C1E",
