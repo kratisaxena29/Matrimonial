@@ -20,19 +20,34 @@ import SendIcon from "@mui/icons-material/Send";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
+import io from "socket.io-client";
+
+const socket = io("http://localhost:3002"); // Replace with your server URL
 
 const ChatApp = () => {
   const [selectedChatIndex, setSelectedChatIndex] = useState(0);
   const [newMessage, setNewMessage] = useState("");
   const [chats, setChats] = useState([]);
 
+  // Function to handle selecting a chat item
   const handleSelectChat = (index) => {
     setSelectedChatIndex(index);
+    console.log("Selected chat ID:", chats[index].id); // Log the ID of the selected chat
   };
 
+  // Function to handle sending a message via socket
   const handleSendMessage = () => {
     if (newMessage.trim() === "") return;
 
+    const message = {
+      senderId: chats[selectedChatIndex].id,
+      receiverId: chats[selectedChatIndex].id,
+      text: newMessage,
+    };
+
+    socket.emit("chat message", message); // Emit message to server
+
+    // Update local state
     const updatedChats = [...chats];
     updatedChats[selectedChatIndex].messages.push({
       sender: "You",
@@ -43,6 +58,7 @@ const ChatApp = () => {
     setNewMessage("");
   };
 
+  // Fetch profiles from API on component mount
   useEffect(() => {
     let apiUrl = 'http://127.0.0.1:3002/getallProfileById?email=kratiwork7@gmail.com';
 
@@ -51,6 +67,7 @@ const ChatApp = () => {
         console.log("..response...", response.data);
         const profiles = response.data.response.allProfilesDetails;
         const formattedChats = profiles.map(profile => ({
+          id: profile._id,
           name: profile.name,
           lastMessage: "",
           messages: [],
@@ -60,7 +77,39 @@ const ChatApp = () => {
       .catch(error => {
         console.log("...error..", error);
       });
-  }, []);
+
+    // Socket.io event listeners
+    socket.on("connect", () => {
+      console.log("Connected to server");
+    });
+
+    socket.on("disconnect", () => {
+      console.log("Disconnected from server");
+    });
+
+    socket.on("chat message", (message) => {
+      console.log("Received chat message:", message);
+
+      // Find the chat index based on senderId or receiverId and update messages
+      const updatedChats = [...chats];
+      const chatIndex = updatedChats.findIndex(
+        (chat) => chat.id === message.senderId || chat.id === message.receiverId
+      );
+
+      if (chatIndex !== -1) {
+        updatedChats[chatIndex].messages.push({
+          sender: message.senderId === chats[chatIndex].id ? "You" : "Other", // Update sender based on your logic
+          text: message.text,
+        });
+        updatedChats[chatIndex].lastMessage = message.text;
+        setChats(updatedChats);
+      }
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []); // Empty dependency array ensures this effect runs only once
 
   return (
     <Box
