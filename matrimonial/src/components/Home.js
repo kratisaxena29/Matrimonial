@@ -644,24 +644,30 @@ function Home() {
       {/* END */}
       {/* COPYRIGHTS */}
       <section>
-        <div className="cr">
-          <div className="container">
-            <div className="row">
-              <p>
-                Copyright © <span id="cry">2024</span>{" "}
-                <a
-                  style={{ textDecoration: "none", color: "#FFBF00	" }}
-                  href="#!"
-                  target="_blank"
-                >
-                  SoulMatch
-                </a>{" "}
-                All rights reserved.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+  <div className="cr">
+    <div className="container">
+      <div className="row">
+        <p>
+          Copyright © <span id="cry">2024</span>{" "}
+          <a
+            style={{ textDecoration: "none", color: "#FFBF00" }}
+            href="#!"
+            target="_blank"
+          >
+            SoulMatch
+          </a>{" "}
+          All rights reserved. |{" "}
+          <a
+           style={{cursor:"pointer", color:"#FFBF00"}}
+           onClick={() => navigate('/terms&conditions')}  
+          >
+            Terms and Conditions
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
       {/* END */}
       {/* Optional JavaScript */}
       {/* jQuery first, then Popper.js, then Bootstrap JS */}

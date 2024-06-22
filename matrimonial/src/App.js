@@ -23,6 +23,7 @@ import PersonDetails from './components/PersonDetails';
 import ForgotOtp from './components/ForgotOtp';
 import ResetPassword from './components/ResetPassword';
 import PasswordResetSuccess from './components/PasswordResetSuccess';
+import TermsConditions from './components/TermsConditions';
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/forgot-otp" element={<ForgotOtp />} />
         <Route path="/success" element={<PasswordResetSuccess />} />
+        <Route path="/terms&conditions" element={<TermsConditions />} />
       </Routes>
     </Router>
   );
