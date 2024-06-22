@@ -119,7 +119,7 @@ function Home() {
             <div className="hom-nav">
               {/* LOGO */}
               <div className="logo">
-                <a href="index.html" className="logo-brand">
+                <a style={{cursor:"pointer"}} onClick={() => navigate('/')} className="logo-brand">
                   <img src={logo} alt="" loading="lazy" className="ic-logo" />
                 </a>
               </div>

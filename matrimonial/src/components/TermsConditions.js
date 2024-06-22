@@ -15,28 +15,30 @@ function TermsConditions() {
 
   return (
     <div>
-        <div>
-      <nav
-        style={{
-          backgroundColor: "#6D0B32",
-          padding: "10px 20px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          width: "100%",
-        //   top:0,
-        //   position:"fixed"
-        }}
-      >
-        <img
-          src={logo}
-          alt="Logo"
-          style={{ height: "60px", marginRight: "40px" }}
-        />
-        <button onClick={() => navigate("/login")} class="custom-button">
-          Login
-        </button>
-      </nav>
+      <div>
+        <nav
+          style={{
+            backgroundColor: "#6D0B32",
+            padding: "10px 20px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            width: "100%",
+            //   top:0,
+            //   position:"fixed"
+          }}
+        >
+          <a style={{cursor:"pointer"}} onClick={() => navigate('/')} className="logo-brand">
+            <img
+              src={logo}
+              alt="Logo"
+              style={{ height: "60px", marginRight: "40px" }}
+            />
+          </a>
+          <button onClick={() => navigate("/login")} class="custom-button">
+            Login
+          </button>
+        </nav>
       </div>
       <div
         style={{
@@ -80,8 +82,8 @@ function TermsConditions() {
           mother, brother, sister, relative or a friend ("Registrant") of the
           prospective bride/ bridegroom. The terms "You" and "User" shall be
           interchangeably used for "SM member". "SM Services" means a collective
-          reference to the Soul Match service provided by Matrimony.com
-          Limited ,CIN : L63090TN2001PLC047432,a company under the provisions of
+          reference to the Soul Match service provided by Matrimony.com Limited
+          ,CIN : L63090TN2001PLC047432,a company under the provisions of
           companies act, 2013 and having its registered office at No.94, TVH
           Beliciaa Towers, Tower - 2, 5th Floor, MRC Nagar, Chennai, Tamil Nadu
           – 600 028("MCL/Company").
@@ -341,10 +343,8 @@ function TermsConditions() {
         </p>
         <p style={{ color: "#333", fontSize: "14px" }}>
           H. SM members are expected to visit URL{" "}
-          <a href="https://soulmatch.co.in/">
-          https://soulmatch.co.in/
-          </a>{" "}
-          for understanding the safety measures on partner search and awareness
+          <a href="https://soulmatch.co.in/">https://soulmatch.co.in/</a> for
+          understanding the safety measures on partner search and awareness
           towards online safety.
         </p>
         <p style={{ color: "#333", fontSize: "14px" }}>
@@ -417,9 +417,7 @@ function TermsConditions() {
         </p>
         <p style={{ color: "#333", fontSize: "14px" }}>
           Email ID:{" "}
-          <a href="mailto:helpdesk@soulmatch.com">
-            helpdesk@soulmatch.com
-          </a>
+          <a href="mailto:helpdesk@soulmatch.com">helpdesk@soulmatch.com</a>
           <br />
           Contact No: +91-8144998877
           <br />
