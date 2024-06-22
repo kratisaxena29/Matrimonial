@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../styles/home.css";
 import "../styles/animate.css";
 import "../styles/bootstrap.css";
@@ -11,12 +11,19 @@ import "react-toastify/dist/ReactToastify.css";
 import { Email, Facebook, Instagram, Twitter } from "@mui/icons-material";
 
 function TermsConditions() {
-  const navigate = useNavigate();
+    const navRef = useRef(null);
 
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (navRef.current) {
+      navRef.current.scrollIntoView({ behavior: 'auto', block: 'start' });
+    }
+  }, []);
   return (
     <div>
       <div>
         <nav
+        ref={navRef}
           style={{
             backgroundColor: "#6D0B32",
             padding: "10px 20px",
