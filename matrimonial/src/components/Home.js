@@ -428,7 +428,7 @@ function Home() {
       </section>
       <section>
         <div>
-          <div className="container">
+          {/* <div className="container">
             <div className="row">
               <div className="home-tit">
                 <p>trusted brand</p>
@@ -514,14 +514,14 @@ function Home() {
               </div>
              
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
       {/* END */}
       {/* BANNER */}
       <section>
         <div className="str">
-          <div className="ban-inn ban-home">
+          <div style={{ marginTop: '30%' }} className="ban-inn ban-home">
             <div className="container">
               <div className="row">
                 <div className="hom-ban">
@@ -661,7 +661,13 @@ function Home() {
            style={{cursor:"pointer", color:"#FFBF00"}}
            onClick={() => navigate('/terms&conditions')}  
           >
-            Terms and Conditions
+            Terms and Conditions   |{" "}
+          </a>
+          <a
+           style={{cursor:"pointer", color:"#FFF"}}
+           onClick={() => navigate('/plan')}  
+          >
+           Pricing Policy  
           </a>
         </p>
       </div>

@@ -172,7 +172,7 @@ function Plan() {
           }}
         >
           <Box>
-            <IconButton edge="start" color="inherit" aria-label="facebook">
+            {/* <IconButton edge="start" color="inherit" aria-label="facebook">
               <Facebook />
             </IconButton>
             <IconButton edge="start" color="inherit" aria-label="instagram">
@@ -180,17 +180,17 @@ function Plan() {
             </IconButton>
             <IconButton edge="start" color="inherit" aria-label="twitter">
               <Twitter />
-            </IconButton>
+            </IconButton> */}
           </Box>
           <Typography variant="body1" color="white">
             &copy; 2024 <span style={{ color: "#FFBF00" }}>SoulMatch</span> All
             rights reserved.
           </Typography>
           <Box style={{ display: "flex", alignItems: "center" }}>
-            <Email style={{ marginRight: "10px" }} />
+            {/* <Email style={{ marginRight: "10px" }} />
             <Typography variant="body1" color="white">
               abc@gmail.com
-            </Typography>
+            </Typography> */}
           </Box>
         </Toolbar>
       </AppBar>

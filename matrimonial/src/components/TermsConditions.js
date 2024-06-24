@@ -1280,17 +1280,23 @@ function TermsConditions() {
         }}
       >
         <div>
-          <Facebook style={{ marginRight: "10px" }} />
+          {/* <Facebook style={{ marginRight: "10px" }} />
           <Instagram style={{ marginRight: "10px" }} />
-          <Twitter style={{ marginRight: "10px" }} />
+          <Twitter style={{ marginRight: "10px" }} /> */}
         </div>
         <div>
           &copy; 2024 <span style={{ color: "#FFBF00" }}>SoulMatch</span> All
-          rights reserved.
+          rights reserved. |{" "}
+          <a
+           style={{cursor:"pointer", color:"#FFBF00"}}
+           onClick={() => navigate('/plan')}  
+          >
+           Pricing Policy   
+          </a>
         </div>
         <div>
-          <Email style={{ marginRight: "10px" }} />
-          <span style={{ color: "#FFF" }}>Email Address</span>
+          {/* <Email style={{ marginRight: "10px" }} /> */}
+          {/* <span style={{ color: "#FFF" }}>Email Address</span> */}
         </div>
       </footer>
     </div>
