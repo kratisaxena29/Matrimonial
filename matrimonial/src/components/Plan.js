@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -11,20 +11,43 @@ import {
   IconButton,
 } from "@mui/material";
 import {
-  Facebook,
-  Instagram,
-  Twitter,
-  Email,
   CheckCircle,
   Cancel,
 } from "@mui/icons-material";
 import logo from "../images/logo.png";
 import "../css/plan.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Plan() {
+  const [loading2 , setLoading2] = useState(false);
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
+  const handlePayment = async (e) => {
+    console.log("...frontend");
+    e.preventDefault();
+    
+    const data = {
+      amount: 1,
+      MUID: "MUID" + Date.now(),
+      transactionId: 'T' + Date.now(),
+    };
+
+    console.log("...data...", data);
+
+    const API_BASE_URL = 'http://localhost:3002';
+    // setLoading2(true);
+    axios.post(`${API_BASE_URL}/pay`, {...data}).then(res => {
+      setTimeout(() => {
+        setLoading2(false);
+      }, 1500);
+    }).catch(error => {
+      setLoading2(false);
+      console.log(error);
+    });
+    // navigate('/payment')
+  };
+
   return (
     <div style={{ paddingTop: "0px", paddingBottom: "80px" }}>
       <AppBar position="fixed" style={{ backgroundColor: "#6D0B32" }}>
@@ -37,11 +60,8 @@ function Plan() {
             />
           </Box>
           <Box sx={{ display: "flex", flexDirection: "row", gap: "20px" }}>
-            {/* Buttons can be uncommented as needed */}
-            {/* <Button color="inherit">Explore</Button>
-            <Button color="inherit">Plans</Button> */}
             <Button
-             onClick={() => navigate('/profiles')}
+              onClick={() => navigate('/profiles')}
               color="inherit"
               variant="outlined"
               style={{
@@ -145,7 +165,7 @@ function Plan() {
                   </Grid>
                 </Box>
                 <Button 
-               onClick={() => navigate('/payment')}
+                  onClick={handlePayment}
                   variant="contained"
                   className="plan-button"
                   style={{

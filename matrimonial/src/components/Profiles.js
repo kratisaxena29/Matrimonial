@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import logo from "../images/logo.png";
-import Profile1 from "../images/profiles/profile1.jpg";
-import Profile2 from "../images/profiles/Profile6.jpg";
-import Profile3 from "../images/profiles/Profile7.jpg";
-import Profile4 from "../images/profiles/Profile8.jpg";
-import Profile5 from "../images/profiles/Profile5.jpg";
 import noProfile from "../images/profiles/noProfile.jpg";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function Profiles() {
+function Profiles({ setlogedIn }) {
   const [selectedPhoto, setSelectedPhoto] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
   const [age, setAge] = useState("");
+  const [caste, setCaste] = useState("");
+  const [religion, setReligion] = useState("");
   const [profiles, setProfiles] = useState([]);
   const [interestedProfiles, setInterestedProfiles] = useState([]);
   const navigate = useNavigate();
 
+  const user = JSON.parse(sessionStorage.getItem('user'));
+  console.log("..user...", user);
+  console.log("..user email...", user.email);
   console.log("...age..", age);
+  console.log("...caste..", caste);
+  console.log("...religion...", religion);
 
   const handleChat = async () => {
     try {
@@ -25,9 +27,8 @@ function Profiles() {
       const response = await axios.post(
         `${API_BASE_URL}/allProfileId`,
         {
-          
-          email: "kratiwork7@gmail.com",
-          AllprofilesId : interestedProfiles
+          email: user.email,
+          AllprofilesId: interestedProfiles
         },
         {
           headers: {
@@ -35,27 +36,22 @@ function Profiles() {
           },
         }
       );
-  
+
       console.log("API Response:", response);
       navigate('/chat');
     } catch (error) {
-      console.log("..error...",error)
+      console.log("..error...", error);
     }
-   
   };
 
   const handleInterest = (profileId) => {
     console.log("Interest button clicked for profile:", profileId);
 
-    // Update the state and then log the updated state inside the callback
     setInterestedProfiles(prevState => {
       const updatedProfiles = [...prevState, profileId];
       console.log("..updatedProfile..", updatedProfiles);
       return updatedProfiles;
     });
-
-    // Note: Logging here will not reflect the updated state immediately due to the asynchronous nature of setState
-    //  console.log("..interestedProfiles..", interestedProfiles);
   };
 
   const uploadImage = (event) => {
@@ -77,7 +73,7 @@ function Profiles() {
     formData.append('image', file);
 
     try {
-      const response = await fetch('http://127.0.0.1:3002/upload?email=kratiwork7@gmail.com', {
+      const response = await fetch(`http://127.0.0.1:3002/upload?email=${user.email}`, {
         method: 'POST',
         body: formData,
       });
@@ -95,7 +91,7 @@ function Profiles() {
   };
 
   const handlegetImageUrl = async () => {
-    axios.get('http://127.0.0.1:3002/getimagepath?email=kratiwork7@gmail.com')
+    axios.get(`http://127.0.0.1:3002/getimagepath?email=${user.email}`)
       .then(response => {
         console.log(".get image url response...", response.data.response.imageUrl);
         setPhotoUrl(response.data.response.imageUrl);
@@ -110,11 +106,20 @@ function Profiles() {
   }, []);
 
   useEffect(() => {
-    let apiUrl = 'http://127.0.0.1:3002/getAllprofile?email=kratiwork7@gmail.com';
+    // Construct the API URL based on filters
+    let apiUrl = `http://127.0.0.1:3002/getAllprofile?email=${user.email}`;
 
     if (age) {
       apiUrl += `&ageRange=${age}`;
     }
+    if (religion) {
+      apiUrl += `&religion=${religion}`;
+    }
+    if (caste) {
+      apiUrl += `&caste=${caste}`;
+    }
+
+    console.log("Constructed API URL:", apiUrl);
 
     axios.get(apiUrl)
       .then(response => {
@@ -124,10 +129,17 @@ function Profiles() {
       .catch(error => {
         console.log("...error..", error);
       });
-  }, [age]);
+  }, [age, religion, caste]);
 
   const handleProfileDetails = async () => {
     navigate('/PersonDetails');
+  };
+
+  const handleLogout = () => {
+    sessionStorage.clear();
+    setlogedIn(false);
+    localStorage.setItem("logedIn", "false");
+    navigate('/');
   };
 
   useEffect(() => {
@@ -182,6 +194,9 @@ function Profiles() {
             "Upload"
           )}
         </div>
+        <div>
+          <button onClick={handleLogout}>Logout</button>
+        </div>
       </nav>
       <div>
         <section style={{ paddingTop: "0px" }}>
@@ -190,20 +205,6 @@ function Profiles() {
               <div className="row">
                 <div className="col-md-3 fil-mob-view">
                   <span className="filter-clo">+</span>
-                  {/* Filter Options */}
-                  <div className="filt-com lhs-cate">
-                    <h4>
-                      <i className="fa fa-search" aria-hidden="true" /> I'm
-                      looking for
-                    </h4>
-                    <div className="form-group">
-                      <select className="chosen-select">
-                        <option value="">I'm looking for</option>
-                        <option value="Men">Men</option>
-                        <option value="Women">Women</option>
-                      </select>
-                    </div>
-                  </div>
                   <div className="filt-com lhs-cate">
                     <h4>
                       <i className="fa fa-clock-o" aria-hidden="true" />
@@ -233,26 +234,16 @@ function Profiles() {
                       Select Religion
                     </h4>
                     <div className="form-group">
-                      <select className="chosen-select">
-                        <option>Religion</option>
-                        <option>Any</option>
-                        <option>Hindu</option>
-                        <option>Muslim</option>
-                        <option>Jain</option>
-                        <option>Christian</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="filt-com lhs-cate">
-                    <h4>
-                      <i className="fa fa-map-marker" aria-hidden="true" />
-                      Location
-                    </h4>
-                    <div className="form-group">
-                      <select className="chosen-select" name="addjbmaincate">
-                        <option value="Chennai">Chennai</option>
-                        <option value="Bangaluru">Bangaluru</option>
-                        <option value="Delhi">Delhi</option>
+                      <select className="chosen-select" 
+                        value={religion}
+                        onChange={(event) => setReligion(event.target.value)}
+                      >
+                        <option value="">Select Religion</option>
+                        <option value="Any">Any</option>
+                        <option value="Hindu">Hindu</option>
+                        <option value="Muslim">Muslim</option>
+                        <option value="Jain">Jain</option>
+                        <option value="Christian">Christian</option>
                       </select>
                     </div>
                   </div>
@@ -265,15 +256,14 @@ function Profiles() {
                       <select
                         id="caste-select"
                         className="chosen-select"
-                        // value={caste}
-                        // onChange={(event) => setCaste(event.target.value)}
+                        value={caste}
+                        onChange={(event) => setCaste(event.target.value)}
                       >
-                        <option value="aggrawal">Aggrawal</option>
-                        <option value="sharma">Sharma</option>
-                        <option value="gupta">Gupta</option>
-                        <option value="verma">Verma</option>
-                        <option value="singh">Singh</option>
-                        <option value="jain">Jain</option>
+                        <option value="">Select Caste</option>
+                        <option value="General">General</option>
+                        <option value="OBC">OBC</option>
+                        <option value="SC">SC</option>
+                        <option value="ST">ST</option>
                       </select>
                     </div>
                   </div>

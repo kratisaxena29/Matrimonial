@@ -1267,6 +1267,7 @@ function TermsConditions() {
           <br />
           <br />
         </p>
+        <p>This website is proudly powered by The Dreamy Trails.</p>
       </div>
 
       <footer

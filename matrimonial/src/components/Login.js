@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import logo from "../images/logo_maroon.png";
 import bigImage from "../images/hero_image2.png"; // Replace with your big image path
 
-const Login = () => {
+const Login = ({setlogedIn}) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -26,6 +26,7 @@ const Login = () => {
   const [passwordError, setPasswordError] = useState("");
   const [showPassword, setShowPassword] = useState(false); // State for toggling password visibility
   const navigate = useNavigate();
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -58,7 +59,14 @@ const Login = () => {
         }
       );
       console.log("API Response:", response);
-      navigate('/profiles')
+      const { token, user } = response.data.response;
+      console.log("...token...",token)
+      console.log("...user...",user)
+    sessionStorage.setItem('token', token);
+    sessionStorage.setItem('user', JSON.stringify(user));
+      setlogedIn(true);
+      navigate('/plan')
+      // navigate('/profiles')
     } catch (error) {
       console.error("Error while making API call:", error.response);
       toast.error(error.response.data.Error);
