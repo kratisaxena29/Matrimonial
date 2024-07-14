@@ -34,7 +34,7 @@ function PersonDetails() {
                   <div className="s1">
                     <img src={Profile1} loading="lazy" className="pro" alt="" />
                   </div>
-                  <div className="s3">
+                  {/* <div className="s3">
                     <a href="#!" className="cta fol cta-chat">
                       Chat now
                     </a>
@@ -45,21 +45,21 @@ function PersonDetails() {
                     >
                       Send interest
                     </span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className="profi-pg profi-bio">
                 <div className="lhs">
                   <div className="pro-pg-intro">
                     <h1>Angelina Jolie</h1>
-                    <div className="pro-info-status">
+                    {/* <div className="pro-info-status">
                       <span className="stat-1">
                         <b>100</b> viewers
                       </span>
                       <span className="stat-2">
                         <b>Available</b> online
                       </span>
-                    </div>
+                    </div> */}
                     <ul>
                       <li>
                         <div>
@@ -129,7 +129,7 @@ function PersonDetails() {
                   </div>
                   {/* END PROFILE ABOUT */}
                   {/* PROFILE ABOUT */}
-                  <div className="pr-bio-c pr-bio-gal" id="gallery">
+                  {/* <div className="pr-bio-c pr-bio-gal" id="gallery">
                     <h3>Photo gallery</h3>
                     <div id="image-gallery">
                       <div className="pro-gal-imag">
@@ -184,7 +184,7 @@ function PersonDetails() {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                   {/* END PROFILE ABOUT */}
                   {/* PROFILE ABOUT */}
                   <div className="pr-bio-c pr-bio-conta">

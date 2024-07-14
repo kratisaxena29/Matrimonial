@@ -132,6 +132,7 @@ function Profiles({ setlogedIn }) {
   }, [age, religion, caste]);
 
   const handleProfileDetails = async () => {
+    console.log("...handleProfileDetails...")
     navigate('/PersonDetails');
   };
 

@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../images/logo.png";
 import { useNavigate } from 'react-router-dom';
 import { Typography, TextField, Button, Select, MenuItem, createTheme, ThemeProvider, InputLabel, FormControl, FormHelperText } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
+import axios from 'axios';
 
 function ProfileDetails() {
-
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
@@ -16,8 +16,12 @@ function ProfileDetails() {
   const [religion, setReligion] = useState("");
   const [disability, setDisability] = useState("");
   const [disabilityDetails, setDisabilityDetails] = useState("");
-  const [email, setEmail] = useState(""); // New state variable for email
-
+  const [email, setEmail] = useState("");
+  const [phoneNo, setPhoneNo] = useState("");
+  const [address, setAddress] = useState("");
+  const [indianCities, setIndianCities] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [errors, setErrors] = useState({});
 
   const navigate = useNavigate();
@@ -26,7 +30,7 @@ function ProfileDetails() {
       MuiPopover: {
         styleOverrides: {
           root: {
-            paddingRight: "0px", // Override the default padding-right
+            paddingRight: "0px",
           },
         },
       },
@@ -44,6 +48,8 @@ function ProfileDetails() {
     if (!religion) newErrors.religion = "Religion is required";
     if (disability === "Yes" && !disabilityDetails) newErrors.disabilityDetails = "Please provide details about your disability";
     if (!email) newErrors.email = "Email is required";
+    if (!phoneNo) newErrors.phoneNo = "Phone number is required";
+    if (!address) newErrors.address = "Address is required";
     if (email && !/\S+@\S+\.\S+/.test(email)) newErrors.email = "Email is invalid";
 
     setErrors(newErrors);
@@ -53,18 +59,6 @@ function ProfileDetails() {
   const handleProfileNext = async () => {
     if (!validate()) return;
 
-    console.log("..name..", name);
-    console.log("gender..", gender);
-    console.log("..age..", age);
-    console.log("..marital status..", maritalStatus);
-    console.log("..nationality...", nationality);
-    console.log("..city..", city);
-    console.log("..religion..", religion);
-    console.log("...disability...", disability);
-    if (disability === "Yes") {
-      console.log("...disability details...", disabilityDetails);
-    }
-    console.log("..email..", email);
     navigate('/additional-details', {
       state: {
         name,
@@ -76,7 +70,9 @@ function ProfileDetails() {
         religion,
         disability,
         disabilityDetails: disability === "Yes" ? disabilityDetails : "",
-        email, // Include email in the navigation state
+        email,
+        phoneNo,
+        address
       }
     });
   };
@@ -85,6 +81,45 @@ function ProfileDetails() {
     setter(event.target.value);
     setErrors(prevErrors => ({ ...prevErrors, [fieldName]: "" }));
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get('https://countriesnow.space/api/v0.1/countries/population/cities');
+        const allCities = response.data.data;
+        const indianCities = allCities.filter(city => city.country === "India");
+        const indianCityNames = indianCities.map(city => city.city);
+        setIndianCities(indianCityNames);
+        setLoading(false);
+      } catch (error) {
+        setError(error.message);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    // Optional: Use this for debugging if needed
+    if (process.env.NODE_ENV === 'development') {
+      console.log("State Values:");
+      console.log("name:", name);
+      console.log("gender:", gender);
+      console.log("age:", age);
+      console.log("maritalStatus:", maritalStatus);
+      console.log("nationality:", nationality);
+      console.log("city:", city);
+      console.log("religion:", religion);
+      console.log("disability:", disability);
+      console.log("disabilityDetails:", disabilityDetails);
+      console.log("email:", email);
+      console.log("phoneNo:", phoneNo);
+      console.log("address:", address);
+      console.log("indianCities:", indianCities);
+    }
+  }, [name, gender, age, maritalStatus, nationality, city, religion, disability, disabilityDetails, email, phoneNo, address, indianCities]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -116,10 +151,9 @@ function ProfileDetails() {
                   helperText={errors.name}
                 />
                 <FormControl variant="standard" sx={{ minWidth: 200 }} error={!!errors.gender}>
-                  <InputLabel id="demo-simple-select-standard-label">Gender</InputLabel>
+                  <InputLabel id="gender-label">Gender</InputLabel>
                   <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
+                    labelId="gender-label"
                     value={gender}
                     onChange={handleChange(setGender, "gender")}
                     label="Gender"
@@ -141,10 +175,9 @@ function ProfileDetails() {
                   helperText={errors.age}
                 />
                 <FormControl variant="standard" sx={{ minWidth: 200 }} error={!!errors.maritalStatus}>
-                  <InputLabel id="demo-simple-select-standard-label">Marital Status</InputLabel>
+                  <InputLabel id="marital-status-label">Marital Status</InputLabel>
                   <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
+                    labelId="marital-status-label"
                     value={maritalStatus}
                     onChange={handleChange(setMaritalStatus, "maritalStatus")}
                     label="Marital Status"
@@ -160,10 +193,9 @@ function ProfileDetails() {
               </div>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
                 <FormControl variant="standard" sx={{ minWidth: 195 }} error={!!errors.nationality}>
-                  <InputLabel id="demo-simple-select-standard-label">Nationality</InputLabel>
+                  <InputLabel id="nationality-label">Nationality</InputLabel>
                   <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
+                    labelId="nationality-label"
                     value={nationality}
                     onChange={handleChange(setNationality, "nationality")}
                     label="Nationality"
@@ -173,43 +205,65 @@ function ProfileDetails() {
                   </Select>
                   {errors.nationality && <FormHelperText>{errors.nationality}</FormHelperText>}
                 </FormControl>
-                <FormControl variant="standard" sx={{ minWidth: 195 }} error={!!errors.city}>
-                  <InputLabel id="city-select-label">City</InputLabel>
+                <FormControl variant="standard" sx={{ minWidth: 200 }} error={!!errors.city}>
+                  <InputLabel id="city-label">City</InputLabel>
                   <Select
-                    labelId="city-select-label"
-                    id="city-select"
+                    labelId="city-label"
                     value={city}
                     onChange={handleChange(setCity, "city")}
                     label="City"
                   >
-                    <MenuItem value="Mohali">Mohali</MenuItem>
-                    <MenuItem value="Delhi">Delhi</MenuItem>
-                    <MenuItem value="Hyderabad">Hyderabad</MenuItem>
-                    <MenuItem value="Banglore">Banglore</MenuItem>
-                    <MenuItem value="Chennai">Chennai</MenuItem>
-                    <MenuItem value="Kolkata">Kolkata</MenuItem>
-                    <MenuItem value="Jaipur">Jaipur</MenuItem>
-                    <MenuItem value="Varanasi">Varanasi</MenuItem>
-                    <MenuItem value="Agra">Agra</MenuItem>
-                    <MenuItem value="Mumbai">Mumbai</MenuItem>
+                    {indianCities.map((cityName, index) => (
+                      <MenuItem key={index} value={cityName}>
+                        {cityName}
+                      </MenuItem>
+                    ))}
                   </Select>
                   {errors.city && <FormHelperText>{errors.city}</FormHelperText>}
                 </FormControl>
               </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "40px", marginBottom: "40px" }}>
                 <TextField
-                  label="Religion"
+                  label="Phone No"
                   variant="standard"
-                  value={religion}
-                  onChange={handleChange(setReligion, "religion")}
-                  error={!!errors.religion}
-                  helperText={errors.religion}
+                  value={phoneNo}
+                  onChange={handleChange(setPhoneNo, "phoneNo")}
+                  error={!!errors.phoneNo}
+                  helperText={errors.phoneNo}
+                  sx={{ width: "45%" }}
                 />
-                <FormControl variant="standard" sx={{ minWidth: 200 }} error={!!errors.disability}>
-                  <InputLabel id="demo-simple-select-standard-label">Disability</InputLabel>
+                <TextField
+                  label="Address"
+                  variant="standard"
+                  value={address}
+                  onChange={handleChange(setAddress, "address")}
+                  error={!!errors.address}
+                  helperText={errors.address}
+                  sx={{ width: "45%" }}
+                />
+              </div>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
+                <FormControl variant="standard" sx={{ minWidth: 200 }} error={!!errors.religion}>
+                  <InputLabel id="religion-label">Religion</InputLabel>
                   <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
+                    labelId="religion-label"
+                    value={religion}
+                    onChange={handleChange(setReligion, "religion")}
+                    label="Religion"
+                  >
+                    <MenuItem value=""><em>Select Religion</em></MenuItem>
+                    <MenuItem value="Any">Any</MenuItem>
+                    <MenuItem value="Hindu">Hindu</MenuItem>
+                    <MenuItem value="Muslim">Muslim</MenuItem>
+                    <MenuItem value="Jain">Jain</MenuItem>
+                    <MenuItem value="Christian">Christian</MenuItem>
+                  </Select>
+                  {errors.religion && <FormHelperText>{errors.religion}</FormHelperText>}
+                </FormControl>
+                <FormControl variant="standard" sx={{ minWidth: 200 }} error={!!errors.disability}>
+                  <InputLabel id="disability-label">Disability</InputLabel>
+                  <Select
+                    labelId="disability-label"
                     value={disability}
                     onChange={handleChange(setDisability, "disability")}
                     label="Disability"
@@ -220,31 +274,28 @@ function ProfileDetails() {
                   {errors.disability && <FormHelperText>{errors.disability}</FormHelperText>}
                 </FormControl>
               </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "40px",gap:"80px" }}>
-              {disability === "Yes" && (
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "40px", gap: "80px" }}>
+                {disability === "Yes" && (
                   <TextField
                     label="Enter details about your disability"
                     variant="standard"
                     value={disabilityDetails}
                     onChange={handleChange(setDisabilityDetails, "disabilityDetails")}
-                    sx={{minWidth:200}}
+                    sx={{ minWidth: 200 }}
                     error={!!errors.disabilityDetails}
                     helperText={errors.disabilityDetails}
                   />
-              )}
-              {/* <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "40px" }}> */}
+                )}
                 <TextField
                   label="Email"
                   variant="standard"
                   value={email}
                   onChange={handleChange(setEmail, "email")}
-                  // fullWidth
                   sx={{ width: disability === "Yes" ? 200 : 470 }}
                   error={!!errors.email}
                   helperText={errors.email}
-                  />
-              {/* </div> */}
-                  </div>
+                />
+              </div>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "20px", marginBottom: "40px" }}>
                 <Button
                   onClick={() => navigate('/')}

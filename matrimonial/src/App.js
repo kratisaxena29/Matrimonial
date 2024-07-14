@@ -26,6 +26,7 @@ import PasswordResetSuccess from './components/PasswordResetSuccess';
 import TermsConditions from './components/TermsConditions';
 import PublicRoute from './Routes/PublicRoute';
 import ProtectedRoute from './Routes/ProtectedRoute';
+import NewPassword from './components/NewPassword';
 
 function App() {
   const [logedIn, setlogedIn] = useState(
@@ -54,12 +55,13 @@ function App() {
           <Route path="/partner-education" element={<PartnerEducation />} />
           <Route path="/partner-living" element={<PartnerLiving />} />
           <Route path="/upload-document" element={<UploadDocument />} />
-          <Route path="/PersonDetails" element={<PersonDetails />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
+          
+          <Route path="/forgot-password" element={<ResetPassword />} />
           <Route path="/forgot-otp" element={<ForgotOtp />} />
           <Route path="/success" element={<PasswordResetSuccess />} />
           <Route path="/terms&conditions" element={<TermsConditions />} />
           <Route path="/profile-completed" element={<ProfileCompleted />} />
+          <Route path='/reset-password' element={<NewPassword/>}></Route>
           
         </Route>
 
@@ -68,6 +70,7 @@ function App() {
           <Route path="/chat" element={<Chat setlogedIn={setlogedIn}/>} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/plan" element={<Plan />} />
+          <Route path="/PersonDetails" element={<PersonDetails />} />
         </Route>
       </Routes>
     </Router>

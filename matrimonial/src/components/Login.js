@@ -102,7 +102,7 @@ const Login = ({setlogedIn}) => {
   };
 
   const handleForgotPassword = async () => {
-    navigate('/reset-password');
+    navigate('/forgot-password');
   };
 
   return (

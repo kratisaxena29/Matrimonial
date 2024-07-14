@@ -28,7 +28,7 @@ function Plan() {
     e.preventDefault();
     
     const data = {
-      amount: 1,
+      amount: 100,
       MUID: "MUID" + Date.now(),
       transactionId: 'T' + Date.now(),
     };

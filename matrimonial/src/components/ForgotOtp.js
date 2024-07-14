@@ -51,7 +51,7 @@ const navigate = useNavigate()
 
   const handleVerifyClick = async () => {
     console.log("Verify button clicked");
-    navigate('/success')
+    navigate('/reset-password')
     // try {
     //     console.log("verifed")
     // } catch (error) {
