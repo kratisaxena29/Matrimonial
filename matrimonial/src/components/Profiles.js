@@ -21,11 +21,13 @@ function Profiles({ setlogedIn }) {
   console.log("...caste..", caste);
   console.log("...religion...", religion);
 
+  const URL = process.env.REACT_APP_API_BASE_URL;
+
   const handleChat = async () => {
     try {
-      const API_BASE_URL = 'http://localhost:3002';
+      
       const response = await axios.post(
-        `${API_BASE_URL}/allProfileId`,
+        `${URL}/allProfileId`,
         {
           email: user.email,
           AllprofilesId: interestedProfiles
@@ -73,7 +75,7 @@ function Profiles({ setlogedIn }) {
     formData.append('image', file);
 
     try {
-      const response = await fetch(`http://127.0.0.1:3002/upload?email=${user.email}`, {
+      const response = await fetch(`${URL}/upload?email=${user.email}`, {
         method: 'POST',
         body: formData,
       });
@@ -91,7 +93,7 @@ function Profiles({ setlogedIn }) {
   };
 
   const handlegetImageUrl = async () => {
-    axios.get(`http://127.0.0.1:3002/getimagepath?email=${user.email}`)
+    axios.get(`${URL}/getimagepath?email=${user.email}`)
       .then(response => {
         console.log(".get image url response...", response.data.response.imageUrl);
         setPhotoUrl(response.data.response.imageUrl);
@@ -107,7 +109,7 @@ function Profiles({ setlogedIn }) {
 
   useEffect(() => {
     // Construct the API URL based on filters
-    let apiUrl = `http://127.0.0.1:3002/getAllprofile?email=${user.email}`;
+    let apiUrl = `${URL}/getAllprofile?email=${user.email}`;
 
     if (age) {
       apiUrl += `&ageRange=${age}`;
@@ -131,9 +133,9 @@ function Profiles({ setlogedIn }) {
       });
   }, [age, religion, caste]);
 
-  const handleProfileDetails = async () => {
-    console.log("...handleProfileDetails...")
-    navigate('/PersonDetails');
+  const handleProfileDetails = async (profileId) => {
+    console.log("...handleProfileDetails for profileId...", profileId)
+    navigate('/PersonDetails', { state: { profileId } });
   };
 
   const handleLogout = () => {
@@ -192,7 +194,11 @@ function Profiles({ setlogedIn }) {
               style={{ height: "100%", width: "100%", borderRadius: "50%" }}
             />
           ) : (
-            "Upload"
+            <img
+            src= {noProfile}
+            alt="Uploaded Profile"
+            style={{ height: "100%", width: "100%", borderRadius: "50%" }}
+          />
           )}
         </div>
         <div>
@@ -285,7 +291,7 @@ function Profiles({ setlogedIn }) {
                             data-aviltxt="Available online"
                           >
                             <div className="pro-img">
-                              <a onClick={handleProfileDetails}>
+                              <a onClick={() => handleProfileDetails(profile._id)}>
                                 <img
                                   src={profile.fileUpload || noProfile}
                                   alt=""
@@ -300,7 +306,7 @@ function Profiles({ setlogedIn }) {
                             </div>
                             <div className="pro-detail">
                               <h4>
-                                <a onClick={handleProfileDetails}>
+                                <a onClick={() => handleProfileDetails(profile._id)}>
                                   {profile.name}
                                 </a>
                               </h4>
@@ -337,9 +343,9 @@ function Profiles({ setlogedIn }) {
                       ))}
                     </ul>
                   </div>
-                  <div className="mor-prof">
+                 {/* <div className="mor-prof">
                     <button className="mor-but">Load more profiles</button>
-                  </div>
+                  </div>*/}
                 </div>
               </div>
             </div>

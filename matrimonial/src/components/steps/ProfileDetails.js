@@ -1,25 +1,31 @@
 import React, { useEffect, useState } from "react";
 import logo from "../../images/logo.png";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Typography, TextField, Button, Select, MenuItem, createTheme, ThemeProvider, InputLabel, FormControl, FormHelperText } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import axios from 'axios';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ProfileDetails() {
-  const [name, setName] = useState("");
-  const [gender, setGender] = useState("");
-  const [age, setAge] = useState("");
-  const [maritalStatus, setMaritalStatus] = useState("");
-  const [nationality, setNationality] = useState("");
-  const [city, setCity] = useState("");
-  const [religion, setReligion] = useState("");
-  const [disability, setDisability] = useState("");
-  const [disabilityDetails, setDisabilityDetails] = useState("");
-  const [email, setEmail] = useState("");
-  const [phoneNo, setPhoneNo] = useState("");
-  const [address, setAddress] = useState("");
-  const [indianCities, setIndianCities] = useState([]);
+
+  const location = useLocation();
+  const [name, setName] = useState(location?.state?.name || "");
+  const [gender, setGender] = useState(location?.state?.gender || "");
+  const [age, setAge] = useState(location?.state?.age || "");
+  const [maritalStatus, setMaritalStatus] = useState(location?.state?.maritalStatus || "");
+  const [nationality, setNationality] = useState(location?.state?.nationality || "");
+  const [city, setCity] = useState(location?.state?.city || "");
+  const [religion, setReligion] = useState(location?.state?.religion || "");
+  const [disability, setDisability] = useState(location?.state?.disability || "");
+  const [disabilityDetails, setDisabilityDetails] = useState(location?.state?.disabilityDetails || "");
+  const [email, setEmail] = useState(location?.state?.email || "");
+  const [phoneNo, setPhoneNo] = useState(location?.state?.phoneNo || "");
+  const [address, setAddress] = useState(location?.state?.address || "");
+  const [hobbies, setHobbies] = useState(location?.state?.hobbies || []);
+  const [indianCities, setIndianCities] = useState(location?.state?.indianCities || []);
+  const [isNRI, setIsNRI] = useState(location?.state?.nationality && location?.state?.nationality !== "Indian");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [errors, setErrors] = useState({});
@@ -37,49 +43,112 @@ function ProfileDetails() {
     },
   });
 
-  const validate = () => {
-    const newErrors = {};
-    if (!name) newErrors.name = "Name is required";
-    if (!gender) newErrors.gender = "Gender is required";
-    if (!age) newErrors.age = "Age is required";
-    if (!maritalStatus) newErrors.maritalStatus = "Marital status is required";
-    if (!nationality) newErrors.nationality = "Nationality is required";
-    if (!city) newErrors.city = "City is required";
-    if (!religion) newErrors.religion = "Religion is required";
-    if (disability === "Yes" && !disabilityDetails) newErrors.disabilityDetails = "Please provide details about your disability";
-    if (!email) newErrors.email = "Email is required";
-    if (!phoneNo) newErrors.phoneNo = "Phone number is required";
-    if (!address) newErrors.address = "Address is required";
-    if (email && !/\S+@\S+\.\S+/.test(email)) newErrors.email = "Email is invalid";
+  const validateField = (fieldName, value) => {
+    const newErrors = { ...errors };
+
+    switch (fieldName) {
+      case "name":
+        if (!value) newErrors.name = "Name is required";
+        else delete newErrors.name;
+        break;
+      case "gender":
+        if (!value) newErrors.gender = "Gender is required";
+        else delete newErrors.gender;
+        break;
+      case "age":
+        if (!value) newErrors.age = "Age is required";
+        else delete newErrors.age;
+        break;
+      case "maritalStatus":
+        if (!value) newErrors.maritalStatus = "Marital status is required";
+        else delete newErrors.maritalStatus;
+        break;
+      case "nationality":
+        if (!value) newErrors.nationality = "Nationality is required";
+        else delete newErrors.nationality;
+        break;
+      case "city":
+        if (!value) newErrors.city = "City is required";
+        else delete newErrors.city;
+        break;
+      case "religion":
+        if (!value) newErrors.religion = "Religion is required";
+        else delete newErrors.religion;
+        break;
+      case "disability":
+        if (!value) newErrors.disability = "Disability is required";
+        else delete newErrors.disability;
+        break;
+      case "disabilityDetails":
+        if (disability === "Yes" && !value) newErrors.disabilityDetails = "Please provide details about your disability";
+        else delete newErrors.disabilityDetails;
+        break;
+      case "email":
+        if (!value) newErrors.email = "Email is required";
+        else if (value && !/\S+@\S+\.\S+/.test(value)) newErrors.email = "Email is invalid";
+        else delete newErrors.email;
+        break;
+      case "phoneNo":
+        if (!value) newErrors.phoneNo = "Phone number is required";
+        else if (value.length < 10) newErrors.phoneNo = "Phone number must be 10 digits";
+        else if (value.length > 10) newErrors.phoneNo = "Phone number must not be more than 10 digits";
+        else delete newErrors.phoneNo;
+        break;
+      case "address":
+        if (!value) newErrors.address = "Address is required";
+        else delete newErrors.address;
+        break;
+      case "hobbies":
+        if (!value || value.length<3) newErrors.hobbies = "Hobbies is required";
+        else delete newErrors.hobbies;
+        break;
+      default:
+        break;
+    }
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
   };
 
-  const handleProfileNext = async () => {
-    if (!validate()) return;
+  const handleBlur = (fieldName) => (event) => {
+    validateField(fieldName, event.target.value);
+  };
 
-    navigate('/additional-details', {
-      state: {
-        name,
-        gender,
-        age,
-        maritalStatus,
-        nationality,
-        city,
-        religion,
-        disability,
-        disabilityDetails: disability === "Yes" ? disabilityDetails : "",
-        email,
-        phoneNo,
-        address
-      }
-    });
+ 
+  console.log("..email ...", location.state.email);
+
+  const handleProfileNext = async () => {
+    const allFieldsValid = Object.keys(errors).length === 0;
+
+    if (!allFieldsValid) return;
+
+    if (email === location.state.email) {
+      navigate('/additional-details', {
+        state: {
+          name,
+          gender,
+          age,
+          maritalStatus,
+          nationality,
+          city,
+          religion,
+          disability,
+          disabilityDetails: disability === "Yes" ? disabilityDetails : "",
+          email,
+          phoneNo,
+          address,
+          hobbies,
+        },
+      });
+    } else {
+      console.log("...email does not match with the registered one");
+      toast.error("Email does not match with the registered one");
+    }
   };
 
   const handleChange = (setter, fieldName) => (event) => {
     setter(event.target.value);
-    setErrors(prevErrors => ({ ...prevErrors, [fieldName]: "" }));
+    setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
+    validateField(fieldName, event.target.value);
   };
 
   useEffect(() => {
@@ -88,8 +157,8 @@ function ProfileDetails() {
       try {
         const response = await axios.get('https://countriesnow.space/api/v0.1/countries/population/cities');
         const allCities = response.data.data;
-        const indianCities = allCities.filter(city => city.country === "India");
-        const indianCityNames = indianCities.map(city => city.city);
+        const indianCities = allCities.filter((city) => city.country === "India");
+        const indianCityNames = indianCities.map((city) => city.city);
         setIndianCities(indianCityNames);
         setLoading(false);
       } catch (error) {
@@ -101,29 +170,51 @@ function ProfileDetails() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    // Optional: Use this for debugging if needed
-    if (process.env.NODE_ENV === 'development') {
-      console.log("State Values:");
-      console.log("name:", name);
-      console.log("gender:", gender);
-      console.log("age:", age);
-      console.log("maritalStatus:", maritalStatus);
-      console.log("nationality:", nationality);
-      console.log("city:", city);
-      console.log("religion:", religion);
-      console.log("disability:", disability);
-      console.log("disabilityDetails:", disabilityDetails);
-      console.log("email:", email);
-      console.log("phoneNo:", phoneNo);
-      console.log("address:", address);
-      console.log("indianCities:", indianCities);
-    }
-  }, [name, gender, age, maritalStatus, nationality, city, religion, disability, disabilityDetails, email, phoneNo, address, indianCities]);
+  const ageOptions = [];
+  for (let i = 18; i <= 75; i++) {
+    ageOptions.push(i);
+  }
+
+  const hobbiesOptions = [
+    "Reading",
+    "Traveling",
+    "Cooking",
+    "Sports",
+    "Music",
+    "Dancing",
+    "Photography",
+    "Drawing",
+    "Others"
+  ];
+
+  const nationalityOptions = [
+    "Indian",
+   "NRI"
+  ];
+
+  const religionOptions = [
+    "Hindu",
+    "Muslim",
+    "Christian",
+    "Sikh",
+    "Buddhist",
+    "Jain",
+    "Bahai",
+    
+  ];
+
+  const maritalStatusOptions = [
+   "Never Married",
+   "Awaiting Divorce",
+    "Divorced",
+    "Widowed",
+    "Annulled"
+  ];
 
   return (
     <ThemeProvider theme={theme}>
       <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+        <ToastContainer />
         <nav style={{ backgroundColor: "#6D0B32", padding: "10px 20px", display: "flex", alignItems: "center" }}>
           <img src={logo} alt="Logo" style={{ height: "60px", marginRight: "40px" }} />
         </nav>
@@ -147,6 +238,7 @@ function ProfileDetails() {
                   variant="standard"
                   value={name}
                   onChange={handleChange(setName, "name")}
+                  onBlur={handleBlur("name")}
                   error={!!errors.name}
                   helperText={errors.name}
                 />
@@ -156,91 +248,115 @@ function ProfileDetails() {
                     labelId="gender-label"
                     value={gender}
                     onChange={handleChange(setGender, "gender")}
-                    label="Gender"
+                    onBlur={handleBlur("gender")}
                   >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
                     <MenuItem value="Male">Male</MenuItem>
                     <MenuItem value="Female">Female</MenuItem>
-                    <MenuItem value="Others">Others</MenuItem>
+                    <MenuItem value="Other">Other</MenuItem>
                   </Select>
                   {errors.gender && <FormHelperText>{errors.gender}</FormHelperText>}
                 </FormControl>
               </div>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
-                <TextField
-                  label="Age"
-                  variant="standard"
-                  value={age}
-                  onChange={handleChange(setAge, "age")}
-                  error={!!errors.age}
-                  helperText={errors.age}
-                />
+                <FormControl variant="standard" sx={{ minWidth: 200 }} error={!!errors.age}>
+                  <InputLabel id="age-label">Age</InputLabel>
+                  <Select
+                    labelId="age-label"
+                    value={age}
+                    onChange={handleChange(setAge, "age")}
+                    onBlur={handleBlur("age")}
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    {ageOptions.map((ageOption) => (
+                      <MenuItem key={ageOption} value={ageOption}>
+                        {ageOption}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {errors.age && <FormHelperText>{errors.age}</FormHelperText>}
+                </FormControl>
                 <FormControl variant="standard" sx={{ minWidth: 200 }} error={!!errors.maritalStatus}>
                   <InputLabel id="marital-status-label">Marital Status</InputLabel>
                   <Select
                     labelId="marital-status-label"
                     value={maritalStatus}
                     onChange={handleChange(setMaritalStatus, "maritalStatus")}
-                    label="Marital Status"
+                    onBlur={handleBlur("maritalStatus")}
                   >
-                    <MenuItem value="Single">Single</MenuItem>
-                    <MenuItem value="Married">Married</MenuItem>
-                    <MenuItem value="Divorced">Divorced</MenuItem>
-                    <MenuItem value="Widowed">Widowed</MenuItem>
-                    <MenuItem value="Annulled">Annulled</MenuItem>
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    {maritalStatusOptions.map((status) => (
+                      <MenuItem key={status} value={status}>
+                        {status}
+                      </MenuItem>
+                    ))}
                   </Select>
                   {errors.maritalStatus && <FormHelperText>{errors.maritalStatus}</FormHelperText>}
                 </FormControl>
               </div>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
-                <FormControl variant="standard" sx={{ minWidth: 195 }} error={!!errors.nationality}>
+                <FormControl variant="standard" sx={{ minWidth: 200 }} error={!!errors.nationality}>
                   <InputLabel id="nationality-label">Nationality</InputLabel>
                   <Select
                     labelId="nationality-label"
                     value={nationality}
-                    onChange={handleChange(setNationality, "nationality")}
-                    label="Nationality"
+                    onChange={(e) => {
+                      setNationality(e.target.value);
+                      setIsNRI(e.target.value !== "Indian");
+                    }}
+                    onBlur={handleBlur("nationality")}
                   >
-                    <MenuItem value="Indian">Indian</MenuItem>
-                    <MenuItem value="NRI">NRI</MenuItem>
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    {nationalityOptions.map((nationality) => (
+                      <MenuItem key={nationality} value={nationality}>
+                        {nationality}
+                      </MenuItem>
+                      
+                    ))}
                   </Select>
                   {errors.nationality && <FormHelperText>{errors.nationality}</FormHelperText>}
                 </FormControl>
-                <FormControl variant="standard" sx={{ minWidth: 200 }} error={!!errors.city}>
+                {nationality === "Indian" && (
+                  <FormControl variant="standard" sx={{ minWidth: 200 }} error={!!errors.city}>
                   <InputLabel id="city-label">City</InputLabel>
                   <Select
                     labelId="city-label"
                     value={city}
                     onChange={handleChange(setCity, "city")}
-                    label="City"
+                    onBlur={handleBlur("city")}
                   >
-                    {indianCities.map((cityName, index) => (
-                      <MenuItem key={index} value={cityName}>
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    {indianCities.map((cityName) => (
+                      <MenuItem key={cityName} value={cityName}>
                         {cityName}
                       </MenuItem>
                     ))}
                   </Select>
                   {errors.city && <FormHelperText>{errors.city}</FormHelperText>}
                 </FormControl>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "40px", marginBottom: "40px" }}>
-                <TextField
-                  label="Phone No"
-                  variant="standard"
-                  value={phoneNo}
-                  onChange={handleChange(setPhoneNo, "phoneNo")}
-                  error={!!errors.phoneNo}
-                  helperText={errors.phoneNo}
-                  sx={{ width: "45%" }}
-                />
-                <TextField
-                  label="Address"
-                  variant="standard"
-                  value={address}
-                  onChange={handleChange(setAddress, "address")}
-                  error={!!errors.address}
-                  helperText={errors.address}
-                  sx={{ width: "45%" }}
-                />
+                )}
+                {isNRI && ( 
+                   <TextField
+                  
+                  label="Country"
+                  variant="outlined"
+                  value={city}
+                  onChange={handleChange(setCity, "city")}
+                  onBlur={handleBlur("city")}
+                  error={!!errors.city}
+                  helperText={errors.city}
+                  sx={{ marginBottom: 2 }}
+                />)}
               </div>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
                 <FormControl variant="standard" sx={{ minWidth: 200 }} error={!!errors.religion}>
@@ -249,14 +365,16 @@ function ProfileDetails() {
                     labelId="religion-label"
                     value={religion}
                     onChange={handleChange(setReligion, "religion")}
-                    label="Religion"
+                    onBlur={handleBlur("religion")}
                   >
-                    <MenuItem value=""><em>Select Religion</em></MenuItem>
-                    <MenuItem value="Any">Any</MenuItem>
-                    <MenuItem value="Hindu">Hindu</MenuItem>
-                    <MenuItem value="Muslim">Muslim</MenuItem>
-                    <MenuItem value="Jain">Jain</MenuItem>
-                    <MenuItem value="Christian">Christian</MenuItem>
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    {religionOptions.map((religion) => (
+                      <MenuItem key={religion} value={religion}>
+                        {religion}
+                      </MenuItem>
+                    ))}
                   </Select>
                   {errors.religion && <FormHelperText>{errors.religion}</FormHelperText>}
                 </FormControl>
@@ -266,58 +384,102 @@ function ProfileDetails() {
                     labelId="disability-label"
                     value={disability}
                     onChange={handleChange(setDisability, "disability")}
-                    label="Disability"
+                    onBlur={handleBlur("disability")}
                   >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
                     <MenuItem value="Yes">Yes</MenuItem>
                     <MenuItem value="No">No</MenuItem>
                   </Select>
                   {errors.disability && <FormHelperText>{errors.disability}</FormHelperText>}
                 </FormControl>
               </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "40px", gap: "80px" }}>
-                {disability === "Yes" && (
+              {disability === "Yes" && (
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "40px" }}>
                   <TextField
-                    label="Enter details about your disability"
+                    label="Disability Details"
                     variant="standard"
                     value={disabilityDetails}
                     onChange={handleChange(setDisabilityDetails, "disabilityDetails")}
-                    sx={{ minWidth: 200 }}
+                    onBlur={handleBlur("disabilityDetails")}
                     error={!!errors.disabilityDetails}
                     helperText={errors.disabilityDetails}
+                    fullWidth
                   />
-                )}
+                </div>
+              )}
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
                 <TextField
                   label="Email"
                   variant="standard"
                   value={email}
                   onChange={handleChange(setEmail, "email")}
-                  sx={{ width: disability === "Yes" ? 200 : 470 }}
+                  onBlur={handleBlur("email")}
                   error={!!errors.email}
                   helperText={errors.email}
                 />
+                <TextField
+                  label="Phone No"
+                  variant="standard"
+                  value={phoneNo}
+                  onChange={handleChange(setPhoneNo, "phoneNo")}
+                  onBlur={handleBlur("phoneNo")}
+                  error={!!errors.phoneNo}
+                  helperText={errors.phoneNo}
+                />
               </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "20px", marginBottom: "40px" }}>
-                <Button
-                  onClick={() => navigate('/')}
-                  variant="outlined"
-                  color="error"
-                  sx={{ mt: 4, mb: 2, width: 150, height: 40, textTransform: "inherit", fontSize: "18px" }}
-                >
-                  Back
-                </Button>
-                <Button
-                  onClick={handleProfileNext}
-                  type="submit"
-                  variant="contained"
-                  sx={{ mt: 4, mb: 2, width: 150, height: 40, textTransform: "inherit", fontSize: "18px", backgroundColor: "#FB6A6B" }}
-                >
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "40px" }}>
+                <TextField
+                  label="Address"
+                  variant="standard"
+                  value={address}
+                  onChange={handleChange(setAddress, "address")}
+                  onBlur={handleBlur("address")}
+                  error={!!errors.address}
+                  helperText={errors.address}
+                  fullWidth
+                />
+              </div>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "40px" }}>
+                <FormControl variant="standard" sx={{ minWidth: 200 }} error={!!errors.hobbies}>
+                  <InputLabel id="hobbies-label">Hobbies</InputLabel>
+                  <Select
+                    labelId="hobbies-label"
+                    value={hobbies}
+                    onChange={handleChange(setHobbies, "hobbies")}
+                    onBlur={handleBlur("hobbies")}
+                    multiple
+                    renderValue={(selected) => selected.join(', ')}
+                  >
+                   
+                    {hobbiesOptions.map((hobby) => (
+                      <MenuItem key={hobby} value={hobby}>
+                        {hobby}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {errors.hobbies && <FormHelperText>{errors.hobbies}</FormHelperText>}
+                </FormControl>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop: "20px" }}>
+                <Button variant="contained" color="primary" onClick={handleProfileNext}>
                   Next
                 </Button>
               </div>
             </div>
           </div>
         </div>
-        <footer style={{ backgroundColor: "#530014", padding: "20px", display: "flex", alignItems: "center", justifyContent: "space-between", color: "#fff" }}>
+        <footer
+          style={{
+            backgroundColor: "#530014",
+            padding: "20px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            color: "#fff",
+          }}
+        >
           <div>
             <Facebook style={{ marginRight: "10px" }} />
             <Instagram style={{ marginRight: "10px" }} />

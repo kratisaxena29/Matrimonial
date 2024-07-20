@@ -6,7 +6,8 @@ import logo from "../images/logo_maroon.png";
 import bigImage from "../images/hero_image2.png";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function NewPassword() {
     const [formData, setFormData] = useState({
@@ -17,24 +18,76 @@ function NewPassword() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation()
+    console.log("...location..",location.state)
+    const otpArray = location.state.otp; // assuming location.state.otp is an array
+const otpString = otpArray.join('');
+console.log(otpString);
 
+const URL = process.env.REACT_APP_API_BASE_URL;
+    // console.log("..otp..",otpData)
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+    
         if (formData.password !== formData.confirmPassword) {
             setPasswordError("Passwords do not match");
             toast.error("Passwords do not match");
         } else {
             setPasswordError("");
-            console.log("...password..",formData.password)
-            console.log("Form submitted successfully");
-            // Add your form submission logic here
+            console.log("...password..", formData.password);
+    
+            
+            
+            try {
+                const response = await axios.post(
+                    `${URL}/password-reset`,
+                    {
+                        email: location.state.email,
+                        password: formData.password,
+                        otp: otpString // Make sure otpString is defined
+                    },
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    }
+                );
+    
+                console.log("..response...", response);
+                navigate('/login')
+                console.log("Form submitted successfully");
+            } catch (error) {
+                console.log(error);
+            }
         }
     };
+
+    const handlePasswordChange = async () => {
+        
+        try {
+            const response = await axios.post(
+                `${URL}/password-reset`,
+                {
+                  email: location.state.email,
+                  password : formData.password,
+                  otp : otpString
+                },
+                {
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                }
+              );
+              console.log("..response...",response)
+        } catch (error) {
+          console.log(error)  
+        }
+    }
 
     return (
         <div

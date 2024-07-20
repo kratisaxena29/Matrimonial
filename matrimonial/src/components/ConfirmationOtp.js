@@ -1,10 +1,13 @@
 import { Button, Typography } from "@mui/material";
 import React from "react";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 function ConfirmationOtp() {
   const navigate = useNavigate()
+
+  const location = useLocation()
+  console.log("...conformation-email ...",location.state.email)
   const textStyle = {
     marginBottom: 8,
     color: "#363640",
@@ -20,6 +23,14 @@ function ConfirmationOtp() {
     textAlign: "center",
     gap: 20,
   };
+
+  const handleContinue = () => {
+   navigate('/profile-details',{
+    state: {
+      email : location.state.email
+    }
+   })
+  }
   return (
     <div style={rootStyle}>
       <TaskAltIcon color="success" sx={{ fontSize: "60px" }} />
@@ -30,7 +41,7 @@ function ConfirmationOtp() {
         You have verified your email !
       </Typography>
       <Button
-      onClick={() => navigate('/profile-details')}
+      onClick={handleContinue}
         type="submit"
         variant="contained"
         sx={{

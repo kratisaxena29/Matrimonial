@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "../../images/logo.png";
 import {
   Typography,
@@ -15,14 +15,16 @@ import {
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
 import { useLocation, useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 
 function LifeStyle() {
-  const [diet, setDiet] = useState("");
-  const [alcohol, setAlcohol] = useState("");
-  const [smoke, setSmoke] = useState("");
-  const [interest, setInterest] = useState("");
-  const [errors, setErrors] = useState({});
   const location = useLocation();
+  const [diet, setDiet] = useState(location?.state?.diet || "");
+  const [alcohol, setAlcohol] = useState(location?.state?.alcohol || "");
+  const [smoke, setSmoke] = useState(location?.state?.smoke || "");
+  const [errors, setErrors] = useState({});
+  const [isFormValid, setIsFormValid] = useState(false);
+
   const navigate = useNavigate();
 
   const theme = createTheme({
@@ -30,7 +32,7 @@ function LifeStyle() {
       MuiPopover: {
         styleOverrides: {
           root: {
-            paddingRight: "0px", // Override the default padding-right
+            paddingRight: "0px",
           },
         },
       },
@@ -42,45 +44,22 @@ function LifeStyle() {
     if (!diet) newErrors.diet = "Diet is required";
     if (!alcohol) newErrors.alcohol = "Alcohol consumption status is required";
     if (!smoke) newErrors.smoke = "Smoking status is required";
-    if (!interest) newErrors.interest = "Interests are required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-// data
+
+  useEffect(() => {
+    setIsFormValid(validate());
+  }, [diet, alcohol, smoke]);
+
   const handleNext = () => {
     if (validate()) {
       navigate("/family-details", {
         state: {
-          diet: diet,
-          alcohol: alcohol,
-          smoke: smoke,
-          interest: interest,
-          dateofBirth: location.state.dateofBirth,
-          timeofBirth: location.state.timeofBirth,
-          placeofBirth: location.state.placeofBirth,
-          areyouManglik: location.state.areyouManglik,
-          highestEduction: location.state.highestEduction,
-          currentEmployes: location.state.currentEmployes,
-          profession: location.state.profession,
-          annualIncome: location.state.annualIncome,
-          yearsOfExperience: location.state.yearsOfExperience,
-          caste: location.state.caste,
-          subCaste: location.state.subCaste,
-          origin: location.state.origin,
-          mothertongue: location.state.motherTongue,
-          height: location.state.height,
-          weight: location.state.weight,
-          gothra: location.state.gothra,
-          petFriendly: location.state.petFriendly,
-          age: location.state.age,
-          city: location.state.city,
-          disability: location.state.disability,
-          gender: location.state.gender,
-          maritalStatus: location.state.maritalStatus,
-          name: location.state.name,
-          nationality: location.state.nationality,
-          religion: location.state.religion,
-          email: location.state.email,
+          ...location.state,
+          diet,
+          alcohol,
+          smoke,
         },
       });
     }
@@ -98,9 +77,6 @@ function LifeStyle() {
       case "smoke":
         setSmoke(value);
         break;
-      case "interest":
-        setInterest(value);
-        break;
       default:
         break;
     }
@@ -109,9 +85,7 @@ function LifeStyle() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div
-        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
-      >
+      <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
         <nav
           style={{
             backgroundColor: "#6D0B32",
@@ -120,14 +94,9 @@ function LifeStyle() {
             alignItems: "center",
           }}
         >
-          <img
-            src={logo}
-            alt="Logo"
-            style={{ height: "60px", marginRight: "40px" }}
-          />
+          <img src={logo} alt="Logo" style={{ height: "60px", marginRight: "40px" }} />
         </nav>
         <div style={{ display: "flex", flex: 1 }}>
-          {/* Left part */}
           <div
             style={{
               flex: 1,
@@ -140,17 +109,11 @@ function LifeStyle() {
               justifyContent: "center",
             }}
           >
-            {/* MUI icon */}
-            <MonitorHeartIcon
-              style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }}
-            />
-            {/* Big text */}
+            <MonitorHeartIcon style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }} />
             <Typography variant="h4" component="div" sx={{ color: "#6B0D37" }}>
-              "Embrace the magic of love as we help you find the one who makes
-              your heart skip a beat."
+              "Embrace the magic of love as we help you find the one who makes your heart skip a beat."
             </Typography>
           </div>
-          {/* Right part */}
           <div
             style={{
               flex: 1,
@@ -161,11 +124,7 @@ function LifeStyle() {
             }}
           >
             <div>
-              <Typography
-                sx={{ textAlign: "center" }}
-                variant="h5"
-                gutterBottom
-              >
+              <Typography sx={{ textAlign: "center" }} variant="h5" gutterBottom>
                 Living Style Details
               </Typography>
               <div
@@ -175,14 +134,9 @@ function LifeStyle() {
                   justifyContent: "center",
                   gap: "80px",
                   marginBottom: "40px",
-                  //   marginTop: "20px",
                 }}
               >
-                <FormControl
-                  variant="standard"
-                  sx={{ minWidth: 300 }}
-                  error={Boolean(errors.diet)}
-                >
+                <FormControl variant="standard" sx={{ minWidth: 300 }} error={Boolean(errors.diet)}>
                   <InputLabel id="diet-label">Diet</InputLabel>
                   <Select
                     labelId="diet-label"
@@ -209,11 +163,7 @@ function LifeStyle() {
                   marginBottom: "40px",
                 }}
               >
-                <FormControl
-                  variant="standard"
-                  sx={{ minWidth: 300 }}
-                  error={Boolean(errors.alcohol)}
-                >
+                <FormControl variant="standard" sx={{ minWidth: 300 }} error={Boolean(errors.alcohol)}>
                   <InputLabel id="alcohol-label">Alcohol</InputLabel>
                   <Select
                     labelId="alcohol-label"
@@ -223,13 +173,13 @@ function LifeStyle() {
                     onChange={handleInputChange}
                     label="Alcohol"
                   >
+                     <MenuItem value="Occasionally">Occasionally</MenuItem>
                     <MenuItem value="Social Drinker">Social Drinker</MenuItem>
                     <MenuItem value="Regular Drinker">Regular Drinker</MenuItem>
                     <MenuItem value="Non-drinker">Non-drinker</MenuItem>
+                   
                   </Select>
-                  {errors.alcohol && (
-                    <FormHelperText>{errors.alcohol}</FormHelperText>
-                  )}
+                  {errors.alcohol && <FormHelperText>{errors.alcohol}</FormHelperText>}
                 </FormControl>
               </div>
               <div
@@ -241,11 +191,7 @@ function LifeStyle() {
                   marginBottom: "40px",
                 }}
               >
-                <FormControl
-                  variant="standard"
-                  sx={{ minWidth: 300 }}
-                  error={Boolean(errors.smoke)}
-                >
+                <FormControl variant="standard" sx={{ minWidth: 300 }} error={Boolean(errors.smoke)}>
                   <InputLabel id="smoke-label">Smoke</InputLabel>
                   <Select
                     labelId="smoke-label"
@@ -255,33 +201,15 @@ function LifeStyle() {
                     onChange={handleInputChange}
                     label="Smoke"
                   >
-                    <MenuItem value="Yes">Yes</MenuItem>
-                    <MenuItem value="No">No</MenuItem>
+                    
+
+                    <MenuItem value="Yes">Non-smoker</MenuItem>
+                    <MenuItem value="No">Social Smoker</MenuItem>
+                    <MenuItem value="Regularly">Regular-Smoker</MenuItem>
+                    <MenuItem value="Occasionally">Occasionally</MenuItem>
                   </Select>
-                  {errors.smoke && (
-                    <FormHelperText>{errors.smoke}</FormHelperText>
-                  )}
+                  {errors.smoke && <FormHelperText>{errors.smoke}</FormHelperText>}
                 </FormControl>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "80px",
-                  marginBottom: "40px",
-                }}
-              >
-                <TextField
-                  sx={{ minWidth: 300 }}
-                  label="Interests"
-                  name="interest"
-                  variant="standard"
-                  value={interest}
-                  onChange={handleInputChange}
-                  error={Boolean(errors.interest)}
-                  helperText={errors.interest}
-                />
               </div>
               <div
                 style={{
@@ -293,7 +221,7 @@ function LifeStyle() {
                 }}
               >
                 <Button
-                  onClick={() => navigate("/horoscope")}
+                  onClick={() => navigate("/horoscope", { state: { ...location.state } })}
                   variant="outlined"
                   sx={{
                     mt: 4,
@@ -312,6 +240,7 @@ function LifeStyle() {
                   onClick={handleNext}
                   type="submit"
                   variant="contained"
+                  disabled={!isFormValid}
                   sx={{
                     mt: 4,
                     mb: 2,
@@ -320,6 +249,9 @@ function LifeStyle() {
                     textTransform: "inherit",
                     fontSize: "18px",
                     backgroundColor: "#FB6A6B",
+                    "&:hover": {
+                      backgroundColor: "#FB6A6B",
+                    },
                   }}
                 >
                   Next
@@ -344,9 +276,7 @@ function LifeStyle() {
             <Twitter style={{ marginRight: "10px" }} />
           </div>
           <div>
-            &copy; 2024{" "}
-            <span style={{ color: "#FFBF00" }}>SoulMatch</span> All rights
-            reserved.
+            &copy; 2024 <span style={{ color: "#FFBF00" }}>SoulMatch</span> All rights reserved.
           </div>
           <div>
             <Email style={{ marginRight: "10px" }} />

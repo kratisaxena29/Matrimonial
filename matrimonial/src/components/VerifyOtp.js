@@ -41,11 +41,13 @@ function VerifyOtp() {
     }
   };
 
+  const URL = process.env.REACT_APP_API_BASE_URL;
   const handleEmailOtp = async () => {
     try {
-      const API_BASE_URL = 'http://localhost:3002';
+      
+ 
       const response = await axios.post(
-        `${API_BASE_URL}/email-otp`,
+        `${URL}/email-otp`,
         {
           "subject": "Hey! Your One Time Password",
           email: email
@@ -65,12 +67,12 @@ function VerifyOtp() {
 
   const handleVerifyClick = async () => {
     console.log("Verify button clicked");
-    const API_BASE_URL = 'http://localhost:3002';
+    
     const combinedOtp = otp.join('');
     console.log("Combined OTP:", combinedOtp);
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/verify-otp`,
+        `${URL}/verify-otp`,
         {
           email: email,
           otp: combinedOtp
@@ -82,7 +84,9 @@ function VerifyOtp() {
         }
       );
       console.log("API Response:", response);
-      navigate('/confirmation-otp');
+      navigate('/confirmation-otp',{state: {
+        email : location.state.email
+      }});
     } catch (error) {
       console.error("Error while making API call:", error);
       toast.error("Wrong OTP")

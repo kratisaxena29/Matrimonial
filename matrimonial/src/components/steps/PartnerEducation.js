@@ -1,18 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "../../images/logo.png";
-import { Typography, TextField, Button, Select, MenuItem, createTheme, ThemeProvider, InputLabel, FormControl } from "@mui/material";
+import { Typography, Button, Select, MenuItem, createTheme, ThemeProvider, InputLabel, FormControl, FormHelperText } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import StarsIcon from '@mui/icons-material/Stars';
 import { useLocation, useNavigate } from "react-router-dom";
 
 function PartnerEducation() {
-  const [part_highestEducation, setHighestEducation] = useState("");
-  const [part_currentEmployment, setCurrentEmployment] = useState("");
-  const [part_profession, setProfession] = useState("");
-  const [part_annualIncome, setAnnualIncome] = useState("");
-  const [part_yearsOfExperience, setYearsOfExperience] = useState("");
-  const [errors, setErrors] = useState({});
   const location = useLocation();
   const navigate = useNavigate();
   const theme = createTheme({
@@ -27,24 +20,245 @@ function PartnerEducation() {
     },
   });
 
-  const handleNext = () => {
-    const errors = validateForm();
-    if (Object.keys(errors).length === 0) {
-      navigate('/partner-living', {
-        state: {
-          ...location.state,
-          part_highestEducation,
-          part_currentEmployment,
-          part_profession,
-          part_annualIncome,
-          part_yearsOfExperience
-        }
-      });
-    } else {
-      setErrors(errors);
-    }
-  };
+  // Initialize state with values from location.state or default to empty strings
+  const [part_highestEducation, setHighestEducation] = useState(location.state?.part_highestEducation || "");
+  const [part_currentEmployment, setCurrentEmployment] = useState(location.state?.part_currentEmployment || "");
+  const [part_profession, setProfession] = useState(location.state?.part_profession || "");
+  const [part_annualIncome, setAnnualIncome] = useState(location.state?.part_annualIncome || "");
+  const [part_yearsOfExperience, setYearsOfExperience] = useState(location.state?.part_yearsOfExperience || "");
+  const [errors, setErrors] = useState({});
+  const [isFormValid, setIsFormValid] = useState(false);
 
+  // Define options for dropdowns
+  const highestEducationOtption = [
+    { label: "Computers", style: { color: "red", fontWeight: "bold" } },
+  // Computers
+  "MCA",
+  "BCA",
+  "B.IT",
+  "MCM",
+  "PGDCA",
+  "DCA",
+  "ADCA",
+  { label: "Finance/Commerce/Economics", style: { color: "red", fontWeight: "bold" } },
+//  Finance/Commerce/Economics
+   "B.Com",
+   "CA",
+   "CS",
+   "ICWA",
+   "M.Com",
+   "CFA",
+   "BBI",
+   "BBE",
+   "B.Com(Hons)",
+   "MBE",
+   "MFC",
+   "MFM",
+   "CFP",
+   "CIA",
+   "CPA",
+   { label: "Management", style: { color: "red", fontWeight: "bold" } },
+// Management
+  "MBA/PGDM",
+  "BBA",
+  "BHM",
+  "BAM",
+  "BBM",
+  "BFM",
+  "BFT",
+  "B.H.A",
+  "BHMCT",
+  "BHMTT",
+  "BMS",
+  "MAM",
+  "MHA",
+  "MMS",
+  "MMM",
+  "MTM",
+  "MTA",
+  "MHRM",
+  "MBM",
+  "Executive MBA/PGDM",
+  "CWM",
+  "FPM",
+  { label: "Engineering/Technology/Design", style: { color: "red", fontWeight: "bold" } },
+  // Engineering/Technology/Design
+      "B.E/B.Tech",
+      "B.Pharma",
+      "M.E/M.Tech",
+      "M.Pharma",
+      "M.S. (Engineering)",
+      "B.Arch",
+      "M.Arch",
+      "B.Des",
+      "M.Des",
+      "B.FAD",
+      "B.FTech",
+      "BID",
+      "B.Tech LL.B.",
+      "M.FTech",
+      "MID",
+      "MIB",
+      "M.Plan",
+      "MPH",
+      "A.M.E.",
+      "CISE",
+      "ITIL",
+      { label: "Medicine/Health", style: { color: "red", fontWeight: "bold" } },
+  
+  // Medicine/Health
+
+  "MBBS",
+  "M.D",
+  "BAMS",
+  "BHMS",
+  "BDS",
+  "M.S(Medicine)",
+  "MVSc.",
+  "BVSc.",
+  "MDS",
+  "BPT",
+  "MPT",
+  "DM",
+  "MCh",
+  "BCVT",
+  "BMLT",
+  "BMRIT",
+  "BMRT",
+  "BNYS",
+  "BOT",
+  "B.O.Th",
+  "BOPTM",
+  "BPMT",
+  "B.P.Ed",
+  "B.P.E.S",
+  "BPO",
+  "BPH",
+  "BRDIT",
+  "BUMS",
+  "MOT",
+  "M.Optom.",
+  "MS",
+  "DMLT",
+  "D.Pharm",
+  "D.P.Ed",
+  "ANM",
+  "GNM",
+  { label: "Law", style: { color: "red", fontWeight: "bold" } },
+  // Law
+"L.L.B",
+"L.L.M",
+"B.A.LL.B.",
+"B.A.LL.B.(Hons)",
+"BBALL.B.",
+"BBALL.B.(Hons)",
+"B.Com LL.B",
+"B.L.S.LL.B.",
+"M.B.L",
+"L.L.B",
+"L.L.M.",
+{ label: "Arts/Science", style: { color: "red", fontWeight: "bold" } },
+// Arts/Science
+"B.A",
+"B.Sc",
+"M.A",
+"M.Sc",
+"B.Ed",
+"M.Ed",
+"MSW",
+"BFA",
+"MFA",
+"BJMC",
+"MJMC",
+"B.Agri",
+"B.A(Hons)",
+"BCT & CA",
+"B.EI.ED",
+"B.F.Sc",
+"B.J",
+"B.Lib.I.Sc.",
+"B.Lib.Sc.",
+"B.Litt",
+"B.M.C.",
+"B.M.M.",
+"B.M.M.M.C.",
+"B.Mus.",
+"BPA",
+"B.Sc(Post Basic)",
+"BSW",
+"BVA",
+"B.Voc",
+"M.F.Sc.",
+"M.H.Sc.",
+"M.J.",
+"M.Lib.I.Sc.",
+"M.Lib.Sc.",
+"M.M.C.",
+"M.O.L.",
+"MPA",
+"M.P.Ed",
+"MVA",
+"M.Voc",
+"D.Ed",
+"D.EI.Ed",
+"D.Voc",
+"CPT",
+"ETT",
+"TTC",
+"P.P.T.T.C",
+"B.A",
+{ label: "Doctorate", style: { color: "red", fontWeight: "bold" } },
+// Doctorate
+"PhD",
+"M.Phil",
+"LL.D.",
+"D.Litt",
+"Pharm.D",
+"PhD",
+"M.Phil",
+{ label: "Non-Graduate", style: { color: "red", fontWeight: "bold" } },
+// Non-Graduate
+"Diploma",
+"High School",
+"Trade School",
+]
+
+  const employmentOptions = [
+    "Employed",
+    "Self-Employed",
+    "Business",
+    "Student",
+    "Unemployed"
+  ];
+
+  const professionOptions = [
+    "Engineer",
+    "Doctor",
+    "Teacher",
+    "Businessperson",
+    "Artist",
+    "Other"
+  ];
+
+  const incomeOptions = [
+    "2-5 lac",
+    "5-7 lac",
+    "7-10 lac",
+    "10-15 lac",
+    "15-20 lac",
+    "20-30 lac",
+    "More than 30 lac"
+  ];
+
+  const experienceOptions = [
+    "Less than 1 year",
+    "1-3 years",
+    "3-5 years",
+    "5-10 years",
+    "More than 10 years"
+  ];
+
+  // Function to validate form
   const validateForm = () => {
     const errors = {};
     if (!part_highestEducation.trim()) {
@@ -65,9 +279,35 @@ function PartnerEducation() {
     return errors;
   };
 
+  // Function to handle navigation to the next page
+  const handleNext = () => {
+    const errors = validateForm();
+    if (Object.keys(errors).length === 0) {
+      navigate('/partner-living', {
+        state: {
+          ...location.state,
+          part_highestEducation,
+          part_currentEmployment,
+          part_profession,
+          part_annualIncome,
+          part_yearsOfExperience
+        }
+      });
+    } else {
+      setErrors(errors);
+    }
+  };
+
+  // Hook to check form validity
+  useEffect(() => {
+    const isValid = part_highestEducation && part_currentEmployment && part_profession && part_annualIncome && part_yearsOfExperience;
+    setIsFormValid(isValid);
+  }, [part_highestEducation, part_currentEmployment, part_profession, part_annualIncome, part_yearsOfExperience]);
+
   return (
     <ThemeProvider theme={theme}>
       <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+        {/* Navigation bar */}
         <nav style={{ backgroundColor: "#6D0B32", padding: "10px 20px", display: "flex", alignItems: "center" }}>
           <img src={logo} alt="Logo" style={{ height: "60px", marginRight: "40px" }} />
         </nav>
@@ -86,101 +326,114 @@ function PartnerEducation() {
               <Typography sx={{ textAlign: "center" }} variant="h5" gutterBottom>
                 Education and Career
               </Typography>
+
+              {/* Highest Education */}
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
                 <FormControl variant="standard" sx={{ minWidth: 300, marginTop: "10px" }}>
-                  <InputLabel id="demo-simple-select-standard-label">
-                    Highest Education
-                  </InputLabel>
+                  <InputLabel id="highest-education-label">Highest Education</InputLabel>
                   <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
+                    labelId="highest-education-label"
+                    id="highest-education"
                     value={part_highestEducation}
                     onChange={(event) => setHighestEducation(event.target.value)}
-                    error={errors.highestEducation ? true : false}
+                    error={Boolean(errors.highestEducation)}
                   >
-                    <MenuItem value="Bachelor's Degree">Bachelor's Degree</MenuItem>
-                    <MenuItem value="Master's Degree">Master's Degree</MenuItem>
-                    <MenuItem value="Post Master's Degree">Post Master's Degree</MenuItem>
-                    <MenuItem value="PHD">PHD</MenuItem>
-                    <MenuItem value="Non-Bachelor's Degree">Non-Bachelor's Degree</MenuItem>
+                     {highestEducationOtption.map((option, index) => (
+                      typeof option === "string" ? (
+                        <MenuItem key={index} value={option}>{option}</MenuItem>
+                      ) : (
+                        <MenuItem key={index} disabled style={option.style}>{option.label}</MenuItem>
+                      )
+                    ))}
                   </Select>
-                  {errors.highestEducation && <Typography variant="caption" sx={{ color: 'red' }}>{errors.highestEducation}</Typography>}
+                  {errors.highestEducation && <FormHelperText error>{errors.highestEducation}</FormHelperText>}
                 </FormControl>
               </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
-                <TextField
-                  sx={{ minWidth: 300 }}
-                  label="Current Employment"
-                  variant="standard"
-                  value={part_currentEmployment}
-                  onChange={(event) => setCurrentEmployment(event.target.value)}
-                  error={errors.currentEmployment ? true : false}
-                  helperText={errors.currentEmployment}
-                />
-              </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
-                <TextField
-                  sx={{ minWidth: 300 }}
-                  label="Profession"
-                  variant="standard"
-                  value={part_profession}
-                  onChange={(event) => setProfession(event.target.value)}
-                  error={errors.profession ? true : false}
-                  helperText={errors.profession}
-                />
-              </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
-                <TextField
-                  sx={{ minWidth: 300 }}
-                  label="Annual Income"
-                  variant="standard"
-                  value={part_annualIncome}
-                  onChange={(event) => setAnnualIncome(event.target.value)}
-                  error={errors.annualIncome ? true : false}
-                  helperText={errors.annualIncome}
-                />
-              </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
-                <TextField
-                  sx={{ minWidth: 300 }}
-                  label="Years of Experience"
-                  variant="standard"
-                  value={part_yearsOfExperience}
-                  onChange={(event) => setYearsOfExperience(event.target.value)}
-                  error={errors.yearsOfExperience ? true : false}
-                  helperText={errors.yearsOfExperience}
-                />
-              </div>
-            {/* </div> */}
 
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  gap: "20px",
-                  marginBottom: "40px",
-                }}
-              >
-                {/* <Button
-                  onClick={() => navigate('/')}
-                  variant="outlined"
-                  color="error"
-                  sx={{
-                    mt: 4,
-                    mb: 2,
-                    width: 150,
-                    height: 40,
-                    textTransform: "inherit",
-                    fontSize: "18px",
-                    // borderColor: "red",
-                    // color: "#FB6A6B",
-                  }}
-                >
-                  Cancel
-                </Button> */}
+              {/* Current Employment */}
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
+                <FormControl variant="standard" sx={{ minWidth: 300 }}>
+                  <InputLabel id="current-employment-label">Current Employment</InputLabel>
+                  <Select
+                    labelId="current-employment-label"
+                    id="current-employment"
+                    value={part_currentEmployment}
+                    onChange={(event) => setCurrentEmployment(event.target.value)}
+                    error={Boolean(errors.currentEmployment)}
+                  >
+                    {employmentOptions.map((option) => (
+                      <MenuItem key={option} value={option}>{option}</MenuItem>
+                    ))}
+                  </Select>
+                  {errors.currentEmployment && <FormHelperText error>{errors.currentEmployment}</FormHelperText>}
+                </FormControl>
+              </div>
+
+              {/* Profession */}
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
+                <FormControl variant="standard" sx={{ minWidth: 300 }}>
+                  <InputLabel id="profession-label">Profession</InputLabel>
+                  <Select
+                    labelId="profession-label"
+                    id="profession"
+                    value={part_profession}
+                    onChange={(event) => setProfession(event.target.value)}
+                    error={Boolean(errors.profession)}
+                  >
+                    {professionOptions.map((option) => (
+                      <MenuItem key={option} value={option}>{option}</MenuItem>
+                    ))}
+                  </Select>
+                  {errors.profession && <FormHelperText error>{errors.profession}</FormHelperText>}
+                </FormControl>
+              </div>
+
+              {/* Annual Income */}
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
+                <FormControl variant="standard" sx={{ minWidth: 300 }}>
+                  <InputLabel id="annual-income-label">Annual Income</InputLabel>
+                  <Select
+                    labelId="annual-income-label"
+                    id="annual-income"
+                    value={part_annualIncome}
+                    onChange={(event) => setAnnualIncome(event.target.value)}
+                    error={Boolean(errors.annualIncome)}
+                  >
+                      <MenuItem value="Rs 2-5 lakh">Rs 2-5 lakh</MenuItem>
+                    <MenuItem value="Rs 5-7 lakh">Rs 5-7 lakh</MenuItem>
+                    <MenuItem value="Rs 7-10 lakh">Rs 7-10 lakh</MenuItem>
+                    <MenuItem value="Rs 10-15 lakh">Rs 10-15 lakh</MenuItem>
+                    <MenuItem value="Rs 15-20 lakh">Rs 15-20 lakh</MenuItem>
+                    <MenuItem value="Rs 20-30 lakh">Rs 20-30 lakh</MenuItem>
+                    <MenuItem value="More than 30 lakh">More than 30 lakh</MenuItem>
+                  </Select>
+                  {errors.annualIncome && <FormHelperText error>{errors.annualIncome}</FormHelperText>}
+                </FormControl>
+              </div>
+
+              {/* Years of Experience */}
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
+                <FormControl variant="standard" sx={{ minWidth: 300 }}>
+                  <InputLabel id="years-of-experience-label">Years of Experience</InputLabel>
+                  <Select
+                    labelId="years-of-experience-label"
+                    id="years-of-experience"
+                    value={part_yearsOfExperience}
+                    onChange={(event) => setYearsOfExperience(event.target.value)}
+                    error={Boolean(errors.yearsOfExperience)}
+                  >
+                    {experienceOptions.map((option) => (
+                      <MenuItem key={option} value={option}>{option}</MenuItem>
+                    ))}
+                  </Select>
+                  {errors.yearsOfExperience && <FormHelperText error>{errors.yearsOfExperience}</FormHelperText>}
+                </FormControl>
+              </div>
+
+              {/* Navigation Buttons */}
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "20px", marginBottom: "40px" }}>
                 <Button
-                  onClick={() => navigate('/partner-family')}
+                  onClick={() => navigate('/partner-family',{state: location.state})}
                   variant="outlined"
                   sx={{
                     mt: 4,
@@ -208,6 +461,7 @@ function PartnerEducation() {
                     fontSize: "18px",
                     backgroundColor: "#FB6A6B",
                   }}
+                  disabled={!isFormValid} // Disable the button if form is not valid
                 >
                   Next
                 </Button>
@@ -215,22 +469,15 @@ function PartnerEducation() {
             </div>
           </div>
         </div>
-        <footer
-          style={{
-            backgroundColor: "#530014",
-            padding: "20px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            color: "#fff",
-          }}
-        >
+        <footer style={{ backgroundColor: "#530014", padding: "20px", display: "flex", alignItems: "center", justifyContent: "space-between", color: "#fff" }}>
           <div>
             <Facebook style={{ marginRight: "10px" }} />
             <Instagram style={{ marginRight: "10px" }} />
             <Twitter style={{ marginRight: "10px" }} />
           </div>
-          <div>&copy; 2024 <span style={{ color: "#FFBF00	"}}>SoulMatch</span> All rights reserved.</div>
+          <div>
+            &copy; 2024 <span style={{ color: "#FFBF00" }}>SoulMatch</span> All rights reserved.
+          </div>
           <div>
             <Email style={{ marginRight: "10px" }} />
             <span style={{ color: "#FFF" }}>Email Address</span>

@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
- import { useNavigate } from 'react-router-dom';
+ import { useLocation, useNavigate } from 'react-router-dom';
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 // import backgroundImage from './backgroundImage.jpg'; // Ensure you have a background image in your src folder

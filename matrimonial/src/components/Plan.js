@@ -10,23 +10,22 @@ import {
   Button,
   IconButton,
 } from "@mui/material";
-import {
-  CheckCircle,
-  Cancel,
-} from "@mui/icons-material";
+import { CheckCircle, Cancel } from "@mui/icons-material";
 import logo from "../images/logo.png";
 import "../css/plan.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Plan() {
-  const [loading2 , setLoading2] = useState(false);
+  const [loading2, setLoading2] = useState(false);
   const navigate = useNavigate();
+
+  const URL = process.env.REACT_APP_API_BASE_URL;
 
   const handlePayment = async (e) => {
     console.log("...frontend");
     e.preventDefault();
-    
+
     const data = {
       amount: 100,
       MUID: "MUID" + Date.now(),
@@ -35,9 +34,9 @@ function Plan() {
 
     console.log("...data...", data);
 
-    const API_BASE_URL = 'http://localhost:3002';
+  
     // setLoading2(true);
-    axios.post(`${API_BASE_URL}/pay`, {...data}).then(res => {
+    axios.post(`${URL}/pay`, { ...data }).then(res => {
       setTimeout(() => {
         setLoading2(false);
       }, 1500);
@@ -111,10 +110,10 @@ function Plan() {
                   }}
                 >
                   {index === 0
-                    ? "₹500/month"
+                    ? "₹699/month"
                     : index === 1
-                    ? "₹900/month"
-                    : "₹1500/month"}
+                    ? "₹999/month"
+                    : "₹1299/month"}
                 </Typography>
                 <Box
                   sx={{ display: "flex", flexDirection: "column", gap: "30px" }}
@@ -145,7 +144,7 @@ function Plan() {
                   </Grid>
                   <Grid container spacing={1} alignItems="center">
                     <Grid item>
-                      <Cancel />
+                      {index === 2 ? <CheckCircle /> : <Cancel />}
                     </Grid>
                     <Grid item>
                       <Typography variant="body1" style={{ marginLeft: "5px" }}>
@@ -155,7 +154,7 @@ function Plan() {
                   </Grid>
                   <Grid container spacing={1} alignItems="center">
                     <Grid item>
-                      <Cancel />
+                      {index === 2 ? <CheckCircle /> : <Cancel />}
                     </Grid>
                     <Grid item>
                       <Typography variant="body1" style={{ marginLeft: "5px" }}>
@@ -164,7 +163,7 @@ function Plan() {
                     </Grid>
                   </Grid>
                 </Box>
-                <Button 
+                <Button
                   onClick={handlePayment}
                   variant="contained"
                   className="plan-button"

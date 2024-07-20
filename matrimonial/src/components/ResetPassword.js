@@ -13,6 +13,7 @@ import VpnKeyRoundedIcon from "@mui/icons-material/VpnKeyRounded";
 import HttpsRoundedIcon from "@mui/icons-material/HttpsRounded";
 import Grid from "@mui/material/Grid";
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const theme = createTheme({
   palette: {
@@ -31,6 +32,7 @@ const theme = createTheme({
 function ForgotPassword() {
   const [stage, setStage] = useState(1);
   const [email, setEmail] = useState('');
+ 
   const [timer, setTimer] = useState(60);
   const [showResendButton, setShowResendButton] = useState(false);
   const [resendClicked, setResendClicked] = useState(false);
@@ -40,6 +42,8 @@ function ForgotPassword() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef([]);
+
+  console.log("...email...",email)
 
   useEffect(() => {
     let interval;
@@ -52,6 +56,8 @@ function ForgotPassword() {
     }
     return () => clearInterval(interval);
   }, [timer]);
+
+  const URL = process.env.REACT_APP_API_BASE_URL;
 
   const navigate = useNavigate();
   const handleResendCode = () => {
@@ -101,9 +107,7 @@ function ForgotPassword() {
     }
   };
 
-  const handleSendVverification = async () => {
-    navigate('/forgot-otp');
-  };
+ 
 
   const handleBackspace = (index, event) => {
     if (event.key === "Backspace" && index > 0 && otp[index] === "") {
@@ -123,6 +127,33 @@ function ForgotPassword() {
     textAlign: "center",
     gap: 20,
   };
+  
+  const handleSendVverification = async(event) => {
+    event.preventDefault();
+    
+    try {
+      const response = await axios.post(
+        `${URL}/forgot-otp`,
+        {
+          email: email,
+          subject : "For forgot password"
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("API Response:", response);
+      navigate('/forgot-otp',{
+        state : {
+          email : email
+        }
+      });
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div style={{ background: '#F7E7CE', height: '100vh', paddingTop: '5%' }}>

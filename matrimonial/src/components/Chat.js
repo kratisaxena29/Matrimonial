@@ -23,7 +23,7 @@ import axios from "axios";
 import { io } from 'socket.io-client'
 import { useNavigate } from "react-router-dom";
 
-const ChatApp = ({ setLoggedIn }) => {
+const ChatApp = ({ setlogedIn }) => {
   const [selectedChatIndex, setSelectedChatIndex] = useState(null);
   const [newMessage, setNewMessage] = useState("");
   const [chats, setChats] = useState([]);
@@ -36,11 +36,13 @@ const ChatApp = ({ setLoggedIn }) => {
   const navigate = useNavigate();
   const loggedInUser = user.id;
 
+  const URL = process.env.REACT_APP_API_BASE_URL;
+
   const handleSelectChat = async (index, conversationId) => {
     setSelectedChatIndex(index);
 
     try {
-      const response = await axios.get(`http://127.0.0.1:3002/conversation/messages/${conversationId}`);
+      const response = await axios.get(`${URL}/conversation/messages/${conversationId}`);
       const updatedChats = [...chats];
       updatedChats[index].messages = response.data.messages;
       setChats(updatedChats);
@@ -70,7 +72,7 @@ const ChatApp = ({ setLoggedIn }) => {
     });
 
     try {
-      const response = await axios.post("http://127.0.0.1:3002/message", {
+      const response = await axios.post(`${URL}/message`, {
         conversationId: conversationId === "new" ? "new" : conversationId,
         senderId: loggedInUser,
         message: newMessage,
@@ -106,7 +108,7 @@ const ChatApp = ({ setLoggedIn }) => {
   useEffect(() => {
     const fetchConversations = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:3002/conversation/${loggedInUser}`);
+        const response = await axios.get(`${URL}/conversation/${loggedInUser}`);
         setConversations(response.data);
       } catch (error) {
         console.error("Error fetching conversations:", error);
@@ -118,7 +120,7 @@ const ChatApp = ({ setLoggedIn }) => {
 
   const fetchMessages = async (conversationId, user) => {
     try {
-      const res = await fetch(`http://127.0.0.1:3002/message/${conversationId.conversationId}?senderId=${loggedInUser}&&receiverId=${conversationId?.user?.receiverId}`, {
+      const res = await fetch(`${URL}/message/${conversationId.conversationId}?senderId=${loggedInUser}&&receiverId=${conversationId?.user?.receiverId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -133,8 +135,8 @@ const ChatApp = ({ setLoggedIn }) => {
 
   const handleLogout = () => {
     sessionStorage.clear();
-    setLoggedIn(false);
-    localStorage.setItem("loggedIn", "false");
+    setlogedIn(false);
+    localStorage.setItem("logedIn", "false");
     navigate('/');
   };
 
@@ -152,7 +154,7 @@ const ChatApp = ({ setLoggedIn }) => {
   useEffect(() => {
     const fetchProfiles = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:3002/getallProfileById?email=${user.email}`);
+        const response = await axios.get(`${URL}/getallProfileById?email=${user.email}`);
         const profiles = response.data.response.allProfilesDetails;
         const formattedChats = profiles.map((profile) => ({
           id: profile._id,
@@ -223,7 +225,7 @@ const ChatApp = ({ setLoggedIn }) => {
               Chats
             </Typography>
           </Box>
-          <Box
+          {/* <Box
             sx={{
               padding: 1,
               margin: 1,
@@ -242,7 +244,7 @@ const ChatApp = ({ setLoggedIn }) => {
               placeholder="Search or start a new chat"
               sx={{ marginLeft: 1, flex: 1, color: "#8B0000" }}
             />
-          </Box>
+          </Box> */}
           <Divider />
           <Box sx={{ flexGrow: 1, overflowY: "auto" }}>
             <List component="nav" sx={{ paddingTop: 0 }}>
@@ -306,9 +308,9 @@ const ChatApp = ({ setLoggedIn }) => {
               <Typography variant="h6" sx={{ flexGrow: 1 }}>
                 {message?.receiver?.fullName || "No conversation selected"}
               </Typography>
-              <IconButton edge="end" color="inherit" aria-label="menu">
+              {/* <IconButton edge="end" color="inherit" aria-label="menu">
                 <MoreVertIcon />
-              </IconButton>
+              </IconButton> */}
             </Toolbar>
           </AppBar>
           <Box
@@ -415,7 +417,7 @@ const ChatApp = ({ setLoggedIn }) => {
               People
             </Typography>
           </Box>
-          <Box
+          {/* <Box
             sx={{
               padding: 1,
               margin: 1,
@@ -434,7 +436,7 @@ const ChatApp = ({ setLoggedIn }) => {
               placeholder="Search people"
               sx={{ marginLeft: 1, flex: 1, color: "#8B0000" }}
             />
-          </Box>
+          </Box> */}
           <Divider />
           <Box sx={{ flexGrow: 1, overflowY: "auto" }}>
             <List component="nav" sx={{ paddingTop: 0 }}>

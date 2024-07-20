@@ -14,8 +14,9 @@ import 'react-toastify/dist/ReactToastify.css';
 function ForgotOtp() {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [resendTimer, setResendTimer] = useState(0);
-
-//   const location = useLocation();
+console.log("...otp...",otp);
+   const location = useLocation();
+   console.log("..email ..", location.state.email )
   const { email } =  {};
   const inputRefs = useRef([]);
 const navigate = useNavigate()
@@ -51,7 +52,12 @@ const navigate = useNavigate()
 
   const handleVerifyClick = async () => {
     console.log("Verify button clicked");
-    navigate('/reset-password')
+    navigate('/reset-password',{
+      state : {
+        otp : otp,
+        email : location.state.email
+      }
+    })
     // try {
     //     console.log("verifed")
     // } catch (error) {

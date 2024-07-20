@@ -41,13 +41,15 @@ const Login = ({setlogedIn}) => {
     }
   };
 
+  const URL = process.env.REACT_APP_API_BASE_URL;
+
   const handleSubmit = async(event) => {
     event.preventDefault();
     console.log(formData);
-    const API_BASE_URL = 'http://localhost:3002';
+   
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/login`,
+        `${URL}/login`,
         {
           email: formData.email,
           password : formData.password
@@ -82,7 +84,9 @@ const Login = ({setlogedIn}) => {
         console.log("In 404 console..profile")
         
         toast.warning("Please complete your profile");
-        navigate('/profile-details')
+        navigate('/profile-details',{state :{
+          email : formData.email
+        }})
       } 
 
     }
