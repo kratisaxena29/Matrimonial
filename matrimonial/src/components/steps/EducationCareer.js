@@ -215,6 +215,135 @@ function EducationCareer() {
 
 
   ]
+
+  const ProfessionOption = [
+    { label: "Administration", style: { color: "red", fontWeight: "bold" } },
+    
+   " Admin Professional",
+   "Clerk",
+   "Operator/Techinician",
+   "Secretary/Front Office",
+   { label: "Advertising , Media & Entertainment", style: { color: "red", fontWeight: "bold" } },
+  
+  "Actor/Model",
+  "Advertising Professional",
+  "Film/ Entertainment Professional",
+  "Journalist",
+  "Media Professional",
+  "PR Professional",
+  { label: "Agriculture", style: { color: "red", fontWeight: "bold" } },
+  
+  "Agriculture Professional",
+  "Farming",
+  { label: "Airline & Aviation", style: { color: "red", fontWeight: "bold" } },
+  
+  "Airline Professional",
+  "Flight Attendant",
+  "Pilot",
+  { label: "Architecture", style: { color: "red", fontWeight: "bold" } },
+  
+  "Architect",
+  { label: "BPO & Customer Service", style: { color: "red", fontWeight: "bold" } },
+  
+  "BPO/ITes Professional",
+  "Customer Service",
+  { label: "Banking & Finance", style: { color: "red", fontWeight: "bold" } },
+  
+  "Accounting Professional",
+  "Auditor",
+  "Banking Professional",
+  "Chartered accountant",
+  "Finance Professional",
+  { label: "Corporate Management Professionals", style: { color: "red", fontWeight: "bold" } },
+  
+  "Analyst",
+  "Consultant",
+  "Corporate Communication",
+  "Corporate Planning",
+  "HR Professional",
+  "Marketing Professional",
+  "Operations Management",
+  "Product manager",
+  "Program Manager",
+  "Project Manager - Non IT",
+  "Sales Professional",
+  "Sr. Manager/ Manager",
+  "Subject Matter Expert",
+  { label: "Doctor", style: { color: "red", fontWeight: "bold" } },
+  
+  "Dentist",
+  "Doctor",
+  "Surgeon",
+  { label: "Education & Training", style: { color: "red", fontWeight: "bold" } },
+  
+  "Education Professional",
+  "Educational Institution Owner",
+  "Librarian",
+  "Professor/Lecturer",
+  "Research Assistant",
+  "Teacher",
+  { label: "Engineering", style: { color: "red", fontWeight: "bold" } },
+  
+  "Electronics Engineer",
+  "Hardware/Telecom Engineer",
+  "Non – IT Engineer",
+  "Quality Assurance Engineer",
+  { label: "Hospitality", style: { color: "red", fontWeight: "bold" } },
+  
+  "Hotels/Hospitality Professional",
+  { label: "Legal", style: { color: "red", fontWeight: "bold" } },
+  
+  "Lawyer & Legal Professional",
+  { label: "Merchant Navy", style: { color: "red", fontWeight: "bold" } },
+  
+  "Mariner",
+  "Merchant Naval Officer",
+  { label: "Other Medical & Healthcare", style: { color: "red", fontWeight: "bold" } },
+  
+  "Merchant Naval Officer",
+  "Nurse",
+  "Paramedic",
+  "Pharmacist",
+  "Physiotherapist",
+  "Psychologist",
+  "Veterinary doctor",
+  { label: "Science & Research", style: { color: "red", fontWeight: "bold" } },
+  
+  "Research Professional",
+  "Science Professional",
+  "Scientist",
+  { label: "Software & IT", style: { color: "red", fontWeight: "bold" } },
+  
+  "Animator",
+  "Cyber/Network Security",
+  "Project Lead - IT",
+  "Project Manager - IT",
+  "Quality Assurance Engineer - IT",
+  "Software Professional",
+  "UI/UX designer",
+  "Web/Graphic Designer",
+  { label: "Top Management", style: { color: "red", fontWeight: "bold" } },
+  
+  "CxO/ Chairman/ President/ Director",
+  "VP/ AVP/ GM/ DGM",
+  { label: "Others", style: { color: "red", fontWeight: "bold" } },
+  
+  "Agent",
+  "Artist",
+  "Beautician",
+  "Broker",
+  "Fashion Designer",
+  "Fitness Professional",
+  "Interior Designer",
+  "Security Professional",
+  "Singer",
+  "Social Services/ NGO/ Volunteer",
+  "Sportsperson",
+  "Travel Professional",
+  "Writer",
+  "Others"
+  ]
+
   const theme = createTheme({
     components: {
       MuiPopover: {
@@ -351,11 +480,13 @@ function EducationCareer() {
                     onChange={(event) => setProfession(event.target.value)}
                     label="Profession"
                   >
-                    <MenuItem value="Software Engineer">Software Engineer</MenuItem>
-                    <MenuItem value="Doctor">Doctor</MenuItem>
-                    <MenuItem value="Teacher">Teacher</MenuItem>
-                    <MenuItem value="Accountant">Accountant</MenuItem>
-                    <MenuItem value="Others">Others</MenuItem>
+                  {ProfessionOption.map((option, index) => (
+                      typeof option === "string" ? (
+                        <MenuItem key={index} value={option}>{option}</MenuItem>
+                      ) : (
+                        <MenuItem key={index} disabled style={option.style}>{option.label}</MenuItem>
+                      )
+                    ))}
                   </Select>
                   {!profession && <FormHelperText>Profession is required</FormHelperText>}
                 </FormControl>

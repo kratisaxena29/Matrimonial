@@ -86,6 +86,134 @@ function PartnerFamily() {
     "Assamese",
     "Sikkim/Nepali"
   ];
+  const ProfessionOption = [
+    { label: "Administration", style: { color: "red", fontWeight: "bold" } },
+    
+   " Admin Professional",
+   "Clerk",
+   "Operator/Techinician",
+   "Secretary/Front Office",
+   { label: "Advertising , Media & Entertainment", style: { color: "red", fontWeight: "bold" } },
+  
+  "Actor/Model",
+  "Advertising Professional",
+  "Film/ Entertainment Professional",
+  "Journalist",
+  "Media Professional",
+  "PR Professional",
+  { label: "Agriculture", style: { color: "red", fontWeight: "bold" } },
+  
+  "Agriculture Professional",
+  "Farming",
+  { label: "Airline & Aviation", style: { color: "red", fontWeight: "bold" } },
+  
+  "Airline Professional",
+  "Flight Attendant",
+  "Pilot",
+  { label: "Architecture", style: { color: "red", fontWeight: "bold" } },
+  
+  "Architect",
+  { label: "BPO & Customer Service", style: { color: "red", fontWeight: "bold" } },
+  
+  "BPO/ITes Professional",
+  "Customer Service",
+  { label: "Banking & Finance", style: { color: "red", fontWeight: "bold" } },
+  
+  "Accounting Professional",
+  "Auditor",
+  "Banking Professional",
+  "Chartered accountant",
+  "Finance Professional",
+  { label: "Corporate Management Professionals", style: { color: "red", fontWeight: "bold" } },
+  
+  "Analyst",
+  "Consultant",
+  "Corporate Communication",
+  "Corporate Planning",
+  "HR Professional",
+  "Marketing Professional",
+  "Operations Management",
+  "Product manager",
+  "Program Manager",
+  "Project Manager - Non IT",
+  "Sales Professional",
+  "Sr. Manager/ Manager",
+  "Subject Matter Expert",
+  { label: "Doctor", style: { color: "red", fontWeight: "bold" } },
+  
+  "Dentist",
+  "Doctor",
+  "Surgeon",
+  { label: "Education & Training", style: { color: "red", fontWeight: "bold" } },
+  
+  "Education Professional",
+  "Educational Institution Owner",
+  "Librarian",
+  "Professor/Lecturer",
+  "Research Assistant",
+  "Teacher",
+  { label: "Engineering", style: { color: "red", fontWeight: "bold" } },
+  
+  "Electronics Engineer",
+  "Hardware/Telecom Engineer",
+  "Non – IT Engineer",
+  "Quality Assurance Engineer",
+  { label: "Hospitality", style: { color: "red", fontWeight: "bold" } },
+  
+  "Hotels/Hospitality Professional",
+  { label: "Legal", style: { color: "red", fontWeight: "bold" } },
+  
+  "Lawyer & Legal Professional",
+  { label: "Merchant Navy", style: { color: "red", fontWeight: "bold" } },
+  
+  "Mariner",
+  "Merchant Naval Officer",
+  { label: "Other Medical & Healthcare", style: { color: "red", fontWeight: "bold" } },
+  
+  "Merchant Naval Officer",
+  "Nurse",
+  "Paramedic",
+  "Pharmacist",
+  "Physiotherapist",
+  "Psychologist",
+  "Veterinary doctor",
+  { label: "Science & Research", style: { color: "red", fontWeight: "bold" } },
+  
+  "Research Professional",
+  "Science Professional",
+  "Scientist",
+  { label: "Software & IT", style: { color: "red", fontWeight: "bold" } },
+  
+  "Animator",
+  "Cyber/Network Security",
+  "Project Lead - IT",
+  "Project Manager - IT",
+  "Quality Assurance Engineer - IT",
+  "Software Professional",
+  "UI/UX designer",
+  "Web/Graphic Designer",
+  { label: "Top Management", style: { color: "red", fontWeight: "bold" } },
+  
+  "CxO/ Chairman/ President/ Director",
+  "VP/ AVP/ GM/ DGM",
+  { label: "Others", style: { color: "red", fontWeight: "bold" } },
+  
+  "Agent",
+  "Artist",
+  "Beautician",
+  "Broker",
+  "Fashion Designer",
+  "Fitness Professional",
+  "Interior Designer",
+  "Security Professional",
+  "Singer",
+  "Social Services/ NGO/ Volunteer",
+  "Sportsperson",
+  "Travel Professional",
+  "Writer",
+  "Others"
+  ]
+  
   const heightOptions = [
     "4'0''(1.22 mts)",
     "4'1''(1.24 mts)",
@@ -126,6 +254,8 @@ function PartnerFamily() {
     "7' (2.13 mts) plus",
    
   ]
+
+  const casteOptions = ["Bihari", "Bengali", "Hindi Delhi", "Hindi" , "Gujarati" , "Kannada" , "Malayalam" , "Marathi" , "Oriya" , "Punjabi" , "Rajasthan" , "Tamil" , "Telugu" , "Hindi UP" , "Hindi MP" , "KonKani" , "Himachali" , "Haryanvi"  , "Assamese" , "Kashmiri", "Sikkim Nepali" , "Tulu" ];
 
   const validateForm = () => {
     return (
@@ -264,10 +394,9 @@ function PartnerFamily() {
                     onChange={(event) => setCaste(event.target.value)}
                     error={casteError}
                   >
-                    <MenuItem value="General">General</MenuItem>
-                    <MenuItem value="OBC">OBC</MenuItem>
-                    <MenuItem value="SC">SC</MenuItem>
-                    <MenuItem value="ST">ST</MenuItem>
+                   {casteOptions.map(option => (
+                      <MenuItem key={option} value={option}>{option}</MenuItem>
+                    ))}
                   </Select>
                   {casteError && <FormHelperText error>Please select a caste.</FormHelperText>}
                 </FormControl>

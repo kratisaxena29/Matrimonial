@@ -32,7 +32,7 @@ function PartnerEducation() {
   // Define options for dropdowns
   const highestEducationOtption = [
     { label: "Computers", style: { color: "red", fontWeight: "bold" } },
-  // Computers
+  
   "MCA",
   "BCA",
   "B.IT",
@@ -41,7 +41,7 @@ function PartnerEducation() {
   "DCA",
   "ADCA",
   { label: "Finance/Commerce/Economics", style: { color: "red", fontWeight: "bold" } },
-//  Finance/Commerce/Economics
+
    "B.Com",
    "CA",
    "CS",
@@ -58,7 +58,7 @@ function PartnerEducation() {
    "CIA",
    "CPA",
    { label: "Management", style: { color: "red", fontWeight: "bold" } },
-// Management
+
   "MBA/PGDM",
   "BBA",
   "BHM",
@@ -82,7 +82,7 @@ function PartnerEducation() {
   "CWM",
   "FPM",
   { label: "Engineering/Technology/Design", style: { color: "red", fontWeight: "bold" } },
-  // Engineering/Technology/Design
+  
       "B.E/B.Tech",
       "B.Pharma",
       "M.E/M.Tech",
@@ -106,8 +106,6 @@ function PartnerEducation() {
       "ITIL",
       { label: "Medicine/Health", style: { color: "red", fontWeight: "bold" } },
   
-  // Medicine/Health
-
   "MBBS",
   "M.D",
   "BAMS",
@@ -145,7 +143,7 @@ function PartnerEducation() {
   "ANM",
   "GNM",
   { label: "Law", style: { color: "red", fontWeight: "bold" } },
-  // Law
+ 
 "L.L.B",
 "L.L.M",
 "B.A.LL.B.",
@@ -158,7 +156,7 @@ function PartnerEducation() {
 "L.L.B",
 "L.L.M.",
 { label: "Arts/Science", style: { color: "red", fontWeight: "bold" } },
-// Arts/Science
+
 "B.A",
 "B.Sc",
 "M.A",
@@ -208,7 +206,7 @@ function PartnerEducation() {
 "P.P.T.T.C",
 "B.A",
 { label: "Doctorate", style: { color: "red", fontWeight: "bold" } },
-// Doctorate
+
 "PhD",
 "M.Phil",
 "LL.D.",
@@ -217,7 +215,7 @@ function PartnerEducation() {
 "PhD",
 "M.Phil",
 { label: "Non-Graduate", style: { color: "red", fontWeight: "bold" } },
-// Non-Graduate
+
 "Diploma",
 "High School",
 "Trade School",
@@ -231,24 +229,133 @@ function PartnerEducation() {
     "Unemployed"
   ];
 
-  const professionOptions = [
-    "Engineer",
-    "Doctor",
-    "Teacher",
-    "Businessperson",
-    "Artist",
-    "Other"
-  ];
-
-  const incomeOptions = [
-    "2-5 lac",
-    "5-7 lac",
-    "7-10 lac",
-    "10-15 lac",
-    "15-20 lac",
-    "20-30 lac",
-    "More than 30 lac"
-  ];
+  const ProfessionOption = [
+    { label: "Administration", style: { color: "red", fontWeight: "bold" } },
+    
+   " Admin Professional",
+   "Clerk",
+   "Operator/Techinician",
+   "Secretary/Front Office",
+   { label: "Advertising , Media & Entertainment", style: { color: "red", fontWeight: "bold" } },
+  
+  "Actor/Model",
+  "Advertising Professional",
+  "Film/ Entertainment Professional",
+  "Journalist",
+  "Media Professional",
+  "PR Professional",
+  { label: "Agriculture", style: { color: "red", fontWeight: "bold" } },
+  
+  "Agriculture Professional",
+  "Farming",
+  { label: "Airline & Aviation", style: { color: "red", fontWeight: "bold" } },
+  
+  "Airline Professional",
+  "Flight Attendant",
+  "Pilot",
+  { label: "Architecture", style: { color: "red", fontWeight: "bold" } },
+  
+  "Architect",
+  { label: "BPO & Customer Service", style: { color: "red", fontWeight: "bold" } },
+  
+  "BPO/ITes Professional",
+  "Customer Service",
+  { label: "Banking & Finance", style: { color: "red", fontWeight: "bold" } },
+  
+  "Accounting Professional",
+  "Auditor",
+  "Banking Professional",
+  "Chartered accountant",
+  "Finance Professional",
+  { label: "Corporate Management Professionals", style: { color: "red", fontWeight: "bold" } },
+  
+  "Analyst",
+  "Consultant",
+  "Corporate Communication",
+  "Corporate Planning",
+  "HR Professional",
+  "Marketing Professional",
+  "Operations Management",
+  "Product manager",
+  "Program Manager",
+  "Project Manager - Non IT",
+  "Sales Professional",
+  "Sr. Manager/ Manager",
+  "Subject Matter Expert",
+  { label: "Doctor", style: { color: "red", fontWeight: "bold" } },
+  
+  "Dentist",
+  "Doctor",
+  "Surgeon",
+  { label: "Education & Training", style: { color: "red", fontWeight: "bold" } },
+  
+  "Education Professional",
+  "Educational Institution Owner",
+  "Librarian",
+  "Professor/Lecturer",
+  "Research Assistant",
+  "Teacher",
+  { label: "Engineering", style: { color: "red", fontWeight: "bold" } },
+  
+  "Electronics Engineer",
+  "Hardware/Telecom Engineer",
+  "Non – IT Engineer",
+  "Quality Assurance Engineer",
+  { label: "Hospitality", style: { color: "red", fontWeight: "bold" } },
+  
+  "Hotels/Hospitality Professional",
+  { label: "Legal", style: { color: "red", fontWeight: "bold" } },
+  
+  "Lawyer & Legal Professional",
+  { label: "Merchant Navy", style: { color: "red", fontWeight: "bold" } },
+  
+  "Mariner",
+  "Merchant Naval Officer",
+  { label: "Other Medical & Healthcare", style: { color: "red", fontWeight: "bold" } },
+  
+  "Merchant Naval Officer",
+  "Nurse",
+  "Paramedic",
+  "Pharmacist",
+  "Physiotherapist",
+  "Psychologist",
+  "Veterinary doctor",
+  { label: "Science & Research", style: { color: "red", fontWeight: "bold" } },
+  
+  "Research Professional",
+  "Science Professional",
+  "Scientist",
+  { label: "Software & IT", style: { color: "red", fontWeight: "bold" } },
+  
+  "Animator",
+  "Cyber/Network Security",
+  "Project Lead - IT",
+  "Project Manager - IT",
+  "Quality Assurance Engineer - IT",
+  "Software Professional",
+  "UI/UX designer",
+  "Web/Graphic Designer",
+  { label: "Top Management", style: { color: "red", fontWeight: "bold" } },
+  
+  "CxO/ Chairman/ President/ Director",
+  "VP/ AVP/ GM/ DGM",
+  { label: "Others", style: { color: "red", fontWeight: "bold" } },
+  
+  "Agent",
+  "Artist",
+  "Beautician",
+  "Broker",
+  "Fashion Designer",
+  "Fitness Professional",
+  "Interior Designer",
+  "Security Professional",
+  "Singer",
+  "Social Services/ NGO/ Volunteer",
+  "Sportsperson",
+  "Travel Professional",
+  "Writer",
+  "Others"
+  ]
 
   const experienceOptions = [
     "Less than 1 year",
@@ -380,8 +487,12 @@ function PartnerEducation() {
                     onChange={(event) => setProfession(event.target.value)}
                     error={Boolean(errors.profession)}
                   >
-                    {professionOptions.map((option) => (
-                      <MenuItem key={option} value={option}>{option}</MenuItem>
+                    {ProfessionOption.map((option, index) => (
+                      typeof option === "string" ? (
+                        <MenuItem key={index} value={option}>{option}</MenuItem>
+                      ) : (
+                        <MenuItem key={index} disabled style={option.style}>{option.label}</MenuItem>
+                      )
                     ))}
                   </Select>
                   {errors.profession && <FormHelperText error>{errors.profession}</FormHelperText>}

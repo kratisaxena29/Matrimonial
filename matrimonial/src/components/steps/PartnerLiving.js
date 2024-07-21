@@ -261,9 +261,11 @@ function PartnerLiving() {
                     onChange={(event) => setAlcohol(event.target.value)}
                     error={!!errors.alcohol}
                   >
+                         <MenuItem value="Occasionally">Occasionally</MenuItem>
                     <MenuItem value="Social Drinker">Social Drinker</MenuItem>
                     <MenuItem value="Regular Drinker">Regular Drinker</MenuItem>
                     <MenuItem value="Non-drinker">Non-drinker</MenuItem>
+                   
                   </Select>
                   {errors.alcohol && <Typography color="error">{errors.alcohol}</Typography>}
                 </FormControl>
@@ -278,8 +280,10 @@ function PartnerLiving() {
                     onChange={(event) => setSmoke(event.target.value)}
                     error={!!errors.smoke}
                   >
-                    <MenuItem value="Yes">Yes</MenuItem>
-                    <MenuItem value="No">No</MenuItem>
+                    <MenuItem value="Yes">Non-smoker</MenuItem>
+                    <MenuItem value="No">Social Smoker</MenuItem>
+                    <MenuItem value="Regularly">Regular-Smoker</MenuItem>
+                    <MenuItem value="Occasionally">Occasionally</MenuItem>
                   </Select>
                   {errors.smoke && <Typography color="error">{errors.smoke}</Typography>}
                 </FormControl>
