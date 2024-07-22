@@ -27,3 +27,4 @@ jobs:
     - run: npm run build --if-present
     - name: Clear contents of /var/www/html
       run: sudo rm -rf /var/www/html/*
+    - run: sudo cp -r build/* /var/www/html/
