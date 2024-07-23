@@ -28,6 +28,8 @@ import PublicRoute from './Routes/PublicRoute';
 import ProtectedRoute from './Routes/ProtectedRoute';
 import NewPassword from './components/NewPassword';
 import AboutYourself from './components/steps/Aboutyourself';
+import PaymentFailure from './components/PaymentFailure';
+import PaymentSucess from './components/PaymentSucess';
 
 function App() {
   const [logedIn, setlogedIn] = useState(
@@ -64,6 +66,8 @@ function App() {
           <Route path="/profile-completed" element={<ProfileCompleted />} />
           <Route path='/reset-password' element={<NewPassword/>}/>
           <Route path='/about-yourself' element={<AboutYourself/>}/>
+          <Route path='/payment-fail' element={<PaymentFailure/>}/>
+          <Route path='/payment-success' element={<PaymentSucess/>}/>
         </Route>
 
         <Route path="/" element={<ProtectedRoute logedIn={logedIn} />}>
