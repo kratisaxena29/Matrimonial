@@ -47,7 +47,7 @@ function VerifyOtp() {
       
  
       const response = await axios.post(
-        `${URL}/api/email-otp`,
+        `${URL}/email-otp`,
         {
           "subject": "Hey! Your One Time Password",
           email: email
@@ -72,7 +72,7 @@ function VerifyOtp() {
     console.log("Combined OTP:", combinedOtp);
     try {
       const response = await axios.post(
-        `${URL}/api/verify-otp`,
+        `${URL}/verify-otp`,
         {
           email: email,
           otp: combinedOtp

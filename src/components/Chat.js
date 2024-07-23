@@ -42,7 +42,7 @@ const ChatApp = ({ setlogedIn }) => {
     setSelectedChatIndex(index);
 
     try {
-      const response = await axios.get(`${URL}/api/conversation/messages/${conversationId}`);
+      const response = await axios.get(`${URL}/conversation/messages/${conversationId}`);
       const updatedChats = [...chats];
       updatedChats[index].messages = response.data.messages;
       setChats(updatedChats);
@@ -72,7 +72,7 @@ const ChatApp = ({ setlogedIn }) => {
     });
 
     try {
-      const response = await axios.post(`${URL}/api/message`, {
+      const response = await axios.post(`${URL}/message`, {
         conversationId: conversationId === "new" ? "new" : conversationId,
         senderId: loggedInUser,
         message: newMessage,
@@ -108,7 +108,7 @@ const ChatApp = ({ setlogedIn }) => {
   useEffect(() => {
     const fetchConversations = async () => {
       try {
-        const response = await axios.get(`${URL}/api/conversation/${loggedInUser}`);
+        const response = await axios.get(`${URL}/conversation/${loggedInUser}`);
         setConversations(response.data);
       } catch (error) {
         console.error("Error fetching conversations:", error);
@@ -120,7 +120,7 @@ const ChatApp = ({ setlogedIn }) => {
 
   const fetchMessages = async (conversationId, user) => {
     try {
-      const res = await fetch(`${URL}/api/message/${conversationId.conversationId}?senderId=${loggedInUser}&&receiverId=${conversationId?.user?.receiverId}`, {
+      const res = await fetch(`${URL}/message/${conversationId.conversationId}?senderId=${loggedInUser}&&receiverId=${conversationId?.user?.receiverId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -154,7 +154,7 @@ const ChatApp = ({ setlogedIn }) => {
   useEffect(() => {
     const fetchProfiles = async () => {
       try {
-        const response = await axios.get(`${URL}/api/getallProfileById?email=${user.email}`);
+        const response = await axios.get(`${URL}/getallProfileById?email=${user.email}`);
         const profiles = response.data.response.allProfilesDetails;
         const formattedChats = profiles.map((profile) => ({
           id: profile._id,

@@ -133,7 +133,7 @@ function ForgotPassword() {
     
     try {
       const response = await axios.post(
-        `${URL}/api/forgot-otp`,
+        `${URL}/forgot-otp`,
         {
           email: email,
           subject : "For forgot password"

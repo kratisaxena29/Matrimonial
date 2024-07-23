@@ -26,7 +26,7 @@ const navigate = useNavigate()
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${URL}/api/profile/${profileId}`);
+        const response = await axios.get(`${URL}/profile/${profileId}`);
         setProfileData(response.data);
       } catch (error) {
         console.error("Error fetching profile data:", error);

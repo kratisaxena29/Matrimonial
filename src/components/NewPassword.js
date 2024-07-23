@@ -45,7 +45,7 @@ const URL = process.env.REACT_APP_API_BASE_URL;
             
             try {
                 const response = await axios.post(
-                    `${URL}/api/password-reset`,
+                    `${URL}/password-reset`,
                     {
                         email: location.state.email,
                         password: formData.password,
@@ -71,7 +71,7 @@ const URL = process.env.REACT_APP_API_BASE_URL;
         
         try {
             const response = await axios.post(
-                `${URL}/api/password-reset`,
+                `${URL}/password-reset`,
                 {
                   email: location.state.email,
                   password : formData.password,
