@@ -90,7 +90,7 @@ function PartnerLiving() {
         };
   
         const response = await axios.post(
-          `${URL}/profile-register`,
+          `${URL}/api/profile-register`,
           {
             email: location.state.email,
             name: location.state.name,

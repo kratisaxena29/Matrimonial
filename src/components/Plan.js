@@ -36,7 +36,7 @@ function Plan() {
 
   
     // setLoading2(true);
-    axios.post(`${URL}/pay`, { ...data }).then(res => {
+    axios.post(`${URL}/api/pay`, { ...data }).then(res => {
       setTimeout(() => {
         setLoading2(false);
       }, 1500);

@@ -27,7 +27,7 @@ function Profiles({ setlogedIn }) {
     try {
       
       const response = await axios.post(
-        `${URL}/allProfileId`,
+        `${URL}/api/allProfileId`,
         {
           email: user.email,
           AllprofilesId: interestedProfiles
@@ -75,7 +75,7 @@ function Profiles({ setlogedIn }) {
     formData.append('image', file);
 
     try {
-      const response = await fetch(`${URL}/upload?email=${user.email}`, {
+      const response = await fetch(`${URL}/api/upload?email=${user.email}`, {
         method: 'POST',
         body: formData,
       });
@@ -93,7 +93,7 @@ function Profiles({ setlogedIn }) {
   };
 
   const handlegetImageUrl = async () => {
-    axios.get(`${URL}/getimagepath?email=${user.email}`)
+    axios.get(`${URL}/api/getimagepath?email=${user.email}`)
       .then(response => {
         console.log(".get image url response...", response.data.response.imageUrl);
         setPhotoUrl(response.data.response.imageUrl);
@@ -109,7 +109,7 @@ function Profiles({ setlogedIn }) {
 
   useEffect(() => {
     // Construct the API URL based on filters
-    let apiUrl = `${URL}/getAllprofile?email=${user.email}`;
+    let apiUrl = `${URL}/api/getAllprofile?email=${user.email}`;
 
     if (age) {
       apiUrl += `&ageRange=${age}`;

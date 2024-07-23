@@ -35,7 +35,7 @@ function Home() {
   
     try {
       const response = await axios.post(
-        `${URL}/user-register`,
+        `${URL}/api/user-register`,
         {
           firstName: firstName,
           lastName: lastName,
@@ -62,7 +62,7 @@ function Home() {
   const handleEmailOtp = async() => {
     try {
       const response = await axios.post(
-        `${URL}/email-otp`,
+        `${URL}/api/email-otp`,
         {
           "subject" : "Hey! Your One Time Password",
           email : email

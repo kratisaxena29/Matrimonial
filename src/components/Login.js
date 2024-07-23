@@ -49,7 +49,7 @@ const Login = ({setlogedIn}) => {
    
     try {
       const response = await axios.post(
-        `${URL}/login`,
+        `${URL}/api/login`,
         {
           email: formData.email,
           password : formData.password
