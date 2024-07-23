@@ -93,7 +93,7 @@ function Home() {
               </div>
               <div className="bl">
                 <ul>
-                  <button onClick={() => navigate('/login')} className="custom-button">Krati</button>
+                  <button onClick={() => navigate('/login')} className="custom-button">Login</button>
                 </ul>
               </div>
             </div>
