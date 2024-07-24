@@ -62,7 +62,7 @@ function PartnerLiving() {
   }, [part_diet, part_alcohol, part_smoke]);
 
   const URL = process.env.REACT_APP_API_BASE_URL;
-
+  console.log("...location state in living...",location.state)
   const handleNext = async () => {
     console.log('Previous page data:', location.state);
   
@@ -99,6 +99,7 @@ function PartnerLiving() {
             martialStatus: location.state.maritalStatus, // Fixed typo from "martialStatus"
             nationality: location.state.nationality,
             city: location.state.city,
+            country : location.state.country,
             religion: location.state.religion,
             disability: location.state.disability,
             disabilityDetail: location.state.disabilityDetails, // Fixed typo from "disabilityDetail"
@@ -137,6 +138,7 @@ function PartnerLiving() {
             Part_martialStatus: location.state.part_martialStatus, // Ensure proper casing
             Part_Religion: location.state.part_religion,
             Part_Caste: location.state.part_caste,
+            Part_subCaste : location.state.Part_subCaste,
             Part_motherTongue: location.state.part_mothertongue, // Ensure proper casing
             Part_height: location.state.part_height,
             Part_horoscopeMatch: location.state.part_horoscopeMatch,

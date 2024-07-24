@@ -486,7 +486,7 @@ function AdditionalDetails() {
       setFormValid(false);
     }
   }, [caste, subCaste, origin, motherTongue, height, weight, petFriendly]);
-
+console.log("...additional..",location.state)
   const handleAdditionalDetails = async () => {
     console.log('Previous page data:', location.state);
     navigate('/education-career', {

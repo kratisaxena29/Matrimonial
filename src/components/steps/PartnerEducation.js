@@ -385,7 +385,7 @@ function PartnerEducation() {
     }
     return errors;
   };
-
+console.log("...location state in education...",location.state)
   // Function to handle navigation to the next page
   const handleNext = () => {
     const errors = validateForm();

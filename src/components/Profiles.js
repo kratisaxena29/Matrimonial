@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import logo from "../images/logo.png";
 import noProfile from "../images/profiles/noProfile.jpg";
 import { useNavigate } from 'react-router-dom';
+import { MenuItem, Select, InputLabel, FormControl } from "@mui/material";
 import axios from 'axios';
 
 function Profiles({ setlogedIn }) {
@@ -12,7 +13,351 @@ function Profiles({ setlogedIn }) {
   const [religion, setReligion] = useState("");
   const [profiles, setProfiles] = useState([]);
   const [interestedProfiles, setInterestedProfiles] = useState([]);
+  const [subcaste,setSubCaste ] = useState("")
   const navigate = useNavigate();
+ 
+  const casteOptions = ["Select Caste","Bihari", "Bengali", "Hindi Delhi", "Hindi" , "Gujarati" , "Kannada" , "Malayalam" , "Marathi" , "Oriya" , "Punjabi" , "Rajasthan" , "Tamil" , "Telugu" , "Hindi UP" , "Hindi MP" , "KonKani" , "Himachali" , "Haryanvi"  , "Assamese" , "Kashmiri", "Sikkim Nepali" , "Tulu" ];
+
+  const subCasteOptions = [
+    "Select Sub Caste",
+    "Arora",
+"Baniya",
+"24 Manai Telugu Chettiar",
+"96 Kuli Maratha",
+"96K Kokanastha",
+"Adi Andhra",
+"Adi Dharmi",
+"Adi Dravida",
+"Adi Karnataka",
+"Agamudayar",
+"Agnikula Kshatriya",
+"Agri",
+"Ahir",
+"Ahom",
+"Ambalavasi",
+"Arcot",
+"Arekatica",
+"Arora",
+"Arunthathiyar",
+"Arya Vysya",
+"Aryasamaj",
+"Ayyaraka",
+"Bhandari",
+"Brahmin - Audichya",
+"Brahmin - Anavil",
+"Brahmin - Audichya",
+"Brahmin - Barendra",
+"Brahmin - Bhatt",
+"Brahmin - Bhumihar",
+"Brahmin - Brahmbhatt",
+"Brahmin - Dadhich/Dadheech",
+"Brahmin - Daivadnya",
+"Brahmin - Danua",
+"Brahmin - Deshastha",
+"Brahmin - Dhiman",
+"Brahmin - Dravida",
+"Brahmin - Embrandiri",
+"Brahmin - Goswami",
+"Brahmin - Gour",
+"Brahmin - Gowd Saraswat",
+"Brahmin - Gujar Gour",
+"Brahmin - Gurukkal",
+"Brahmin - Halua",
+"Brahmin - Havyaka",
+"Brahmin - Himachali",
+"Brahmin - Hoysala",
+"Brahmin - Iyengar",
+"Brahmin - Iyer",
+"Brahmin - Jangid",
+"Brahmin - Jhadua",
+"Brahmin - Jhijhotiya",
+"Brahmin - Kanyakubja",
+"Brahmin - Karhade",
+"Brahmin - Kashmiri Pandit",
+"Brahmin - Kokanastha",
+"Brahmin - Kota",
+"Brahmin - Kulin",
+"Brahmin - Kumaoni",
+"Brahmin - Madhwa",
+"Brahmin - Maithili",
+"Brahmin - Modh",
+"Brahmin - Mohyal",
+"Brahmin - Nagar",
+"Brahmin - Namboodiri",
+"Brahmin - Niyogi",
+"Brahmin - Niyogi Nandavariki",
+"Brahmin - Other",
+"Brahmin - Paliwal",
+"Brahmin - Panda",
+"Brahmin - Pareek",
+"Brahmin - Pushkarna",
+"Brahmin - Rarhi",
+"Brahmin - Rudraj",
+"Brahmin - Sakaldwipi",
+"Brahmin - Sanadya",
+"Brahmin - Saraswat",
+"Brahmin - Sanketi",
+"Brahmin - Sarua",
+"Brahmin - Vyas",
+"Brahmbatt",
+"Badaga",
+"Baghel/Pal/Gaderiya",
+"Bahi",
+"Baidya",
+"Baishnab",
+"Brahmo",
+"Buddar",
+"Bunt (Shetty)",
+"CKP",
+"Chalawadi Holeya",
+"Chambhar",
+"Chandravanshi Kahar",
+"Chasa",
+"Chattada Sri Vaishnava",
+"Chaudary",
+"Chaurasia",
+"Chekkala - Nair",
+"Chennadasar",
+"Cheramar",
+"Chettiar",
+"Chhetri",
+"Chippolu/Mera",
+"Devadiga",
+"Devanga",
+"Devar/Thevar/Mukkulathor",
+"Devendra Kula Vellalar",
+"Dhangar",
+"Dheevara",
+"Dhiman",
+"Dhoba",
+"Digambar",
+"Dommala",
+"Dusadh",
+"Ediga",
+"Ezhava",
+"Ezhuthachan",
+"Gabit",
+"Ganakar",
+"Gowda",
+"Halwai",
+"Hegde",
+"Helava",
+"Intercaste",
+"Jaalari",
+"Jaiswal",
+"Jandra",
+"Jangam",
+"Jat",
+"Jatav",
+"Jetty Malla",
+"Kachara",
+"Kaibarta",
+"Kakkalan",
+"Kalar",
+"Kalinga",
+"Kalinga Vysya",
+"Kashyap",
+"Kayastha",
+"Khandelwal",
+"Koli",
+"Koli Patel",
+"Kshatriya",
+"Lambadi",
+"Laxminarayan gola",
+"Leva Patidar",
+"Leva Patil",
+"Lingayat",
+"Lingayat-Agasa",
+"Lingayat-Akkasali",
+"Lingayat-Aradhya",
+"Lingayat-Balegala",
+"Lingayat-Banagar",
+"Lingayat-Banajiga",
+"Lingayat-Bhandari",
+"Lingayat-Bilijedaru",
+"Lingayat-Bilimagga",
+"Lingayat-Chaturtha",
+"Lingayat-Dikshwant",
+"Lingayat-Ganiga",
+"Lingayat-Gowda",
+"Lingayat-Gowli",
+"Lingayat-Gurav",
+"Lingayat-Hadapada",
+"Lingayat-Hatgar",
+"Lingayat-Hoogar / Hugar / Jeer",
+"Lingayat-Jadaru",
+"Lingayat-Jangam",
+"Lingayat-Kudu Vokkaliga",
+"Lingayat-Kumbar / Kumbara",
+"Lingayat-Kumbhar",
+"Lingayat-Kuruhina Setty",
+"Lingayat-lamba",
+"Lingayat-Lolagonda",
+"Lingayat-Madivala",
+"Lingayat-Malgar",
+"Lingayat-Mali",
+"Lingayat-Neelagar",
+"Lingayat-Neeli / Neelagar",
+"Lingayat-Neygi",
+"Lingayat-Nolamba",
+"Lingayat-Pancham",
+"Lingayat-Panchamasali",
+"Lingayat-Pattasali",
+"Lingayat-Reddy Reddi",
+"Lingayat-Sadar",
+"Lingayat-Sajjan / Sajjanaganigar ",
+"Lingayat-Setty",
+"Lingayat-Shilwant",
+"Lingayat-Shiva Simpi",
+"Lingayat-Vani",
+"Lingayat-Veerashaiva",
+"Lohana",
+"Lohana-Ghoghari",
+"Lohana-Halai",
+"Lohana-Kutchi",
+"Lohana-Vaishnav",
+"Lohar",
+"Lubana",
+"Madiga",
+"Mahar",
+"Mahendra",
+"Maheshwari",
+"Mahindra",
+"Mahisya",
+"Majabi Mazhbi",
+"Mala",
+"Mali",
+"Mallah",
+"Mallah-Kewat / Keot",
+"Mallah-Nishad",
+"Manikpuri",
+"Manipuri",
+"Manjhi",
+"Mannan / Velon / Vannan",
+"Mapila",
+"Maratha",
+"Maratha-96 Kuli Maratha",
+"Maratha-Aramari Gabit",
+"Maratha-Deshastha Maratha",
+"Maratha-Deshmukh",
+"Maratha-Deshtha Maratha",
+"Maratha-Gomantak Maratha",
+"Maratha-Jhadav",
+"Maratha-Kokanastha Maratha",
+"Maratha-Kunbi Dhanoje",
+"Maratha-Kunbi Khaire",
+"Maratha-Kunbi Khedule",
+"Maratha-Kunbi Lonari",
+"Maratha-Kunbi Maratha",
+"Maratha-Kunbi Tirale",
+"Maratha-Malwani",
+"Maratha-Maratha Kshatriya",
+"Maratha-Parit",
+"Maratha-Patil",
+"Maratha-Sonar",
+"Maratha-Suthar",
+"Maratha-Vani",
+"Maravar",
+"Maruthuvar",
+"Matang",
+"Maurya",
+"Maurya-Kachchi",
+"Maurya-Kushwaha",
+"Meda",
+"Meena",
+"Meenavar",
+"Meghwal",
+"Mehra",
+"Mehtar",
+"Menon",
+"Meru",
+"Meru darji",
+"Mochi",
+"Modak",
+"Mogaveera",
+"Monchi",
+"Motati Reddy",
+"Mudaliar",
+"Mudaliar-Agamudayar/Arcot/Thuluva Vellala",
+"Mudaliar-Isai Vellalar",
+"Mudaliar-Kerala Mudali",
+"Mudaliar-Kongu Vellala Gounder",
+"Mudaliar-Mudailiar Arcot",
+"Mudaliar-Mudaliar All",
+"Mudaliar-Mudaliar Saiva",
+"Mudaliar-Mudaliar Sengupta",
+"Mudaliar-Saiva Pillai Tirunelveli",
+"Mudaliar-Sengunthar/Kaikolar",
+"Mudaliar-Sozhiya Vellalar",
+"Mudaliar-Thondai Mandala Vellala",
+"Mudaliar-Veerakodi Vellala",
+"Mudaliar Arcot",
+"Mudiraj",
+"Muthuraja",
+"Naagavamsam",
+"Nadar",
+"Nadar-Kongu Nadar",
+"Nagaralu",
+"Naicker",
+"Naicker-Naicker others",
+"Naicker-Naicker-Vanniya Kula Kshatriyar",
+"Naicker-Rajaka Chakali Dhobi",
+"Naidu",
+"Naidu-Balija Naidu",
+"Naidu-Ediga /Goud",
+"Naidu-Gajula Kavarai",
+"Naidu-Gavara",
+"Naidu-Kamma",
+"Naidu-Kapu Naidu",
+"Naidu-Munnuru Kapu",
+"Naidu-Mutharaja",
+"Naidu-Perika",
+"Naidu-Raja Kambalathu Naicker",
+"Naidu-Raju",
+"OBC - Barber/Naayee",
+"Oswal",
+"Otari",
+"Patel",
+"Padmasali",
+"Panchal",
+"Pandaram",
+"Panicker",
+"Paravan",
+"Parit",
+"Parkava Kulam",
+"Partraj",
+"Pasi",
+"Rajaka/Chakali/Dhobi",
+"Rajbhar",
+"Rajput",
+"Rajput - Kumaoni",
+"Rajput - Lodhi",
+"Ramdasia",
+"Ramgharia",
+"Rauniyar",
+"Ravidasia",
+"Rawat",
+"Reddiar",
+"Reddy",
+"Relli",
+"SSK",
+"Sagara - Uppara",
+"Shilpkar",
+"Shimpi",
+"Sindhi - Bhanusali",
+"Sindhi - Bhatia",
+"Sindhi - Chhapru",
+"Sindhi - Dadu",
+"Sindhi - Hyderabadi",
+"Sindhi - Larai",
+"Sindhi - Lohana",
+"Telaga",
+"Teli",
+"Thuluva Vellala",
+"Vysya",
+"Yadav",
+"Other"
+];
 
   const user = JSON.parse(sessionStorage.getItem('user'));
   console.log("..user...", user);
@@ -120,6 +465,9 @@ function Profiles({ setlogedIn }) {
     if (caste) {
       apiUrl += `&caste=${caste}`;
     }
+    if(subcaste) {
+      apiUrl += `&subcaste=${subcaste}`
+    }
 
     console.log("Constructed API URL:", apiUrl);
 
@@ -131,7 +479,7 @@ function Profiles({ setlogedIn }) {
       .catch(error => {
         console.log("...error..", error);
       });
-  }, [age, religion, caste]);
+  }, [age, religion, caste,subcaste]);
 
   const handleProfileDetails = async (profileId) => {
     console.log("...handleProfileDetails for profileId...", profileId)
@@ -260,18 +608,44 @@ function Profiles({ setlogedIn }) {
                       Select Caste
                     </h4>
                     <div className="form-group">
-                      <select
-                        id="caste-select"
-                        className="chosen-select"
-                        value={caste}
-                        onChange={(event) => setCaste(event.target.value)}
-                      >
-                        <option value="">Select Caste</option>
-                        <option value="General">General</option>
-                        <option value="OBC">OBC</option>
-                        <option value="SC">SC</option>
-                        <option value="ST">ST</option>
-                      </select>
+                      <FormControl fullWidth>
+                        <InputLabel id="caste-label">Select Caste</InputLabel>
+                        <Select
+                          labelId="caste-label"
+                          id="caste-select"
+                          value={caste}
+                          onChange={(event) => setCaste(event.target.value)}
+                          label="Select Caste"
+                        >
+                          {casteOptions.map(option => (
+                            <MenuItem key={option} value={option}>{option}</MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </div>
+                  </div>
+
+
+                  <div className="filt-com lhs-cate">
+                    <h4>
+                      <i className="fa fa-users" aria-hidden="true" />
+                      Select Sub Caste
+                    </h4>
+                    <div className="form-group">
+                      <FormControl fullWidth>
+                        <InputLabel id="caste-label">Select Sub Caste</InputLabel>
+                        <Select
+                          labelId="caste-label"
+                          id="caste-select"
+                          value={subcaste}
+                          onChange={(event) => setSubCaste(event.target.value)}
+                          label="Select Caste"
+                        >
+                         {subCasteOptions.map(option => (
+                      <MenuItem key={option} value={option}>{option}</MenuItem>
+                    ))}
+                        </Select>
+                      </FormControl>
                     </div>
                   </div>
                 </div>

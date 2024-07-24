@@ -26,6 +26,8 @@ function ProfileDetails() {
   const [hobbies, setHobbies] = useState(location?.state?.hobbies || []);
   const [indianCities, setIndianCities] = useState(location?.state?.indianCities || []);
   const [isNRI, setIsNRI] = useState(location?.state?.nationality && location?.state?.nationality !== "Indian");
+  const [country, setCountry] = useState(location?.state?.country || "");
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [errors, setErrors] = useState({});
@@ -70,6 +72,10 @@ function ProfileDetails() {
       case "city":
         if (!value) newErrors.city = "City is required";
         else delete newErrors.city;
+        break;
+        case "country":
+        if (!value) newErrors.country = "Country is required";
+        else delete newErrors.country;
         break;
       case "religion":
         if (!value) newErrors.religion = "Religion is required";
@@ -137,6 +143,7 @@ function ProfileDetails() {
           phoneNo,
           address,
           hobbies,
+          country
         },
       });
     } else {
@@ -350,11 +357,11 @@ function ProfileDetails() {
                   
                   label="Country"
                   variant="outlined"
-                  value={city}
-                  onChange={handleChange(setCity, "city")}
+                  value={country}
+                  onChange={handleChange(setCountry, "city")}
                   onBlur={handleBlur("city")}
-                  error={!!errors.city}
-                  helperText={errors.city}
+                  error={!!errors.country}
+                  helperText={errors.country}
                   sx={{ marginBottom: 2 }}
                 />)}
               </div>

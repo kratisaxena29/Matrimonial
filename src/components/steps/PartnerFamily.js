@@ -25,7 +25,7 @@ function PartnerFamily() {
   const [part_height, setHeight] = useState(location?.state?.part_height || "");
   const [part_horoscopeMatch, setHoroscopeMatch] = useState(location?.state?.part_horoscopeMatch || "");
   const [part_petFriendly, setPetFriendly] = useState(location?.state?.petFriendly || "");
-
+  const [Part_subCaste,setPart_subCaste] = useState(location?.state?.Part_subCaste || "");
   const [ageError, setAgeError] = useState(false);
   const [martialStatusError, setMartialStatusError] = useState(false);
   const [religionError, setReligionError] = useState(false);
@@ -34,7 +34,7 @@ function PartnerFamily() {
   const [heightError, setHeightError] = useState(false);
   const [horoscopeMatchError, setHoroscopeMatchError] = useState(false);
   const [petFriendlyError, setPetFriendlyError] = useState(false);
-
+const [subcasteError,setSubCasteError] = useState(false)
  
   const navigate = useNavigate();
   const theme = createTheme({
@@ -256,7 +256,345 @@ function PartnerFamily() {
   ]
 
   const casteOptions = ["Bihari", "Bengali", "Hindi Delhi", "Hindi" , "Gujarati" , "Kannada" , "Malayalam" , "Marathi" , "Oriya" , "Punjabi" , "Rajasthan" , "Tamil" , "Telugu" , "Hindi UP" , "Hindi MP" , "KonKani" , "Himachali" , "Haryanvi"  , "Assamese" , "Kashmiri", "Sikkim Nepali" , "Tulu" ];
-
+  const subCasteOptions = [
+    "Arora",
+"Baniya",
+"24 Manai Telugu Chettiar",
+"96 Kuli Maratha",
+"96K Kokanastha",
+"Adi Andhra",
+"Adi Dharmi",
+"Adi Dravida",
+"Adi Karnataka",
+"Agamudayar",
+"Agnikula Kshatriya",
+"Agri",
+"Ahir",
+"Ahom",
+"Ambalavasi",
+"Arcot",
+"Arekatica",
+"Arora",
+"Arunthathiyar",
+"Arya Vysya",
+"Aryasamaj",
+"Ayyaraka",
+"Bhandari",
+"Brahmin - Audichya",
+"Brahmin - Anavil",
+"Brahmin - Audichya",
+"Brahmin - Barendra",
+"Brahmin - Bhatt",
+"Brahmin - Bhumihar",
+"Brahmin - Brahmbhatt",
+"Brahmin - Dadhich/Dadheech",
+"Brahmin - Daivadnya",
+"Brahmin - Danua",
+"Brahmin - Deshastha",
+"Brahmin - Dhiman",
+"Brahmin - Dravida",
+"Brahmin - Embrandiri",
+"Brahmin - Goswami",
+"Brahmin - Gour",
+"Brahmin - Gowd Saraswat",
+"Brahmin - Gujar Gour",
+"Brahmin - Gurukkal",
+"Brahmin - Halua",
+"Brahmin - Havyaka",
+"Brahmin - Himachali",
+"Brahmin - Hoysala",
+"Brahmin - Iyengar",
+"Brahmin - Iyer",
+"Brahmin - Jangid",
+"Brahmin - Jhadua",
+"Brahmin - Jhijhotiya",
+"Brahmin - Kanyakubja",
+"Brahmin - Karhade",
+"Brahmin - Kashmiri Pandit",
+"Brahmin - Kokanastha",
+"Brahmin - Kota",
+"Brahmin - Kulin",
+"Brahmin - Kumaoni",
+"Brahmin - Madhwa",
+"Brahmin - Maithili",
+"Brahmin - Modh",
+"Brahmin - Mohyal",
+"Brahmin - Nagar",
+"Brahmin - Namboodiri",
+"Brahmin - Niyogi",
+"Brahmin - Niyogi Nandavariki",
+"Brahmin - Other",
+"Brahmin - Paliwal",
+"Brahmin - Panda",
+"Brahmin - Pareek",
+"Brahmin - Pushkarna",
+"Brahmin - Rarhi",
+"Brahmin - Rudraj",
+"Brahmin - Sakaldwipi",
+"Brahmin - Sanadya",
+"Brahmin - Saraswat",
+"Brahmin - Sanketi",
+"Brahmin - Sarua",
+"Brahmin - Vyas",
+"Brahmbatt",
+"Badaga",
+"Baghel/Pal/Gaderiya",
+"Bahi",
+"Baidya",
+"Baishnab",
+"Brahmo",
+"Buddar",
+"Bunt (Shetty)",
+"CKP",
+"Chalawadi Holeya",
+"Chambhar",
+"Chandravanshi Kahar",
+"Chasa",
+"Chattada Sri Vaishnava",
+"Chaudary",
+"Chaurasia",
+"Chekkala - Nair",
+"Chennadasar",
+"Cheramar",
+"Chettiar",
+"Chhetri",
+"Chippolu/Mera",
+"Devadiga",
+"Devanga",
+"Devar/Thevar/Mukkulathor",
+"Devendra Kula Vellalar",
+"Dhangar",
+"Dheevara",
+"Dhiman",
+"Dhoba",
+"Digambar",
+"Dommala",
+"Dusadh",
+"Ediga",
+"Ezhava",
+"Ezhuthachan",
+"Gabit",
+"Ganakar",
+"Gowda",
+"Halwai",
+"Hegde",
+"Helava",
+"Intercaste",
+"Jaalari",
+"Jaiswal",
+"Jandra",
+"Jangam",
+"Jat",
+"Jatav",
+"Jetty Malla",
+"Kachara",
+"Kaibarta",
+"Kakkalan",
+"Kalar",
+"Kalinga",
+"Kalinga Vysya",
+"Kashyap",
+"Kayastha",
+"Khandelwal",
+"Koli",
+"Koli Patel",
+"Kshatriya",
+"Lambadi",
+"Laxminarayan gola",
+"Leva Patidar",
+"Leva Patil",
+"Lingayat",
+"Lingayat-Agasa",
+"Lingayat-Akkasali",
+"Lingayat-Aradhya",
+"Lingayat-Balegala",
+"Lingayat-Banagar",
+"Lingayat-Banajiga",
+"Lingayat-Bhandari",
+"Lingayat-Bilijedaru",
+"Lingayat-Bilimagga",
+"Lingayat-Chaturtha",
+"Lingayat-Dikshwant",
+"Lingayat-Ganiga",
+"Lingayat-Gowda",
+"Lingayat-Gowli",
+"Lingayat-Gurav",
+"Lingayat-Hadapada",
+"Lingayat-Hatgar",
+"Lingayat-Hoogar / Hugar / Jeer",
+"Lingayat-Jadaru",
+"Lingayat-Jangam",
+"Lingayat-Kudu Vokkaliga",
+"Lingayat-Kumbar / Kumbara",
+"Lingayat-Kumbhar",
+"Lingayat-Kuruhina Setty",
+"Lingayat-lamba",
+"Lingayat-Lolagonda",
+"Lingayat-Madivala",
+"Lingayat-Malgar",
+"Lingayat-Mali",
+"Lingayat-Neelagar",
+"Lingayat-Neeli / Neelagar",
+"Lingayat-Neygi",
+"Lingayat-Nolamba",
+"Lingayat-Pancham",
+"Lingayat-Panchamasali",
+"Lingayat-Pattasali",
+"Lingayat-Reddy Reddi",
+"Lingayat-Sadar",
+"Lingayat-Sajjan / Sajjanaganigar ",
+"Lingayat-Setty",
+"Lingayat-Shilwant",
+"Lingayat-Shiva Simpi",
+"Lingayat-Vani",
+"Lingayat-Veerashaiva",
+"Lohana",
+"Lohana-Ghoghari",
+"Lohana-Halai",
+"Lohana-Kutchi",
+"Lohana-Vaishnav",
+"Lohar",
+"Lubana",
+"Madiga",
+"Mahar",
+"Mahendra",
+"Maheshwari",
+"Mahindra",
+"Mahisya",
+"Majabi Mazhbi",
+"Mala",
+"Mali",
+"Mallah",
+"Mallah-Kewat / Keot",
+"Mallah-Nishad",
+"Manikpuri",
+"Manipuri",
+"Manjhi",
+"Mannan / Velon / Vannan",
+"Mapila",
+"Maratha",
+"Maratha-96 Kuli Maratha",
+"Maratha-Aramari Gabit",
+"Maratha-Deshastha Maratha",
+"Maratha-Deshmukh",
+"Maratha-Deshtha Maratha",
+"Maratha-Gomantak Maratha",
+"Maratha-Jhadav",
+"Maratha-Kokanastha Maratha",
+"Maratha-Kunbi Dhanoje",
+"Maratha-Kunbi Khaire",
+"Maratha-Kunbi Khedule",
+"Maratha-Kunbi Lonari",
+"Maratha-Kunbi Maratha",
+"Maratha-Kunbi Tirale",
+"Maratha-Malwani",
+"Maratha-Maratha Kshatriya",
+"Maratha-Parit",
+"Maratha-Patil",
+"Maratha-Sonar",
+"Maratha-Suthar",
+"Maratha-Vani",
+"Maravar",
+"Maruthuvar",
+"Matang",
+"Maurya",
+"Maurya-Kachchi",
+"Maurya-Kushwaha",
+"Meda",
+"Meena",
+"Meenavar",
+"Meghwal",
+"Mehra",
+"Mehtar",
+"Menon",
+"Meru",
+"Meru darji",
+"Mochi",
+"Modak",
+"Mogaveera",
+"Monchi",
+"Motati Reddy",
+"Mudaliar",
+"Mudaliar-Agamudayar/Arcot/Thuluva Vellala",
+"Mudaliar-Isai Vellalar",
+"Mudaliar-Kerala Mudali",
+"Mudaliar-Kongu Vellala Gounder",
+"Mudaliar-Mudailiar Arcot",
+"Mudaliar-Mudaliar All",
+"Mudaliar-Mudaliar Saiva",
+"Mudaliar-Mudaliar Sengupta",
+"Mudaliar-Saiva Pillai Tirunelveli",
+"Mudaliar-Sengunthar/Kaikolar",
+"Mudaliar-Sozhiya Vellalar",
+"Mudaliar-Thondai Mandala Vellala",
+"Mudaliar-Veerakodi Vellala",
+"Mudaliar Arcot",
+"Mudiraj",
+"Muthuraja",
+"Naagavamsam",
+"Nadar",
+"Nadar-Kongu Nadar",
+"Nagaralu",
+"Naicker",
+"Naicker-Naicker others",
+"Naicker-Naicker-Vanniya Kula Kshatriyar",
+"Naicker-Rajaka Chakali Dhobi",
+"Naidu",
+"Naidu-Balija Naidu",
+"Naidu-Ediga /Goud",
+"Naidu-Gajula Kavarai",
+"Naidu-Gavara",
+"Naidu-Kamma",
+"Naidu-Kapu Naidu",
+"Naidu-Munnuru Kapu",
+"Naidu-Mutharaja",
+"Naidu-Perika",
+"Naidu-Raja Kambalathu Naicker",
+"Naidu-Raju",
+"OBC - Barber/Naayee",
+"Oswal",
+"Otari",
+"Patel",
+"Padmasali",
+"Panchal",
+"Pandaram",
+"Panicker",
+"Paravan",
+"Parit",
+"Parkava Kulam",
+"Partraj",
+"Pasi",
+"Rajaka/Chakali/Dhobi",
+"Rajbhar",
+"Rajput",
+"Rajput - Kumaoni",
+"Rajput - Lodhi",
+"Ramdasia",
+"Ramgharia",
+"Rauniyar",
+"Ravidasia",
+"Rawat",
+"Reddiar",
+"Reddy",
+"Relli",
+"SSK",
+"Sagara - Uppara",
+"Shilpkar",
+"Shimpi",
+"Sindhi - Bhanusali",
+"Sindhi - Bhatia",
+"Sindhi - Chhapru",
+"Sindhi - Dadu",
+"Sindhi - Hyderabadi",
+"Sindhi - Larai",
+"Sindhi - Lohana",
+"Telaga",
+"Teli",
+"Thuluva Vellala",
+"Vysya",
+"Yadav",
+"Other"
+];
   const validateForm = () => {
     return (
       part_ageFrom &&
@@ -279,6 +617,7 @@ function PartnerFamily() {
     setHeightError(!part_height);
     setHoroscopeMatchError(!part_horoscopeMatch);
     setPetFriendlyError(!part_petFriendly);
+    setSubCasteError(!Part_subCaste)
 
     if (validateForm()) {
       navigate("/partner-education", {
@@ -288,6 +627,7 @@ function PartnerFamily() {
           part_martialStatus,
           part_religion,
           part_caste,
+          Part_subCaste,
           part_mothertongue,
           part_height,
           part_horoscopeMatch,
@@ -364,7 +704,43 @@ function PartnerFamily() {
                 </FormControl>
               </div>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
+              <FormControl variant="standard" sx={{ minWidth: 195 }}>
+                  <InputLabel id="caste-select-label">Caste</InputLabel>
+                  <Select
+                    labelId="caste-select-label"
+                    id="caste-select"
+                    label="Caste"
+                    value={part_caste}
+                    onChange={(event) => setCaste(event.target.value)}
+                    error={casteError}
+                  >
+                   {casteOptions.map(option => (
+                      <MenuItem key={option} value={option}>{option}</MenuItem>
+                    ))}
+                  </Select>
+                  {casteError && <FormHelperText error>Please select a caste.</FormHelperText>}
+                </FormControl>
                 <FormControl variant="standard" sx={{ minWidth: 195 }}>
+                  <InputLabel id="caste-select-label">Sub Caste</InputLabel>
+                  <Select
+                    labelId="caste-select-label"
+                    id="caste-select"
+                    label="Caste"
+                    value={Part_subCaste}
+                    onChange={(event) => setPart_subCaste(event.target.value)}
+                    error={subcasteError}
+                  >
+                   {subCasteOptions.map(option => (
+                      <MenuItem key={option} value={option}>{option}</MenuItem>
+                    ))}
+                  </Select>
+                  {subcasteError && <FormHelperText error>Please select a sub caste.</FormHelperText>}
+                </FormControl>
+              </div>
+             
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
+               
+              <FormControl variant="standard" sx={{ minWidth: 195 }}>
                   <InputLabel id="religion-select-label">Religion</InputLabel>
                   <Select
                     labelId="religion-select-label"
@@ -385,24 +761,6 @@ function PartnerFamily() {
                   {religionError && <FormHelperText error>Please select a religion.</FormHelperText>}
                 </FormControl>
                 <FormControl variant="standard" sx={{ minWidth: 195 }}>
-                  <InputLabel id="caste-select-label">Caste</InputLabel>
-                  <Select
-                    labelId="caste-select-label"
-                    id="caste-select"
-                    label="Caste"
-                    value={part_caste}
-                    onChange={(event) => setCaste(event.target.value)}
-                    error={casteError}
-                  >
-                   {casteOptions.map(option => (
-                      <MenuItem key={option} value={option}>{option}</MenuItem>
-                    ))}
-                  </Select>
-                  {casteError && <FormHelperText error>Please select a caste.</FormHelperText>}
-                </FormControl>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
-                <FormControl variant="standard" sx={{ minWidth: 195 }}>
                   <InputLabel id="mothertongue-select-label">Mother Tongue</InputLabel>
                   <Select
                     labelId="mothertongue-select-label"
@@ -422,7 +780,10 @@ function PartnerFamily() {
                   </Select>
                   {mothertongueError && <FormHelperText error>Please select your mother tongue.</FormHelperText>}
                 </FormControl>
-                <FormControl variant="standard" sx={{ minWidth: 195 }}>
+                
+              </div>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
+              <FormControl variant="standard" sx={{ minWidth: 195 }}>
                   <InputLabel id="height-select-label">Height</InputLabel>
                   <Select
                     labelId="height-select-label"
@@ -438,8 +799,6 @@ function PartnerFamily() {
                   </Select>
                   {heightError && <FormHelperText error>Please select your height.</FormHelperText>}
                 </FormControl>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
                 <FormControl variant="standard" sx={{ minWidth: 195 }}>
                   <InputLabel id="horoscope-match-label">Horoscope match?</InputLabel>
                   <Select
@@ -455,7 +814,10 @@ function PartnerFamily() {
                   </Select>
                   {horoscopeMatchError && <FormHelperText error>Please select if horoscope match is required.</FormHelperText>}
                 </FormControl>
-                <FormControl variant="standard" sx={{ minWidth: 195 }}>
+               
+              </div>
+              <div  style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
+              <FormControl variant="standard" sx={{ minWidth: 195 }}>
                   <InputLabel id="pet-friendly-label">Pet Friendly</InputLabel>
                   <Select
                     labelId="pet-friendly-label"
