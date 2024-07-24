@@ -25,27 +25,31 @@ function Plan() {
   const handlePayment = async (e) => {
     console.log("...frontend");
     e.preventDefault();
-
+  
     const data = {
       amount: 100,
       MUID: "MUID" + Date.now(),
       transactionId: 'T' + Date.now(),
     };
-
-    console.log("...data...", data);
-
   
-    // setLoading2(true);
-    axios.post(`${URL}/pay`, { ...data }).then(res => {
-      setTimeout(() => {
-        setLoading2(false);
-      }, 1500);
-    }).catch(error => {
-      setLoading2(false);
-      console.log(error);
-    });
-    // navigate('/payment')
+    console.log("...data...", data);
+  
+    try {
+      const response = await axios.post(`${URL}/pay`, data, {
+        headers: {
+          'Content-Type': 'application/json',
+          // Add any necessary headers here
+        },
+        withCredentials: true // Ensure cookies are sent if needed
+      });
+      console.log("Payment response:", response.data);
+      // Handle response
+    } catch (error) {
+      console.error("Error during payment initiation:", error);
+      // Handle error
+    }
   };
+  
 
   return (
     <div style={{ paddingTop: "0px", paddingBottom: "80px" }}>
