@@ -489,7 +489,7 @@ function Profiles({ setlogedIn }) {
   const handleLogout = () => {
     sessionStorage.clear();
     setlogedIn(false);
-    localStorage.setItem("logedIn", "false");
+    sessionStorage.setItem("logedIn", "false");
     navigate('/');
   };
 

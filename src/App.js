@@ -33,11 +33,11 @@ import PaymentSucess from './components/PaymentSucess';
 
 function App() {
   const [logedIn, setlogedIn] = useState(
-    localStorage.getItem("logedIn") === "true"
+    sessionStorage.getItem("logedIn") === "true"
   );
 
   useEffect(() => {
-    localStorage.setItem("logedIn", logedIn);
+    sessionStorage.setItem("logedIn", logedIn);
   }, [logedIn]);
 
   return (
