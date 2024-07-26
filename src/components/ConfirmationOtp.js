@@ -4,10 +4,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 function ConfirmationOtp() {
+
   const navigate = useNavigate()
 
   const location = useLocation()
   console.log("...conformation-email ...",location.state.email)
+  console.log("...conformation-phone ...",location.state.phoneno)
   const textStyle = {
     marginBottom: 8,
     color: "#363640",
@@ -25,11 +27,21 @@ function ConfirmationOtp() {
   };
 
   const handleContinue = () => {
-   navigate('/profile-details',{
-    state: {
-      email : location.state.email
+    if(location.state.email){
+      navigate('/profile-details',{
+        state: {
+          email : location.state.email
+        }
+       })
     }
-   })
+    else if(location.state.phoneno){
+      navigate('/profile-details',{
+        state: {
+          phoneno : location.state.phoneno
+        }
+       })
+    }
+  
   }
   return (
     <div style={rootStyle}>

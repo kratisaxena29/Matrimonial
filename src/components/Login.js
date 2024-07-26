@@ -9,24 +9,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import logo from "../images/logo_maroon.png";
 import bigImage from "../images/hero_image2.png"; // Replace with your big image path
 
-const Login = ({setlogedIn}) => {
+const Login = ({ setlogedIn }) => {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
+    emailOrPhone: "",
     password: "",
   });
-  const floatingAnimation = {
-    '@keyframes float': {
-      '0%': { transform: 'translatey(0px)' },
-      '50%': { transform: 'translatey(-10px)' },
-      '100%': { transform: 'translatey(0px)' },
-    },
-    animation: 'float 3s ease-in-out infinite',
-  };
   const [passwordError, setPasswordError] = useState("");
   const [showPassword, setShowPassword] = useState(false); // State for toggling password visibility
   const navigate = useNavigate();
-
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -42,18 +32,22 @@ const Login = ({setlogedIn}) => {
   };
 
   const URL = process.env.REACT_APP_API_BASE_URL;
-
-  const handleSubmit = async(event) => {
+  
+  const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(formData);
-   
+    
+    const isEmail = /\S+@\S+\.\S+/.test(formData.emailOrPhone);
+    const requestData = {
+      password: formData.password,
+      ...(isEmail ? { email: formData.emailOrPhone } : { phoneno: formData.emailOrPhone }),
+    };
+    console.log("..request..", requestData);
+  
     try {
       const response = await axios.post(
         `${URL}/login`,
-        {
-          email: formData.email,
-          password : formData.password
-        },
+        requestData,
         {
           headers: {
             "Content-Type": "application/json",
@@ -62,36 +56,49 @@ const Login = ({setlogedIn}) => {
       );
       console.log("API Response:", response);
       const { token, user } = response.data.response;
-      console.log("...token...",token)
-      console.log("...user...",user)
-    sessionStorage.setItem('token', token);
-    sessionStorage.setItem('user', JSON.stringify(user));
+      console.log("...token...", token);
+      console.log("...user...", user);
+      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('user', JSON.stringify(user));
       setlogedIn(true);
-      navigate('/plan')
-      // navigate('/profiles')
+      navigate('/plan');
+      // navigate('/profiles');
     } catch (error) {
       console.error("Error while making API call:", error.response);
       toast.error(error.response.data.Error);
-      if(error.response.data.ErrorCode == 404){
-        
-        console.log("In 404 console..email")
+      console.log("...status code ...", error.response.data.ErrorCode);
+  
+      if (error.response.data.ErrorCode === 400) {
+        console.log("In 400 console..email");
         toast.warning("Please verify your email");
-        navigate('/verify-otp',{state : {
-          email : formData.email
-        }})
-      } 
-      else if (error.response.data.ErrorCode == 405) {
-        console.log("In 404 console..profile")
-        
+        navigate('/verify-otp', {
+          state: {
+            state: isEmail ? { email: formData.emailOrPhone } : { phoneno: formData.emailOrPhone },
+          },
+        });
+      } else if (error.response.data.ErrorCode === 406) {
+        console.log("In 406 console..profile");
         toast.warning("Please complete your profile");
-        navigate('/profile-details',{state :{
-          email : formData.email
-        }})
-      } 
-
+        const email = isEmail ? formData.emailOrPhone : null;
+        const phoneno = !isEmail ? formData.emailOrPhone : null;
+  
+        if (email) {
+          navigate('/profile-details', {
+            state: {
+              email: email,
+            },
+          });
+        } else if (phoneno) {
+          navigate('/profile-details', {
+            state: {
+              phoneno: phoneno,
+            },
+          });
+        }
+      }
     }
-    // You can send this formData to your backend for further processing
   };
+  
 
   const validatePassword = (password) => {
     const passwordRegex =
@@ -117,7 +124,6 @@ const Login = ({setlogedIn}) => {
         background: "#F7E7CE",
       }}
     >
-      
       <div
         style={{
           flex: 1,
@@ -174,16 +180,15 @@ const Login = ({setlogedIn}) => {
                   fontSize: "18px",
                   color: "#555",
                 }}
-                htmlFor="email"
+                htmlFor="emailOrPhone"
               >
-                Email
+                Email Or PhoneNo
               </label>
               <TextField
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Enter Email ID"
-                value={formData.email}
+                id="emailOrPhone"
+                name="emailOrPhone"
+                placeholder="Enter Email ID or Phone No"
+                value={formData.emailOrPhone}
                 onChange={handleChange}
                 fullWidth
                 required

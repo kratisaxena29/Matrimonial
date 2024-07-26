@@ -16,7 +16,12 @@ function VerifyOtp() {
   const [resendTimer, setResendTimer] = useState(0);
 
   const location = useLocation();
+  console.log("...location...",location.state)
   const { email } = location.state || {};
+  console.log("..email...",email)
+  const { phoneno } = location.state || {};
+  console.log("...phone...",phoneno) 
+
   const inputRefs = useRef([]);
 
   const handleChange = (index, value) => {
@@ -43,6 +48,12 @@ function VerifyOtp() {
 
   const URL = process.env.REACT_APP_API_BASE_URL;
   const handleEmailOtp = async () => {
+    if(phoneno){
+    console.log("...under phone number");
+    }
+    if(email){
+      console.log("...under email");
+    }
     try {
       
  
@@ -66,32 +77,58 @@ function VerifyOtp() {
   };
 
   const handleVerifyClick = async () => {
+    const combinedOtp = otp.join(''); // Move this line to the top
+  
     console.log("Verify button clicked");
-    
-    const combinedOtp = otp.join('');
     console.log("Combined OTP:", combinedOtp);
-    try {
-      const response = await axios.post(
-        `${URL}/verify-otp`,
-        {
-          email: email,
-          otp: combinedOtp
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
+  
+    if (phoneno) {
+      console.log("...under phone number");
+      try {
+        const response = await axios.post(
+          `${URL}/phoneverify-otp`,
+          {
+            phoneno: phoneno,
+            otp: combinedOtp
           },
-        }
-      );
-      console.log("API Response:", response);
-      navigate('/confirmation-otp',{state: {
-        email : location.state.email
-      }});
-    } catch (error) {
-      console.error("Error while making API call:", error);
-      toast.error("Wrong OTP")
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log("API Response:", response);
+        navigate('/confirmation-otp', { state: { phoneno: location.state.phoneno } });
+      } catch (error) {
+        console.error("Error while making API call:", error);
+        toast.error("Wrong OTP");
+      }
+    }
+  
+    if (email) {
+      console.log("...under email");
+      try {
+        const response = await axios.post(
+          `${URL}/verify-otp`,
+          {
+            email: email,
+            otp: combinedOtp
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log("API Response:", response);
+        navigate('/confirmation-otp', { state: { email: location.state.email } });
+      } catch (error) {
+        console.error("Error while making API call:", error);
+        toast.error("Wrong OTP");
+      }
     }
   };
+  
 
   useEffect(() => {
     let timer;

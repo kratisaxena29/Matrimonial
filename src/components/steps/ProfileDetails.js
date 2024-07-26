@@ -21,7 +21,7 @@ function ProfileDetails() {
   const [disability, setDisability] = useState(location?.state?.disability || "");
   const [disabilityDetails, setDisabilityDetails] = useState(location?.state?.disabilityDetails || "");
   const [email, setEmail] = useState(location?.state?.email || "");
-  const [phoneNo, setPhoneNo] = useState(location?.state?.phoneNo || "");
+  const [phoneNo, setPhoneNo] = useState(location?.state?.phoneno || "");
   const [address, setAddress] = useState(location?.state?.address || "");
   const [hobbies, setHobbies] = useState(location?.state?.hobbies || []);
   const [indianCities, setIndianCities] = useState(location?.state?.indianCities || []);
@@ -119,37 +119,65 @@ function ProfileDetails() {
     validateField(fieldName, event.target.value);
   };
 
- 
+ console.log("...location...",location.state)
   console.log("..email ...", location.state.email);
+  console.log("..phone ...", location.state.phoneno);
 
   const handleProfileNext = async () => {
     const allFieldsValid = Object.keys(errors).length === 0;
 
     if (!allFieldsValid) return;
-
-    if (email === location.state.email) {
-      navigate('/additional-details', {
-        state: {
-          name,
-          gender,
-          age,
-          maritalStatus,
-          nationality,
-          city,
-          religion,
-          disability,
-          disabilityDetails: disability === "Yes" ? disabilityDetails : "",
-          email,
-          phoneNo,
-          address,
-          hobbies,
-          country
-        },
-      });
-    } else {
-      console.log("...email does not match with the registered one");
-      toast.error("Email does not match with the registered one");
+    if(location.state.email){
+      if (email === location.state.email) {
+        navigate('/additional-details', {
+          state: {
+            name,
+            gender,
+            age,
+            maritalStatus,
+            nationality,
+            city,
+            religion,
+            disability,
+            disabilityDetails: disability === "Yes" ? disabilityDetails : "",
+            email,
+            phoneNo,
+            address,
+            hobbies,
+            country
+          },
+        });
+      } else {
+        console.log("...email does not match with the registered one");
+        toast.error("Email does not match with the registered one");
+      }
     }
+else if (location.state.phoneno){
+  if (phoneNo === location.state.phoneno) {
+    navigate('/additional-details', {
+      state: {
+        name,
+        gender,
+        age,
+        maritalStatus,
+        nationality,
+        city,
+        religion,
+        disability,
+        disabilityDetails: disability === "Yes" ? disabilityDetails : "",
+        email,
+        phoneNo,
+        address,
+        hobbies,
+        country
+      },
+    });
+  } else {
+    console.log("...email does not match with the registered one");
+    toast.error("Phone no does not match with the registered one");
+  }
+}
+    
   };
 
   const handleChange = (setter, fieldName) => (event) => {
@@ -217,6 +245,10 @@ function ProfileDetails() {
     "Widowed",
     "Annulled"
   ];
+  useEffect(() => {
+    console.log("useeffect Location state:", location.state);
+    console.log("useeffect Location state phoneno:", location.state.phoneno);
+  }, [location]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -417,6 +449,7 @@ function ProfileDetails() {
                 </div>
               )}
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
+              {location.state.email && (
                 <TextField
                   label="Email"
                   variant="standard"
@@ -426,6 +459,8 @@ function ProfileDetails() {
                   error={!!errors.email}
                   helperText={errors.email}
                 />
+              )}
+               {location.state.phoneno && (
                 <TextField
                   label="Phone No"
                   variant="standard"
@@ -435,6 +470,7 @@ function ProfileDetails() {
                   error={!!errors.phoneNo}
                   helperText={errors.phoneNo}
                 />
+               )}
               </div>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "40px" }}>
                 <TextField
