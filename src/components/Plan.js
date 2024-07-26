@@ -42,8 +42,13 @@ function Plan() {
         },
         withCredentials: true // Ensure cookies are sent if needed
       });
-      console.log("Payment response:", response.data);
-      // Handle response
+
+      if (response.data && response.data.paymentUrl) {
+        // Redirect user to the payment URL
+        window.location.href = response.data.paymentUrl;
+      } else {
+        console.error("Invalid payment response:", response.data);
+      }
     } catch (error) {
       console.error("Error during payment initiation:", error);
       // Handle error
