@@ -370,26 +370,37 @@ function Profiles({ setlogedIn }) {
 
   const handleChat = async () => {
     try {
-      
-      const response = await axios.post(
-        `${URL}/allProfileId`,
-        {
-          email: user.email,
-          AllprofilesId: interestedProfiles
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+        const payload = {
+            AllprofilesId: interestedProfiles
+        };
 
-      console.log("API Response:", response);
-      navigate('/chat');
+        // Add email or phoneno to the payload based on available user data
+        if (user.email) {
+            payload.email = user.email;
+        } else if (user.phoneno) {
+            payload.phoneno = user.phoneno;
+        } else {
+            console.log("Neither email nor phone number is available.");
+            return;
+        }
+
+        const response = await axios.post(
+            `${URL}/allProfileId`,
+            payload,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        console.log("API Response:", response.data);
+        navigate('/chat');
     } catch (error) {
-      console.log("..error...", error);
+        console.log("..error...", error);
     }
-  };
+};
+
 
   const handleInterest = (profileId) => {
     console.log("Interest button clicked for profile:", profileId);
@@ -420,7 +431,14 @@ function Profiles({ setlogedIn }) {
     formData.append('image', file);
 
     try {
-      const response = await fetch(`${URL}/upload?email=${user.email}`, {
+      let apiUrl = `${URL}/upload?`;
+      if (user.email) {
+        apiUrl += `email=${user.email}`;
+      } else if (user.phoneno) {
+        console.log("...user.phoneno...",user.phoneno)
+        apiUrl += `phoneno=${user.phoneno}`;
+      }
+      const response = await fetch(apiUrl, {
         method: 'POST',
         body: formData,
       });
@@ -454,7 +472,13 @@ function Profiles({ setlogedIn }) {
 
   useEffect(() => {
     // Construct the API URL based on filters
-    let apiUrl = `${URL}/getAllprofile?email=${user.email}`;
+    let apiUrl = `${URL}/getAllprofile?`;
+    if (user.email) {
+      apiUrl += `email=${user.email}`;
+    } else if (user.phoneno) {
+      console.log("...user.phoneno...",user.phoneno)
+      apiUrl += `phoneno=${user.phoneno}`;
+    }
 
     if (age) {
       apiUrl += `&ageRange=${age}`;

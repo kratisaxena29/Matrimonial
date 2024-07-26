@@ -154,7 +154,14 @@ const ChatApp = ({ setlogedIn }) => {
   useEffect(() => {
     const fetchProfiles = async () => {
       try {
-        const response = await axios.get(`${URL}/getallProfileById?email=${user.email}`);
+        let apiUrl = `${URL}/getallProfileById?`;
+    if (user.email) {
+      apiUrl += `email=${user.email}`;
+    } else if (user.phoneno) {
+      console.log("...user.phoneno...",user.phoneno)
+      apiUrl += `phoneno=${user.phoneno}`;
+    }
+        const response = await axios.get(apiUrl);
         const profiles = response.data.response.allProfilesDetails;
         const formattedChats = profiles.map((profile) => ({
           id: profile._id,
