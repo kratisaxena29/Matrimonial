@@ -8,7 +8,6 @@ import {
   Grid,
   Paper,
   Button,
-  IconButton,
 } from "@mui/material";
 import { CheckCircle, Cancel } from "@mui/icons-material";
 import logo from "../images/logo.png";
@@ -23,7 +22,6 @@ function Plan() {
   const URL = process.env.REACT_APP_API_BASE_URL;
 
   const handlePayment = async (e) => {
-    console.log("...frontend");
     e.preventDefault();
   
     const data = {
@@ -32,20 +30,21 @@ function Plan() {
       transactionId: 'T' + Date.now(),
     };
   
-    console.log("...data...", data);
-  
     try {
       const response = await axios.post(`${URL}/pay`, data, {
         headers: {
           'Content-Type': 'application/json',
-          // Add any necessary headers here
         },
         withCredentials: true // Ensure cookies are sent if needed
       });
-      console.log("...response....",response)
-console.log("...response.data...",response.data)
-console.log("...response.dataurl...",response.data.paymentUrl)
-      if (response.data && response.data.paymentUrl) {
+
+      // Log the response for debugging
+      console.log("Response:", response);
+
+      // Check if response contains HTML content
+      if (response.data && response.data.includes('<html>')) {
+        handleApiResponse(response.data);
+      } else if (response.data && response.data.paymentUrl) {
         // Redirect user to the payment URL
         window.location.href = response.data.paymentUrl;
       } else {
@@ -53,10 +52,17 @@ console.log("...response.dataurl...",response.data.paymentUrl)
       }
     } catch (error) {
       console.error("Error during payment initiation:", error);
-      // Handle error
+      // Handle error (display a message to the user, etc.)
     }
   };
-  
+
+  const handleApiResponse = (htmlContent) => {
+    console.log("...html...cintent...",htmlContent)
+    const newWindow = window.open();
+    newWindow.document.open();
+    newWindow.document.write(htmlContent);
+    newWindow.document.close();
+  };
 
   return (
     <div style={{ paddingTop: "0px", paddingBottom: "80px" }}>
@@ -202,25 +208,14 @@ console.log("...response.dataurl...",response.data.paymentUrl)
           }}
         >
           <Box>
-            {/* <IconButton edge="start" color="inherit" aria-label="facebook">
-              <Facebook />
-            </IconButton>
-            <IconButton edge="start" color="inherit" aria-label="instagram">
-              <Instagram />
-            </IconButton>
-            <IconButton edge="start" color="inherit" aria-label="twitter">
-              <Twitter />
-            </IconButton> */}
+            {/* Social media icons or other content can be added here */}
           </Box>
           <Typography variant="body1" color="white">
             &copy; 2024 <span style={{ color: "#FFBF00" }}>SoulMatch</span> All
             rights reserved.
           </Typography>
           <Box style={{ display: "flex", alignItems: "center" }}>
-            {/* <Email style={{ marginRight: "10px" }} />
-            <Typography variant="body1" color="white">
-              abc@gmail.com
-            </Typography> */}
+            {/* Email or other contact info can be added here */}
           </Box>
         </Toolbar>
       </AppBar>
