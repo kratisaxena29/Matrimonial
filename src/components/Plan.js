@@ -42,7 +42,8 @@ function Plan() {
         },
         withCredentials: true // Ensure cookies are sent if needed
       });
-
+console.log("...response.data...",response.data)
+console.log("...response.data...",response.data.paymentUrl)
       if (response.data && response.data.paymentUrl) {
         // Redirect user to the payment URL
         window.location.href = response.data.paymentUrl;
