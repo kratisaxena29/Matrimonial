@@ -12,7 +12,7 @@ import {
 import { CheckCircle, Cancel } from "@mui/icons-material";
 import logo from "../images/logo.png";
 import "../css/plan.css";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Plan() {
@@ -40,16 +40,17 @@ function Plan() {
 
       // Log the response for debugging
       console.log("Response:", response);
-      handleApiResponse(response.data);
+      // handleApiResponse(response.data);
       // Check if response contains HTML content
-      // if (response.data && response.data.includes('<html>')) {
-      //   handleApiResponse(response.data);
-      // } else if (response.data && response.data.paymentUrl) {
-      //   // Redirect user to the payment URL
-      //   window.location.href = response.data.paymentUrl;
-      // } else {
-      //   console.error("Invalid payment response:", response.data);
-      // }
+ 
+     if (response.data) {
+             const convertingUrl =   JSON.stringify(response.data)
+             console.log("...convertingUrl...",convertingUrl)
+        // Redirect user to the payment URL
+        // window.location.href = response.data.paymentUrl;
+      } else {
+        console.error("Invalid payment response:", response.data);
+      }
     } catch (error) {
       console.error("Error during payment initiation:", error);
       // Handle error (display a message to the user, etc.)
