@@ -40,14 +40,11 @@ function Plan() {
 
       // Log the response for debugging
       console.log("Response:", response);
-      // handleApiResponse(response.data);
-      // Check if response contains HTML content
+     
  
      if (response.data) {
-             const convertingUrl =   JSON.stringify(response.data)
-             console.log("...convertingUrl...",convertingUrl)
-        // Redirect user to the payment URL
-        // window.location.href = response.data.paymentUrl;
+            
+        window.location.href = response.data.url;
       } else {
         console.error("Invalid payment response:", response.data);
       }
@@ -57,13 +54,7 @@ function Plan() {
     }
   };
 
-  const handleApiResponse = (htmlContent) => {
-    console.log("...html...cintent...",htmlContent)
-    const newWindow = window.open();
-    newWindow.document.open();
-    newWindow.document.write(htmlContent);
-    newWindow.document.close();
-  };
+ 
 
   return (
     <div style={{ paddingTop: "0px", paddingBottom: "80px" }}>
