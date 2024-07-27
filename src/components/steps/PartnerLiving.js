@@ -166,7 +166,7 @@ function PartnerLiving() {
         console.log("Response:", response);
   
         // Navigate to the next page with the updated state
-        navigate('/login', {
+        navigate('/Confirmation-Profile', {
           state: {
             ...location.state,
           }
