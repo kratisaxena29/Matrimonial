@@ -51,10 +51,10 @@ function ConfirmationProfile() {
         Thank you!
       </Typography>
       <Typography variant="h6" style={textStyle}>
-        Your Profile has been Created please login  !
+        Your Profile has been Created please login !
       </Typography>
       <Button
-      onClick={handleContinue}
+        onClick={handleContinue}
         type="submit"
         variant="contained"
         sx={{
@@ -63,9 +63,12 @@ function ConfirmationProfile() {
           height: 50,
           textTransform: "inherit",
           fontSize: "18px",
-          backgroundColor:"#FB6A6B",
+          backgroundColor: "#FB6A6B",
+          "&:hover": {
+            backgroundColor: "#FB6A6B",
+          },
         }}
-        endIcon={<ArrowForwardIosRoundedIcon sx={{color:"#FFF"}} />}
+        endIcon={<ArrowForwardIosRoundedIcon sx={{ color: "#FFF" }} />}
       >
         Login
       </Button>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import logo from "../images/logo.png";
 import noProfile from "../images/profiles/noProfile.jpg";
 import { useNavigate } from 'react-router-dom';
-import { MenuItem, Select, InputLabel, FormControl } from "@mui/material";
+import { MenuItem, Select, InputLabel, FormControl, Button } from "@mui/material";
 import axios from 'axios';
 
 function Profiles({ setlogedIn }) {
@@ -522,7 +522,9 @@ function Profiles({ setlogedIn }) {
     sessionStorage.setItem("logedIn", "false");
     navigate('/');
   };
-
+  const handlePlans= () => {
+    navigate('/plan');
+  };
   useEffect(() => {
     console.log("..interestedProfiles after update..", interestedProfiles);
   }, [interestedProfiles]);
@@ -538,49 +540,82 @@ function Profiles({ setlogedIn }) {
           justifyContent: "space-between",
         }}
       >
-        <img
-          src={logo}
-          alt="Logo"
-          style={{ height: "60px", marginRight: "40px" }}
-        />
-        <input
-          type="file"
-          id="fileInput"
-          style={{ display: "none" }}
-          onChange={uploadImage}
-        />
-        <div
-          onClick={triggerFileInput}
-          style={{
-            height: "50px",
-            width: "50px",
-            borderRadius: "50%",
-            backgroundColor: "#FF0000",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#FFFFFF",
-            fontWeight: "bold",
-            fontSize: "20px",
-            cursor: "pointer",
-          }}
-        >
-          {photoUrl ? (
-            <img
-              src={photoUrl}
-              alt="Uploaded Profile"
-              style={{ height: "100%", width: "100%", borderRadius: "50%" }}
-            />
-          ) : (
-            <img
-            src= {noProfile}
-            alt="Uploaded Profile"
-            style={{ height: "100%", width: "100%", borderRadius: "50%" }}
+        <img src={logo} alt="Logo" style={{ height: "60px" }} />
+        <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "transparent",
+              color: "white",
+              border:"2px solid",
+              borderColor:"#F68C1E",
+              "&:hover": {
+                backgroundColor: "#E57D0F",
+              },
+              textTransform: "none",
+              fontWeight: "bold",
+            }}
+            onClick={() => {
+              handlePlans();
+            }}
+          >
+            Plans
+          </Button>
+          <input
+            type="file"
+            id="fileInput"
+            style={{ display: "none" }}
+            onChange={uploadImage}
           />
-          )}
-        </div>
-        <div>
-          <button onClick={handleLogout}>Logout</button>
+          <div
+            onClick={triggerFileInput}
+            style={{
+              height: "50px",
+              width: "50px",
+              borderRadius: "50%",
+              backgroundColor: "#FFFFFF",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              overflow: "hidden",
+              boxShadow: "0 0 10px rgba(0,0,0,0.2)",
+              transition: "transform 0.3s ease",
+            }}
+            onMouseOver={(e) =>
+              (e.currentTarget.style.transform = "scale(1.1)")
+            }
+            onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+          >
+            {photoUrl ? (
+              <img
+                src={photoUrl}
+                alt="Uploaded Profile"
+                style={{ height: "100%", width: "100%", objectFit: "cover" }}
+              />
+            ) : (
+              <img
+                src={noProfile}
+                alt="Default Profile"
+                style={{ height: "100%", width: "100%", objectFit: "cover" }}
+              />
+            )}
+          </div>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#F68C1E",
+              color: "white",
+              "&:hover": {
+                backgroundColor: "red",
+              },
+              textTransform: "none",
+              fontWeight: "bold",
+            }}
+            onClick={handleLogout}
+          >
+            Logout
+          </Button>
         </div>
       </nav>
       <div>
@@ -619,7 +654,8 @@ function Profiles({ setlogedIn }) {
                       Select Religion
                     </h4>
                     <div className="form-group">
-                      <select className="chosen-select" 
+                      <select
+                        className="chosen-select"
                         value={religion}
                         onChange={(event) => setReligion(event.target.value)}
                       >
@@ -633,51 +669,46 @@ function Profiles({ setlogedIn }) {
                     </div>
                   </div>
                   <div className="filt-com lhs-cate">
-                    <h4>
-                      <i className="fa fa-users" aria-hidden="true" />
-                      Select Caste
-                    </h4>
-                    <div className="form-group">
-                      <FormControl fullWidth>
-                        <InputLabel id="caste-label">Select Caste</InputLabel>
-                        <Select
-                          labelId="caste-label"
-                          id="caste-select"
-                          value={caste}
-                          onChange={(event) => setCaste(event.target.value)}
-                          label="Select Caste"
-                        >
-                          {casteOptions.map(option => (
-                            <MenuItem key={option} value={option}>{option}</MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                    </div>
-                  </div>
+  <h4>
+    <i className="fa fa-users" aria-hidden="true" />
+    Select Caste
+  </h4>
+  <div className="form-group">
+    <select
+      className="chosen-select"
+      value={caste}
+      onChange={(event) => setCaste(event.target.value)}
+    >
+      <option value="">Select Caste</option>
+      {casteOptions.map((option) => (
+        <option key={option} value={option}>
+          {option}
+        </option>
+      ))}
+    </select>
+  </div>
+</div>
 
-
-                  <div className="filt-com lhs-cate">
-                    <h4>
-                      <i className="fa fa-users" aria-hidden="true" />
-                      Select Sub Caste
-                    </h4>
-                    <div className="form-group">
-                      <FormControl fullWidth>
-                        <InputLabel id="caste-label">Select Sub Caste</InputLabel>
-                        <Select
-                          labelId="caste-label"
-                          id="caste-select"
-                          value={subcaste}
-                          onChange={(event) => setSubCaste(event.target.value)}
-                          label="Select Caste"
-                        >
-                         {subCasteOptions.map(option => (
-                      <MenuItem key={option} value={option}>{option}</MenuItem>
-                    ))}
-                        </Select>
-                      </FormControl>
-                    </div>
-                  </div>
+<div className="filt-com lhs-cate">
+  <h4>
+    <i className="fa fa-users" aria-hidden="true" />
+    Select Sub Caste
+  </h4>
+  <div className="form-group">
+    <select
+      className="chosen-select"
+      value={subcaste}
+      onChange={(event) => setSubCaste(event.target.value)}
+    >
+      {/* <option value="">Select Sub Caste</option> */}
+      {subCasteOptions.map((option) => (
+        <option key={option} value={option}>
+          {option}
+        </option>
+      ))}
+    </select>
+  </div>
+</div>
                 </div>
                 <div className="col-md-9">
                   <div className="short-all">
@@ -695,7 +726,11 @@ function Profiles({ setlogedIn }) {
                             data-aviltxt="Available online"
                           >
                             <div className="pro-img">
-                              <a onClick={() => handleProfileDetails(profile._id)}>
+                              <a
+                                onClick={() =>
+                                  handleProfileDetails(profile._id)
+                                }
+                              >
                                 <img
                                   src={profile.fileUpload || noProfile}
                                   alt=""
@@ -710,7 +745,11 @@ function Profiles({ setlogedIn }) {
                             </div>
                             <div className="pro-detail">
                               <h4>
-                                <a onClick={() => handleProfileDetails(profile._id)}>
+                                <a
+                                  onClick={() =>
+                                    handleProfileDetails(profile._id)
+                                  }
+                                >
                                   {profile.name}
                                 </a>
                               </h4>
@@ -747,7 +786,7 @@ function Profiles({ setlogedIn }) {
                       ))}
                     </ul>
                   </div>
-                 {/* <div className="mor-prof">
+                  {/* <div className="mor-prof">
                     <button className="mor-but">Load more profiles</button>
                   </div>*/}
                 </div>
@@ -756,6 +795,51 @@ function Profiles({ setlogedIn }) {
           </div>
         </section>
       </div>
+      <section>
+        <div className="cr">
+          <div className="container">
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-evenly",
+                alignItems: "center",
+                padding: "20px 0",
+              }}
+            >
+              <p>
+                <strong style={{ color: "#FFBF0E" }}>Email:</strong>{" "}
+                abc@gmail.com
+              </p>
+              <p style={{ width: "200rem", textAlign: "center" }}>
+                Copyright © <span id="cry">2024</span>{" "}
+                <a
+                  style={{ textDecoration: "none", color: "#FFBF00" }}
+                  href="#!"
+                  target="_blank"
+                >
+                  SoulMatch
+                </a>{" "}
+                {/* All rights reserved. |{" "} */}
+                {/* <a
+                  style={{
+                    cursor: "pointer",
+                    color: "#FFBF00",
+                    textDecoration: "none",
+                  }}
+                  onClick={() => navigate("/terms&conditions")}
+                >
+                  Terms and Conditions
+                </a> */}
+              </p>
+              <p>
+                <strong style={{ color: "#FFBF0E" }}>Support:</strong> 94490
+                65433
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

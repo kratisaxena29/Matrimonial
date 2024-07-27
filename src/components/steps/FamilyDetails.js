@@ -316,7 +316,7 @@ function FamilyDetails() {
                 Family Details
               </Typography>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px", marginTop: "40px" }}>
-                <FormControl variant="standard" sx={{ minWidth: 425 }}>
+                <FormControl variant="standard" sx={{ minWidth: 380 }}>
                   <InputLabel id="demo-simple-select-standard-label">Family Type</InputLabel>
                   <Select
                     labelId="demo-simple-select-standard-label"
@@ -402,18 +402,18 @@ function FamilyDetails() {
                   {errors.motherProf && <Typography variant="caption" color="error">{errors.motherProf}</Typography>}
                 </FormControl>
               </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "40px", marginBottom: "40px" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "start",marginLeft:"160px", gap: "40px", marginBottom: "40px" }}>
                 <TextField
-                  label="Brother"
+                  label="Number of Brothers"
                   variant="standard"
                   type="number"
                   onChange={handleBrotherChange}
                 />
               </div>
               {renderBrotherFields()}
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "40px", marginBottom: "40px" }}>
+              <div style={{ display: "flex", alignItems: "center",  justifyContent: "start",marginLeft:"160px",  gap: "40px", marginBottom: "40px" }}>
                 <TextField
-                  label="Sister"
+                  label="Number of Sisters"
                   variant="standard"
                   type="number"
                   onChange={handleSisterChange}
@@ -449,7 +449,10 @@ function FamilyDetails() {
                     height: 40,
                     textTransform: "inherit",
                     fontSize: "18px",
-                    backgroundColor: "#FB6A6B"
+                    backgroundColor: "#FB6A6B",
+                    "&:hover": {
+                      backgroundColor: "#FB6A6B",
+                    },
                   }}
                 >
                   Next
