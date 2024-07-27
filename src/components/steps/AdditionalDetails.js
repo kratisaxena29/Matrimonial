@@ -116,8 +116,8 @@ function AdditionalDetails() {
   ]
   const weightOptions = ["< 50 kg", "50 - 60 kg", "60 - 70 kg", " 70 - 80kg", "<80kg"]; // Add more options as needed
   const casteOptions = [
-    "Aggarwal", "Kanyakubj Brahmin", "Gaur Brahmin", "Brahmin" , "Jat" , "Kayastha" , "Khatri" ,
-     "Kshatriya" , "Maratha" , "Rajput" , "Sindhi" , "Sunni" , 
+    "Aggarwal", "Kanyakubj Brahmin", "Gaur Brahmin", "Brahmin" , "Jat" ,"Jain","Maheshwari" ,"Kayastha" , "Khatri" ,
+     "Kshatriya" , "Maratha" , "Rajput" , "Sindhi" , "Sunni" , "Oberoi",
      "Arora" , "Shwetamber" , "Yadav" , "Bania" , "Scheduled Caste" , "Digamber"  , "Sikh Jat" , "Gupta", "Tei" , "Vaishnav" ,"Kurmi kshatriya" ];
   const subCasteOptions = [
     "Arora",
