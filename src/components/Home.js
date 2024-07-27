@@ -149,10 +149,10 @@ function Home() {
   return (
     <div className="body">
       <ToastContainer />
-      <div className="hom-top">
-        <div className="container">
+      <div className="hom-top" style={{width:"100rem"}}>
+        <div className="container" >
           <div className="row">
-            <div className="hom-nav">
+            <div className="hom-nav" >
               <div className="logo">
                 <a
                   style={{ cursor: "pointer" }}
@@ -164,6 +164,13 @@ function Home() {
               </div>
               <div className="bl">
                 <ul>
+                  <p style={{marginTop:10, paddingRight:"-30px"}}>
+                    <strong style={{ color: "#FFBF0E" }}>Support:</strong>{" "}
+                    <span style={{ color: "white" }}>94490 65433</span>
+                  </p>
+                </ul>
+                {/* <div className="bl"> */}
+                <ul>
                   <button
                     onClick={() => navigate("/login")}
                     className="custom-button"
@@ -171,7 +178,15 @@ function Home() {
                     Login
                   </button>
                 </ul>
+                {/* </div> */}
               </div>
+              {/* <div className="bl">
+                <ul>
+                <p>
+          <strong style={{color:"#FFBF0E"}}>Support:</strong> 94490 65433
+        </p>
+                </ul>
+              </div> */}
             </div>
           </div>
         </div>
@@ -406,34 +421,78 @@ function Home() {
         </div>
       </section>
       <section className="about-us-section">
-  <div className="container">
-    <div className="row align-items-center">
-      <div className="col-md-6">
-        <img
-          src={aboutUsImage}
-          alt="Happy couple"
-          className="about-us-image img-fluid rounded shadow"
-        />
-      </div>
-      <div className="col-md-6 about-us-content">
-        <h2 className="about-us-title">About Us</h2>
-        <h3 className="about-us-subtitle">
-          "Bringing Together Two Souls"
-        </h3>
-        <p className="about-us-text">
-          Soulmatch believes in building a bridge between prospective
-          Brides and Grooms. If you are seeking a forever relationship
-          through a sacred matrimonial alliance, we provide you with one
-          of the best platforms to meet your soulmate.
-        </p>
-        <a href="#" className="btn btn-primary learn-more-btn">
-          Join Us Today
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
+        <div className="container">
+          <div className="row align-items-center">
+            <div className="col-md-6">
+              <img
+                src={aboutUsImage}
+                alt="Happy couple"
+                className="about-us-image img-fluid rounded shadow"
+              />
+            </div>
+            <div className="col-md-6 about-us-content">
+              <h2 className="about-us-title">About Us</h2>
+              <h3 className="about-us-subtitle">
+                "Bringing Together Two Souls"
+              </h3>
+              <p className="about-us-text">
+                Soulmatch believes in building a bridge between prospective
+                Brides and Grooms. If you are seeking a forever relationship
+                through a sacred matrimonial alliance, we provide you with one
+                of the best platforms to meet your soulmate.
+              </p>
+              <a href="#" className="learn-more-btn">
+                Join Us Today
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div className="cr">
+          <div className="container">
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-evenly",
+                alignItems: "center",
+                padding: "20px 0",
+              }}
+            >
+              <p>
+                <strong style={{ color: "#FFBF0E" }}>Email:</strong>{" "}
+                abc@gmail.com
+              </p>
+              <p style={{ width: "200rem", textAlign: "center" }}>
+                Copyright © <span id="cry">2024</span>{" "}
+                <a
+                  style={{ textDecoration: "none", color: "#FFBF00" }}
+                  href="#!"
+                  target="_blank"
+                >
+                  SoulMatch
+                </a>{" "}
+                All rights reserved. |{" "}
+                <a
+                  style={{
+                    cursor: "pointer",
+                    color: "#FFBF00",
+                    textDecoration: "none",
+                  }}
+                  onClick={() => navigate("/terms&conditions")}
+                >
+                  Terms and Conditions
+                </a>
+              </p>
+              <p>
+                <strong style={{ color: "#FFBF0E" }}>Support:</strong> 94490
+                65433
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
