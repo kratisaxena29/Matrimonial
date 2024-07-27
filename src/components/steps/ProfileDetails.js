@@ -105,7 +105,7 @@ function ProfileDetails() {
         else delete newErrors.address;
         break;
       case "hobbies":
-        if (!value || value.length<3) newErrors.hobbies = "Hobbies is required";
+        if (!value || value.length<3) newErrors.hobbies = "Hobbies  should be min 3";
         else delete newErrors.hobbies;
         break;
       default:
@@ -418,7 +418,7 @@ else if (location.state.phoneno){
                   {errors.religion && <FormHelperText>{errors.religion}</FormHelperText>}
                 </FormControl>
                 <FormControl variant="standard" sx={{ minWidth: 200 }} error={!!errors.disability}>
-                  <InputLabel id="disability-label">Disability</InputLabel>
+                  <InputLabel id="disability-label">Differently-Abled</InputLabel>
                   <Select
                     labelId="disability-label"
                     value={disability}
@@ -437,7 +437,7 @@ else if (location.state.phoneno){
               {disability === "Yes" && (
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "40px" }}>
                   <TextField
-                    label="Disability Details"
+                    label="Differently-Abled Details"
                     variant="standard"
                     value={disabilityDetails}
                     onChange={handleChange(setDisabilityDetails, "disabilityDetails")}

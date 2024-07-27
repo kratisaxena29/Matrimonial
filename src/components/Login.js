@@ -38,6 +38,7 @@ const Login = ({ setlogedIn }) => {
     console.log(formData);
     
     const isEmail = /\S+@\S+\.\S+/.test(formData.emailOrPhone);
+    console.log("..isEmail...",isEmail)
     const requestData = {
       password: formData.password,
       ...(isEmail ? { email: formData.emailOrPhone } : { phoneno: formData.emailOrPhone }),
@@ -66,6 +67,7 @@ const Login = ({ setlogedIn }) => {
     } catch (error) {
       console.error("Error while making API call:", error.response);
       toast.error(error.response.data.Error);
+      console.log("...error...",error.response.data.Error)
       console.log("...status code ...", error.response.data.ErrorCode);
   
       if (error.response.data.ErrorCode === 400) {
@@ -76,7 +78,7 @@ const Login = ({ setlogedIn }) => {
             state: isEmail ? { email: formData.emailOrPhone } : { phoneno: formData.emailOrPhone },
           },
         });
-      } else if (error.response.data.ErrorCode === 406) {
+      } else if (error.response.data.Error === "Profile not verified") {
         console.log("In 406 console..profile");
         toast.warning("Please complete your profile");
         const email = isEmail ? formData.emailOrPhone : null;

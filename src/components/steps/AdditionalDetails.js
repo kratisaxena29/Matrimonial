@@ -115,7 +115,10 @@ function AdditionalDetails() {
    
   ]
   const weightOptions = ["< 50 kg", "50 - 60 kg", "60 - 70 kg", " 70 - 80kg", "<80kg"]; // Add more options as needed
-  const casteOptions = ["Bihari", "Bengali", "Hindi Delhi", "Hindi" , "Gujarati" , "Kannada" , "Malayalam" , "Marathi" , "Oriya" , "Punjabi" , "Rajasthan" , "Tamil" , "Telugu" , "Hindi UP" , "Hindi MP" , "KonKani" , "Himachali" , "Haryanvi"  , "Assamese" , "Kashmiri", "Sikkim Nepali" , "Tulu" ];
+  const casteOptions = [
+    "Aggarwal", "Kanyakubj Brahmin", "Gaur Brahmin", "Brahmin" , "Jat" , "Kayastha" , "Khatri" ,
+     "Kshatriya" , "Maratha" , "Rajput" , "Sindhi" , "Sunni" , 
+     "Arora" , "Shwetamber" , "Yadav" , "Bania" , "Scheduled Caste" , "Digamber"  , "Sikh Jat" , "Gupta", "Tei" , "Vaishnav" ,"Kurmi kshatriya" ];
   const subCasteOptions = [
     "Arora",
 "Baniya",
