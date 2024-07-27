@@ -13,14 +13,10 @@ import {
   Typography,
   AppBar,
   Toolbar,
-  IconButton,
-  InputBase,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
-import { io } from 'socket.io-client'
+import { io } from 'socket.io-client';
 import { useNavigate } from "react-router-dom";
 
 const ChatApp = ({ setlogedIn }) => {
@@ -34,7 +30,7 @@ const ChatApp = ({ setlogedIn }) => {
 
   const user = JSON.parse(sessionStorage.getItem('user'));
   const navigate = useNavigate();
-  const loggedInUser = user.id;
+  const loggedInUser = user ? user.id : null;  // Ensure user is defined
 
   const URL = process.env.REACT_APP_API_BASE_URL;
 
@@ -64,6 +60,7 @@ const ChatApp = ({ setlogedIn }) => {
 
     const conversationId = message?.conversationId || "new";
 
+    // Emit message to the socket
     socket?.emit('handleSendMessage', {
       conversationId: conversationId === "new" ? "new" : conversationId,
       senderId: loggedInUser,
@@ -72,13 +69,15 @@ const ChatApp = ({ setlogedIn }) => {
     });
 
     try {
-      const response = await axios.post(`${URL}/message`, {
+      // Send message to the server
+      await axios.post(`${URL}/message`, {
         conversationId: conversationId === "new" ? "new" : conversationId,
         senderId: loggedInUser,
         message: newMessage,
         receiverId: message?.receiver?.receiverId,
       });
 
+      // Update the local chat state
       const newMessageData = {
         user: { fullName: "You", id: loggedInUser },
         message: newMessage,
@@ -127,7 +126,11 @@ const ChatApp = ({ setlogedIn }) => {
         },
       });
       const resData = await res.json();
-      setMessages({ messages: resData, receiver: { receiverId: conversationId?.user?.receiverId, fullName: conversationId?.user?.fullName }, conversationId: conversationId.conversationId });
+      setMessages({
+        messages: resData,
+        receiver: { receiverId: conversationId?.user?.receiverId, fullName: conversationId?.user?.fullName },
+        conversationId: conversationId.conversationId
+      });
     } catch (error) {
       console.error("Error fetching messages:", error);
     }
@@ -155,12 +158,11 @@ const ChatApp = ({ setlogedIn }) => {
     const fetchProfiles = async () => {
       try {
         let apiUrl = `${URL}/getallProfileById?`;
-    if (user.email) {
-      apiUrl += `email=${user.email}`;
-    } else if (user.phoneno) {
-      console.log("...user.phoneno...",user.phoneno)
-      apiUrl += `phoneno=${user.phoneno}`;
-    }
+        if (user.email) {
+          apiUrl += `email=${user.email}`;
+        } else if (user.phoneno) {
+          apiUrl += `phoneno=${user.phoneno}`;
+        }
         const response = await axios.get(apiUrl);
         const profiles = response.data.response.allProfilesDetails;
         const formattedChats = profiles.map((profile) => ({
@@ -180,25 +182,51 @@ const ChatApp = ({ setlogedIn }) => {
     fetchProfiles();
   }, [conversations, user.email]);
 
-  useEffect(() => {
-    const newSocket = io('http://13.200.211.15:3001');
-    setSocket(newSocket);
-    return () => newSocket.close();
-  }, []);
 
   useEffect(() => {
-    socket?.emit('addUser', loggedInUser);
-    socket?.on('getUsers', users => {
+    const newSocket = io('http://13.200.211.15:3001/')
+    // const newSocket = io('http://127.0.0.1:3001'); // Ensure this URL is correct
+    setSocket(newSocket);
+  
+    newSocket.on('connect', () => {
+      console.log('Connected to socket server');
+      newSocket.emit('addUser', loggedInUser);
+    });
+  
+    newSocket.on('disconnect', () => {
+      console.log('Disconnected from socket server');
+    });
+  
+    newSocket.on('getUsers', (users) => {
       console.log('activeUsers-->', users);
     });
-    socket?.on('getMessage', data => {
-      console.log('data...', data);
-      setMessages(prev => ({
-        ...prev,
-        messages: [...prev.messages, { user: data.sender, message: data.message }],
-      }));
+  
+    newSocket.on('getMessage', (data) => {
+      console.log('Received message:', data);
+  
+      setMessages((prev) => {
+        // Check if the message already exists
+        const messageExists = prev.messages.some(
+          (msg) => msg.message === data.message && msg.user.id === data.sender?.id
+        );
+        if (messageExists) {
+          console.log('Duplicate message detected, not adding');
+          return prev; // Prevent adding duplicate messages
+        }
+  
+        console.log('Adding new message');
+        return {
+          ...prev,
+          messages: [...prev.messages, { user: data.sender || { fullName: "Unknown", id: null }, message: data.message }],
+        };
+      });
     });
-  }, [socket, loggedInUser]);
+  
+    return () => {
+      newSocket.close();
+    };
+  }, [loggedInUser]);
+  
 
   return (
     <Box
@@ -232,34 +260,14 @@ const ChatApp = ({ setlogedIn }) => {
               Chats
             </Typography>
           </Box>
-          {/* <Box
-            sx={{
-              padding: 1,
-              margin: 1,
-              display: "flex",
-              alignItems: "center",
-              backgroundColor: "#F7E7CE",
-              borderBottom: "1px solid #e0e0e0",
-              borderRadius: 2,
-              position: "sticky",
-              top: 0,
-              zIndex: 1,
-            }}
-          >
-            <SearchIcon sx={{ color: "#8B0000" }} />
-            <InputBase
-              placeholder="Search or start a new chat"
-              sx={{ marginLeft: 1, flex: 1, color: "#8B0000" }}
-            />
-          </Box> */}
           <Divider />
           <Box sx={{ flexGrow: 1, overflowY: "auto" }}>
             <List component="nav" sx={{ paddingTop: 0 }}>
-              {conversations.map((conversationId, user) => (
+              {conversations.map((conversationId, index) => (
                 <React.Fragment key={conversationId.conversationId}>
                   <ListItem
                     button
-                    onClick={() => fetchMessages(conversationId, user)}
+                    onClick={() => fetchMessages(conversationId, conversationId.user)}
                   >
                     <Avatar
                       sx={{
@@ -268,10 +276,9 @@ const ChatApp = ({ setlogedIn }) => {
                       }}
                     >
                       {/* send Image here */}
-                      {/* {conversationId?.user?.email} */}
                     </Avatar>
                     <ListItemText
-                      primary={conversationId?.user?.fullName}
+                      primary={conversationId?.user?.fullName || "Unknown"}
                       sx={{ marginLeft: 2, color: "#8B0000" }}
                     />
                   </ListItem>
@@ -307,17 +314,21 @@ const ChatApp = ({ setlogedIn }) => {
                 sx={{
                   marginRight: 2,
                   backgroundColor: "#8B0000",
-                  color: "#FFF",
+                  color: "#fff",
                 }}
               >
-                {/* Display the user's initial or any relevant content */}
+                {/* receiver image here */}
               </Avatar>
               <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                {message?.receiver?.fullName || "No conversation selected"}
+                {message?.receiver?.fullName || "Chat"}
               </Typography>
-              {/* <IconButton edge="end" color="inherit" aria-label="menu">
-                <MoreVertIcon />
-              </IconButton> */}
+              <Button
+                color="inherit"
+                onClick={handleLogout}
+                sx={{ color: "#76001C" }}
+              >
+                Logout
+              </Button>
             </Toolbar>
           </AppBar>
           <Box
@@ -325,37 +336,40 @@ const ChatApp = ({ setlogedIn }) => {
               flexGrow: 1,
               overflowY: "auto",
               padding: 2,
-              backgroundColor: "#f1f1f1",
+              backgroundColor: "#f8f9fa",
             }}
           >
             <List>
               {message?.messages?.length > 0 ? (
-                message?.messages.map(({ message, user: { fullName, id } }, index) => (
-                  <ListItem
-                    key={index}
-                    sx={{
-                      justifyContent: id === loggedInUser ? 'flex-end' : 'flex-start',
-                    }}
-                  >
-                    <Box
+                message?.messages.map(({ message, user }, index) => {
+                  const userFullName = user?.fullName || "Unknown";
+                  return (
+                    <ListItem
+                      key={index}
                       sx={{
-                        backgroundColor: id === loggedInUser ? '#FFDAB9' : '#ffffff',
-                        borderRadius: 2,
-                        padding: 1,
-                        maxWidth: "60%",
-                        boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.1)",
+                        justifyContent: user?.id === loggedInUser ? 'flex-end' : 'flex-start',
                       }}
                     >
-                      <ListItemText
-                        primary={message}
-                        secondary={fullName}
+                      <Box
                         sx={{
-                          textAlign: id === loggedInUser ? 'right' : 'left',
+                          backgroundColor: user?.id === loggedInUser ? '#FFDAB9' : '#ffffff',
+                          borderRadius: 2,
+                          padding: 1,
+                          maxWidth: "60%",
+                          boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.1)",
                         }}
-                      />
-                    </Box>
-                  </ListItem>
-                ))
+                      >
+                        <ListItemText
+                          primary={message}
+                          secondary={userFullName}
+                          sx={{
+                            textAlign: user?.id === loggedInUser ? 'right' : 'left',
+                          }}
+                        />
+                      </Box>
+                    </ListItem>
+                  );
+                })
               ) : (
                 <Typography variant="body2" color="textSecondary" align="center">
                   No messages to display
@@ -365,40 +379,30 @@ const ChatApp = ({ setlogedIn }) => {
           </Box>
           <Box
             sx={{
+              borderTop: "1px solid #e0e0e0",
+              backgroundColor: "#fff",
+              padding: 1,
               display: "flex",
               alignItems: "center",
-              padding: 1,
-              borderTop: "1px solid #e0e0e0",
-              backgroundColor: "#FFF5F5",
-              position: "sticky",
-              bottom: 0,
-              zIndex: 1,
             }}
           >
             <TextField
               fullWidth
               variant="outlined"
-              placeholder="Type a message here..."
+              size="small"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  handleSendMessage();
-                  e.preventDefault();
-                }
-              }}
+              placeholder="Type a message"
               sx={{ marginRight: 1 }}
             />
-            {message?.receiver?.fullName && (
-              <Button
-                variant="contained"
-                sx={{ backgroundColor: "#8B0000", color: "#FFF" }}
-                onClick={handleSendMessage}
-                endIcon={<SendIcon sx={{ color: "#FFF" }} />}
-              >
-                Send
-              </Button>
-            )}
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSendMessage}
+              endIcon={<SendIcon />}
+            >
+              Send
+            </Button>
           </Box>
         </Grid>
         <Grid
@@ -407,8 +411,6 @@ const ChatApp = ({ setlogedIn }) => {
           sx={{
             borderLeft: "1px solid #e0e0e0",
             backgroundColor: "#f8f9fa",
-            display: "flex",
-            flexDirection: "column",
             height: "100vh",
           }}
         >
@@ -419,55 +421,32 @@ const ChatApp = ({ setlogedIn }) => {
               zIndex: 1,
             }}
           >
-            <button onClick={handleLogout}>LogOut</button>
             <Typography variant="h6" sx={{ color: "#8B0000" }}>
               People
             </Typography>
           </Box>
-          {/* <Box
-            sx={{
-              padding: 1,
-              margin: 1,
-              display: "flex",
-              alignItems: "center",
-              backgroundColor: "#F7E7CE",
-              borderBottom: "1px solid #e0e0e0",
-              borderRadius: 2,
-              position: "sticky",
-              top: 0,
-              zIndex: 1,
-            }}
-          >
-            <SearchIcon sx={{ color: "#8B0000" }} />
-            <InputBase
-              placeholder="Search people"
-              sx={{ marginLeft: 1, flex: 1, color: "#8B0000" }}
-            />
-          </Box> */}
           <Divider />
-          <Box sx={{ flexGrow: 1, overflowY: "auto" }}>
+          <Box sx={{ overflowY: "auto" }}>
             <List component="nav" sx={{ paddingTop: 0 }}>
-              {people.map((person, index) => (
-                <React.Fragment key={index}>
-                  <ListItem
-                    button
-                    onClick={() => handleSelectPerson(person)}
+              {people.map((person) => (
+                <ListItem
+                  button
+                  key={person._id}
+                  onClick={() => handleSelectPerson(person)}
+                >
+                  <Avatar
+                    sx={{
+                      backgroundColor: "#FFC0CB",
+                      color: "#8B0000",
+                    }}
                   >
-                    <Avatar
-                      sx={{
-                        backgroundColor: "#FFC0CB",
-                        color: "#8B0000",
-                      }}
-                    >
-                      {person.name.charAt(0)}
-                    </Avatar>
-                    <ListItemText
-                      primary={person.name}
-                      sx={{ marginLeft: 2, color: "#8B0000" }}
-                    />
-                  </ListItem>
-                  <Divider />
-                </React.Fragment>
+                    {/* Profile image here */}
+                  </Avatar>
+                  <ListItemText
+                    primary={person.name}
+                    sx={{ marginLeft: 2, color: "#8B0000" }}
+                  />
+                </ListItem>
               ))}
             </List>
           </Box>
