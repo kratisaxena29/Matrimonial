@@ -38,6 +38,10 @@ function PersonDetails({ setlogedIn }) {
     }
   }, [profileId]);
 
+  const handleShowPhoneNumber = () => {
+    navigate('/plan');
+  };
+
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <nav
@@ -120,7 +124,12 @@ function PersonDetails({ setlogedIn }) {
                       <li>
                         <span>
                           <i className="fa fa-mobile" aria-hidden="true" />
-                          <b>Phone:</b> {profileData?.phoneNo || "Not Available"}
+                          <b>Phone:</b>
+                          {profileData?.phoneNo ? (
+                            <button onClick={handleShowPhoneNumber}>Show Phone Number</button>
+                          ) : (
+                            " Not Available"
+                          )}
                         </span>
                       </li>
                       <li>

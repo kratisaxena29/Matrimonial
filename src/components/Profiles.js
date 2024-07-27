@@ -16,7 +16,13 @@ function Profiles({ setlogedIn }) {
   const [subcaste,setSubCaste ] = useState("")
   const navigate = useNavigate();
  
-  const casteOptions = ["Select Caste","Bihari", "Bengali", "Hindi Delhi", "Hindi" , "Gujarati" , "Kannada" , "Malayalam" , "Marathi" , "Oriya" , "Punjabi" , "Rajasthan" , "Tamil" , "Telugu" , "Hindi UP" , "Hindi MP" , "KonKani" , "Himachali" , "Haryanvi"  , "Assamese" , "Kashmiri", "Sikkim Nepali" , "Tulu" ];
+  const casteOptions = [
+    "Aggarwal", "Kanyakubj Brahmin", "Gaur Brahmin", "Brahmin" , 
+    "Jat" ,"Jain","Maheshwari" ,"Kayastha" , "Khatri" ,
+     "Kshatriya" , "Maratha" , "Rajput" , "Sindhi" , "Sunni" , "Oberoi",
+     "Arora" , "Shwetamber" , "Yadav" , "Bania" , "Scheduled Caste" , 
+     "Digamber"  , "Sikh Jat" , "Gupta",
+      "Tei" , "Vaishnav" ,"Kurmi kshatriya", "Other" ];
 
   const subCasteOptions = [
     "Select Sub Caste",
@@ -731,10 +737,10 @@ function Profiles({ setlogedIn }) {
                               data-toggle="tooltip"
                               title="Click to save this profile."
                             >
-                              <i
+                              {/* <i
                                 className="fa fa-thumbs-o-up"
                                 aria-hidden="true"
-                              />
+                              /> */}
                             </span>
                           </div>
                         </li>
