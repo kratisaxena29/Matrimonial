@@ -24,7 +24,7 @@ function PartnerFamily() {
   const [part_mothertongue, setMothertongue] = useState(location?.state?.part_mothertongue || "");
   const [part_height, setHeight] = useState(location?.state?.part_height || "");
   const [part_horoscopeMatch, setHoroscopeMatch] = useState(location?.state?.part_horoscopeMatch || "");
-  const [part_petFriendly, setPetFriendly] = useState(location?.state?.petFriendly || "");
+  const [part_petFriendly, setPetFriendly] = useState(location?.state?.part_petFriendly || "");
   const [Part_subCaste,setPart_subCaste] = useState(location?.state?.Part_subCaste || "");
   const [ageError, setAgeError] = useState(false);
   const [martialStatusError, setMartialStatusError] = useState(false);
@@ -255,7 +255,13 @@ const [subcasteError,setSubCasteError] = useState(false)
    
   ]
 
-  const casteOptions = ["Bihari", "Bengali", "Hindi Delhi", "Hindi" , "Gujarati" , "Kannada" , "Malayalam" , "Marathi" , "Oriya" , "Punjabi" , "Rajasthan" , "Tamil" , "Telugu" , "Hindi UP" , "Hindi MP" , "KonKani" , "Himachali" , "Haryanvi"  , "Assamese" , "Kashmiri", "Sikkim Nepali" , "Tulu" ];
+  const casteOptions = [
+    "Aggarwal", "Kanyakubj Brahmin", "Gaur Brahmin", "Brahmin" , 
+    "Jat" ,"Jain","Maheshwari" ,"Kayastha" , "Khatri" ,
+     "Kshatriya" , "Maratha" , "Rajput" , "Sindhi" , "Sunni" , "Oberoi",
+     "Arora" , "Shwetamber" , "Yadav" , "Bania" , "Scheduled Caste" , 
+     "Digamber"  , "Sikh Jat" , "Gupta",
+      "Tei" , "Vaishnav" ,"Kurmi kshatriya", "Other" ];
   const subCasteOptions = [
     "Arora",
 "Baniya",
@@ -673,13 +679,13 @@ const [subcasteError,setSubCasteError] = useState(false)
                     <MenuItem value="25-30">25-30 years</MenuItem>
                     <MenuItem value="30-35">30-35 years</MenuItem>
                     <MenuItem value="35-40">35-40 years</MenuItem>
-                    <MenuItem value="35-40">40-45 years</MenuItem>
-                    <MenuItem value="35-40">45-50 years</MenuItem>
-                    <MenuItem value="35-40">50-55 years</MenuItem>
-                    <MenuItem value="35-40">55-60 years</MenuItem>
-                    <MenuItem value="35-40">60-65 years</MenuItem>
-                    <MenuItem value="35-40">65-70 years</MenuItem>
-                    <MenuItem value="35-40">70-75 years</MenuItem>
+                    <MenuItem value="40-45">40-45 years</MenuItem>
+                    <MenuItem value="45-50">45-50 years</MenuItem>
+                    <MenuItem value="50-55">50-55 years</MenuItem>
+                    <MenuItem value="55-60">55-60 years</MenuItem>
+                    <MenuItem value="60-65">60-65 years</MenuItem>
+                    <MenuItem value="65-70">65-70 years</MenuItem>
+                    <MenuItem value="70-75">70-75 years</MenuItem>
                   </Select>
                   {ageError && <FormHelperText error>Please select an age range.</FormHelperText>}
                 </FormControl>

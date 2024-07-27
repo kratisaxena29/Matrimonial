@@ -30,6 +30,7 @@ import NewPassword from './components/NewPassword';
 import AboutYourself from './components/steps/Aboutyourself';
 import PaymentFailure from './components/PaymentFailure';
 import PaymentSucess from './components/PaymentSucess';
+import ConfirmationProfile from './components/ConfirmationProfile';
 
 function App() {
   const [logedIn, setlogedIn] = useState(
@@ -58,7 +59,7 @@ function App() {
           <Route path="/partner-education" element={<PartnerEducation />} />
           <Route path="/partner-living" element={<PartnerLiving />} />
           <Route path="/upload-document" element={<UploadDocument />} />
-          
+          <Route path="/Confirmation-Profile" element={<ConfirmationProfile />} />
           <Route path="/forgot-password" element={<ResetPassword />} />
           <Route path="/forgot-otp" element={<ForgotOtp />} />
           <Route path="/success" element={<PasswordResetSuccess />} />
