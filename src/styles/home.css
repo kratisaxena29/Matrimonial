@@ -1521,7 +1521,7 @@ i.fa-instagram:hover {
     margin-bottom: 0%;
     /* margin-top: 3%; */
     border-radius: 10px;
-    height: 620px; /* Adjust height to auto for responsiveness */
+    height: 560px; /* Adjust height to auto for responsiveness */
     max-width: 800px; /* Set maximum width for larger screens */
   }
   
@@ -1571,6 +1571,23 @@ i.fa-instagram:hover {
     padding: 10px 20px;
     cursor: pointer;
     display: inline-block;
+  }
+  .button-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-top: 30%;
+      gap:20px
+  }
+  .phone-button {
+    background-color: #F68C1E;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 30px;
   }
 .ban-tit h1 b {
     color: #EC184A;
@@ -5375,7 +5392,7 @@ span.mail::before {
 }
 
 .ban-inn {
-    background: #F7C5D1;
+    background: #D3D3D3;
     padding: 40px 20px 110px 20px;
     float: left;
     width: 100%;
@@ -5388,31 +5405,89 @@ span.mail::before {
     line-height: 100px;
     color: #76001C;
     margin-bottom: 20px;
-    background: #76001C;
+    background: #000000;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 800;
 }
 
 .ban-inn .ban-tit span {
-    color: #76001C;
+    color: #000000;
 }
 
 .ban-inn .ban-tit p {
-    color: #76001C;
+    color: #000000;
 }
-
+.about-us-section {
+    padding: 80px 0;
+    background-color: #f9f9f9;
+  }
+  
+  .about-us-image {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .about-us-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 40px;
+  }
+  
+  .about-us-content h2 {
+    color: #CD6900;
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+  
+  .about-us-content h3 {
+    font-size: 24px;
+    font-style: italic;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .about-us-content p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 30px;
+  }
+  
+  .learn-more-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #CD6900;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .learn-more-btn:hover {
+    background-color: #A85500;
+  }
+  
+  @media (max-width: 768px) {
+    .about-us-content {
+      padding-left: 0;
+      padding-top: 40px;
+    }
+  }
 .ban-home {
     padding: 110px 20px 115px 20px;
     position: relative;
-    margin-top: 160px;
+    margin-top: 380px;
 }
 
 .ban-home:before {
     content:
         '';
     position: absolute;
-    background: url('../images/icon/happy_couple_crop.png');
+    background: url('../images/icon/couple_img.png');
     width: 600px;
     height: 344px;
     background-size: cover;

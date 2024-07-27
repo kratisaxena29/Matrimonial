@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from "react";
 import "../styles/home.css";
 import "../styles/animate.css";
 import "../styles/bootstrap.css";
 import "../styles/fontAwesome.css";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import couple1 from "../images/gallery/couple-1.jpg";
 import couple2 from "../images/gallery/couple-2.jpg";
 import couple3 from "../images/gallery/couple-3.jpg";
@@ -13,9 +13,10 @@ import couple6 from "../images/gallery/couple-6.png";
 import couple7 from "../images/gallery/couple-7.jpg";
 import couple8 from "../images/gallery/couple-8.jpg";
 import logo from "../images/logo.png";
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import aboutUsImage from "../images/gallery/owner_matrimonial.jpg";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Home() {
   const [firstName, setFirstName] = useState("");
@@ -26,17 +27,21 @@ function Home() {
   const [registerMethod, setRegisterMethod] = useState(null);
 
   const URL = process.env.REACT_APP_API_BASE_URL;
-
+  const formContainerRef = useRef(null);
   const navigate = useNavigate();
-
+  const handleRegisterNowClick = () => {
+    if (formContainerRef.current) {
+      formContainerRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   const handleRegister = async (event) => {
     event.preventDefault();
     console.log("firstName:", firstName);
     console.log("lastName:", lastName);
     console.log("email:", email);
-    console.log("phoneno..",phone)
-    if(email){
-      console.log("..under email")
+    console.log("phoneno..", phone);
+    if (email) {
+      console.log("..under email");
       try {
         const response = await axios.post(
           `${URL}/user-register`,
@@ -45,7 +50,6 @@ function Home() {
             lastName,
             email: email,
             password,
-            
           },
           {
             headers: {
@@ -56,17 +60,20 @@ function Home() {
         toast.success("User registered successfully!");
         console.log("API Response:", response.data.response.email);
 
-          navigate('/verify-otp', { state: { email: response.data.response.email } });
+        navigate("/verify-otp", {
+          state: { email: response.data.response.email },
+        });
         handleEmailOtp(response.data.response.email);
-  
-  
       } catch (error) {
-        console.error("Error while making API call:", error.response?.data?.Error || error.message);
+        console.error(
+          "Error while making API call:",
+          error.response?.data?.Error || error.message
+        );
         toast.error(error.response?.data?.Error || "An error occurred");
       }
     }
-    if(phone){
-      console.log("..under phone")
+    if (phone) {
+      console.log("..under phone");
       try {
         const response = await axios.post(
           `${URL}/user-register`,
@@ -84,18 +91,19 @@ function Home() {
         );
         toast.success("User registered successfully!");
         console.log("API Response:", response.data.response.email);
-  
 
-    navigate('/verify-otp', { state: { phoneno: response.data.response.phoneno } });
-    handlePhoneOtp(response.data.response.phoneno);
-  
+        navigate("/verify-otp", {
+          state: { phoneno: response.data.response.phoneno },
+        });
+        handlePhoneOtp(response.data.response.phoneno);
       } catch (error) {
-        console.error("Error while making API call:", error.response?.data?.Error || error.message);
+        console.error(
+          "Error while making API call:",
+          error.response?.data?.Error || error.message
+        );
         toast.error(error.response?.data?.Error || "An error occurred");
       }
     }
-
-   
   };
 
   const handlePhoneOtp = async (phone) => {
@@ -104,7 +112,7 @@ function Home() {
         `${URL}/phone-otp`,
         {
           subject: "Hey! Your One Time Password",
-          phoneno : phone
+          phoneno: phone,
         },
         {
           headers: {
@@ -124,7 +132,7 @@ function Home() {
         `${URL}/email-otp`,
         {
           subject: "Hey! Your One Time Password",
-          email
+          email,
         },
         {
           headers: {
@@ -146,13 +154,22 @@ function Home() {
           <div className="row">
             <div className="hom-nav">
               <div className="logo">
-                <a style={{ cursor: "pointer" }} onClick={() => navigate('/')} className="logo-brand">
+                <a
+                  style={{ cursor: "pointer" }}
+                  onClick={() => navigate("/")}
+                  className="logo-brand"
+                >
                   <img src={logo} alt="" loading="lazy" className="ic-logo" />
                 </a>
               </div>
               <div className="bl">
                 <ul>
-                  <button onClick={() => navigate('/login')} className="custom-button">Login</button>
+                  <button
+                    onClick={() => navigate("/login")}
+                    className="custom-button"
+                  >
+                    Login
+                  </button>
                 </ul>
               </div>
             </div>
@@ -165,7 +182,10 @@ function Home() {
             <div className="container">
               <div className="row">
                 <div className="hom-ban">
-                  <div className="ban-tit" style={{ width: "85%", paddingTop: "10rem" }}>
+                  <div
+                    className="ban-tit"
+                    style={{ width: "85%", paddingTop: "10rem" }}
+                  >
                     <span>
                       <i className="no1">#1</i> Matrimony
                     </span>
@@ -179,20 +199,37 @@ function Home() {
                 </div>
               </div>
             </div>
-            <div className="form-container">
-              <h1 style={{ color: "#CD6900", textAlign: "center", paddingBottom: "40px", width: "250px" }}>
+            <div className="form-container" ref={formContainerRef}>
+              <h1
+                style={{
+                  color: "#CD6900",
+                  textAlign: "center",
+                  paddingBottom: "40px",
+                  width: "250px",
+                }}
+              >
                 Sign up to Matrimony
               </h1>
               {registerMethod === null ? (
                 <div className="button-container">
-                  <button onClick={() => setRegisterMethod('email')} className="register-button">Register with Email</button>
-                  <button onClick={() => setRegisterMethod('phone')} className="register-button">Register with Phone</button>
+                  <button
+                    onClick={() => setRegisterMethod("email")}
+                    className="register-button"
+                  >
+                    Register with Email
+                  </button>
+                  <button
+                    onClick={() => setRegisterMethod("phone")}
+                    className="phone-button"
+                  >
+                    Register with Phone
+                  </button>
                 </div>
               ) : (
                 <form className="form" onSubmit={handleRegister}>
                   <div className="form-group">
                     <label htmlFor="first">First Name</label>
-                    <input 
+                    <input
                       type="text"
                       id="first"
                       value={firstName}
@@ -202,7 +239,7 @@ function Home() {
                   </div>
                   <div className="form-group">
                     <label htmlFor="last">Last Name</label>
-                    <input 
+                    <input
                       type="text"
                       id="last"
                       value={lastName}
@@ -210,10 +247,10 @@ function Home() {
                       required
                     />
                   </div>
-                  {registerMethod === 'email' ? (
+                  {registerMethod === "email" ? (
                     <div className="form-group">
                       <label htmlFor="email">Email</label>
-                      <input 
+                      <input
                         type="email"
                         id="email"
                         value={email}
@@ -224,7 +261,7 @@ function Home() {
                   ) : (
                     <div className="form-group">
                       <label htmlFor="phone">Phone</label>
-                      <input 
+                      <input
                         type="number"
                         id="phone"
                         value={phone}
@@ -235,7 +272,7 @@ function Home() {
                   )}
                   <div className="form-group">
                     <label htmlFor="password">Password</label>
-                    <input 
+                    <input
                       type="password"
                       id="password"
                       value={password}
@@ -243,11 +280,41 @@ function Home() {
                       required
                     />
                   </div>
-                  <button type="submit" className="register-button" style={{ textAlign: "center", marginRight: "0px" }}>
+                  <button
+                    type="submit"
+                    className="register-button"
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      textAlign: "center",
+                      marginRight: "0px",
+                    }}
+                  >
                     Register
                   </button>
                 </form>
               )}
+            </div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div className="str">
+          <div className="ban-inn ban-home">
+            <div className="container">
+              <div className="row">
+                <div className="hom-ban">
+                  <div className="ban-tit">
+                    <span>
+                      <i className="no1">#1</i> Wedding Website
+                    </span>
+                    <h2>Find your Perfect Match Now</h2>
+                    <p>
+                      Most Trusted and premium Matrimony Service in the World.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -329,7 +396,7 @@ function Home() {
                   <p>
                     Take the first step towards finding your perfect soulmate
                   </p>
-                  <a onClick={() => navigate('/profile-details')} className="cta-3">
+                  <a onClick={handleRegisterNowClick} className="cta-3">
                     Register Now
                   </a>
                 </div>
@@ -338,6 +405,35 @@ function Home() {
           </div>
         </div>
       </section>
+      <section className="about-us-section">
+  <div className="container">
+    <div className="row align-items-center">
+      <div className="col-md-6">
+        <img
+          src={aboutUsImage}
+          alt="Happy couple"
+          className="about-us-image img-fluid rounded shadow"
+        />
+      </div>
+      <div className="col-md-6 about-us-content">
+        <h2 className="about-us-title">About Us</h2>
+        <h3 className="about-us-subtitle">
+          "Bringing Together Two Souls"
+        </h3>
+        <p className="about-us-text">
+          Soulmatch believes in building a bridge between prospective
+          Brides and Grooms. If you are seeking a forever relationship
+          through a sacred matrimonial alliance, we provide you with one
+          of the best platforms to meet your soulmate.
+        </p>
+        <a href="#" className="btn btn-primary learn-more-btn">
+          Join Us Today
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
     </div>
   );
 }
