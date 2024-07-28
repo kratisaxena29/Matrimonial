@@ -571,6 +571,9 @@ console.log("...location state in education...",location.state)
                     textTransform: "inherit",
                     fontSize: "18px",
                     backgroundColor: "#FB6A6B",
+                    "&:hover": {
+                      backgroundColor: "#FB6A6B",
+                    },
                   }}
                   disabled={!isFormValid} // Disable the button if form is not valid
                 >

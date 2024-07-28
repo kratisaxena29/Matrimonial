@@ -524,7 +524,9 @@ console.log("...additional..",location.state)
 
   return (
     <ThemeProvider theme={theme}>
-      <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+      <div
+        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+      >
         <nav
           style={{
             backgroundColor: "#6D0B32",
@@ -590,7 +592,11 @@ console.log("...additional..",location.state)
                   marginBottom: "40px",
                 }}
               >
-                <FormControl variant="standard" sx={{ minWidth: 195 }} error={!caste}>
+                <FormControl
+                  variant="standard"
+                  sx={{ minWidth: 195 }}
+                  error={!caste}
+                >
                   <InputLabel id="caste-select-label">Caste</InputLabel>
                   <Select
                     labelId="caste-select-label"
@@ -599,13 +605,21 @@ console.log("...additional..",location.state)
                     onChange={(event) => setCaste(event.target.value)}
                     label="Caste"
                   >
-                    {casteOptions.map(option => (
-                      <MenuItem key={option} value={option}>{option}</MenuItem>
+                    {casteOptions.map((option) => (
+                      <MenuItem key={option} value={option}>
+                        {option}
+                      </MenuItem>
                     ))}
                   </Select>
-                  {!caste && <FormHelperText>Please select your caste</FormHelperText>}
+                  {!caste && (
+                    <FormHelperText>Please select your caste</FormHelperText>
+                  )}
                 </FormControl>
-                <FormControl variant="standard" sx={{ minWidth: 195 }} error={!subCaste}>
+                <FormControl
+                  variant="standard"
+                  sx={{ minWidth: 195 }}
+                  error={!subCaste}
+                >
                   <InputLabel id="sub-caste-select-label">Sub Caste</InputLabel>
                   <Select
                     labelId="sub-caste-select-label"
@@ -614,11 +628,17 @@ console.log("...additional..",location.state)
                     onChange={(event) => setSubCaste(event.target.value)}
                     label="Sub Caste"
                   >
-                    {subCasteOptions.map(option => (
-                      <MenuItem key={option} value={option}>{option}</MenuItem>
+                    {subCasteOptions.map((option) => (
+                      <MenuItem key={option} value={option}>
+                        {option}
+                      </MenuItem>
                     ))}
                   </Select>
-                  {!subCaste && <FormHelperText>Please select your sub-caste</FormHelperText>}
+                  {!subCaste && (
+                    <FormHelperText>
+                      Please select your sub-caste
+                    </FormHelperText>
+                  )}
                 </FormControl>
               </div>
               <div
@@ -630,7 +650,11 @@ console.log("...additional..",location.state)
                   marginBottom: "40px",
                 }}
               >
-                <FormControl variant="standard" sx={{ minWidth: 195 }} error={!origin}>
+                <FormControl
+                  variant="standard"
+                  sx={{ minWidth: 195 }}
+                  error={!origin}
+                >
                   <InputLabel id="origin-select-label">Origin</InputLabel>
                   <Select
                     labelId="origin-select-label"
@@ -639,14 +663,24 @@ console.log("...additional..",location.state)
                     onChange={(event) => setOrigin(event.target.value)}
                     label="Origin"
                   >
-                    {originOptions.map(option => (
-                      <MenuItem key={option} value={option}>{option}</MenuItem>
+                    {originOptions.map((option) => (
+                      <MenuItem key={option} value={option}>
+                        {option}
+                      </MenuItem>
                     ))}
                   </Select>
-                  {!origin && <FormHelperText>Please select your origin</FormHelperText>}
+                  {!origin && (
+                    <FormHelperText>Please select your origin</FormHelperText>
+                  )}
                 </FormControl>
-                <FormControl variant="standard" sx={{ minWidth: 195 }} error={!motherTongue}>
-                  <InputLabel id="mother-tongue-select-label">Mother Tongue</InputLabel>
+                <FormControl
+                  variant="standard"
+                  sx={{ minWidth: 195 }}
+                  error={!motherTongue}
+                >
+                  <InputLabel id="mother-tongue-select-label">
+                    Mother Tongue
+                  </InputLabel>
                   <Select
                     labelId="mother-tongue-select-label"
                     id="mother-tongue-select"
@@ -654,15 +688,23 @@ console.log("...additional..",location.state)
                     onChange={(event) => setMotherTongue(event.target.value)}
                     label="Mother Tongue"
                   >
-                    {motherTongueOptions.map((option, index) => (
+                    {motherTongueOptions.map((option, index) =>
                       typeof option === "string" ? (
-                        <MenuItem key={index} value={option}>{option}</MenuItem>
+                        <MenuItem key={index} value={option}>
+                          {option}
+                        </MenuItem>
                       ) : (
-                        <MenuItem key={index} disabled style={option.style}>{option.label}</MenuItem>
+                        <MenuItem key={index} disabled style={option.style}>
+                          {option.label}
+                        </MenuItem>
                       )
-                    ))}
+                    )}
                   </Select>
-                  {!motherTongue && <FormHelperText>Please select your mother tongue</FormHelperText>}
+                  {!motherTongue && (
+                    <FormHelperText>
+                      Please select your mother tongue
+                    </FormHelperText>
+                  )}
                 </FormControl>
               </div>
               <div
@@ -674,7 +716,11 @@ console.log("...additional..",location.state)
                   marginBottom: "40px",
                 }}
               >
-                <FormControl variant="standard" sx={{ minWidth: 195 }} error={!height}>
+                <FormControl
+                  variant="standard"
+                  sx={{ minWidth: 195 }}
+                  error={!height}
+                >
                   <InputLabel id="height-select-label">Height</InputLabel>
                   <Select
                     labelId="height-select-label"
@@ -683,13 +729,21 @@ console.log("...additional..",location.state)
                     onChange={(event) => setHeight(event.target.value)}
                     label="Height"
                   >
-                    {heightOptions.map(option => (
-                      <MenuItem key={option} value={option}>{option}</MenuItem>
+                    {heightOptions.map((option) => (
+                      <MenuItem key={option} value={option}>
+                        {option}
+                      </MenuItem>
                     ))}
                   </Select>
-                  {!height && <FormHelperText>Please select your height</FormHelperText>}
+                  {!height && (
+                    <FormHelperText>Please select your height</FormHelperText>
+                  )}
                 </FormControl>
-                <FormControl variant="standard" sx={{ minWidth: 195 }} error={!weight}>
+                <FormControl
+                  variant="standard"
+                  sx={{ minWidth: 195 }}
+                  error={!weight}
+                >
                   <InputLabel id="weight-select-label">Weight</InputLabel>
                   <Select
                     labelId="weight-select-label"
@@ -698,19 +752,23 @@ console.log("...additional..",location.state)
                     onChange={(event) => setWeight(event.target.value)}
                     label="Weight"
                   >
-                    {weightOptions.map(option => (
-                      <MenuItem key={option} value={option}>{option}</MenuItem>
+                    {weightOptions.map((option) => (
+                      <MenuItem key={option} value={option}>
+                        {option}
+                      </MenuItem>
                     ))}
                   </Select>
-                  {!weight && <FormHelperText>Please select your weight</FormHelperText>}
+                  {!weight && (
+                    <FormHelperText>Please select your weight</FormHelperText>
+                  )}
                 </FormControl>
               </div>
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "center",
-                  gap: "80px",
+                  justifyContent: "start",
+                  marginLeft: "120px",
                   marginBottom: "40px",
                 }}
               >
@@ -729,8 +787,14 @@ console.log("...additional..",location.state)
                   </Select>
                   {!gothra && <FormHelperText>Please select your gothra</FormHelperText>}
                 </FormControl> */}
-                <FormControl variant="standard" sx={{ minWidth: 200 }} error={!petFriendly}>
-                  <InputLabel id="pet-friendly-select-label">Pet Friendly</InputLabel>
+                <FormControl
+                  variant="standard"
+                  sx={{ minWidth: 200 }}
+                  error={!petFriendly}
+                >
+                  <InputLabel id="pet-friendly-select-label">
+                    Pet Friendly
+                  </InputLabel>
                   <Select
                     labelId="pet-friendly-select-label"
                     id="pet-friendly-select"
@@ -738,11 +802,17 @@ console.log("...additional..",location.state)
                     onChange={(event) => setPetFriendly(event.target.value)}
                     label="Pet Friendly"
                   >
-                    {petFriendlyOptions.map(option => (
-                      <MenuItem key={option} value={option}>{option}</MenuItem>
+                    {petFriendlyOptions.map((option) => (
+                      <MenuItem key={option} value={option}>
+                        {option}
+                      </MenuItem>
                     ))}
                   </Select>
-                  {!petFriendly && <FormHelperText>Please select if you are pet friendly</FormHelperText>}
+                  {!petFriendly && (
+                    <FormHelperText>
+                      Please select if you are pet friendly
+                    </FormHelperText>
+                  )}
                 </FormControl>
               </div>
               <div
@@ -755,7 +825,9 @@ console.log("...additional..",location.state)
                 }}
               >
                 <Button
-                  onClick={() => navigate('/profile-details', { state: location?.state })}
+                  onClick={() =>
+                    navigate("/profile-details", { state: location?.state })
+                  }
                   variant="outlined"
                   sx={{
                     mt: 4,
@@ -782,6 +854,9 @@ console.log("...additional..",location.state)
                     textTransform: "inherit",
                     fontSize: "18px",
                     backgroundColor: "#FB6A6B",
+                    "&:hover": {
+                      backgroundColor: "#FB6A6B",
+                    },
                   }}
                   disabled={!formValid}
                 >
@@ -806,7 +881,10 @@ console.log("...additional..",location.state)
             <Instagram style={{ marginRight: "10px" }} />
             <Twitter style={{ marginRight: "10px" }} />
           </div>
-          <div>&copy; 2024 <span style={{ color: "#FFBF00" }}>SoulMatch</span> All rights reserved.</div>
+          <div>
+            &copy; 2024 <span style={{ color: "#FFBF00" }}>SoulMatch</span> All
+            rights reserved.
+          </div>
           <div>
             <Email style={{ marginRight: "10px" }} />
             <span style={{ color: "#FFF" }}>Email Address</span>

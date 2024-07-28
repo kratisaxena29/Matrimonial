@@ -645,26 +645,82 @@ const [subcasteError,setSubCasteError] = useState(false)
 
   return (
     <ThemeProvider theme={theme}>
-      <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-        <nav style={{ backgroundColor: "#6D0B32", padding: "10px 20px", display: "flex", alignItems: "center" }}>
-          <img src={logo} alt="Logo" style={{ height: "60px", marginRight: "40px" }} />
+      <div
+        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+      >
+        <nav
+          style={{
+            backgroundColor: "#6D0B32",
+            padding: "10px 20px",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <img
+            src={logo}
+            alt="Logo"
+            style={{ height: "60px", marginRight: "40px" }}
+          />
         </nav>
         <div style={{ display: "flex", flex: 1 }}>
-          <div style={{ flex: 1, backgroundColor: "#FFE5E7", textAlign: "center", padding: "10px 0", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-            <Diversity3Icon style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }} />
+          <div
+            style={{
+              flex: 1,
+              backgroundColor: "#FFE5E7",
+              textAlign: "center",
+              padding: "10px 0",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Diversity3Icon
+              style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }}
+            />
             <Typography variant="h4" component="div" sx={{ color: "#6B0D37" }}>
-              "Embark on a journey of companionship, where every moment is a step closer to finding your perfect match."
+              "Embark on a journey of companionship, where every moment is a
+              step closer to finding your perfect match."
             </Typography>
           </div>
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "50px" }}>
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              padding: "50px",
+            }}
+          >
             <div>
-              <Typography sx={{ textAlign: "center", fontWeight: "bold", marginBottom: 5 }} variant="h5" gutterBottom>
+              <Typography
+                sx={{
+                  textAlign: "center",
+                  fontWeight: "bold",
+                  marginBottom: 5,
+                }}
+                variant="h5"
+                gutterBottom
+              >
                 Please fill your desired partner details
               </Typography>
-              <Typography sx={{ textAlign: "center" }} variant="h5" gutterBottom>
+              <Typography
+                sx={{ textAlign: "center" }}
+                variant="h5"
+                gutterBottom
+              >
                 Personal Details
               </Typography>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px", marginTop: "40px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "80px",
+                  marginBottom: "40px",
+                  marginTop: "40px",
+                }}
+              >
                 <FormControl variant="standard" sx={{ minWidth: 195 }}>
                   <InputLabel id="age-from-label">Age from</InputLabel>
                   <Select
@@ -687,10 +743,16 @@ const [subcasteError,setSubCasteError] = useState(false)
                     <MenuItem value="65-70">65-70 years</MenuItem>
                     <MenuItem value="70-75">70-75 years</MenuItem>
                   </Select>
-                  {ageError && <FormHelperText error>Please select an age range.</FormHelperText>}
+                  {ageError && (
+                    <FormHelperText error>
+                      Please select an age range.
+                    </FormHelperText>
+                  )}
                 </FormControl>
                 <FormControl variant="standard" sx={{ minWidth: 195 }}>
-                  <InputLabel id="martial-status-label">Marital Status</InputLabel>
+                  <InputLabel id="martial-status-label">
+                    Marital Status
+                  </InputLabel>
                   <Select
                     labelId="martial-status-label"
                     id="martial-status"
@@ -699,18 +761,31 @@ const [subcasteError,setSubCasteError] = useState(false)
                     onChange={(event) => setMartialStatus(event.target.value)}
                     error={martialStatusError}
                   >
-                  
                     <MenuItem value="Never Married">Never Married</MenuItem>
-                    <MenuItem value="Awaiting Divorce">Awaiting Divorce</MenuItem>
+                    <MenuItem value="Awaiting Divorce">
+                      Awaiting Divorce
+                    </MenuItem>
                     <MenuItem value="Divorced">Divorced</MenuItem>
                     <MenuItem value="Widowed">Widowed</MenuItem>
                     <MenuItem value="Annulled">Annulled</MenuItem>
                   </Select>
-                  {martialStatusError && <FormHelperText error>Please select marital status.</FormHelperText>}
+                  {martialStatusError && (
+                    <FormHelperText error>
+                      Please select marital status.
+                    </FormHelperText>
+                  )}
                 </FormControl>
               </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
-              <FormControl variant="standard" sx={{ minWidth: 195 }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "80px",
+                  marginBottom: "40px",
+                }}
+              >
+                <FormControl variant="standard" sx={{ minWidth: 195 }}>
                   <InputLabel id="caste-select-label">Caste</InputLabel>
                   <Select
                     labelId="caste-select-label"
@@ -720,11 +795,17 @@ const [subcasteError,setSubCasteError] = useState(false)
                     onChange={(event) => setCaste(event.target.value)}
                     error={casteError}
                   >
-                   {casteOptions.map(option => (
-                      <MenuItem key={option} value={option}>{option}</MenuItem>
+                    {casteOptions.map((option) => (
+                      <MenuItem key={option} value={option}>
+                        {option}
+                      </MenuItem>
                     ))}
                   </Select>
-                  {casteError && <FormHelperText error>Please select a caste.</FormHelperText>}
+                  {casteError && (
+                    <FormHelperText error>
+                      Please select a caste.
+                    </FormHelperText>
+                  )}
                 </FormControl>
                 <FormControl variant="standard" sx={{ minWidth: 195 }}>
                   <InputLabel id="caste-select-label">Sub Caste</InputLabel>
@@ -736,17 +817,30 @@ const [subcasteError,setSubCasteError] = useState(false)
                     onChange={(event) => setPart_subCaste(event.target.value)}
                     error={subcasteError}
                   >
-                   {subCasteOptions.map(option => (
-                      <MenuItem key={option} value={option}>{option}</MenuItem>
+                    {subCasteOptions.map((option) => (
+                      <MenuItem key={option} value={option}>
+                        {option}
+                      </MenuItem>
                     ))}
                   </Select>
-                  {subcasteError && <FormHelperText error>Please select a sub caste.</FormHelperText>}
+                  {subcasteError && (
+                    <FormHelperText error>
+                      Please select a sub caste.
+                    </FormHelperText>
+                  )}
                 </FormControl>
               </div>
-             
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
-               
-              <FormControl variant="standard" sx={{ minWidth: 195 }}>
+
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "80px",
+                  marginBottom: "40px",
+                }}
+              >
+                <FormControl variant="standard" sx={{ minWidth: 195 }}>
                   <InputLabel id="religion-select-label">Religion</InputLabel>
                   <Select
                     labelId="religion-select-label"
@@ -764,10 +858,16 @@ const [subcasteError,setSubCasteError] = useState(false)
                     <MenuItem value="Jain">Jain</MenuItem>
                     <MenuItem value="Bahai">Bahai</MenuItem>
                   </Select>
-                  {religionError && <FormHelperText error>Please select a religion.</FormHelperText>}
+                  {religionError && (
+                    <FormHelperText error>
+                      Please select a religion.
+                    </FormHelperText>
+                  )}
                 </FormControl>
                 <FormControl variant="standard" sx={{ minWidth: 195 }}>
-                  <InputLabel id="mothertongue-select-label">Mother Tongue</InputLabel>
+                  <InputLabel id="mothertongue-select-label">
+                    Mother Tongue
+                  </InputLabel>
                   <Select
                     labelId="mothertongue-select-label"
                     id="mothertongue-select"
@@ -776,20 +876,35 @@ const [subcasteError,setSubCasteError] = useState(false)
                     onChange={(event) => setMothertongue(event.target.value)}
                     error={mothertongueError}
                   >
-                   {motherTongueOptions.map((option, index) => (
+                    {motherTongueOptions.map((option, index) =>
                       typeof option === "string" ? (
-                        <MenuItem key={index} value={option}>{option}</MenuItem>
+                        <MenuItem key={index} value={option}>
+                          {option}
+                        </MenuItem>
                       ) : (
-                        <MenuItem key={index} disabled style={option.style}>{option.label}</MenuItem>
+                        <MenuItem key={index} disabled style={option.style}>
+                          {option.label}
+                        </MenuItem>
                       )
-                    ))}
+                    )}
                   </Select>
-                  {mothertongueError && <FormHelperText error>Please select your mother tongue.</FormHelperText>}
+                  {mothertongueError && (
+                    <FormHelperText error>
+                      Please select your mother tongue.
+                    </FormHelperText>
+                  )}
                 </FormControl>
-                
               </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
-              <FormControl variant="standard" sx={{ minWidth: 195 }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "80px",
+                  marginBottom: "40px",
+                }}
+              >
+                <FormControl variant="standard" sx={{ minWidth: 195 }}>
                   <InputLabel id="height-select-label">Height</InputLabel>
                   <Select
                     labelId="height-select-label"
@@ -800,13 +915,21 @@ const [subcasteError,setSubCasteError] = useState(false)
                     error={heightError}
                   >
                     {heightOptions.map((option) => (
-                      <MenuItem key={option} value={option}>{option}</MenuItem>
+                      <MenuItem key={option} value={option}>
+                        {option}
+                      </MenuItem>
                     ))}
                   </Select>
-                  {heightError && <FormHelperText error>Please select your height.</FormHelperText>}
+                  {heightError && (
+                    <FormHelperText error>
+                      Please select your height.
+                    </FormHelperText>
+                  )}
                 </FormControl>
                 <FormControl variant="standard" sx={{ minWidth: 195 }}>
-                  <InputLabel id="horoscope-match-label">Horoscope match?</InputLabel>
+                  <InputLabel id="horoscope-match-label">
+                    Horoscope match?
+                  </InputLabel>
                   <Select
                     labelId="horoscope-match-label"
                     id="horoscope-match"
@@ -818,12 +941,24 @@ const [subcasteError,setSubCasteError] = useState(false)
                     <MenuItem value="Yes">Yes</MenuItem>
                     <MenuItem value="No">No</MenuItem>
                   </Select>
-                  {horoscopeMatchError && <FormHelperText error>Please select if horoscope match is required.</FormHelperText>}
+                  {horoscopeMatchError && (
+                    <FormHelperText error>
+                      Please select if horoscope match is required.
+                    </FormHelperText>
+                  )}
                 </FormControl>
-               
               </div>
-              <div  style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
-              <FormControl variant="standard" sx={{ minWidth: 195 }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "start",
+                  marginLeft: "120px",
+                  gap: "80px",
+                  marginBottom: "40px",
+                }}
+              >
+                <FormControl variant="standard" sx={{ minWidth: 195 }}>
                   <InputLabel id="pet-friendly-label">Pet Friendly</InputLabel>
                   <Select
                     labelId="pet-friendly-label"
@@ -836,12 +971,26 @@ const [subcasteError,setSubCasteError] = useState(false)
                     <MenuItem value="Yes">Yes</MenuItem>
                     <MenuItem value="No">No</MenuItem>
                   </Select>
-                  {petFriendlyError && <FormHelperText error>Please select if pet-friendly is required.</FormHelperText>}
+                  {petFriendlyError && (
+                    <FormHelperText error>
+                      Please select if pet-friendly is required.
+                    </FormHelperText>
+                  )}
                 </FormControl>
               </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "20px", marginBottom: "40px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: "20px",
+                  marginBottom: "40px",
+                }}
+              >
                 <Button
-                  onClick={() => navigate("/about-yourself",{state : location?.state})}
+                  onClick={() =>
+                    navigate("/about-yourself", { state: location?.state })
+                  }
                   variant="outlined"
                   sx={{
                     mt: 4,
@@ -868,6 +1017,9 @@ const [subcasteError,setSubCasteError] = useState(false)
                     textTransform: "inherit",
                     fontSize: "18px",
                     backgroundColor: "#FB6A6B",
+                    "&:hover": {
+                      backgroundColor: "#FB6A6B",
+                    },
                   }}
                   disabled={!validateForm()} // Disable the button if the form is not valid
                 >
@@ -877,14 +1029,24 @@ const [subcasteError,setSubCasteError] = useState(false)
             </div>
           </div>
         </div>
-        <footer style={{ backgroundColor: "#530014", padding: "20px", display: "flex", alignItems: "center", justifyContent: "space-between", color: "#fff" }}>
+        <footer
+          style={{
+            backgroundColor: "#530014",
+            padding: "20px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            color: "#fff",
+          }}
+        >
           <div>
             <Facebook style={{ marginRight: "10px" }} />
             <Instagram style={{ marginRight: "10px" }} />
             <Twitter style={{ marginRight: "10px" }} />
           </div>
           <div>
-            &copy; 2024 <span style={{ color: "#FFBF00" }}>SoulMatch</span> All rights reserved.
+            &copy; 2024 <span style={{ color: "#FFBF00" }}>SoulMatch</span> All
+            rights reserved.
           </div>
           <div>
             <Email style={{ marginRight: "10px" }} />

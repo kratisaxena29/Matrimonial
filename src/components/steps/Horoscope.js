@@ -208,7 +208,7 @@ function Horoscope() {
                     marginBottom: "40px",
                   }}
                 >
-                  <FormControl variant="standard" sx={{ minWidth: 300 }} error={Boolean(errors.placeofBirth)}>
+                  <FormControl variant="outlined" sx={{ minWidth: 260 }} error={Boolean(errors.placeofBirth)}>
                     <InputLabel id="place-of-birth-label">Place of Birth</InputLabel>
                     <Select
                       labelId="place-of-birth-label"
@@ -235,7 +235,7 @@ function Horoscope() {
                     marginBottom: "40px",
                   }}
                 >
-                  <FormControl variant="standard" sx={{ minWidth: 300 }} error={Boolean(errors.areyouManglik)}>
+                  <FormControl variant="outlined" sx={{ minWidth: 260 }} error={Boolean(errors.areyouManglik)}>
                     <InputLabel id="manglik-label">Are you Manglik?</InputLabel>
                     <Select
                       labelId="manglik-label"

@@ -319,6 +319,9 @@ function PartnerLiving() {
                     textTransform: "inherit",
                     fontSize: "18px",
                     backgroundColor: "#FB6A6B",
+                    "&:hover": {
+                      backgroundColor: "#FB6A6B",
+                    },
                   }}
                   disabled={!isFormValid}
                 >

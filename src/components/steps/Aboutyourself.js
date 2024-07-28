@@ -56,7 +56,9 @@ function AboutYourself() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+      <div
+        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+      >
         <nav
           style={{
             backgroundColor: "#6D0B32",
@@ -122,26 +124,59 @@ function AboutYourself() {
                   marginBottom: "40px",
                 }}
               >
-                <FormControl variant="standard" sx={{ minWidth: 300 }} error={!aboutYourself}>
-                  <InputLabel id="about-yourself-label"></InputLabel>
+                <FormControl
+                  variant="standard"
+                  sx={{ minWidth: 300 }}
+                  error={!aboutYourself}
+                >
                   <TextField
-                    labelId="about-yourself-label"
                     id="about-yourself"
                     value={aboutYourself}
                     onChange={(event) => setAboutYourself(event.target.value)}
-                    label="About Yourself"
-                  >
-                    
-                  </TextField>
-                  {!aboutYourself && <FormHelperText>About yourself is required</FormHelperText>}
+                    label="Express Yourself!"
+                    multiline
+                    rows={4}
+                    placeholder="You may consider answering these questions:
+1. How would you describe yourself?
+2. What kind of food/movies/books/music you like?
+3. Do you enjoy activities like traveling, music, sports etc?
+4. Where have you lived most of your life till now?
+5. Where do you wish to settle down in future?"
+                    helperText="Introduce yourself (Don't mention your name, number or social handles). Write about your values, beliefs/goals and aspirations. How do you describe yourself? Your interests and hobbies."
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    sx={{
+                      "& .MuiInputBase-input::placeholder": {
+                        fontSize: "0.875rem",
+                        lineHeight: "1.2",
+                      },
+                    }}
+                  />
+                  {!aboutYourself && (
+                    <FormHelperText>
+                      Express Yourself is required
+                    </FormHelperText>
+                  )}
                 </FormControl>
               </div>
-              <div style={{ display: "flex", justifyContent: "space-between", marginTop: "40px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginTop: "40px",
+                }}
+              >
                 <Button
-                  onClick={() => navigate('/family-details')}
+                  onClick={() => navigate("/family-details")}
                   variant="outlined"
                   color="error"
-                  sx={{ width: 150, height: 40, textTransform: "inherit", fontSize: "18px" }}
+                  sx={{
+                    width: 150,
+                    height: 40,
+                    textTransform: "inherit",
+                    fontSize: "18px",
+                  }}
                 >
                   Back
                 </Button>
@@ -149,7 +184,16 @@ function AboutYourself() {
                   onClick={handleAdditionalDetails}
                   type="submit"
                   variant="contained"
-                  sx={{ width: 150, height: 40, textTransform: "inherit", fontSize: "18px", backgroundColor: "#FB6A6B" }}
+                  sx={{
+                    width: 150,
+                    height: 40,
+                    textTransform: "inherit",
+                    fontSize: "18px",
+                    backgroundColor: "#FB6A6B",
+                    "&:hover": {
+                      backgroundColor: "#FB6A6B",
+                    },
+                  }}
                   disabled={!formValid}
                 >
                   Next
@@ -173,7 +217,10 @@ function AboutYourself() {
             <Instagram style={{ marginRight: "10px" }} />
             <Twitter style={{ marginRight: "10px" }} />
           </div>
-          <div>&copy; 2024 <span style={{ color: "#FFBF00" }}>SoulMatch</span> All rights reserved.</div>
+          <div>
+            &copy; 2024 <span style={{ color: "#FFBF00" }}>SoulMatch</span> All
+            rights reserved.
+          </div>
           <div>
             <Email style={{ marginRight: "10px" }} />
             <span style={{ color: "#FFF" }}>Email Address</span>

@@ -382,78 +382,130 @@ function EducationCareer() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-        <nav style={{ backgroundColor: "#6D0B32", padding: "10px 20px", display: "flex", alignItems: "center" }}>
-          <img src={logo} alt="Logo" style={{ height: "60px", marginRight: "40px" }} />
+      <div
+        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+      >
+        <nav
+          style={{
+            backgroundColor: "#6D0B32",
+            padding: "10px 20px",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <img
+            src={logo}
+            alt="Logo"
+            style={{ height: "60px", marginRight: "40px" }}
+          />
         </nav>
         <div style={{ display: "flex", flex: 1 }}>
-          <div style={{
-            flex: 1,
-            backgroundColor: "#FFE5E7",
-            textAlign: "center",
-            padding: "10px 0",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}>
-            <SchoolIcon style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }} />
+          <div
+            style={{
+              flex: 1,
+              backgroundColor: "#FFE5E7",
+              textAlign: "center",
+              padding: "10px 0",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <SchoolIcon
+              style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }}
+            />
             <Typography variant="h4" component="div" sx={{ color: "#6B0D37" }}>
-              "Love knows no boundaries, and neither do we. Explore endless possibilities in finding your Better half"
+              "Love knows no boundaries, and neither do we. Explore endless
+              possibilities in finding your Better half"
             </Typography>
           </div>
-          <div style={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            padding: "50px",
-          }}>
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              padding: "50px",
+            }}
+          >
             <div>
-              <Typography sx={{ textAlign: "center" }} variant="h5" gutterBottom>
+              <Typography
+                sx={{ textAlign: "center" }}
+                variant="h5"
+                gutterBottom
+              >
                 Education and Career
               </Typography>
-              <div style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "80px",
-                marginBottom: "40px",
-              }}>
-                <FormControl variant="standard" sx={{ minWidth: 300, marginTop: "10px" }} error={!highestEducation}>
-                  <InputLabel id="highest-education-label">Highest Education</InputLabel>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "80px",
+                  marginBottom: "40px",
+                }}
+              >
+                <FormControl
+                  variant="standard"
+                  sx={{ minWidth: 300, marginTop: "10px" }}
+                  error={!highestEducation}
+                >
+                  <InputLabel id="highest-education-label">
+                    Highest Education
+                  </InputLabel>
                   <Select
                     labelId="highest-education-label"
                     id="highest-education-select"
                     value={highestEducation}
-                    onChange={(event) => setHighestEducation(event.target.value)}
+                    onChange={(event) =>
+                      setHighestEducation(event.target.value)
+                    }
                     label="Highest Education"
                   >
-                    {highestEducationOtption.map((option, index) => (
+                    {highestEducationOtption.map((option, index) =>
                       typeof option === "string" ? (
-                        <MenuItem key={index} value={option}>{option}</MenuItem>
+                        <MenuItem key={index} value={option}>
+                          {option}
+                        </MenuItem>
                       ) : (
-                        <MenuItem key={index} disabled style={option.style}>{option.label}</MenuItem>
+                        <MenuItem key={index} disabled style={option.style}>
+                          {option.label}
+                        </MenuItem>
                       )
-                    ))}
+                    )}
                   </Select>
-                  {!highestEducation && <FormHelperText>Highest education is required</FormHelperText>}
+                  {!highestEducation && (
+                    <FormHelperText>
+                      Highest education is required
+                    </FormHelperText>
+                  )}
                 </FormControl>
               </div>
-              <div style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "80px",
-                marginBottom: "40px",
-              }}>
-                <FormControl variant="standard" sx={{ minWidth: 300, marginTop: "10px" }} error={!currentEmployment}>
-                  <InputLabel id="current-employment-label">Current Employment</InputLabel>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "80px",
+                  marginBottom: "40px",
+                }}
+              >
+                <FormControl
+                  variant="standard"
+                  sx={{ minWidth: 300, marginTop: "10px" }}
+                  error={!currentEmployment}
+                >
+                  <InputLabel id="current-employment-label">
+                    Current Employment
+                  </InputLabel>
                   <Select
                     labelId="current-employment-label"
                     id="current-employment-select"
                     value={currentEmployment}
-                    onChange={(event) => setCurrentEmployment(event.target.value)}
+                    onChange={(event) =>
+                      setCurrentEmployment(event.target.value)
+                    }
                     label="Current Employment"
                   >
                     <MenuItem value="Employed">Employed</MenuItem>
@@ -461,17 +513,27 @@ function EducationCareer() {
                     <MenuItem value="Unemployed">Unemployed</MenuItem>
                     <MenuItem value="Student">Student</MenuItem>
                   </Select>
-                  {!currentEmployment && <FormHelperText>Current employment status is required</FormHelperText>}
+                  {!currentEmployment && (
+                    <FormHelperText>
+                      Current employment status is required
+                    </FormHelperText>
+                  )}
                 </FormControl>
               </div>
-              <div style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "80px",
-                marginBottom: "40px",
-              }}>
-                <FormControl variant="standard" sx={{ minWidth: 300, marginTop: "10px" }} error={!profession}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "80px",
+                  marginBottom: "40px",
+                }}
+              >
+                <FormControl
+                  variant="standard"
+                  sx={{ minWidth: 300, marginTop: "10px" }}
+                  error={!profession}
+                >
                   <InputLabel id="profession-label">Profession</InputLabel>
                   <Select
                     labelId="profession-label"
@@ -480,26 +542,40 @@ function EducationCareer() {
                     onChange={(event) => setProfession(event.target.value)}
                     label="Profession"
                   >
-                  {ProfessionOption.map((option, index) => (
+                    {ProfessionOption.map((option, index) =>
                       typeof option === "string" ? (
-                        <MenuItem key={index} value={option}>{option}</MenuItem>
+                        <MenuItem key={index} value={option}>
+                          {option}
+                        </MenuItem>
                       ) : (
-                        <MenuItem key={index} disabled style={option.style}>{option.label}</MenuItem>
+                        <MenuItem key={index} disabled style={option.style}>
+                          {option.label}
+                        </MenuItem>
                       )
-                    ))}
+                    )}
                   </Select>
-                  {!profession && <FormHelperText>Profession is required</FormHelperText>}
+                  {!profession && (
+                    <FormHelperText>Profession is required</FormHelperText>
+                  )}
                 </FormControl>
               </div>
-              <div style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "80px",
-                marginBottom: "40px",
-              }}>
-                <FormControl variant="standard" sx={{ minWidth: 300, marginTop: "10px" }} error={!annualIncome}>
-                  <InputLabel id="annual-income-label">Annual Income</InputLabel>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "80px",
+                  marginBottom: "40px",
+                }}
+              >
+                <FormControl
+                  variant="standard"
+                  sx={{ minWidth: 300, marginTop: "10px" }}
+                  error={!annualIncome}
+                >
+                  <InputLabel id="annual-income-label">
+                    Annual Income
+                  </InputLabel>
                   <Select
                     labelId="annual-income-label"
                     id="annual-income-select"
@@ -513,46 +589,74 @@ function EducationCareer() {
                     <MenuItem value="Rs 10-15 lakh">Rs 10-15 lakh</MenuItem>
                     <MenuItem value="Rs 15-20 lakh">Rs 15-20 lakh</MenuItem>
                     <MenuItem value="Rs 20-30 lakh">Rs 20-30 lakh</MenuItem>
-                    <MenuItem value="More than 30 lakh">More than 30 lakh</MenuItem>
+                    <MenuItem value="More than 30 lakh">
+                      More than 30 lakh
+                    </MenuItem>
                   </Select>
-                  {!annualIncome && <FormHelperText>Annual income is required</FormHelperText>}
+                  {!annualIncome && (
+                    <FormHelperText>Annual income is required</FormHelperText>
+                  )}
                 </FormControl>
               </div>
-              <div style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "80px",
-                marginBottom: "40px",
-              }}>
-                <FormControl variant="standard" sx={{ minWidth: 300, marginTop: "10px" }} error={!yearsOfExperience}>
-                  <InputLabel id="years-of-experience-label">Years of Experience</InputLabel>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "80px",
+                  marginBottom: "40px",
+                }}
+              >
+                <FormControl
+                  variant="standard"
+                  sx={{ minWidth: 300, marginTop: "10px" }}
+                  error={!yearsOfExperience}
+                >
+                  <InputLabel id="years-of-experience-label">
+                    Years of Experience
+                  </InputLabel>
                   <Select
                     labelId="years-of-experience-label"
                     id="years-of-experience-select"
                     value={yearsOfExperience}
-                    onChange={(event) => setYearsOfExperience(event.target.value)}
+                    onChange={(event) =>
+                      setYearsOfExperience(event.target.value)
+                    }
                     label="Years of Experience"
                   >
                     <MenuItem value="0-1 years">0-1 years</MenuItem>
                     <MenuItem value="2-5 years">2-5 years</MenuItem>
                     <MenuItem value="6-10 years">6-10 years</MenuItem>
-                    <MenuItem value="More than 10 years">More than 10 years</MenuItem>
+                    <MenuItem value="More than 10 years">
+                      More than 10 years
+                    </MenuItem>
                   </Select>
-                  {!yearsOfExperience && <FormHelperText>Years of experience is required</FormHelperText>}
+                  {!yearsOfExperience && (
+                    <FormHelperText>
+                      Years of experience is required
+                    </FormHelperText>
+                  )}
                 </FormControl>
               </div>
-              <div style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: "20px",
-                marginBottom: "40px",
-              }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: "20px",
+                  marginBottom: "40px",
+                }}
+              >
                 <Button
-                  onClick={() => navigate('/additional-details',{state : location?.state})}
+                  onClick={() =>
+                    navigate("/additional-details", { state: location?.state })
+                  }
                   variant="outlined"
-                  sx={{ borderColor: "#6B0D37", color: "#6B0D37", margin: "20px" }}
+                  sx={{
+                    borderColor: "#6B0D37",
+                    color: "#6B0D37",
+                    margin: "20px",
+                  }}
                 >
                   Back
                 </Button>
@@ -560,7 +664,12 @@ function EducationCareer() {
                   onClick={handleNext}
                   variant="contained"
                   disabled={!isFormValid}
-                  sx={{ backgroundColor: "#6B0D37", "&:hover": { backgroundColor: "#6B0D37" }, margin: "20px" }}
+                  sx={{
+                    backgroundColor: "#FB6A6B",
+                    "&:hover": {
+                      backgroundColor: "#FB6A6B",
+                    },
+                  }}
                 >
                   Next
                 </Button>
@@ -583,7 +692,10 @@ function EducationCareer() {
             <Instagram style={{ marginRight: "10px" }} />
             <Twitter style={{ marginRight: "10px" }} />
           </div>
-          <div>&copy; 2024 <span style={{ color: "#FFBF00" }}>SoulMatch</span> All rights reserved.</div>
+          <div>
+            &copy; 2024 <span style={{ color: "#FFBF00" }}>SoulMatch</span> All
+            rights reserved.
+          </div>
           <div>
             <Email style={{ marginRight: "10px" }} />
             <span style={{ color: "#FFF" }}>Email Address</span>
