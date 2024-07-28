@@ -60,7 +60,7 @@ function Plan() {
  
      if (response.data) {
             
-        // window.location.href = response.data.url;
+        window.location.href = response.data.url;
       } else {
         console.error("Invalid payment response:", response.data);
       }
@@ -190,7 +190,7 @@ function Plan() {
                     handlePayment(
                       e,
                       // index === 0 ? 699 : index === 1 ? 999 : 1299
-                      index === 0 ? 1 : index === 1 ? 2 : 3
+                      index === 0 ? 100 : index === 1 ? 200 : 300
                     )
                   }
                   variant="contained"
