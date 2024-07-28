@@ -12,20 +12,36 @@ import {
 import { CheckCircle, Cancel } from "@mui/icons-material";
 import logo from "../images/logo.png";
 import "../css/plan.css";
-import { json, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Plan() {
-  const [loading2, setLoading2] = useState(false);
   const navigate = useNavigate();
 
   const URL = process.env.REACT_APP_API_BASE_URL;
 
-  const handlePayment = async (e) => {
+  const userdata = sessionStorage.getItem('user')
+  console.log("...userdata...",userdata)
+  let user = null
+  if (userdata) {
+    // Parse the JSON string back to an object
+     user = JSON.parse(userdata);
+  
+    // Access the email field
+    console.log("...userdata...", user);
+    console.log("...user email...", user.email); // Output: testingpart@gmail.com
+  } else {
+    console.log('No user data found in sessionStorage.');
+  }
+
+  console.log("...outside...",user.email)
+  const handlePayment = async (e,amount) => {
     e.preventDefault();
   
     const data = {
-      amount: 100,
+      email : user.email || "Not Available",
+      phoneo : user.phoneno || "Not Available",
+      amount: amount,
       MUID: "MUID" + Date.now(),
       transactionId: 'T' + Date.now(),
     };
@@ -53,9 +69,6 @@ function Plan() {
       // Handle error (display a message to the user, etc.)
     }
   };
-
- 
-
   return (
     <div style={{ paddingTop: "0px", paddingBottom: "80px" }}>
       <AppBar position="fixed" style={{ backgroundColor: "#6D0B32" }}>
@@ -119,10 +132,10 @@ function Plan() {
                   }}
                 >
                   {index === 0
-                    ? "₹699/month"
+                    ? "₹1/month"
                     : index === 1
-                    ? "₹999/month"
-                    : "₹1299/month"}
+                    ? "₹2/month"
+                    : "₹3/month"}
                 </Typography>
                 <Box
                   sx={{ display: "flex", flexDirection: "column", gap: "30px" }}
@@ -173,7 +186,13 @@ function Plan() {
                   </Grid>
                 </Box>
                 <Button
-                  onClick={handlePayment}
+                  onClick={(e) =>
+                    handlePayment(
+                      e,
+                      // index === 0 ? 699 : index === 1 ? 999 : 1299
+                      index === 0 ? 1 : index === 1 ? 2 : 3
+                    )
+                  }
                   variant="contained"
                   className="plan-button"
                   style={{
