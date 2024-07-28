@@ -60,7 +60,7 @@ function Plan() {
  
      if (response.data) {
             
-        window.location.href = response.data.url;
+        // window.location.href = response.data.url;
       } else {
         console.error("Invalid payment response:", response.data);
       }
