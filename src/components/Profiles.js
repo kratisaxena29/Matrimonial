@@ -427,7 +427,8 @@ function Profiles({ setlogedIn }) {
   };
 
   const triggerFileInput = () => {
-    document.getElementById('fileInput').click();
+    // document.getElementById('fileInput').click();
+    navigate('/user-profile')
   };
 
   const uploadImageToServer = async (file) => {
@@ -833,7 +834,7 @@ function Profiles({ setlogedIn }) {
                 </a> */}
               </p>
               <p>
-                <strong style={{ color: "#FFBF0E" }}>Support:</strong> 94490
+                <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong> 94490
                 65433
               </p>
             </div>

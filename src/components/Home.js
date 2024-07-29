@@ -165,7 +165,7 @@ function Home() {
               <div className="bl">
                 <ul>
                   <p style={{marginTop:10, paddingRight:"-30px"}}>
-                    <strong style={{ color: "#FFBF0E" }}>Support:</strong>{" "}
+                    <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong>{" "}
                     <span style={{ color: "white" }}>94490 65433</span>
                   </p>
                 </ul>
@@ -420,34 +420,49 @@ function Home() {
           </div>
         </div>
       </section>
-      <section className="about-us-section">
-        <div className="container">
-          <div className="row align-items-center">
-            <div className="col-md-6">
-              <img
-                src={aboutUsImage}
-                alt="Happy couple"
-                className="about-us-image img-fluid rounded shadow"
-              />
-            </div>
-            <div className="col-md-6 about-us-content">
-              <h2 className="about-us-title">About Us</h2>
-              <h3 className="about-us-subtitle">
-                "Bringing Together Two Souls"
-              </h3>
-              <p className="about-us-text">
-                Soulmatch believes in building a bridge between prospective
-                Brides and Grooms. If you are seeking a forever relationship
-                through a sacred matrimonial alliance, we provide you with one
-                of the best platforms to meet your soulmate.
-              </p>
-              <a href="#" className="learn-more-btn">
-                Join Us Today
-              </a>
-            </div>
-          </div>
+      <section className="about-us-section py-5">
+  <div className="container">
+    <div className="row align-items-center">
+      <div className="col-md-6">
+        <div className="image-founders-container">
+          <img
+            src={aboutUsImage}
+            alt="Happy couple"
+            className="about-us-image img-fluid rounded shadow-lg"
+          />
+<div className="founders-info mt-4">
+  <h4 className="founders-title mb-3">The Visionaries Behind SoulMatch</h4>
+  <div className="founders-grid">
+    <div className="co-founder">
+      <p className="founder-name">Shipra Agarwala</p>
+      <p className="founder-role">Co-Founder</p>
+    </div>
+    <div className="founder">
+      <p className="founder-name">Ayush Agarwala</p>
+      <p className="founder-role">Founder</p>
+    </div>
+  </div>
+</div>
         </div>
-      </section>
+      </div>
+      <div className="col-md-6 about-us-content">
+        <h2 className="about-us-title mb-4">About Us</h2>
+        <h3 className="about-us-subtitle mb-4">
+          "Bringing Together Two Souls"
+        </h3>
+        <p className="about-us-text mb-4">
+          Soulmatch believes in building a bridge between prospective
+          Brides and Grooms. If you are seeking a forever relationship
+          through a sacred matrimonial alliance, we provide you with one
+          of the best platforms to meet your soulmate.
+        </p>
+                <a href="#" className="learn-more-btn">
+          Join Us Today
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
       <section>
         <div className="cr">
           <div className="container">
@@ -461,9 +476,10 @@ function Home() {
               }}
             >
               <p>
-                <strong style={{ color: "#FFBF0E" }}>Email:</strong>{" "}
-                abc@gmail.com
-              </p>
+          <strong>Email: </strong> 
+          <a href="mailto:thedreamytrails@gmail.com"  style={{ textDecoration: "none", color: "#FFBF0E" }}>
+          thedreamytrails@gmail.com
+          </a>        </p>
               <p style={{ width: "200rem", textAlign: "center" }}>
                 Copyright © <span id="cry">2024</span>{" "}
                 <a
@@ -486,7 +502,7 @@ function Home() {
                 </a>
               </p>
               <p>
-                <strong style={{ color: "#FFBF0E" }}>Support:</strong> 94490
+                <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong> 94490
                 65433
               </p>
             </div>

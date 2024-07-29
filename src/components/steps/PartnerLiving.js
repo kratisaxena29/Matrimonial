@@ -331,20 +331,46 @@ function PartnerLiving() {
             </div>
           </div>
         </div>
-        <footer style={{ backgroundColor: "#530014", padding: "20px", display: "flex", alignItems: "center", justifyContent: "space-between", color: "#fff" }}>
-          <div>
-            <Facebook style={{ marginRight: "10px" }} />
-            <Instagram style={{ marginRight: "10px" }} />
-            <Twitter style={{ marginRight: "10px" }} />
+        <section>
+          <div className="cr">
+            <div className="container">
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-evenly",
+                  alignItems: "center",
+                  padding: "20px 0",
+                }}
+              >
+                <p>
+                  <strong>Email: </strong>
+                  <a
+                    href="mailto:thedreamytrails@gmail.com"
+                    style={{ textDecoration: "none", color: "#FFBF0E" }}
+                  >
+                    thedreamytrails@gmail.com
+                  </a>{" "}
+                </p>
+                <p style={{ width: "200rem", textAlign: "center" }}>
+                  Copyright © <span id="cry">2024</span>{" "}
+                  <a
+                    style={{ textDecoration: "none", color: "#FFBF00" }}
+                    href="#!"
+                    target="_blank"
+                  >
+                    SoulMatch
+                  </a>{" "}
+                  All rights reserved.{" "}
+                </p>
+                <p>
+                  <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong>{" "}
+                  94490 65433
+                </p>
+              </div>
+            </div>
           </div>
-          <div>
-            &copy; 2024 <span style={{ color: "#FFBF00" }}>SoulMatch</span> All rights reserved.
-          </div>
-          <div>
-            <Email style={{ marginRight: "10px" }} />
-            <span style={{ color: "#FFF" }}>Email Address</span>
-          </div>
-        </footer>
+        </section>
       </div>
     </ThemeProvider>
   );

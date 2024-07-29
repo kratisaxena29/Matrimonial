@@ -31,6 +31,7 @@ import AboutYourself from './components/steps/Aboutyourself';
 import PaymentFailure from './components/PaymentFailure';
 import PaymentSucess from './components/PaymentSucess';
 import ConfirmationProfile from './components/ConfirmationProfile';
+import UserProfile from './components/steps/UserProfile';
 
 function App() {
   const [logedIn, setlogedIn] = useState(
@@ -76,6 +77,7 @@ function App() {
           <Route path="/chat" element={<Chat setlogedIn={setlogedIn}/>} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/plan" element={<Plan />} />
+          <Route path="/user-profile" element={<UserProfile />} />
           <Route path="/PersonDetails" element={<PersonDetails setlogedIn={setlogedIn} />} />
         </Route>
       </Routes>

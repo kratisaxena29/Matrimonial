@@ -23,7 +23,7 @@ function TermsConditions() {
     <div>
       <div>
         <nav
-        ref={navRef}
+          ref={navRef}
           style={{
             backgroundColor: "#6D0B32",
             padding: "10px 20px",
@@ -35,7 +35,11 @@ function TermsConditions() {
             //   position:"fixed"
           }}
         >
-          <a style={{cursor:"pointer"}} onClick={() => navigate('/')} className="logo-brand">
+          <a
+            style={{ cursor: "pointer" }}
+            onClick={() => navigate("/")}
+            className="logo-brand"
+          >
             <img
               src={logo}
               alt="Logo"
@@ -424,17 +428,14 @@ function TermsConditions() {
         </p>
         <p style={{ color: "#333", fontSize: "14px" }}>
           Email ID:{" "}
-          <a href="mailto:helpdesk@soulmatch.com">helpdesk@soulmatch.com</a>
+          <a href="mailto:soulmatchinfo@gmail.com">soulmatchinfo@gmail.com</a>
           <br />
-          Contact No: +91-8144998877
+          Contact No: +91 9449065433
           <br />
-          Address: Matrimony.com Limited
+          Address: Sterling Terraces, 100 Feet Ring Road, Banashankari 3rd
+          Stage,
           <br />
-          No.94, TVH Beliciaa Towers, Tower - 2,
-          <br />
-          5th Floor, MRC Nagar, Chennai,
-          <br />
-          Tamil Nadu - 600 028
+          Bangalore, Karnaraka - 560085
         </p>
 
         {/* Medium of Communication to SM Members Section */}
@@ -1289,10 +1290,10 @@ function TermsConditions() {
           &copy; 2024 <span style={{ color: "#FFBF00" }}>SoulMatch</span> All
           rights reserved. |{" "}
           <a
-           style={{cursor:"pointer", color:"#FFBF00"}}
-           onClick={() => navigate('/plan')}  
+            style={{ cursor: "pointer", color: "#FFBF00" }}
+            onClick={() => navigate("/plan")}
           >
-           Pricing Policy   
+            Pricing Policy
           </a>
         </div>
         <div>
