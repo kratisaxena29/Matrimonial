@@ -403,7 +403,7 @@ function EducationCareer() {
           <div
             style={{
               flex: 1,
-              backgroundColor: "#FFE5E7",
+              backgroundColor: "#F7E7CE",
               textAlign: "center",
               padding: "10px 0",
               display: "flex",

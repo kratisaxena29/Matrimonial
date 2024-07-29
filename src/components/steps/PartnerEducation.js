@@ -419,7 +419,7 @@ console.log("...location state in education...",location.state)
           <img src={logo} alt="Logo" style={{ height: "60px", marginRight: "40px" }} />
         </nav>
         <div style={{ display: "flex", flex: 1 }}>
-          <div style={{ flex: 1, backgroundColor: "#FFE5E7", textAlign: "center", padding: "10px 0", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ flex: 1, backgroundColor: "#F7E7CE", textAlign: "center", padding: "10px 0", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
             <StarsIcon style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }} />
             <Typography variant="h4" component="div" sx={{ color: "#6B0D37" }}>
               "Join us in the quest for love, where every profile is a chapter waiting to be written in the book of destiny."
