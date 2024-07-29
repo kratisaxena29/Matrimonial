@@ -141,7 +141,7 @@ const ChatApp = ({ setlogedIn }) => {
   }, [conversations, user.email]);
 
   useEffect(() => {
-    const socketInstance = io('http://localhost:3001');
+    const socketInstance = io('http://13.200.211.15:3001/:3001');
     setSocket(socketInstance);
 
     return () => {
