@@ -256,7 +256,7 @@ const [subcasteError,setSubCasteError] = useState(false)
   ]
 
   const casteOptions = [
-    "Aggarwal", "Kanyakubj Brahmin", "Gaur Brahmin", "Brahmin" , 
+    "Agarwal", "Kanyakubj Brahmin", "Gaur Brahmin", "Brahmin" , 
     "Jat" ,"Jain","Maheshwari" ,"Kayastha" , "Khatri" ,
      "Kshatriya" , "Maratha" , "Rajput" , "Sindhi" , "Sunni" , "Oberoi",
      "Arora" , "Shwetamber" , "Yadav" , "Bania" , "Scheduled Caste" , 

@@ -367,7 +367,7 @@ function ProfileDetails() {
                 }}
               >
                 <TextField
-                  label="Name"
+                  label="FullName"
                   variant="standard"
                   value={name}
                   onChange={handleChange(setName, "name")}
