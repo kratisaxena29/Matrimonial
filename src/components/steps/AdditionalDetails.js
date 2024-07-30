@@ -881,10 +881,10 @@ console.log("...additional..",location.state)
                 <p>
                   <strong>Email: </strong>
                   <a
-                    href="mailto:thedreamytrails@gmail.com"
+                    href="mailto:soulmatchinfo@gmail.com"
                     style={{ textDecoration: "none", color: "#FFBF0E" }}
                   >
-                    thedreamytrails@gmail.com
+                    soulmatchinfo@gmail.com
                   </a>{" "}
                 </p>
                 <p style={{ width: "200rem", textAlign: "center" }}>

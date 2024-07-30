@@ -477,8 +477,8 @@ function Home() {
             >
               <p>
           <strong>Email: </strong> 
-          <a href="mailto:thedreamytrails@gmail.com"  style={{ textDecoration: "none", color: "#FFBF0E" }}>
-          thedreamytrails@gmail.com
+          <a href="mailto:soulmatchinfo@gmail.com"  style={{ textDecoration: "none", color: "#FFBF0E" }}>
+          soulmatchinfo@gmail.com
           </a>        </p>
               <p style={{ width: "200rem", textAlign: "center" }}>
                 Copyright © <span id="cry">2024</span>{" "}

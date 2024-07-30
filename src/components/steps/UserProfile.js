@@ -38,34 +38,7 @@ function UserProfile({ setlogedIn }) {
 
   const URL = process.env.REACT_APP_API_BASE_URL;
 
-  const handleChat = async () => {
-    try {
-      const payload = {
-        AllprofilesId: interestedProfiles,
-      };
 
-      // Add email or phoneno to the payload based on available user data
-      if (user.email) {
-        payload.email = user.email;
-      } else if (user.phoneno) {
-        payload.phoneno = user.phoneno;
-      } else {
-        console.log("Neither email nor phone number is available.");
-        return;
-      }
-
-      const response = await axios.post(`${URL}/allProfileId`, payload, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      console.log("API Response:", response.data);
-      navigate("/chat");
-    } catch (error) {
-      console.log("..error...", error);
-    }
-  };
 
   const handleInterest = (profileId) => {
     console.log("Interest button clicked for profile:", profileId);
@@ -98,31 +71,7 @@ function UserProfile({ setlogedIn }) {
     aboutMe: "",
   });
 
-  useEffect(() => {
-    // Fetch profile data from API
-    // For now, we'll use dummy data
-    const dummyData = {
-      fullName: "John Doe",
-      dateOfBirth: "1990-01-01",
-      gender: "male",
-      maritalStatus: "never_married",
-      religion: "hindu",
-      caste: "brahmin",
-      fatherOccupation: "Business",
-      motherOccupation: "Homemaker",
-      familyType: "nuclear",
-      highestEducation: "masters",
-      occupation: "Software Engineer",
-      annualIncome: "100000",
-      diet: "non_veg",
-      smoking: false,
-      drinking: false,
-      ageRange: "25-30",
-      heightRange: "5'5\" - 5'10\"",
-      aboutMe: "I'm a software engineer looking for a life partner.",
-    };
-    setProfileData(dummyData);
-  }, []);
+
 
   const handleEditToggle = () => {
     setIsEditMode(!isEditMode);
@@ -276,6 +225,7 @@ function UserProfile({ setlogedIn }) {
   };
 
   const handlegetImageUrl = async () => {
+    console.log("...handleImageUrl....")
     axios
       .get(`${URL}/getimagepath?email=${user.email}`)
       .then((response) => {
@@ -294,46 +244,9 @@ function UserProfile({ setlogedIn }) {
     handlegetImageUrl();
   }, []);
 
-  useEffect(() => {
-    // Construct the API URL based on filters
-    let apiUrl = `${URL}/getAllprofile?`;
-    if (user.email) {
-      apiUrl += `email=${user.email}`;
-    } else if (user.phoneno) {
-      console.log("...user.phoneno...", user.phoneno);
-      apiUrl += `phoneno=${user.phoneno}`;
-    }
 
-    if (age) {
-      apiUrl += `&ageRange=${age}`;
-    }
-    if (religion) {
-      apiUrl += `&religion=${religion}`;
-    }
-    if (caste) {
-      apiUrl += `&caste=${caste}`;
-    }
-    if (subcaste) {
-      apiUrl += `&subcaste=${subcaste}`;
-    }
 
-    console.log("Constructed API URL:", apiUrl);
 
-    axios
-      .get(apiUrl)
-      .then((response) => {
-        console.log("..response...", response.data);
-        setProfiles(response.data.response);
-      })
-      .catch((error) => {
-        console.log("...error..", error);
-      });
-  }, [age, religion, caste, subcaste]);
-
-  const handleProfileDetails = async (profileId) => {
-    console.log("...handleProfileDetails for profileId...", profileId);
-    navigate("/PersonDetails", { state: { profileId } });
-  };
 
   const handleLogout = () => {
     sessionStorage.clear();
@@ -347,7 +260,49 @@ function UserProfile({ setlogedIn }) {
   useEffect(() => {
     console.log("..interestedProfiles after update..", interestedProfiles);
   }, [interestedProfiles]);
-
+  useEffect(() => {
+    const handleData = async () => {
+      console.log("....user krati...",user.email)
+      let data  = user.email
+      if(data.includes('@')){
+        data = user.email
+      }
+      else{
+        data = user.phoneno
+      }
+      try {
+        const response = await axios.get(`${URL}/profile/${data}`);
+      
+       console.log("...response...",response.data)
+       const dummyData = {
+        fullName: response.data.name || "Not Available",
+        dateOfBirth: response.data.dateOfBirth || "Not Available" ,
+        gender: response.data.gender || "Not Available" ,
+        maritalStatus: response.data.martialStatus || "Not Available" ,
+        religion: response.data.religion || "Not Available" ,
+        caste: response.data.caste || "Not Available" ,
+        fatherOccupation: response.data.Fathers_prof || "Not Available" ,
+        motherOccupation: response.data.Mothers_prof || "Not Available" ,
+        familyType: response.data.family_Type || "Not Available" ,
+        highestEducation: response.data.heighestEduction || "Not Available" ,
+        occupation: response.data.profession || "Not Available" ,
+        annualIncome: response.data.annualIncome || "Not Available" ,
+        diet: response.data.diet || "Not Available" ,
+        smoking: response.data.smoke || "Not Available" ,
+        drinking: response.data.drink || "Not Available" ,
+        ageRange: response.data.Part_ageFrom || "Not Available" ,
+        heightRange: response.data.Part_height || "Not Available" ,
+        aboutMe: response.data.aboutYourSelf || "Not Available" ,
+      };
+      setProfileData(dummyData);
+      } catch (error) {
+        console.log("...error..", error);
+      }
+    };
+  
+    handleData();
+  }, [user.email, user.phoneno]);
+  
   return (
     <div>
       <nav
@@ -380,7 +335,26 @@ function UserProfile({ setlogedIn }) {
           >
             Plans
           </Button>
-          <input
+          
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#F68C1E",
+              color: "white",
+              "&:hover": {
+                backgroundColor: "red",
+              },
+              textTransform: "none",
+              fontWeight: "bold",
+            }}
+            onClick={handleLogout}
+          >
+            Logout
+          </Button>
+        </div>
+      </nav>
+      <section>
+      <input
             type="file"
             id="fileInput"
             style={{ display: "none" }}
@@ -389,8 +363,8 @@ function UserProfile({ setlogedIn }) {
           <div
             onClick={triggerFileInput}
             style={{
-              height: "50px",
-              width: "50px",
+              height: "100px",
+              width: "100px",
               borderRadius: "50%",
               backgroundColor: "#FFFFFF",
               display: "flex",
@@ -420,23 +394,7 @@ function UserProfile({ setlogedIn }) {
               />
             )}
           </div>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "#F68C1E",
-              color: "white",
-              "&:hover": {
-                backgroundColor: "red",
-              },
-              textTransform: "none",
-              fontWeight: "bold",
-            }}
-            onClick={handleLogout}
-          >
-            Logout
-          </Button>
-        </div>
-      </nav>
+      </section>
       <section>
       <div className="login pro-edit-update">
         <div className="container">
@@ -447,7 +405,7 @@ function UserProfile({ setlogedIn }) {
                   <form onSubmit={handleSubmit}>
                     <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
                       <Typography variant="h4">User Profile</Typography>
-                      <Button
+                      {/* <Button
                         variant="contained"
                         onClick={handleEditToggle}
                         sx={{
@@ -458,7 +416,7 @@ function UserProfile({ setlogedIn }) {
                         }}
                       >
                         {isEditMode ? "Cancel" : "Edit Profile"}
-                      </Button>
+                      </Button> */}
                     </Box>
 
                     {/* Basic Information */}
@@ -630,10 +588,10 @@ function UserProfile({ setlogedIn }) {
                 <p>
                   <strong>Email: </strong>
                   <a
-                    href="mailto:thedreamytrails@gmail.com"
+                    href="mailto:soulmatchinfo@gmail.com"
                     style={{ textDecoration: "none", color: "#FFBF0E" }}
                   >
-                    thedreamytrails@gmail.com
+                    soulmatchinfo@gmail.com 
                   </a>{" "}
                 </p>
                 <p style={{ width: "200rem", textAlign: "center" }}>

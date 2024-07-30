@@ -59,9 +59,9 @@ function TermsConditions() {
         }}
       >
         <h1 style={{ color: "#6D0B32" }}>TERMS AND CONDITIONS</h1>
-        <p style={{ color: "#333", fontSize: "14px" }}>
+        {/* <p style={{ color: "#333", fontSize: "14px" }}>
           Date: Friday(2024-06-21), Time: 08:57 PM
-        </p>
+        </p> */}
         <p style={{ color: "#333", fontSize: "14px" }}>
           This document is an electronic record in terms of the Information
           Technology Act, 2000 and rules there under pertaining to electronic
