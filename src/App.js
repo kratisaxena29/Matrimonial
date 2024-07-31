@@ -44,55 +44,55 @@ function App() {
   }, [logedIn]);
 
   return (
-    <Dashboard/>
-    // <Router>
-    //   <Routes>
-    //     <Route path="/" element={<PublicRoute logedIn={logedIn} />}>
-    //       <Route path="/" element={<Home />} />
-    //       <Route path="/login" element={<Login setlogedIn={setlogedIn} />} />
-    //       <Route path="/verify-otp" element={<VerifyOtp />} />
-    //       <Route path="/confirmation-otp" element={<ConfirmationOtp />} />
-    //       <Route path="/profile-details" element={<ProfileDetails />} />
-    //       <Route path="/additional-details" element={<AdditionalDetails />} />
-    //       <Route path="/education-career" element={<EducationCareer />} />
-    //       <Route path="/horoscope" element={<Horoscope />} />
-    //       <Route path="/lifestyle" element={<LifeStyle />} />
-    //       <Route path="/family-details" element={<FamilyDetails />} />
-    //       <Route path="/partner-family" element={<PartnerFamily />} />
-    //       <Route path="/partner-education" element={<PartnerEducation />} />
-    //       <Route path="/partner-living" element={<PartnerLiving />} />
-    //       <Route path="/upload-document" element={<UploadDocument />} />
-    //       <Route
-    //         path="/Confirmation-Profile"
-    //         element={<ConfirmationProfile />}
-    //       />
-    //       <Route path="/forgot-password" element={<ResetPassword />} />
-    //       <Route path="/forgot-otp" element={<ForgotOtp />} />
-    //       <Route path="/success" element={<PasswordResetSuccess />} />
-    //       <Route path="/terms&conditions" element={<TermsConditions />} />
-    //       <Route path="/profile-completed" element={<ProfileCompleted />} />
-    //       <Route path="/reset-password" element={<NewPassword />} />
-    //       <Route path="/about-yourself" element={<AboutYourself />} />
-    //       <Route path="/payment-fail" element={<PaymentFailure />} />
-    //       <Route path="/payment-success" element={<PaymentSucess />} />
-    //     </Route>
+    // <Dashboard/>
+    <Router>
+      <Routes>
+        <Route path="/" element={<PublicRoute logedIn={logedIn} />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login setlogedIn={setlogedIn} />} />
+          <Route path="/verify-otp" element={<VerifyOtp />} />
+          <Route path="/confirmation-otp" element={<ConfirmationOtp />} />
+          <Route path="/profile-details" element={<ProfileDetails />} />
+          <Route path="/additional-details" element={<AdditionalDetails />} />
+          <Route path="/education-career" element={<EducationCareer />} />
+          <Route path="/horoscope" element={<Horoscope />} />
+          <Route path="/lifestyle" element={<LifeStyle />} />
+          <Route path="/family-details" element={<FamilyDetails />} />
+          <Route path="/partner-family" element={<PartnerFamily />} />
+          <Route path="/partner-education" element={<PartnerEducation />} />
+          <Route path="/partner-living" element={<PartnerLiving />} />
+          <Route path="/upload-document" element={<UploadDocument />} />
+          <Route
+            path="/Confirmation-Profile"
+            element={<ConfirmationProfile />}
+          />
+          <Route path="/forgot-password" element={<ResetPassword />} />
+          <Route path="/forgot-otp" element={<ForgotOtp />} />
+          <Route path="/success" element={<PasswordResetSuccess />} />
+          <Route path="/terms&conditions" element={<TermsConditions />} />
+          <Route path="/profile-completed" element={<ProfileCompleted />} />
+          <Route path="/reset-password" element={<NewPassword />} />
+          <Route path="/about-yourself" element={<AboutYourself />} />
+          <Route path="/payment-fail" element={<PaymentFailure />} />
+          <Route path="/payment-success" element={<PaymentSucess />} />
+        </Route>
 
-    //     <Route path="/" element={<ProtectedRoute logedIn={logedIn} />}>
-    //       <Route
-    //         path="/profiles"
-    //         element={<Profiles setlogedIn={setlogedIn} />}
-    //       />
-    //       <Route path="/chat" element={<Chat setlogedIn={setlogedIn} />} />
-    //       <Route path="/payment" element={<Payment />} />
-    //       <Route path="/plan" element={<Plan />} />
-    //       <Route path="/user-profile" element={<UserProfile />} />
-    //       <Route
-    //         path="/PersonDetails"
-    //         element={<PersonDetails setlogedIn={setlogedIn} />}
-    //       />
-    //     </Route>
-    //   </Routes>
-    // </Router>
+        <Route path="/" element={<ProtectedRoute logedIn={logedIn} />}>
+          <Route
+            path="/profiles"
+            element={<Profiles setlogedIn={setlogedIn} />}
+          />
+          <Route path="/chat" element={<Chat setlogedIn={setlogedIn} />} />
+          <Route path="/payment" element={<Payment />} />
+          <Route path="/plan" element={<Plan />} />
+          <Route path="/user-profile" element={<UserProfile />} />
+          <Route
+            path="/PersonDetails"
+            element={<PersonDetails setlogedIn={setlogedIn} />}
+          />
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 
