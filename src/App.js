@@ -85,7 +85,7 @@ function App() {
           <Route path="/chat" element={<Chat setlogedIn={setlogedIn} />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/plan" element={<Plan />} />
-          <Route path="/user-profile" element={<UserProfile />} />
+          <Route path="/user-profile" element={<UserProfile setlogedIn={setlogedIn}/>} />
           <Route
             path="/PersonDetails"
             element={<PersonDetails setlogedIn={setlogedIn} />}

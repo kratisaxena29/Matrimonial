@@ -260,7 +260,7 @@ const [subcasteError,setSubCasteError] = useState(false)
     "Jat" ,"Jain","Maheshwari" ,"Kayastha" , "Khatri" ,
      "Kshatriya" , "Maratha" , "Rajput" , "Sindhi" , "Sunni" , "Oberoi",
      "Arora" , "Shwetamber" , "Yadav" , "Bania" , "Scheduled Caste" , 
-     "Digamber"  , "Sikh Jat" , "Gupta",
+     "Digamber"  , "Sikh Jat" , "Gupta","Scheduled Tribes",
       "Tei" , "Vaishnav" ,"Kurmi kshatriya", "Other" ];
   const subCasteOptions = [
     "Arora",
@@ -613,7 +613,7 @@ const [subcasteError,setSubCasteError] = useState(false)
       part_petFriendly
     );
   };
-
+console.log("...partner...",location.state)
   const handleNext = async () => {
     setAgeError(!part_ageFrom);
     setMartialStatusError(!part_martialStatus);

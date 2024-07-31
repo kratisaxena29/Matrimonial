@@ -11,6 +11,7 @@ import axios from "axios";
 function PersonDetails({ setlogedIn }) {
   const location = useLocation();
   const [profileData, setProfileData] = useState(null);
+  console.log("...location.state...",location?.state?.profileId)
   const profileId = location?.state?.profileId;
 
   const URL = process.env.REACT_APP_API_BASE_URL;

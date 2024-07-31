@@ -13,357 +13,357 @@ function Profiles({ setlogedIn }) {
   const [religion, setReligion] = useState("");
   const [profiles, setProfiles] = useState([]);
   const [interestedProfiles, setInterestedProfiles] = useState([]);
-  const [subcaste,setSubCaste ] = useState("")
+  const [subcaste, setSubCaste] = useState("")
   const navigate = useNavigate();
- 
+
   const casteOptions = [
-    "Agarwal", "Kanyakubj Brahmin", "Gaur Brahmin", "Brahmin" , 
-    "Jat" ,"Jain","Maheshwari" ,"Kayastha" , "Khatri" ,
-     "Kshatriya" , "Maratha" , "Rajput" , "Sindhi" , "Sunni" , "Oberoi",
-     "Arora" , "Shwetamber" , "Yadav" , "Bania" , "Scheduled Caste" , 
-     "Digamber"  , "Sikh Jat" , "Gupta",
-      "Tei" , "Vaishnav" ,"Kurmi kshatriya", "Other" ];
+    "Agarwal", "Kanyakubj Brahmin", "Gaur Brahmin", "Brahmin",
+    "Jat", "Jain", "Maheshwari", "Kayastha", "Khatri",
+    "Kshatriya", "Maratha", "Rajput", "Sindhi", "Sunni", "Oberoi",
+    "Arora", "Shwetamber", "Yadav", "Bania", "Scheduled Caste",
+    "Digamber", "Sikh Jat", "Gupta", "Scheduled Tribes",
+    "Tei", "Vaishnav", "Kurmi kshatriya", "Other"];
 
   const subCasteOptions = [
     "Select Sub Caste",
     "Arora",
-"Baniya",
-"24 Manai Telugu Chettiar",
-"96 Kuli Maratha",
-"96K Kokanastha",
-"Adi Andhra",
-"Adi Dharmi",
-"Adi Dravida",
-"Adi Karnataka",
-"Agamudayar",
-"Agnikula Kshatriya",
-"Agri",
-"Ahir",
-"Ahom",
-"Ambalavasi",
-"Arcot",
-"Arekatica",
-"Arora",
-"Arunthathiyar",
-"Arya Vysya",
-"Aryasamaj",
-"Ayyaraka",
-"Bhandari",
-"Brahmin - Audichya",
-"Brahmin - Anavil",
-"Brahmin - Audichya",
-"Brahmin - Barendra",
-"Brahmin - Bhatt",
-"Brahmin - Bhumihar",
-"Brahmin - Brahmbhatt",
-"Brahmin - Dadhich/Dadheech",
-"Brahmin - Daivadnya",
-"Brahmin - Danua",
-"Brahmin - Deshastha",
-"Brahmin - Dhiman",
-"Brahmin - Dravida",
-"Brahmin - Embrandiri",
-"Brahmin - Goswami",
-"Brahmin - Gour",
-"Brahmin - Gowd Saraswat",
-"Brahmin - Gujar Gour",
-"Brahmin - Gurukkal",
-"Brahmin - Halua",
-"Brahmin - Havyaka",
-"Brahmin - Himachali",
-"Brahmin - Hoysala",
-"Brahmin - Iyengar",
-"Brahmin - Iyer",
-"Brahmin - Jangid",
-"Brahmin - Jhadua",
-"Brahmin - Jhijhotiya",
-"Brahmin - Kanyakubja",
-"Brahmin - Karhade",
-"Brahmin - Kashmiri Pandit",
-"Brahmin - Kokanastha",
-"Brahmin - Kota",
-"Brahmin - Kulin",
-"Brahmin - Kumaoni",
-"Brahmin - Madhwa",
-"Brahmin - Maithili",
-"Brahmin - Modh",
-"Brahmin - Mohyal",
-"Brahmin - Nagar",
-"Brahmin - Namboodiri",
-"Brahmin - Niyogi",
-"Brahmin - Niyogi Nandavariki",
-"Brahmin - Other",
-"Brahmin - Paliwal",
-"Brahmin - Panda",
-"Brahmin - Pareek",
-"Brahmin - Pushkarna",
-"Brahmin - Rarhi",
-"Brahmin - Rudraj",
-"Brahmin - Sakaldwipi",
-"Brahmin - Sanadya",
-"Brahmin - Saraswat",
-"Brahmin - Sanketi",
-"Brahmin - Sarua",
-"Brahmin - Vyas",
-"Brahmbatt",
-"Badaga",
-"Baghel/Pal/Gaderiya",
-"Bahi",
-"Baidya",
-"Baishnab",
-"Brahmo",
-"Buddar",
-"Bunt (Shetty)",
-"CKP",
-"Chalawadi Holeya",
-"Chambhar",
-"Chandravanshi Kahar",
-"Chasa",
-"Chattada Sri Vaishnava",
-"Chaudary",
-"Chaurasia",
-"Chekkala - Nair",
-"Chennadasar",
-"Cheramar",
-"Chettiar",
-"Chhetri",
-"Chippolu/Mera",
-"Devadiga",
-"Devanga",
-"Devar/Thevar/Mukkulathor",
-"Devendra Kula Vellalar",
-"Dhangar",
-"Dheevara",
-"Dhiman",
-"Dhoba",
-"Digambar",
-"Dommala",
-"Dusadh",
-"Ediga",
-"Ezhava",
-"Ezhuthachan",
-"Gabit",
-"Ganakar",
-"Gowda",
-"Halwai",
-"Hegde",
-"Helava",
-"Intercaste",
-"Jaalari",
-"Jaiswal",
-"Jandra",
-"Jangam",
-"Jat",
-"Jatav",
-"Jetty Malla",
-"Kachara",
-"Kaibarta",
-"Kakkalan",
-"Kalar",
-"Kalinga",
-"Kalinga Vysya",
-"Kashyap",
-"Kayastha",
-"Khandelwal",
-"Koli",
-"Koli Patel",
-"Kshatriya",
-"Lambadi",
-"Laxminarayan gola",
-"Leva Patidar",
-"Leva Patil",
-"Lingayat",
-"Lingayat-Agasa",
-"Lingayat-Akkasali",
-"Lingayat-Aradhya",
-"Lingayat-Balegala",
-"Lingayat-Banagar",
-"Lingayat-Banajiga",
-"Lingayat-Bhandari",
-"Lingayat-Bilijedaru",
-"Lingayat-Bilimagga",
-"Lingayat-Chaturtha",
-"Lingayat-Dikshwant",
-"Lingayat-Ganiga",
-"Lingayat-Gowda",
-"Lingayat-Gowli",
-"Lingayat-Gurav",
-"Lingayat-Hadapada",
-"Lingayat-Hatgar",
-"Lingayat-Hoogar / Hugar / Jeer",
-"Lingayat-Jadaru",
-"Lingayat-Jangam",
-"Lingayat-Kudu Vokkaliga",
-"Lingayat-Kumbar / Kumbara",
-"Lingayat-Kumbhar",
-"Lingayat-Kuruhina Setty",
-"Lingayat-lamba",
-"Lingayat-Lolagonda",
-"Lingayat-Madivala",
-"Lingayat-Malgar",
-"Lingayat-Mali",
-"Lingayat-Neelagar",
-"Lingayat-Neeli / Neelagar",
-"Lingayat-Neygi",
-"Lingayat-Nolamba",
-"Lingayat-Pancham",
-"Lingayat-Panchamasali",
-"Lingayat-Pattasali",
-"Lingayat-Reddy Reddi",
-"Lingayat-Sadar",
-"Lingayat-Sajjan / Sajjanaganigar ",
-"Lingayat-Setty",
-"Lingayat-Shilwant",
-"Lingayat-Shiva Simpi",
-"Lingayat-Vani",
-"Lingayat-Veerashaiva",
-"Lohana",
-"Lohana-Ghoghari",
-"Lohana-Halai",
-"Lohana-Kutchi",
-"Lohana-Vaishnav",
-"Lohar",
-"Lubana",
-"Madiga",
-"Mahar",
-"Mahendra",
-"Maheshwari",
-"Mahindra",
-"Mahisya",
-"Majabi Mazhbi",
-"Mala",
-"Mali",
-"Mallah",
-"Mallah-Kewat / Keot",
-"Mallah-Nishad",
-"Manikpuri",
-"Manipuri",
-"Manjhi",
-"Mannan / Velon / Vannan",
-"Mapila",
-"Maratha",
-"Maratha-96 Kuli Maratha",
-"Maratha-Aramari Gabit",
-"Maratha-Deshastha Maratha",
-"Maratha-Deshmukh",
-"Maratha-Deshtha Maratha",
-"Maratha-Gomantak Maratha",
-"Maratha-Jhadav",
-"Maratha-Kokanastha Maratha",
-"Maratha-Kunbi Dhanoje",
-"Maratha-Kunbi Khaire",
-"Maratha-Kunbi Khedule",
-"Maratha-Kunbi Lonari",
-"Maratha-Kunbi Maratha",
-"Maratha-Kunbi Tirale",
-"Maratha-Malwani",
-"Maratha-Maratha Kshatriya",
-"Maratha-Parit",
-"Maratha-Patil",
-"Maratha-Sonar",
-"Maratha-Suthar",
-"Maratha-Vani",
-"Maravar",
-"Maruthuvar",
-"Matang",
-"Maurya",
-"Maurya-Kachchi",
-"Maurya-Kushwaha",
-"Meda",
-"Meena",
-"Meenavar",
-"Meghwal",
-"Mehra",
-"Mehtar",
-"Menon",
-"Meru",
-"Meru darji",
-"Mochi",
-"Modak",
-"Mogaveera",
-"Monchi",
-"Motati Reddy",
-"Mudaliar",
-"Mudaliar-Agamudayar/Arcot/Thuluva Vellala",
-"Mudaliar-Isai Vellalar",
-"Mudaliar-Kerala Mudali",
-"Mudaliar-Kongu Vellala Gounder",
-"Mudaliar-Mudailiar Arcot",
-"Mudaliar-Mudaliar All",
-"Mudaliar-Mudaliar Saiva",
-"Mudaliar-Mudaliar Sengupta",
-"Mudaliar-Saiva Pillai Tirunelveli",
-"Mudaliar-Sengunthar/Kaikolar",
-"Mudaliar-Sozhiya Vellalar",
-"Mudaliar-Thondai Mandala Vellala",
-"Mudaliar-Veerakodi Vellala",
-"Mudaliar Arcot",
-"Mudiraj",
-"Muthuraja",
-"Naagavamsam",
-"Nadar",
-"Nadar-Kongu Nadar",
-"Nagaralu",
-"Naicker",
-"Naicker-Naicker others",
-"Naicker-Naicker-Vanniya Kula Kshatriyar",
-"Naicker-Rajaka Chakali Dhobi",
-"Naidu",
-"Naidu-Balija Naidu",
-"Naidu-Ediga /Goud",
-"Naidu-Gajula Kavarai",
-"Naidu-Gavara",
-"Naidu-Kamma",
-"Naidu-Kapu Naidu",
-"Naidu-Munnuru Kapu",
-"Naidu-Mutharaja",
-"Naidu-Perika",
-"Naidu-Raja Kambalathu Naicker",
-"Naidu-Raju",
-"OBC - Barber/Naayee",
-"Oswal",
-"Otari",
-"Patel",
-"Padmasali",
-"Panchal",
-"Pandaram",
-"Panicker",
-"Paravan",
-"Parit",
-"Parkava Kulam",
-"Partraj",
-"Pasi",
-"Rajaka/Chakali/Dhobi",
-"Rajbhar",
-"Rajput",
-"Rajput - Kumaoni",
-"Rajput - Lodhi",
-"Ramdasia",
-"Ramgharia",
-"Rauniyar",
-"Ravidasia",
-"Rawat",
-"Reddiar",
-"Reddy",
-"Relli",
-"SSK",
-"Sagara - Uppara",
-"Shilpkar",
-"Shimpi",
-"Sindhi - Bhanusali",
-"Sindhi - Bhatia",
-"Sindhi - Chhapru",
-"Sindhi - Dadu",
-"Sindhi - Hyderabadi",
-"Sindhi - Larai",
-"Sindhi - Lohana",
-"Telaga",
-"Teli",
-"Thuluva Vellala",
-"Vysya",
-"Yadav",
-"Other"
-];
+    "Baniya",
+    "24 Manai Telugu Chettiar",
+    "96 Kuli Maratha",
+    "96K Kokanastha",
+    "Adi Andhra",
+    "Adi Dharmi",
+    "Adi Dravida",
+    "Adi Karnataka",
+    "Agamudayar",
+    "Agnikula Kshatriya",
+    "Agri",
+    "Ahir",
+    "Ahom",
+    "Ambalavasi",
+    "Arcot",
+    "Arekatica",
+    "Arora",
+    "Arunthathiyar",
+    "Arya Vysya",
+    "Aryasamaj",
+    "Ayyaraka",
+    "Bhandari",
+    "Brahmin - Audichya",
+    "Brahmin - Anavil",
+    "Brahmin - Audichya",
+    "Brahmin - Barendra",
+    "Brahmin - Bhatt",
+    "Brahmin - Bhumihar",
+    "Brahmin - Brahmbhatt",
+    "Brahmin - Dadhich/Dadheech",
+    "Brahmin - Daivadnya",
+    "Brahmin - Danua",
+    "Brahmin - Deshastha",
+    "Brahmin - Dhiman",
+    "Brahmin - Dravida",
+    "Brahmin - Embrandiri",
+    "Brahmin - Goswami",
+    "Brahmin - Gour",
+    "Brahmin - Gowd Saraswat",
+    "Brahmin - Gujar Gour",
+    "Brahmin - Gurukkal",
+    "Brahmin - Halua",
+    "Brahmin - Havyaka",
+    "Brahmin - Himachali",
+    "Brahmin - Hoysala",
+    "Brahmin - Iyengar",
+    "Brahmin - Iyer",
+    "Brahmin - Jangid",
+    "Brahmin - Jhadua",
+    "Brahmin - Jhijhotiya",
+    "Brahmin - Kanyakubja",
+    "Brahmin - Karhade",
+    "Brahmin - Kashmiri Pandit",
+    "Brahmin - Kokanastha",
+    "Brahmin - Kota",
+    "Brahmin - Kulin",
+    "Brahmin - Kumaoni",
+    "Brahmin - Madhwa",
+    "Brahmin - Maithili",
+    "Brahmin - Modh",
+    "Brahmin - Mohyal",
+    "Brahmin - Nagar",
+    "Brahmin - Namboodiri",
+    "Brahmin - Niyogi",
+    "Brahmin - Niyogi Nandavariki",
+    "Brahmin - Other",
+    "Brahmin - Paliwal",
+    "Brahmin - Panda",
+    "Brahmin - Pareek",
+    "Brahmin - Pushkarna",
+    "Brahmin - Rarhi",
+    "Brahmin - Rudraj",
+    "Brahmin - Sakaldwipi",
+    "Brahmin - Sanadya",
+    "Brahmin - Saraswat",
+    "Brahmin - Sanketi",
+    "Brahmin - Sarua",
+    "Brahmin - Vyas",
+    "Brahmbatt",
+    "Badaga",
+    "Baghel/Pal/Gaderiya",
+    "Bahi",
+    "Baidya",
+    "Baishnab",
+    "Brahmo",
+    "Buddar",
+    "Bunt (Shetty)",
+    "CKP",
+    "Chalawadi Holeya",
+    "Chambhar",
+    "Chandravanshi Kahar",
+    "Chasa",
+    "Chattada Sri Vaishnava",
+    "Chaudary",
+    "Chaurasia",
+    "Chekkala - Nair",
+    "Chennadasar",
+    "Cheramar",
+    "Chettiar",
+    "Chhetri",
+    "Chippolu/Mera",
+    "Devadiga",
+    "Devanga",
+    "Devar/Thevar/Mukkulathor",
+    "Devendra Kula Vellalar",
+    "Dhangar",
+    "Dheevara",
+    "Dhiman",
+    "Dhoba",
+    "Digambar",
+    "Dommala",
+    "Dusadh",
+    "Ediga",
+    "Ezhava",
+    "Ezhuthachan",
+    "Gabit",
+    "Ganakar",
+    "Gowda",
+    "Halwai",
+    "Hegde",
+    "Helava",
+    "Intercaste",
+    "Jaalari",
+    "Jaiswal",
+    "Jandra",
+    "Jangam",
+    "Jat",
+    "Jatav",
+    "Jetty Malla",
+    "Kachara",
+    "Kaibarta",
+    "Kakkalan",
+    "Kalar",
+    "Kalinga",
+    "Kalinga Vysya",
+    "Kashyap",
+    "Kayastha",
+    "Khandelwal",
+    "Koli",
+    "Koli Patel",
+    "Kshatriya",
+    "Lambadi",
+    "Laxminarayan gola",
+    "Leva Patidar",
+    "Leva Patil",
+    "Lingayat",
+    "Lingayat-Agasa",
+    "Lingayat-Akkasali",
+    "Lingayat-Aradhya",
+    "Lingayat-Balegala",
+    "Lingayat-Banagar",
+    "Lingayat-Banajiga",
+    "Lingayat-Bhandari",
+    "Lingayat-Bilijedaru",
+    "Lingayat-Bilimagga",
+    "Lingayat-Chaturtha",
+    "Lingayat-Dikshwant",
+    "Lingayat-Ganiga",
+    "Lingayat-Gowda",
+    "Lingayat-Gowli",
+    "Lingayat-Gurav",
+    "Lingayat-Hadapada",
+    "Lingayat-Hatgar",
+    "Lingayat-Hoogar / Hugar / Jeer",
+    "Lingayat-Jadaru",
+    "Lingayat-Jangam",
+    "Lingayat-Kudu Vokkaliga",
+    "Lingayat-Kumbar / Kumbara",
+    "Lingayat-Kumbhar",
+    "Lingayat-Kuruhina Setty",
+    "Lingayat-lamba",
+    "Lingayat-Lolagonda",
+    "Lingayat-Madivala",
+    "Lingayat-Malgar",
+    "Lingayat-Mali",
+    "Lingayat-Neelagar",
+    "Lingayat-Neeli / Neelagar",
+    "Lingayat-Neygi",
+    "Lingayat-Nolamba",
+    "Lingayat-Pancham",
+    "Lingayat-Panchamasali",
+    "Lingayat-Pattasali",
+    "Lingayat-Reddy Reddi",
+    "Lingayat-Sadar",
+    "Lingayat-Sajjan / Sajjanaganigar ",
+    "Lingayat-Setty",
+    "Lingayat-Shilwant",
+    "Lingayat-Shiva Simpi",
+    "Lingayat-Vani",
+    "Lingayat-Veerashaiva",
+    "Lohana",
+    "Lohana-Ghoghari",
+    "Lohana-Halai",
+    "Lohana-Kutchi",
+    "Lohana-Vaishnav",
+    "Lohar",
+    "Lubana",
+    "Madiga",
+    "Mahar",
+    "Mahendra",
+    "Maheshwari",
+    "Mahindra",
+    "Mahisya",
+    "Majabi Mazhbi",
+    "Mala",
+    "Mali",
+    "Mallah",
+    "Mallah-Kewat / Keot",
+    "Mallah-Nishad",
+    "Manikpuri",
+    "Manipuri",
+    "Manjhi",
+    "Mannan / Velon / Vannan",
+    "Mapila",
+    "Maratha",
+    "Maratha-96 Kuli Maratha",
+    "Maratha-Aramari Gabit",
+    "Maratha-Deshastha Maratha",
+    "Maratha-Deshmukh",
+    "Maratha-Deshtha Maratha",
+    "Maratha-Gomantak Maratha",
+    "Maratha-Jhadav",
+    "Maratha-Kokanastha Maratha",
+    "Maratha-Kunbi Dhanoje",
+    "Maratha-Kunbi Khaire",
+    "Maratha-Kunbi Khedule",
+    "Maratha-Kunbi Lonari",
+    "Maratha-Kunbi Maratha",
+    "Maratha-Kunbi Tirale",
+    "Maratha-Malwani",
+    "Maratha-Maratha Kshatriya",
+    "Maratha-Parit",
+    "Maratha-Patil",
+    "Maratha-Sonar",
+    "Maratha-Suthar",
+    "Maratha-Vani",
+    "Maravar",
+    "Maruthuvar",
+    "Matang",
+    "Maurya",
+    "Maurya-Kachchi",
+    "Maurya-Kushwaha",
+    "Meda",
+    "Meena",
+    "Meenavar",
+    "Meghwal",
+    "Mehra",
+    "Mehtar",
+    "Menon",
+    "Meru",
+    "Meru darji",
+    "Mochi",
+    "Modak",
+    "Mogaveera",
+    "Monchi",
+    "Motati Reddy",
+    "Mudaliar",
+    "Mudaliar-Agamudayar/Arcot/Thuluva Vellala",
+    "Mudaliar-Isai Vellalar",
+    "Mudaliar-Kerala Mudali",
+    "Mudaliar-Kongu Vellala Gounder",
+    "Mudaliar-Mudailiar Arcot",
+    "Mudaliar-Mudaliar All",
+    "Mudaliar-Mudaliar Saiva",
+    "Mudaliar-Mudaliar Sengupta",
+    "Mudaliar-Saiva Pillai Tirunelveli",
+    "Mudaliar-Sengunthar/Kaikolar",
+    "Mudaliar-Sozhiya Vellalar",
+    "Mudaliar-Thondai Mandala Vellala",
+    "Mudaliar-Veerakodi Vellala",
+    "Mudaliar Arcot",
+    "Mudiraj",
+    "Muthuraja",
+    "Naagavamsam",
+    "Nadar",
+    "Nadar-Kongu Nadar",
+    "Nagaralu",
+    "Naicker",
+    "Naicker-Naicker others",
+    "Naicker-Naicker-Vanniya Kula Kshatriyar",
+    "Naicker-Rajaka Chakali Dhobi",
+    "Naidu",
+    "Naidu-Balija Naidu",
+    "Naidu-Ediga /Goud",
+    "Naidu-Gajula Kavarai",
+    "Naidu-Gavara",
+    "Naidu-Kamma",
+    "Naidu-Kapu Naidu",
+    "Naidu-Munnuru Kapu",
+    "Naidu-Mutharaja",
+    "Naidu-Perika",
+    "Naidu-Raja Kambalathu Naicker",
+    "Naidu-Raju",
+    "OBC - Barber/Naayee",
+    "Oswal",
+    "Otari",
+    "Patel",
+    "Padmasali",
+    "Panchal",
+    "Pandaram",
+    "Panicker",
+    "Paravan",
+    "Parit",
+    "Parkava Kulam",
+    "Partraj",
+    "Pasi",
+    "Rajaka/Chakali/Dhobi",
+    "Rajbhar",
+    "Rajput",
+    "Rajput - Kumaoni",
+    "Rajput - Lodhi",
+    "Ramdasia",
+    "Ramgharia",
+    "Rauniyar",
+    "Ravidasia",
+    "Rawat",
+    "Reddiar",
+    "Reddy",
+    "Relli",
+    "SSK",
+    "Sagara - Uppara",
+    "Shilpkar",
+    "Shimpi",
+    "Sindhi - Bhanusali",
+    "Sindhi - Bhatia",
+    "Sindhi - Chhapru",
+    "Sindhi - Dadu",
+    "Sindhi - Hyderabadi",
+    "Sindhi - Larai",
+    "Sindhi - Lohana",
+    "Telaga",
+    "Teli",
+    "Thuluva Vellala",
+    "Vysya",
+    "Yadav",
+    "Other"
+  ];
 
   const user = JSON.parse(sessionStorage.getItem('user'));
   console.log("..user...", user);
@@ -376,36 +376,36 @@ function Profiles({ setlogedIn }) {
 
   const handleChat = async () => {
     try {
-        const payload = {
-            AllprofilesId: interestedProfiles
-        };
+      const payload = {
+        AllprofilesId: interestedProfiles
+      };
 
-        // Add email or phoneno to the payload based on available user data
-        if (user.email) {
-            payload.email = user.email;
-        } else if (user.phoneno) {
-            payload.phoneno = user.phoneno;
-        } else {
-            console.log("Neither email nor phone number is available.");
-            return;
+      // Add email or phoneno to the payload based on available user data
+      if (user.email) {
+        payload.email = user.email;
+      } else if (user.phoneno) {
+        payload.phoneno = user.phoneno;
+      } else {
+        console.log("Neither email nor phone number is available.");
+        return;
+      }
+
+      const response = await axios.post(
+        `${URL}/allProfileId`,
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
+      );
 
-        const response = await axios.post(
-            `${URL}/allProfileId`,
-            payload,
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }
-        );
-
-        console.log("API Response:", response.data);
-        navigate('/chat');
+      console.log("API Response:", response.data);
+      navigate('/chat');
     } catch (error) {
-        console.log("..error...", error);
+      console.log("..error...", error);
     }
-};
+  };
 
 
   const handleInterest = (profileId) => {
@@ -442,7 +442,7 @@ function Profiles({ setlogedIn }) {
       if (user.email) {
         apiUrl += `email=${user.email}`;
       } else if (user.phoneno) {
-        console.log("...user.phoneno...",user.phoneno)
+        console.log("...user.phoneno...", user.phoneno)
         apiUrl += `phoneno=${user.phoneno}`;
       }
       const response = await fetch(apiUrl, {
@@ -483,7 +483,7 @@ function Profiles({ setlogedIn }) {
     if (user.email) {
       apiUrl += `email=${user.email}`;
     } else if (user.phoneno) {
-      console.log("...user.phoneno...",user.phoneno)
+      console.log("...user.phoneno...", user.phoneno)
       apiUrl += `phoneno=${user.phoneno}`;
     }
 
@@ -496,7 +496,7 @@ function Profiles({ setlogedIn }) {
     if (caste) {
       apiUrl += `&caste=${caste}`;
     }
-    if(subcaste) {
+    if (subcaste) {
       apiUrl += `&subcaste=${subcaste}`
     }
 
@@ -510,7 +510,7 @@ function Profiles({ setlogedIn }) {
       .catch(error => {
         console.log("...error..", error);
       });
-  }, [age, religion, caste,subcaste]);
+  }, [age, religion, caste, subcaste]);
 
   const handleProfileDetails = async (profileId) => {
     console.log("...handleProfileDetails for profileId...", profileId)
@@ -523,7 +523,7 @@ function Profiles({ setlogedIn }) {
     sessionStorage.setItem("logedIn", "false");
     navigate('/');
   };
-  const handlePlans= () => {
+  const handlePlans = () => {
     navigate('/plan');
   };
   useEffect(() => {
@@ -548,8 +548,8 @@ function Profiles({ setlogedIn }) {
             sx={{
               backgroundColor: "transparent",
               color: "white",
-              border:"2px solid",
-              borderColor:"#F68C1E",
+              border: "2px solid",
+              borderColor: "#F68C1E",
               "&:hover": {
                 backgroundColor: "#E57D0F",
               },
@@ -560,7 +560,7 @@ function Profiles({ setlogedIn }) {
               handlePlans();
             }}
           >
-            Plans
+           Membership Plans
           </Button>
           <input
             type="file"
@@ -661,55 +661,57 @@ function Profiles({ setlogedIn }) {
                         onChange={(event) => setReligion(event.target.value)}
                       >
                         <option value="">Select Religion</option>
-                        <option value="Any">Any</option>
-                        <option value="Hindu">Hindu</option>
-                        <option value="Muslim">Muslim</option>
-                        <option value="Jain">Jain</option>
-                        <option value="Christian">Christian</option>
+                        <MenuItem value="Hindu">Hindu</MenuItem>
+                        <MenuItem value="Muslim">Muslim</MenuItem>
+                        <MenuItem value="Christian">Christian</MenuItem>
+                        <MenuItem value="Sikh">Sikh</MenuItem>
+                        <MenuItem value="Buddhist">Buddhist</MenuItem>
+                        <MenuItem value="Jain">Jain</MenuItem>
+                        <MenuItem value="Bahai">Bahai</MenuItem>
                       </select>
                     </div>
                   </div>
                   <div className="filt-com lhs-cate">
-  <h4>
-    <i className="fa fa-users" aria-hidden="true" />
-    Select Caste
-  </h4>
-  <div className="form-group">
-    <select
-      className="chosen-select"
-      value={caste}
-      onChange={(event) => setCaste(event.target.value)}
-    >
-      <option value="">Select Caste</option>
-      {casteOptions.map((option) => (
-        <option key={option} value={option}>
-          {option}
-        </option>
-      ))}
-    </select>
-  </div>
-</div>
+                    <h4>
+                      <i className="fa fa-users" aria-hidden="true" />
+                      Select Caste
+                    </h4>
+                    <div className="form-group">
+                      <select
+                        className="chosen-select"
+                        value={caste}
+                        onChange={(event) => setCaste(event.target.value)}
+                      >
+                        <option value="">Select Caste</option>
+                        {casteOptions.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
 
-<div className="filt-com lhs-cate">
-  <h4>
-    <i className="fa fa-users" aria-hidden="true" />
-    Select Sub Caste
-  </h4>
-  <div className="form-group">
-    <select
-      className="chosen-select"
-      value={subcaste}
-      onChange={(event) => setSubCaste(event.target.value)}
-    >
-      {/* <option value="">Select Sub Caste</option> */}
-      {subCasteOptions.map((option) => (
-        <option key={option} value={option}>
-          {option}
-        </option>
-      ))}
-    </select>
-  </div>
-</div>
+                  <div className="filt-com lhs-cate">
+                    <h4>
+                      <i className="fa fa-users" aria-hidden="true" />
+                      Select Sub Caste
+                    </h4>
+                    <div className="form-group">
+                      <select
+                        className="chosen-select"
+                        value={subcaste}
+                        onChange={(event) => setSubCaste(event.target.value)}
+                      >
+                        {/* <option value="">Select Sub Caste</option> */}
+                        {subCasteOptions.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
                 </div>
                 <div className="col-md-9">
                   <div className="short-all">

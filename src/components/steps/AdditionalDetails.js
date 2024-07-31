@@ -22,7 +22,7 @@ function AdditionalDetails() {
   const location = useLocation()
   const [caste, setCaste] = useState(location?.state?.caste || "");
   const [subCaste, setSubCaste] = useState(location?.state?.subCaste || "");
-  const [origin, setOrigin] = useState(location?.state?.origin || "");
+
   const [motherTongue, setMotherTongue] = useState(location?.state?.motherTongue || "");
   const [height, setHeight] = useState(location?.state?.height || "");
   const [weight, setWeight] = useState(location?.state?.weight || "");
@@ -34,7 +34,7 @@ function AdditionalDetails() {
   const navigate = useNavigate();
 
 
-  const originOptions = indianCities; // Add more options as needed
+
 
   const motherTongueOptions = [
     { label: "North", style: { color: "red", fontWeight: "bold" } },
@@ -120,7 +120,7 @@ function AdditionalDetails() {
     "Jat" ,"Jain","Maheshwari" ,"Kayastha" , "Khatri" ,
      "Kshatriya" , "Maratha" , "Rajput" , "Sindhi" , "Sunni" , "Oberoi",
      "Arora" , "Shwetamber" , "Yadav" , "Bania" , "Scheduled Caste" , 
-     "Digamber"  , "Sikh Jat" , "Gupta",
+     "Digamber"  , "Sikh Jat" , "Gupta","Scheduled Tribes",
       "Tei" , "Vaishnav" ,"Kurmi kshatriya", "Other" ];
   const subCasteOptions = [
     "Arora",
@@ -486,12 +486,12 @@ function AdditionalDetails() {
 
   // Validation logic
   useEffect(() => {
-    if (caste && subCaste && origin && motherTongue && height && weight  && petFriendly) {
+    if (caste && subCaste  && motherTongue && height && weight  && petFriendly) {
       setFormValid(true);
     } else {
       setFormValid(false);
     }
-  }, [caste, subCaste, origin, motherTongue, height, weight, petFriendly]);
+  }, [caste, subCaste, motherTongue, height, weight, petFriendly]);
 console.log("...additional..",location.state)
   const handleAdditionalDetails = async () => {
     console.log('Previous page data:', location.state);
@@ -500,7 +500,7 @@ console.log("...additional..",location.state)
         ...location.state,
         caste,
         subCaste,
-        origin,
+       
         motherTongue,
         height,
         weight,
@@ -650,29 +650,7 @@ console.log("...additional..",location.state)
                   marginBottom: "40px",
                 }}
               >
-                <FormControl
-                  variant="standard"
-                  sx={{ minWidth: 195 }}
-                  error={!origin}
-                >
-                  <InputLabel id="origin-select-label">Origin</InputLabel>
-                  <Select
-                    labelId="origin-select-label"
-                    id="origin-select"
-                    value={origin}
-                    onChange={(event) => setOrigin(event.target.value)}
-                    label="Origin"
-                  >
-                    {originOptions.map((option) => (
-                      <MenuItem key={option} value={option}>
-                        {option}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  {!origin && (
-                    <FormHelperText>Please select your origin</FormHelperText>
-                  )}
-                </FormControl>
+               
                 <FormControl
                   variant="standard"
                   sx={{ minWidth: 195 }}
@@ -703,6 +681,34 @@ console.log("...additional..",location.state)
                   {!motherTongue && (
                     <FormHelperText>
                       Please select your mother tongue
+                    </FormHelperText>
+                  )}
+                </FormControl>
+
+                <FormControl
+                  variant="standard"
+                  sx={{ minWidth: 200 }}
+                  error={!petFriendly}
+                >
+                  <InputLabel id="pet-friendly-select-label">
+                    Pet Friendly
+                  </InputLabel>
+                  <Select
+                    labelId="pet-friendly-select-label"
+                    id="pet-friendly-select"
+                    value={petFriendly}
+                    onChange={(event) => setPetFriendly(event.target.value)}
+                    label="Pet Friendly"
+                  >
+                    {petFriendlyOptions.map((option) => (
+                      <MenuItem key={option} value={option}>
+                        {option}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {!petFriendly && (
+                    <FormHelperText>
+                      Please select if you are pet friendly
                     </FormHelperText>
                   )}
                 </FormControl>
@@ -787,33 +793,7 @@ console.log("...additional..",location.state)
                   </Select>
                   {!gothra && <FormHelperText>Please select your gothra</FormHelperText>}
                 </FormControl> */}
-                <FormControl
-                  variant="standard"
-                  sx={{ minWidth: 200 }}
-                  error={!petFriendly}
-                >
-                  <InputLabel id="pet-friendly-select-label">
-                    Pet Friendly
-                  </InputLabel>
-                  <Select
-                    labelId="pet-friendly-select-label"
-                    id="pet-friendly-select"
-                    value={petFriendly}
-                    onChange={(event) => setPetFriendly(event.target.value)}
-                    label="Pet Friendly"
-                  >
-                    {petFriendlyOptions.map((option) => (
-                      <MenuItem key={option} value={option}>
-                        {option}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  {!petFriendly && (
-                    <FormHelperText>
-                      Please select if you are pet friendly
-                    </FormHelperText>
-                  )}
-                </FormControl>
+                
               </div>
               <div
                 style={{

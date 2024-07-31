@@ -64,7 +64,7 @@ function PartnerLiving() {
   const URL = process.env.REACT_APP_API_BASE_URL;
   console.log("...location state in living...",location.state)
   const handleNext = async () => {
-    console.log('Previous page data:', location.state);
+    
   
     if (isFormValid) {
       try {
@@ -101,6 +101,7 @@ function PartnerLiving() {
             city: location.state.city,
             country : location.state.country,
             religion: location.state.religion,
+            drink : location.state.alcohol,
             disability: location.state.disability,
             disabilityDetail: location.state.disabilityDetails, // Fixed typo from "disabilityDetail"
             caste: location.state.caste,
@@ -248,6 +249,7 @@ function PartnerLiving() {
                     <MenuItem value="Vegetarian">Vegetarian</MenuItem>
                     <MenuItem value="Vegan">Vegan</MenuItem>
                     <MenuItem value="Non-vegetarian">Non-vegetarian</MenuItem>
+                    <MenuItem value="Eggitarian">Eggitarian</MenuItem>
                     <MenuItem value="Pescatarian">Pescatarian</MenuItem>
                   </Select>
                   {errors.diet && <Typography color="error">{errors.diet}</Typography>}

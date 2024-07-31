@@ -149,6 +149,7 @@ function LifeStyle() {
                     <MenuItem value="Vegetarian">Vegetarian</MenuItem>
                     <MenuItem value="Vegan">Vegan</MenuItem>
                     <MenuItem value="Non-vegetarian">Non-vegetarian</MenuItem>
+                    <MenuItem value="Eggitarian">Eggitarian</MenuItem>
                     <MenuItem value="Pescatarian">Pescatarian</MenuItem>
                   </Select>
                   {errors.diet && <FormHelperText>{errors.diet}</FormHelperText>}

@@ -167,7 +167,7 @@ function FamilyDetails() {
   //   setIsFormValid(isValid);
   //   return isValid;
   // };
-
+console.log("...family details ...",location.state)
   const handleNext = async () => {
     console.log('Previous page data:', location.state);
     // if (validateForm()) {

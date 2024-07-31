@@ -128,10 +128,7 @@ function ProfileDetails() {
           newErrors.phoneNo = "Phone number must not be more than 10 digits";
         else delete newErrors.phoneNo;
         break;
-      case "address":
-        if (!value) newErrors.address = "Address is required";
-        else delete newErrors.address;
-        break;
+      
       case "hobbies":
         if (!value || value.length < 3)
           newErrors.hobbies = "Hobbies  should be min 3";

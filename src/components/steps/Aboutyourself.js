@@ -32,7 +32,7 @@ function AboutYourself() {
       setFormValid(false);
     }
   }, [aboutYourself]);
-
+console.log("...about your self ...",location.state)
   const handleAdditionalDetails = async () => {
     navigate('/partner-family', {
       state: {
