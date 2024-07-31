@@ -39,7 +39,6 @@ function UserProfile({ setlogedIn }) {
   const URL = process.env.REACT_APP_API_BASE_URL;
 
 
-
   const handleInterest = (profileId) => {
     console.log("Interest button clicked for profile:", profileId);
 
@@ -86,10 +85,45 @@ function UserProfile({ setlogedIn }) {
   };
 
   const handleSubmit = (e) => {
+    console.log("....save...")
     e.preventDefault();
     // Submit updated profile data to API
     console.log("Updated profile data:", profileData);
-    setIsEditMode(false);
+    let data  = user.email
+      if(data.includes('@')){
+        data = user.email
+      }
+      else{
+        data = user.phoneno
+      }
+    axios.put(`${URL}/ProfileUpdate/${data}`,{
+      name : profileData.fullName,
+      aboutYourSelf :    profileData.aboutMe,
+      Part_ageFrom :profileData.ageRange,
+      annualIncome : profileData.annualIncome,
+      caste : profileData.caste,
+      dateOfBirth : profileData.dateOfBirth,
+      diet :   profileData.diet,
+      alcohol : profileData.drinking,
+      family_Type : profileData.familyType,
+      Fathers_prof : profileData.fatherOccupation,
+      gender : profileData.gender,
+      height : profileData.heightRange,
+      heighestEduction :profileData.highestEducation,
+      martialStatus :  profileData.maritalStatus,
+      Mothers_prof : profileData.motherOccupation,
+      profession :  profileData.occupation,
+      religion : profileData.religion,
+      smoke : profileData.smoking
+    }) 
+    .then((response) => {
+      console.log("Profile updated successfully:", response.data);
+      setIsEditMode(false);
+    })
+    .catch((error) => {
+      console.error("Error updating profile:", error);
+    });
+  
   };
 
   const renderField = (label, value, name, type = "text", options = []) => {
@@ -223,6 +257,114 @@ function UserProfile({ setlogedIn }) {
       console.error("Error uploading file:", error);
     }
   };
+  const ProfessionOption = [
+    // { value: "Administration", label: "Administration", style: { color: "red", fontWeight: "bold" } },
+    { value: "Admin Professional", label: "Admin Professional" },
+    { value: "Clerk", label: "Clerk" },
+    { value: "Operator/Technician", label: "Operator/Technician" },
+    { value: "Secretary/Front Office", label: "Secretary/Front Office" },
+    // { value: "Advertising", label: "Advertising, Media & Entertainment", style: { color: "red", fontWeight: "bold" } },
+    { value: "Actor/Model", label: "Actor/Model" },
+    { value: "Advertising Professional", label: "Advertising Professional" },
+    { value: "Film/Entertainment Professional", label: "Film/Entertainment Professional" },
+    { value: "Journalist", label: "Journalist" },
+    { value: "Media Professional", label: "Media Professional" },
+    { value: "PR Professional", label: "PR Professional" },
+    // { value: "Agriculture", label: "Agriculture", style: { color: "red", fontWeight: "bold" } },
+    { value: "Agriculture Professional", label: "Agriculture Professional" },
+    { value: "Farming", label: "Farming" },
+    // { value: "Airline", label: "Airline & Aviation", style: { color: "red", fontWeight: "bold" } },
+    { value: "Airline Professional", label: "Airline Professional" },
+    { value: "Flight Attendant", label: "Flight Attendant" },
+    { value: "Pilot", label: "Pilot" },
+    // { value: "Architecture", label: "Architecture", style: { color: "red", fontWeight: "bold" } },
+    { value: "Architect", label: "Architect" },
+    // { value: "BPO", label: "BPO & Customer Service", style: { color: "red", fontWeight: "bold" } },
+    { value: "BPO/ITes Professional", label: "BPO/ITes Professional" },
+    { value: "Customer Service", label: "Customer Service" },
+    // { value: "Banking", label: "Banking & Finance", style: { color: "red", fontWeight: "bold" } },
+    { value: "Accounting Professional", label: "Accounting Professional" },
+    { value: "Auditor", label: "Auditor" },
+    { value: "Banking Professional", label: "Banking Professional" },
+    { value: "Chartered Accountant", label: "Chartered Accountant" },
+    { value: "Finance Professional", label: "Finance Professional" },
+    // { value: "Corporate Management", label: "Corporate Management Professionals", style: { color: "red", fontWeight: "bold" } },
+    { value: "Analyst", label: "Analyst" },
+    { value: "Consultant", label: "Consultant" },
+    { value: "Corporate Communication", label: "Corporate Communication" },
+    { value: "Corporate Planning", label: "Corporate Planning" },
+    { value: "HR Professional", label: "HR Professional" },
+    { value: "Marketing Professional", label: "Marketing Professional" },
+    { value: "Operations Management", label: "Operations Management" },
+    { value: "Product Manager", label: "Product Manager" },
+    { value: "Program Manager", label: "Program Manager" },
+    { value: "Project Manager - Non IT", label: "Project Manager - Non IT" },
+    { value: "Sales Professional", label: "Sales Professional" },
+    { value: "Sr. Manager/ Manager", label: "Sr. Manager/ Manager" },
+    { value: "Subject Matter Expert", label: "Subject Matter Expert" },
+    // { value: "Doctor", label: "Doctor", style: { color: "red", fontWeight: "bold" } },
+    { value: "Dentist", label: "Dentist" },
+    { value: "Doctor", label: "Doctor" },
+    { value: "Surgeon", label: "Surgeon" },
+    // { value: "Education & Training", label: "Education & Training", style: { color: "red", fontWeight: "bold" } },
+    { value: "Education Professional", label: "Education Professional" },
+    { value: "Educational Institution Owner", label: "Educational Institution Owner" },
+    { value: "Librarian", label: "Librarian" },
+    { value: "Professor/Lecturer", label: "Professor/Lecturer" },
+    { value: "Research Assistant", label: "Research Assistant" },
+    { value: "Teacher", label: "Teacher" },
+    // { value: "Engineering", label: "Engineering", style: { color: "red", fontWeight: "bold" } },
+    { value: "Electronics Engineer", label: "Electronics Engineer" },
+    { value: "Hardware/Telecom Engineer", label: "Hardware/Telecom Engineer" },
+    { value: "Non - IT Engineer", label: "Non - IT Engineer" },
+    { value: "Quality Assurance Engineer", label: "Quality Assurance Engineer" },
+    // { value: "Hospitality", label: "Hospitality", style: { color: "red", fontWeight: "bold" } },
+    { value: "Hotels/Hospitality Professional", label: "Hotels/Hospitality Professional" },
+    { value: "Legal", label: "Legal", style: { color: "red", fontWeight: "bold" } },
+    { value: "Lawyer & Legal Professional", label: "Lawyer & Legal Professional" },
+    // { value: "Merchant Navy", label: "Merchant Navy", style: { color: "red", fontWeight: "bold" } },
+    { value: "Mariner", label: "Mariner" },
+    { value: "Merchant Naval Officer", label: "Merchant Naval Officer" },
+    // { value: "Other Medical & Healthcare", label: "Other Medical & Healthcare", style: { color: "red", fontWeight: "bold" } },
+    { value: "Nurse", label: "Nurse" },
+    { value: "Paramedic", label: "Paramedic" },
+    { value: "Pharmacist", label: "Pharmacist" },
+    { value: "Physiotherapist", label: "Physiotherapist" },
+    { value: "Psychologist", label: "Psychologist" },
+    { value: "Veterinary Doctor", label: "Veterinary Doctor" },
+    // { value: "Science & Research", label: "Science & Research", style: { color: "red", fontWeight: "bold" } },
+    { value: "Research Professional", label: "Research Professional" },
+    { value: "Science Professional", label: "Science Professional" },
+    { value: "Scientist", label: "Scientist" },
+    // { value: "Software & IT", label: "Software & IT", style: { color: "red", fontWeight: "bold" } },
+    { value: "Animator", label: "Animator" },
+    { value: "Cyber/Network Security", label: "Cyber/Network Security" },
+    { value: "Project Lead - IT", label: "Project Lead - IT" },
+    { value: "Project Manager - IT", label: "Project Manager - IT" },
+    { value: "Quality Assurance Engineer - IT", label: "Quality Assurance Engineer - IT" },
+    { value: "Software Professional", label: "Software Professional" },
+    { value: "UI/UX Designer", label: "UI/UX Designer" },
+    { value: "Web/Graphic Designer", label: "Web/Graphic Designer" },
+    // { value: "Top Management", label: "Top Management", style: { color: "red", fontWeight: "bold" } },
+    { value: "CxO/Chairman/President/Director", label: "CxO/Chairman/President/Director" },
+    { value: "VP/AVP/GM/DGM", label: "VP/AVP/GM/DGM" },
+    { value: "Others", label: "Others", style: { color: "red", fontWeight: "bold" } },
+    { value: "Agent", label: "Agent" },
+    { value: "Artist", label: "Artist" },
+    { value: "Beautician", label: "Beautician" },
+    { value: "Broker", label: "Broker" },
+    { value: "Fashion Designer", label: "Fashion Designer" },
+    { value: "Fitness Professional", label: "Fitness Professional" },
+    { value: "Interior Designer", label: "Interior Designer" },
+    { value: "Security Professional", label: "Security Professional" },
+    { value: "Singer", label: "Singer" },
+    { value: "Social Services/NGO/Volunteer", label: "Social Services/NGO/Volunteer" },
+    { value: "Sportsperson", label: "Sportsperson" },
+    { value: "Travel Professional", label: "Travel Professional" },
+    { value: "Writer", label: "Writer" },
+    { value: "Others", label: "Others" },
+  ];
+  
 
   const handlegetImageUrl = async () => {
     console.log("...handleImageUrl....")
@@ -271,7 +413,7 @@ function UserProfile({ setlogedIn }) {
         data = user.phoneno
       }
       try {
-        const response = await axios.get(`${URL}/profile/${data}`);
+        const response = await axios.get(`${URL}/profilebyid/${data}`);
       
        console.log("...response...",response.data)
        const dummyData = {
@@ -405,7 +547,7 @@ function UserProfile({ setlogedIn }) {
                   <form onSubmit={handleSubmit}>
                     <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
                       <Typography variant="h4">User Profile</Typography>
-                      {/* <Button
+                      <Button
                         variant="contained"
                         onClick={handleEditToggle}
                         sx={{
@@ -416,7 +558,7 @@ function UserProfile({ setlogedIn }) {
                         }}
                       >
                         {isEditMode ? "Cancel" : "Edit Profile"}
-                      </Button> */}
+                      </Button>
                     </Box>
 
                     {/* Basic Information */}
@@ -438,9 +580,13 @@ function UserProfile({ setlogedIn }) {
                       </div>
                       <div className="form-group">
                         {renderField("Marital Status", profileData.maritalStatus, "maritalStatus", "select", [
-                          { value: "never_married", label: "Never Married" },
-                          { value: "divorced", label: "Divorced" },
-                          { value: "widowed", label: "Widowed" },
+                          { value: "Never Married", label: "Never Married" },
+                          { value: "Divorced", label: "Divorced" },
+                          { value: "Widowed", label: "Widowed" },
+                          { value: "Awaiting Divorce", label: "Awaiting Divorce" },
+                          { value: "Annulled", label: "Annulled" },
+
+                        
                         ])}
                       </div>
                     </div>
@@ -452,13 +598,48 @@ function UserProfile({ setlogedIn }) {
                       </div>
                       <div className="form-group">
                         {renderField("Religion", profileData.religion, "religion", "select", [
-                          { value: "hindu", label: "Hindu" },
-                          { value: "muslim", label: "Muslim" },
-                          { value: "christian", label: "Christian" },
+                          { value: "Hindu", label: "Hindu" },
+                          { value: "Muslim", label: "Muslim" },
+                          { value: "Christian", label: "Christian" },
+                          {value : "Sikh" , label : "Sikh"},
+                          {value :"Buddhist" , label : "Buddhist"},
+                          {value : "Jain" , label : "Jain" },
+                          {value : "Bahai" , label : "Bahai"}
                         ])}
                       </div>
                       <div className="form-group">
-                        {renderField("Caste", profileData.caste, "caste")}
+                     
+                        {renderField("Caste", profileData.caste, "caste" ,"select",[
+                          { value: "Agarwal", label: "Agarwal" },
+                          { value: "Kanyakubj", label: "Kanyakubj" },
+                          { value: "Brahmin", label: "Brahmin" },
+                          {value : "Gaur Brahmin" , label : "Gaur Brahmin"},
+                          {value :"Brahmin" , label : "Brahmin"},
+                          {value : "Jat" , label : "Jat" },
+                          {value : "Jain" , label : "Jain"},
+                          {value : "Maheshwari" , label : "Maheshwari"},
+                          {value : "Kayastha" , label : "Kayastha"},
+                          {value : "Khatri" , label : "Khatri"},
+                          {value : "Kshatriya" , label : "Kshatriya"},   
+                            {value : "Maratha" , label : "Maratha"},
+                            {value : "Rajput" , label : "Rajput"},
+                          {value : "Sindhi" , label : "Sindhi"},
+                          {value : "Sunni" , label : "Sunni"},
+                          {value : "Oberoi" , label : "Oberoi"},
+                          {value : "Arora" , label : "Arora"},
+                          {value : "Shwetamber" , label : "Shwetamber"},
+                          {value : "Yadav" , label : "Yadav"},
+                          {value : "Bania" , label : "Bania"},
+                          {value : "Digamber" , label : "Digamber"},
+                          {value : "Sikh Jat" , label : "Sikh Jat"},
+                          {value : "Gupta" , label : "Gupta"},
+                          {value : "Scheduled Tribes" , label : "Scheduled Tribes"},
+                          {value : "Tei" , label : "Tei"},
+                          {value : "Vaishnav" , label : "Vaishnav"},
+                          {value : "Kurmi kshatriya" , label : "Kurmi kshatriya"},
+                          {value : "Other" , label : "Other"}
+                          
+                        ])}
                       </div>
                     </div>
 
@@ -468,16 +649,35 @@ function UserProfile({ setlogedIn }) {
                         <h4>Family Details</h4>
                       </div>
                       <div className="form-group">
-                        {renderField("Father's Occupation", profileData.fatherOccupation, "fatherOccupation")}
-                      </div>
-                      <div className="form-group">
-                        {renderField("Mother's Occupation", profileData.motherOccupation, "motherOccupation")}
-                      </div>
-                      <div className="form-group">
-                        {renderField("Family Type", profileData.familyType, "familyType", "select", [
-                          { value: "nuclear", label: "Nuclear" },
-                          { value: "joint", label: "Joint" },
+                        {renderField("Father's Occupation", profileData.fatherOccupation, "fatherOccupation","select",[
+                          { value: "Doctor", label: "Doctor" },
+                          { value: "Engineer", label: "Engineer" },
+                          { value: "Teacher", label: "Teacher" },
+                          { value: "Business", label: "Business" },
+                          { value: "Artist", label: "Artist" },
+                          { value: "Other", label: "Other" },
                         ])}
+                      </div>
+                      <div className="form-group">
+                        {renderField("Mother's Occupation", profileData.motherOccupation, "motherOccupation","select",[
+                          { value: "Doctor", label: "Doctor" },
+                          { value: "Engineer", label: "Engineer" },
+                          { value: "Teacher", label: "Teacher" },
+                          { value: "Business", label: "Business" },
+                          { value: "Artist", label: "Artist" },
+                          { value: "Other", label: "Other" },
+                        ])}
+                      </div>
+                      <div className="form-group">
+                        {renderField("Family Type", profileData.familyType, "familyType", "select", 
+                           [
+                            { value: "Nuclear", label: "Nuclear" },
+                            { value: "Joint", label: "Joint" },
+                            { value: "Extended", label: "Extended" },
+                            { value: "Others", label: "Others" }
+                          ]
+
+                        )}
                       </div>
                     </div>
 
@@ -487,17 +687,207 @@ function UserProfile({ setlogedIn }) {
                         <h4>Education and Career</h4>
                       </div>
                       <div className="form-group">
-                        {renderField("Highest Education", profileData.highestEducation, "highestEducation", "select", [
-                          { value: "bachelors", label: "Bachelor's" },
-                          { value: "masters", label: "Master's" },
-                          { value: "phd", label: "PhD" },
+                        {renderField("Highest Education", profileData.highestEducation, "highestEducation", "select", 
+                       [
+                          { value: "Computers", label: "Computers", style: { color: "red", fontWeight: "bold" } },
+                          { value: "MCA", label: "MCA" },
+                          { value: "BCA", label: "BCA" },
+                          { value: "B.IT", label: "B.IT" },
+                          { value: "MCM", label: "MCM" },
+                          { value: "PGDCA", label: "PGDCA" },
+                          { value: "DCA", label: "DCA" },
+                          { value: "ADCA", label: "ADCA" },
+                          { value: "Finance/Commerce/Economics", label: "Finance/Commerce/Economics", style: { color: "red", fontWeight: "bold" } },
+                          { value: "B.Com", label: "B.Com" },
+                          { value: "CA", label: "CA" },
+                          { value: "CS", label: "CS" },
+                          { value: "ICWA", label: "ICWA" },
+                          { value: "M.Com", label: "M.Com" },
+                          { value: "CFA", label: "CFA" },
+                          { value: "BBI", label: "BBI" },
+                          { value: "BBE", label: "BBE" },
+                          { value: "B.Com(Hons)", label: "B.Com(Hons)" },
+                          { value: "MBE", label: "MBE" },
+                          { value: "MFC", label: "MFC" },
+                          { value: "MFM", label: "MFM" },
+                          { value: "CFP", label: "CFP" },
+                          { value: "CIA", label: "CIA" },
+                          { value: "CPA", label: "CPA" },
+                          { value: "Management", label: "Management", style: { color: "red", fontWeight: "bold" } },
+                          { value: "MBA/PGDM", label: "MBA/PGDM" },
+                          { value: "BBA", label: "BBA" },
+                          { value: "BHM", label: "BHM" },
+                          { value: "BAM", label: "BAM" },
+                          { value: "BBM", label: "BBM" },
+                          { value: "BFM", label: "BFM" },
+                          { value: "BFT", label: "BFT" },
+                          { value: "B.H.A", label: "B.H.A" },
+                          { value: "BHMCT", label: "BHMCT" },
+                          { value: "BHMTT", label: "BHMTT" },
+                          { value: "BMS", label: "BMS" },
+                          { value: "MAM", label: "MAM" },
+                          { value: "MHA", label: "MHA" },
+                          { value: "MMS", label: "MMS" },
+                          { value: "MMM", label: "MMM" },
+                          { value: "MTM", label: "MTM" },
+                          { value: "MTA", label: "MTA" },
+                          { value: "MHRM", label: "MHRM" },
+                          { value: "MBM", label: "MBM" },
+                          { value: "Executive MBA/PGDM", label: "Executive MBA/PGDM" },
+                          { value: "CWM", label: "CWM" },
+                          { value: "FPM", label: "FPM" },
+                          { value: "Engineering/Technology/Design", label: "Engineering/Technology/Design", style: { color: "red", fontWeight: "bold" } },
+                          { value: "B.E/B.Tech", label: "B.E/B.Tech" },
+                          { value: "B.Pharma", label: "B.Pharma" },
+                          { value: "M.E/M.Tech", label: "M.E/M.Tech" },
+                          { value: "M.Pharma", label: "M.Pharma" },
+                          { value: "M.S. (Engineering)", label: "M.S. (Engineering)" },
+                          { value: "B.Arch", label: "B.Arch" },
+                          { value: "M.Arch", label: "M.Arch" },
+                          { value: "B.Des", label: "B.Des" },
+                          { value: "M.Des", label: "M.Des" },
+                          { value: "B.FAD", label: "B.FAD" },
+                          { value: "B.FTech", label: "B.FTech" },
+                          { value: "BID", label: "BID" },
+                          { value: "B.Tech LL.B.", label: "B.Tech LL.B." },
+                          { value: "M.FTech", label: "M.FTech" },
+                          { value: "MID", label: "MID" },
+                          { value: "MIB", label: "MIB" },
+                          { value: "M.Plan", label: "M.Plan" },
+                          { value: "MPH", label: "MPH" },
+                          { value: "A.M.E.", label: "A.M.E." },
+                          { value: "CISE", label: "CISE" },
+                          { value: "ITIL", label: "ITIL" },
+                          { value: "Medicine/Health", label: "Medicine/Health", style: { color: "red", fontWeight: "bold" } },
+                          { value: "MBBS", label: "MBBS" },
+                          { value: "M.D", label: "M.D" },
+                          { value: "BAMS", label: "BAMS" },
+                          { value: "BHMS", label: "BHMS" },
+                          { value: "BDS", label: "BDS" },
+                          { value: "M.S(Medicine)", label: "M.S(Medicine)" },
+                          { value: "MVSc.", label: "MVSc." },
+                          { value: "BVSc.", label: "BVSc." },
+                          { value: "MDS", label: "MDS" },
+                          { value: "BPT", label: "BPT" },
+                          { value: "MPT", label: "MPT" },
+                          { value: "DM", label: "DM" },
+                          { value: "MCh", label: "MCh" },
+                          { value: "BCVT", label: "BCVT" },
+                          { value: "BMLT", label: "BMLT" },
+                          { value: "BMRIT", label: "BMRIT" },
+                          { value: "BMRT", label: "BMRT" },
+                          { value: "BNYS", label: "BNYS" },
+                          { value: "BOT", label: "BOT" },
+                          { value: "B.O.Th", label: "B.O.Th" },
+                          { value: "BOPTM", label: "BOPTM" },
+                          { value: "BPMT", label: "BPMT" },
+                          { value: "B.P.Ed", label: "B.P.Ed" },
+                          { value: "B.P.E.S", label: "B.P.E.S" },
+                          { value: "BPO", label: "BPO" },
+                          { value: "BPH", label: "BPH" },
+                          { value: "BRDIT", label: "BRDIT" },
+                          { value: "BUMS", label: "BUMS" },
+                          { value: "MOT", label: "MOT" },
+                          { value: "M.Optom.", label: "M.Optom." },
+                          { value: "MS", label: "MS" },
+                          { value: "DMLT", label: "DMLT" },
+                          { value: "D.Pharm", label: "D.Pharm" },
+                          { value: "D.P.Ed", label: "D.P.Ed" },
+                          { value: "ANM", label: "ANM" },
+                          { value: "GNM", label: "GNM" },
+                          { value: "Law", label: "Law", style: { color: "red", fontWeight: "bold" } },
+                          { value: "L.L.B", label: "L.L.B" },
+                          { value: "L.L.M", label: "L.L.M" },
+                          { value: "B.A.LL.B.", label: "B.A.LL.B." },
+                          { value: "B.A.LL.B.(Hons)", label: "B.A.LL.B.(Hons)" },
+                          { value: "BBALL.B.", label: "BBALL.B." },
+                          { value: "BBALL.B.(Hons)", label: "BBALL.B.(Hons)" },
+                          { value: "B.Com LL.B", label: "B.Com LL.B" },
+                          { value: "B.L.S.LL.B.", label: "B.L.S.LL.B." },
+                          { value: "M.B.L", label: "M.B.L" },
+                          { value: "L.L.B", label: "L.L.B" },
+                          { value: "L.L.M.", label: "L.L.M." },
+                          { value: "Arts/Science", label: "Arts/Science", style: { color: "red", fontWeight: "bold" } },
+                          { value: "B.A", label: "B.A" },
+                          { value: "B.Sc", label: "B.Sc" },
+                          { value: "M.A", label: "M.A" },
+                          { value: "M.Sc", label: "M.Sc" },
+                          { value: "B.Ed", label: "B.Ed" },
+                          { value: "M.Ed", label: "M.Ed" },
+                          { value: "MSW", label: "MSW" },
+                          { value: "BFA", label: "BFA" },
+                          { value: "MFA", label: "MFA" },
+                          { value: "BJMC", label: "BJMC" },
+                          { value: "MJMC", label: "MJMC" },
+                          { value: "B.Agri", label: "B.Agri" },
+                          { value: "B.A(Hons)", label: "B.A(Hons)" },
+                          { value: "BCT & CA", label: "BCT & CA" },
+                          { value: "B.EI.ED", label: "B.EI.ED" },
+                          { value: "B.F.Sc", label: "B.F.Sc" },
+                          { value: "B.J", label: "B.J" },
+                          { value: "B.Lib.I.Sc.", label: "B.Lib.I.Sc." },
+                          { value: "B.Lib.Sc.", label: "B.Lib.Sc." },
+                          { value: "B.Litt", label: "B.Litt" },
+                          { value: "B.M.C.", label: "B.M.C." },
+                          { value: "B.M.M.", label: "B.M.M." },
+                          { value: "B.M.M.M.C.", label: "B.M.M.M.C." },
+                          { value: "B.Mus.", label: "B.Mus." },
+                          { value: "BPA", label: "BPA" },
+                          { value: "B.Sc(Post Basic)", label: "B.Sc(Post Basic)" },
+                          { value: "BSW", label: "BSW" },
+                          { value: "BVA", label: "BVA" },
+                          { value: "B.Voc", label: "B.Voc" },
+                          { value: "M.F.Sc.", label: "M.F.Sc." },
+                          { value: "M.H.Sc.", label: "M.H.Sc." },
+                          { value: "M.J.", label: "M.J." },
+                          { value: "M.Lib.I.Sc.", label: "M.Lib.I.Sc." },
+                          { value: "M.Lib.Sc.", label: "M.Lib.Sc." },
+                          { value: "M.M.C.", label: "M.M.C." },
+                          { value: "M.O.L.", label: "M.O.L." },
+                          { value: "MPA", label: "MPA" },
+                          { value: "M.P.Ed", label: "M.P.Ed" },
+                          { value: "MVA", label: "MVA" },
+                          { value: "M.Voc", label: "M.Voc" },
+                          { value: "D.Ed", label: "D.Ed" },
+                          { value: "D.EI.Ed", label: "D.EI.Ed" },
+                          { value: "D.Voc", label: "D.Voc" },
+                          { value: "CPT", label: "CPT" },
+                          { value: "ETT", label: "ETT" },
+                          { value: "TTC", label: "TTC" },
+                          { value: "P.P.T.T.C", label: "P.P.T.T.C" },
+                          { value: "B.A", label: "B.A" },
+                          { value: "Doctorate", label: "Doctorate", style: { color: "red", fontWeight: "bold" } },
+                          { value: "PhD", label: "PhD" },
+                          { value: "M.Phil", label: "M.Phil" },
+                          { value: "LL.D.", label: "LL.D." },
+                          { value: "D.Litt", label: "D.Litt" },
+                          { value: "Pharm.D", label: "Pharm.D" },
+                          { value: "PhD", label: "PhD" },
+                          { value: "M.Phil", label: "M.Phil" },
+                          { value: "Non-Graduate", label: "Non-Graduate", style: { color: "red", fontWeight: "bold" } },
+                          { value: "Diploma", label: "Diploma" },
+                          { value: "High School", label: "High School" },
+                          { value: "Trade School", label: "Trade School" },
+                        
+                        
                         ])}
                       </div>
                       <div className="form-group">
-                        {renderField("Occupation", profileData.occupation, "occupation")}
+                      <div className="form-group">
+  {renderField("Profession", profileData.occupation, "occupation", "select", ProfessionOption)}
+</div>
                       </div>
                       <div className="form-group">
-                        {renderField("Annual Income", profileData.annualIncome, "annualIncome", "number")}
+                        {renderField("Annual Income", profileData.annualIncome, "annualIncome", "select",[
+                           
+                           {value: "Rs 2-5 lakh", label : "Rs 2-5 lakh"},
+                           {value: "Rs 5-7 lakh", label : "Rs 5-7 lakh"},
+                           {value: "Rs 7-10 lakh", label : "Rs 7-10 lakh"},
+                           {value: "Rs 10-15 lakh", label : "Rs 10-15 lakh"},
+                           {value: "Rs 15-20 lakh", label : "Rs 15-20 lakh"},
+                           {value: "Rs 20-30 lakh", label : "Rs 20-30 lakh"},
+                           {value: "More than 30 lakh", label : "More than 30 lakh"}
+                        ])}
                       </div>
                     </div>
 
@@ -507,10 +897,14 @@ function UserProfile({ setlogedIn }) {
                         <h4>Lifestyle</h4>
                       </div>
                       <div className="form-group">
+                    
+                   
                         {renderField("Diet", profileData.diet, "diet", "select", [
-                          { value: "veg", label: "Vegetarian" },
-                          { value: "non_veg", label: "Non-vegetarian" },
-                          { value: "eggetarian", label: "Eggetarian" },
+                          { value: "Vegetarian", label: "Vegetarian" },
+                          { value: "Non-vegetarian", label: "Non-vegetarian" },
+                          { value: "Eggitarian", label: "Eggitarian" },
+                          { value: "Pescatarian", label: "Pescatarian" },
+                          { value: "Vegan", label: "Vegan" },
                         ])}
                       </div>
                       <div className="form-group">
@@ -527,10 +921,63 @@ function UserProfile({ setlogedIn }) {
                         <h4>Partner Preferences</h4>
                       </div>
                       <div className="form-group">
-                        {renderField("Age Range", profileData.ageRange, "ageRange")}
+                        {renderField("Age Range", profileData.ageRange, "ageRange","select",[
+                           { value: "18-25", label: "18-25 years" },
+                           { value: "25-30", label: "25-30 years" },
+                           { value: "30-35", label: "30-35 years" },
+                           { value: "35-40", label: "35-40 years" },
+                           { value: "40-45", label: "40-45 years" },
+                           { value: "45-50", label: "45-50 years" },
+                           { value: "50-55", label: "50-55 years" },
+                           { value: "55-60", label: "55-60 years" },
+                           { value: "60-65", label: "60-65 years" },
+                           { value: "65-70", label: "65-70 years" },
+                           { value: "70-75", label: "70-75 years" }
+                        ])}
                       </div>
                       <div className="form-group">
-                        {renderField("Height Range", profileData.heightRange, "heightRange")}
+                        {renderField("Height Range", profileData.heightRange, "heightRange","select",
+                          [
+                            { value: "4'0''", label: "4'0'' (1.22 mts)" },
+                            { value: "4'1''", label: "4'1'' (1.24 mts)" },
+                            { value: "4'2''", label: "4'2'' (1.28 mts)" },
+                            { value: "4'3''", label: "4'3'' (1.31 mts)" },
+                            { value: "4'4''", label: "4'4'' (1.34 mts)" },
+                            { value: "4'5''", label: "4'5'' (1.35 mts)" },
+                            { value: "4'6''", label: "4'6'' (1.37 mts)" },
+                            { value: "4'7''", label: "4'7'' (1.40 mts)" },
+                            { value: "4'8''", label: "4'8'' (1.42 mts)" },
+                            { value: "4'9''", label: "4'9'' (1.45 mts)" },
+                            { value: "4'10''", label: "4'10'' (1.47 mts)" },
+                            { value: "4'11''", label: "4'11'' (1.50 mts)" },
+                            { value: "5'0''", label: "5'0'' (1.52 mts)" },
+                            { value: "5'1''", label: "5'1'' (1.55 mts)" },
+                            { value: "5'2''", label: "5'2'' (1.58 mts)" },
+                            { value: "5'3''", label: "5'3'' (1.60 mts)" },
+                            { value: "5'4''", label: "5'4'' (1.63 mts)" },
+                            { value: "5'5''", label: "5'5'' (1.65 mts)" },
+                            { value: "5'6''", label: "5'6'' (1.68 mts)" },
+                            { value: "5'7''", label: "5'7'' (1.70 mts)" },
+                            { value: "5'8''", label: "5'8'' (1.73 mts)" },
+                            { value: "5'9''", label: "5'9'' (1.75 mts)" },
+                            { value: "5'10''", label: "5'10'' (1.78 mts)" },
+                            { value: "5'11''", label: "5'11'' (1.80 mts)" },
+                            { value: "6'0''", label: "6'0'' (1.83 mts)" },
+                            { value: "6'1''", label: "6'1'' (1.85 mts)" },
+                            { value: "6'2''", label: "6'2'' (1.88 mts)" },
+                            { value: "6'3''", label: "6'3'' (1.91 mts)" },
+                            { value: "6'4''", label: "6'4'' (1.93 mts)" },
+                            { value: "6'5''", label: "6'5'' (1.96 mts)" },
+                            { value: "6'6''", label: "6'6'' (1.98 mts)" },
+                            { value: "6'7''", label: "6'7'' (2.01 mts)" },
+                            { value: "6'8''", label: "6'8'' (2.03 mts)" },
+                            { value: "6'9''", label: "6'9'' (2.06 mts)" },
+                            { value: "6'10''", label: "6'10'' (2.08 mts)" },
+                            { value: "6'11''", label: "6'11'' (2.11 mts)" },
+                            { value: "7'", label: "7' (2.13 mts) plus" }
+                          ]
+                          
+                        )}
                       </div>
                     </div>
 
