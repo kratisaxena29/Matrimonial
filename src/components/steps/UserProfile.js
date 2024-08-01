@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { lazy, useEffect, useState } from "react";
 import logo from "../../images/logo.png";
 import noProfile from "../../images/profiles/noProfile.jpg";
 import EditIcon from '@mui/icons-material/Edit';
@@ -89,7 +89,7 @@ function UserProfile({ setlogedIn }) {
       [name]: type === "checkbox" ? checked : value,
     });
   };
-
+console.log("...profileData...",profileData.dateOfBirth)
   const handleSubmit = (e) => {
     console.log("....save...")
     e.preventDefault();
@@ -132,7 +132,7 @@ function UserProfile({ setlogedIn }) {
   
   };
   const [gallery, setGallery] = useState([]);
-
+console.log("...gallery...",gallery)
   const handleGalleryUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -142,6 +142,21 @@ function UserProfile({ setlogedIn }) {
       };
       reader.readAsDataURL(file);
     }
+    const formData = new FormData();
+  formData.append("file", file);
+
+  axios.post(`${URL}/upload-multiple-photo/ritika@gmail.com`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+    .then((response) => {
+      console.log("phot updated successfully:", response.data);
+     
+    })
+    .catch((error) => {
+      console.error("Error updating profile:", error);
+    });
   };
 
   const removePhoto = (index) => {
@@ -614,7 +629,7 @@ function UserProfile({ setlogedIn }) {
                             "Date of Birth",
                             profileData.dateOfBirth,
                             "dateOfBirth",
-                            "date"
+                            // "date"
                           )}
                         </div>
                         <div className="form-group">
@@ -622,7 +637,7 @@ function UserProfile({ setlogedIn }) {
                             "Gender",
                             profileData.gender,
                             "gender",
-                            "radio",
+                            // "radio",
                             [
                               { value: "female", label: "Female" },
                               { value: "male", label: "Male" },
@@ -1090,16 +1105,33 @@ function UserProfile({ setlogedIn }) {
                           {renderField(
                             "Smoking",
                             profileData.smoking,
-                            "smoking",
-                            "checkbox"
+                            "smoking","select",
+                            
+                            [
+                              { value: "Non-smoker", label: "Non-smoker" },
+                              { value: "Social Smoker", label: "Social Smoker" },
+                              { value: "Regular-Smoker", label: "Regular-Smoker" },
+                              { value: "Occasionally", label: "Occasionally" }
+                            ]
+                            // "checkbox"
                           )}
+                          
+                          
                         </div>
                         <div className="form-group">
                           {renderField(
                             "Drinking",
                             profileData.drinking,
                             "drinking",
-                            "checkbox"
+                            // "checkbox"
+                            "select",
+                            
+                            [
+                              { value: "Occasionally", label: "Occasionally" },
+                              { value: "Social Drinker", label: "Social Drinker" },
+                              { value: "Regular Drinker", label: "Regular Drinker" },
+                              { value: "Non-drinker", label: "Non-drinker" }
+                            ]
                           )}
                         </div>
                       </div>

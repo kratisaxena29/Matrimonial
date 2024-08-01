@@ -204,8 +204,8 @@ function LifeStyle() {
                   >
                     
 
-                    <MenuItem value="Yes">Non-smoker</MenuItem>
-                    <MenuItem value="No">Social Smoker</MenuItem>
+                    <MenuItem value="Non-smoker">Non-smoker</MenuItem>
+                    <MenuItem value="Social Smoker">Social Smoker</MenuItem>
                     <MenuItem value="Regularly">Regular-Smoker</MenuItem>
                     <MenuItem value="Occasionally">Occasionally</MenuItem>
                   </Select>
