@@ -40,7 +40,9 @@ const ChatApp = ({ setlogedIn }) => {
 
 
   useEffect(() => {
-    setSocket(io('http://13.200.211.15:3001/'))
+    // setSocket(io('http://13.200.211.15:3001/'))
+    // setSocket(io('http://localhost:3001/'))
+    setSocket(io('https://api.soulmatch.co.in/'))
 }, [])
 
 useEffect(() => {
