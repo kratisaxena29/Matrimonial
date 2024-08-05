@@ -481,6 +481,10 @@ console.log("...gallery...",gallery)
     handleData();
   }, [user.email, user.phoneno]);
   
+  const handleLogo = () => {
+    navigate('/profiles')
+  }
+
   return (
     <div>
       <nav
@@ -492,7 +496,7 @@ console.log("...gallery...",gallery)
           justifyContent: "space-between",
         }}
       >
-        <img src={logo} alt="Logo" style={{ height: "60px" }} />
+        <img onClick={handleLogo} src={logo} alt="Logo" style={{ height: "60px" }} />
         <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
           <Button
             variant="contained"
