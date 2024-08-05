@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   AppBar,
   Toolbar,
@@ -16,31 +16,39 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Plan() {
+  const [oneProfile, setOneProfile] = useState({});
   const navigate = useNavigate();
 
   const URL = process.env.REACT_APP_API_BASE_URL;
 
-  const userdata = sessionStorage.getItem('user')
-  console.log("...userdata...",userdata)
-  let user = null
-  if (userdata) {
-    // Parse the JSON string back to an object
-     user = JSON.parse(userdata);
-  
-    // Access the email field
-    console.log("...userdata...", user);
-    console.log("...user email...", user.email); // Output: testingpart@gmail.com
-  } else {
-    console.log('No user data found in sessionStorage.');
-  }
+  useEffect(() => {
+    const userdata = sessionStorage.getItem('user');
+    if (userdata) {
+      const user = JSON.parse(userdata);
+      if (user && user.email) {
+        axios.get(`${URL}/oneProfileByEmail/${user.email}`)
+          .then(response => {
+            console.log("..plan response...", response.data);
+            setOneProfile(response.data);
+          })
+          .catch(error => {
+            console.log("...error...", error);
+          });
+      }
+    }
+  }, [URL]);
 
-  console.log("...outside...",user.email)
-  const handlePayment = async (e,amount) => {
+  const handlePayment = useCallback(async (e, amount) => {
     e.preventDefault();
-  
+    const userdata = sessionStorage.getItem('user');
+    let user = null;
+    if (userdata) {
+      user = JSON.parse(userdata);
+    }
+
     const data = {
-      email : user.email || "Not Available",
-      phoneo : user.phoneno || "Not Available",
+      email: user?.email || "Not Available",
+      phoneno: user?.phoneno || "Not Available",
       amount: amount,
       MUID: "MUID" + Date.now(),
       transactionId: 'T' + Date.now(),
@@ -51,24 +59,27 @@ function Plan() {
         headers: {
           'Content-Type': 'application/json',
         },
-        withCredentials: true // Ensure cookies are sent if needed
+        withCredentials: true,
       });
 
-      // Log the response for debugging
       console.log("Response:", response);
      
- 
-     if (response.data) {
-            
+      if (response.data) {
         window.location.href = response.data.url;
       } else {
         console.error("Invalid payment response:", response.data);
       }
     } catch (error) {
       console.error("Error during payment initiation:", error);
-      // Handle error (display a message to the user, etc.)
     }
-  };
+  }, [URL]);
+
+  const plans = [
+    { name: "Gold", amount: 100 },
+    { name: "Diamond", amount: 200 },
+    { name: "Platinum", amount: 300 },
+  ];
+
   return (
     <div style={{ paddingTop: "0px", paddingBottom: "80px" }}>
       <AppBar position="fixed" style={{ backgroundColor: "#6D0B32" }}>
@@ -80,6 +91,7 @@ function Plan() {
               style={{ height: "60px", marginRight: "20px" }}
             />
           </Box>
+          
           <Box sx={{ display: "flex", flexDirection: "row", gap: "20px" }}>
             <Button
               onClick={() => navigate('/profiles')}
@@ -105,104 +117,96 @@ function Plan() {
           Find the best plan and the best price that is right for you!
         </Typography>
         <Grid container spacing={3} justifyContent="center" alignItems="center">
-          {["Gold", "Diamond", "Platinum"].map((plan, index) => (
-            <Grid item xs={12} md={4} key={plan}>
-              <Paper
-                elevation={3}
-                className="plan-card"
-                style={{
-                  padding: "30px",
-                  height: "400px",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  textAlign: "center",
-                  borderRadius: "15px",
-                }}
-              >
-                <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-                  {plan}
-                </Typography>
-                <Typography
-                  variant="h6"
+          {plans.map((plan) => (
+            (oneProfile.plan !== plan.amount.toString()) && (
+              <Grid item xs={12} md={4} key={plan.name}>
+                <Paper
+                  elevation={3}
+                  className="plan-card"
                   style={{
-                    margin: "20px 0",
-                    fontWeight: "normal",
+                    padding: "30px",
+                    height: "400px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    textAlign: "center",
+                    borderRadius: "15px",
                   }}
                 >
-                  {index === 0
-                    ? "₹1/month"
-                    : index === 1
-                    ? "₹2/month"
-                    : "₹3/month"}
-                </Typography>
-                <Box
-                  sx={{ display: "flex", flexDirection: "column", gap: "30px" }}
-                >
-                  <Grid container spacing={1} alignItems="center">
-                    <Grid item>
-                      <CheckCircle />
+                  <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                    {plan.name}
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    style={{
+                      margin: "20px 0",
+                      fontWeight: "normal",
+                    }}
+                  >
+                    {`₹${plan.amount}/month`}
+                  </Typography>
+                  <Box
+                    sx={{ display: "flex", flexDirection: "column", gap: "30px" }}
+                  >
+                    <Grid container spacing={1} alignItems="center">
+                      <Grid item>
+                        <CheckCircle />
+                      </Grid>
+                      <Grid item>
+                        <Typography variant="body1" style={{ marginLeft: "5px" }}>
+                          Send unlimited messages
+                        </Typography>
+                      </Grid>
                     </Grid>
-                    <Grid item>
-                      <Typography variant="body1" style={{ marginLeft: "5px" }}>
-                        Send unlimited messages
-                      </Typography>
+                    <Grid container spacing={1} alignItems="center">
+                      <Grid item>
+                        <CheckCircle />
+                      </Grid>
+                      <Grid item>
+                        <Typography variant="body1" style={{ marginLeft: "5px" }}>
+                          {plan.name === "Gold"
+                            ? "View up to 50 contact numbers"
+                            : plan.name === "Diamond"
+                            ? "View up to 100 contact numbers"
+                            : "View up to 200 contact numbers"}
+                        </Typography>
+                      </Grid>
                     </Grid>
-                  </Grid>
-                  <Grid container spacing={1} alignItems="center">
-                    <Grid item>
-                      <CheckCircle />
+                    <Grid container spacing={1} alignItems="center">
+                      <Grid item>
+                        {plan.name === "Platinum" ? <CheckCircle /> : <Cancel />}
+                      </Grid>
+                      <Grid item>
+                        <Typography variant="body1" style={{ marginLeft: "5px" }}>
+                          Standout from other profiles
+                        </Typography>
+                      </Grid>
                     </Grid>
-                    <Grid item>
-                      <Typography variant="body1" style={{ marginLeft: "5px" }}>
-                        {index === 0
-                          ? "View up to 50 contact numbers"
-                          : index === 1
-                          ? "View up to 100 contact numbers"
-                          : "View up to 200 contact numbers"}
-                      </Typography>
+                    <Grid container spacing={1} alignItems="center">
+                      <Grid item>
+                        {plan.name === "Platinum" ? <CheckCircle /> : <Cancel />}
+                      </Grid>
+                      <Grid item>
+                        <Typography variant="body1" style={{ marginLeft: "5px" }}>
+                          Let matches contact you!
+                        </Typography>
+                      </Grid>
                     </Grid>
-                  </Grid>
-                  <Grid container spacing={1} alignItems="center">
-                    <Grid item>
-                      {index === 2 ? <CheckCircle /> : <Cancel />}
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="body1" style={{ marginLeft: "5px" }}>
-                        Standout from other profiles
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                  <Grid container spacing={1} alignItems="center">
-                    <Grid item>
-                      {index === 2 ? <CheckCircle /> : <Cancel />}
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="body1" style={{ marginLeft: "5px" }}>
-                        Let matches contact you!
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Box>
-                <Button
-                  onClick={(e) =>
-                    handlePayment(
-                      e,
-                      // index === 0 ? 699 : index === 1 ? 999 : 1299
-                      index === 0 ? 100 : index === 1 ? 200 : 300
-                    )
-                  }
-                  variant="contained"
-                  className="plan-button"
-                  style={{
-                    marginTop: "20px",
-                  }}
-                >
-                  Get Started
-                </Button>
-              </Paper>
-            </Grid>
+                  </Box>
+                  <Button
+                    onClick={(e) => handlePayment(e, plan.amount)}
+                    variant="contained"
+                    className="plan-button"
+                    style={{
+                      marginTop: "20px",
+                    }}
+                  >
+                    Get Started
+                  </Button>
+                </Paper>
+              </Grid>
+            )
           ))}
         </Grid>
       </Container>

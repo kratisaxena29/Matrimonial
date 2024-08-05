@@ -43,6 +43,10 @@ function PersonDetails({ setlogedIn }) {
     navigate('/plan');
   };
 
+  const handleLogo = () => {
+    navigate('/profiles')
+  }
+
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <nav
@@ -54,7 +58,7 @@ function PersonDetails({ setlogedIn }) {
           alignItems: "center",
         }}
       >
-        <img src={logo} alt="Logo" style={{ height: "60px", marginRight: "40px" }} />
+        <img onClick={handleLogo} src={logo} alt="Logo" style={{ height: "60px", marginRight: "40px" }} />
         <div>
           <button onClick={handleLogout}>Logout</button>
         </div>
@@ -161,7 +165,7 @@ function PersonDetails({ setlogedIn }) {
                       <p>Data is not available</p>
                     )}
                   </div>
-                  <div className="pr-bio-c menu-pop-soci pr-bio-soc">
+                  {/* <div className="pr-bio-c menu-pop-soci pr-bio-soc">
                     <h3>Social media</h3>
                     <ul>
                       <li>
@@ -195,7 +199,7 @@ function PersonDetails({ setlogedIn }) {
                         </a>
                       </li>
                     </ul>
-                  </div>
+                  </div> */}
                 </div>
                 {/* PROFILE lHS */}
               </div>

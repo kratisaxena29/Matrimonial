@@ -14,6 +14,7 @@ function Profiles({ setlogedIn }) {
   const [profiles, setProfiles] = useState([]);
   const [interestedProfiles, setInterestedProfiles] = useState([]);
   const [subcaste, setSubCaste] = useState("")
+  const [oneProfile,setOneProfiles] = useState("")
   const navigate = useNavigate();
 
   const casteOptions = [
@@ -364,7 +365,10 @@ function Profiles({ setlogedIn }) {
     "Yadav",
     "Other"
   ];
-
+ 
+  const ReligionOptions = [
+"Hindu","Muslim","Christian","Sikh","Buddhist","Jain","Bahai"
+  ]
   const user = JSON.parse(sessionStorage.getItem('user'));
   console.log("..user...", user);
   console.log("..user email...", user.email);
@@ -512,6 +516,18 @@ function Profiles({ setlogedIn }) {
       });
   }, [age, religion, caste, subcaste]);
 
+  useEffect(() => {
+    axios.get(`${URL}/oneProfileByEmail/${user.email}`)
+      .then(response => {
+        console.log("..response...", response.data);
+         setOneProfiles(response.data);
+      })
+      .catch(error => {
+        console.log("...error...", error);
+      });
+  }, []);
+  console.log("...krati...",oneProfile)
+
   const handleProfileDetails = async (profileId) => {
     console.log("...handleProfileDetails for profileId...", profileId)
     navigate('/PersonDetails', { state: { profileId } });
@@ -543,7 +559,54 @@ function Profiles({ setlogedIn }) {
       >
         <img src={logo} alt="Logo" style={{ height: "60px" }} />
         <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-          <Button
+        <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "transparent",
+              color: "white",
+              border: "2px solid",
+              borderColor: "#F68C1E",
+              "&:hover": {
+                backgroundColor: "#E57D0F",
+              },
+              textTransform: "none",
+              fontWeight: "bold",
+            }}
+            
+          >
+           {oneProfile?.name}
+          </Button> 
+        <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "transparent",
+              color: "white",
+              border: "2px solid",
+              borderColor: "#F68C1E",
+              "&:hover": {
+                backgroundColor: "#E57D0F",
+              },
+              textTransform: "none",
+              fontWeight: "bold",
+            }}
+            onClick={() => {
+              handlePlans();
+            }}
+          >
+         {(() => {
+    switch (oneProfile.plan) {
+      case "100":
+        return "Gold";
+      case "200":
+        return "Diamond";
+      case "300":
+        return "Platinum";
+      default:
+        return "Membership Plan";
+    }
+  })()}
+          </Button>
+          {/* <Button
             variant="contained"
             sx={{
               backgroundColor: "transparent",
@@ -561,7 +624,7 @@ function Profiles({ setlogedIn }) {
             }}
           >
            Membership Plans
-          </Button>
+          </Button> */}
           <input
             type="file"
             id="fileInput"
@@ -660,14 +723,13 @@ function Profiles({ setlogedIn }) {
                         value={religion}
                         onChange={(event) => setReligion(event.target.value)}
                       >
+                       
                         <option value="">Select Religion</option>
-                        <MenuItem value="Hindu">Hindu</MenuItem>
-                        <MenuItem value="Muslim">Muslim</MenuItem>
-                        <MenuItem value="Christian">Christian</MenuItem>
-                        <MenuItem value="Sikh">Sikh</MenuItem>
-                        <MenuItem value="Buddhist">Buddhist</MenuItem>
-                        <MenuItem value="Jain">Jain</MenuItem>
-                        <MenuItem value="Bahai">Bahai</MenuItem>
+                        {ReligionOptions.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -779,10 +841,7 @@ function Profiles({ setlogedIn }) {
                               data-toggle="tooltip"
                               title="Click to save this profile."
                             >
-                              {/* <i
-                                className="fa fa-thumbs-o-up"
-                                aria-hidden="true"
-                              /> */}
+                              {/* <h6>free</h6> */}
                             </span>
                           </div>
                         </li>
