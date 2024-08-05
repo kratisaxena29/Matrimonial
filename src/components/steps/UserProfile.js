@@ -145,7 +145,7 @@ console.log("...gallery...",gallery)
     const formData = new FormData();
   formData.append("file", file);
 
-  axios.post(`${URL}/upload-multiple-photo/ritika@gmail.com`, formData, {
+  axios.post(`${URL}/upload-multiple-photo/${user.email}`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -159,9 +159,58 @@ console.log("...gallery...",gallery)
     });
   };
 
-  const removePhoto = (index) => {
-    setGallery(gallery.filter((_, i) => i !== index));
+  // const removePhoto = (index) => {
+  //   console.log("...removePhoto...",index)
+  //   setGallery(gallery.filter((_, i) => i !== index));
+  // };
+
+  const removePhoto = async (index) => {
+    console.log("...removePhoto...", index);
+    
+    // Assuming gallery is an array of photo URLs
+    const photoToDelete = gallery[index];
+    const profileIdentifier = user.email || user.phoneno; // Replace with actual user data
+  
+    try {
+      // Make an API call to delete the photo from the server
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_BASE_URL}/deletephotosByEmailOrPhoneNo/${profileIdentifier}`,
+        { photoToDelete: photoToDelete }, // Request body
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+  
+      // Check if the API call was successful
+      if (response.status === 200) {
+        console.log('Photo deleted successfully:', response.data);
+        
+        // Remove the photo from the gallery in the frontend
+        setGallery(gallery.filter((_, i) => i !== index));
+      } else {
+        console.error('Failed to delete photo:', response.data.message);
+      }
+    } catch (error) {
+      console.error('Error during photo deletion:', error);
+    }
   };
+  
+  useEffect(() => {
+    const userdata = sessionStorage.getItem('user');
+    if (userdata) {
+      const user = JSON.parse(userdata);
+      if (user && user.email) {
+        axios.get(`${URL}/getphotosByEmailOrPhoneNo/${user.email}`)
+          .then(response => {
+            console.log("..user profile response...", response.data);
+            const photos = response.data.photoUrl
+            setGallery(photos);
+          })
+          .catch(error => {
+            console.log("...error...", error);
+          });
+      }
+    }
+  }, [URL]);
+
   const renderField = (label, value, name, type = "text", options = []) => {
     if (isEditMode) {
       switch (type) {

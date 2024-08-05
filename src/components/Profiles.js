@@ -831,6 +831,10 @@ function Profiles({ setlogedIn }) {
                                 <span
                                   onClick={() => handleInterest(profile._id)}
                                   className="cta-interest"
+                                  style={{
+                                    cursor: 'pointer',
+                                    color: interestedProfiles.includes(profile._id) ? 'red' : 'black',
+                                  }}
                                 >
                                   Interested
                                 </span>
