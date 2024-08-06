@@ -93,7 +93,7 @@ const navigate = useNavigate()
        Forgot Password
       </Typography>
       <Typography variant="h6" style={{ color: "#363640", fontWeight: "400" }}>
-        An OTP code has been sent to abc@gmail.com. Kindly enter the code below to reset the password
+        An OTP code has been sent to your email. Kindly enter the code below to reset the password
         <strong>&nbsp;{email}</strong>
       </Typography>
       <Box style={{ display: "flex", justifyContent: "center", marginTop: 20 }}>

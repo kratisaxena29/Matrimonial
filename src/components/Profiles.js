@@ -875,7 +875,7 @@ function Profiles({ setlogedIn }) {
             >
               <p>
                 <strong style={{ color: "#FFBF0E" }}>Email:</strong>{" "}
-                abc@gmail.com
+                soulmatchinfo@gmail.com
               </p>
               <p style={{ width: "200rem", textAlign: "center" }}>
                 Copyright © <span id="cry">2024</span>{" "}
