@@ -14,7 +14,7 @@ function Profiles({ setlogedIn }) {
   const [profiles, setProfiles] = useState([]);
   const [interestedProfiles, setInterestedProfiles] = useState([]);
   const [subcaste, setSubCaste] = useState("")
-  const [oneProfile,setOneProfiles] = useState("")
+  const [oneProfile, setOneProfiles] = useState("")
   const navigate = useNavigate();
 
   const casteOptions = [
@@ -365,9 +365,9 @@ function Profiles({ setlogedIn }) {
     "Yadav",
     "Other"
   ];
- 
+
   const ReligionOptions = [
-"Hindu","Muslim","Christian","Sikh","Buddhist","Jain","Bahai"
+    "Hindu", "Muslim", "Christian", "Sikh", "Buddhist", "Jain", "Bahai"
   ]
   const user = JSON.parse(sessionStorage.getItem('user'));
   console.log("..user...", user);
@@ -520,13 +520,13 @@ function Profiles({ setlogedIn }) {
     axios.get(`${URL}/oneProfileByEmail/${user.email}`)
       .then(response => {
         console.log("..response...", response.data);
-         setOneProfiles(response.data);
+        setOneProfiles(response.data);
       })
       .catch(error => {
         console.log("...error...", error);
       });
   }, []);
-  console.log("...krati...",oneProfile)
+  console.log("...krati...", oneProfile)
 
   const handleProfileDetails = async (profileId) => {
     console.log("...handleProfileDetails for profileId...", profileId)
@@ -559,7 +559,7 @@ function Profiles({ setlogedIn }) {
       >
         <img src={logo} alt="Logo" style={{ height: "60px" }} />
         <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-        <Button
+          <Button
             variant="contained"
             sx={{
               backgroundColor: "transparent",
@@ -572,11 +572,11 @@ function Profiles({ setlogedIn }) {
               textTransform: "none",
               fontWeight: "bold",
             }}
-            
+
           >
-           {oneProfile?.name}
-          </Button> 
-        <Button
+            {oneProfile?.name}
+          </Button>
+          <Button
             variant="contained"
             sx={{
               backgroundColor: "transparent",
@@ -593,18 +593,18 @@ function Profiles({ setlogedIn }) {
               handlePlans();
             }}
           >
-         {(() => {
-    switch (oneProfile.plan) {
-      case "100":
-        return "Gold";
-      case "200":
-        return "Diamond";
-      case "300":
-        return "Platinum";
-      default:
-        return "Membership Plan";
-    }
-  })()}
+            {(() => {
+              switch (oneProfile.plan) {
+                case "100":
+                  return "Gold";
+                case "200":
+                  return "Diamond";
+                case "300":
+                  return "Platinum";
+                default:
+                  return "Membership Plan";
+              }
+            })()}
           </Button>
           {/* <Button
             variant="contained"
@@ -723,7 +723,7 @@ function Profiles({ setlogedIn }) {
                         value={religion}
                         onChange={(event) => setReligion(event.target.value)}
                       >
-                       
+
                         <option value="">Select Religion</option>
                         {ReligionOptions.map((option) => (
                           <option key={option} value={option}>
@@ -845,7 +845,20 @@ function Profiles({ setlogedIn }) {
                               data-toggle="tooltip"
                               title="Click to save this profile."
                             >
-                              {/* <h6>free</h6> */}
+                              {/* <h6>{profile.plan || "free"}</h6> */}
+
+                              {(() => {
+                                switch (profile.plan) {
+                                  case "100":
+                                    return "Gold";
+                                  case "200":
+                                    return "Diamond";
+                                  case "300":
+                                    return "Platinum";
+                                  default:
+                                    return "Free";
+                                }
+                              })()}
                             </span>
                           </div>
                         </li>
