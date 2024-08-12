@@ -33,6 +33,7 @@ import PaymentSucess from "./components/PaymentSucess";
 import ConfirmationProfile from "./components/ConfirmationProfile";
 import UserProfile from "./components/steps/UserProfile";
 import Dashboard from "./components/Dashboard";
+import DashboardProfiles from "./components/DashboardProfile";
 
 function App() {
   const [logedIn, setlogedIn] = useState(
@@ -75,6 +76,7 @@ function App() {
           <Route path="/about-yourself" element={<AboutYourself />} />
           <Route path="/payment-fail" element={<PaymentFailure />} />
           <Route path="/payment-success" element={<PaymentSucess />} />
+          {/* <Route path="/dashboard" element={<Dashboard />} /> */}
         </Route>
 
         <Route path="/" element={<ProtectedRoute logedIn={logedIn} />}>
@@ -85,7 +87,9 @@ function App() {
           <Route path="/chat" element={<Chat setlogedIn={setlogedIn} />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/plan" element={<Plan />} />
-          <Route path="/user-profile" element={<UserProfile setlogedIn={setlogedIn}/>} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/user-profile" element={<UserProfile setlogedIn={setlogedIn}/>} />x
+          <Route path="/dashboard-profiles" element={<DashboardProfiles setlogedIn={setlogedIn}/>} />
           <Route
             path="/PersonDetails"
             element={<PersonDetails setlogedIn={setlogedIn} />}

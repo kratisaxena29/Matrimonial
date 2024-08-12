@@ -55,6 +55,7 @@ const [subcasteError,setSubCasteError] = useState(false)
     "Hindi - Delhi",
     "Hindi - MP/CG",
     "Hindi - UP/UK",
+    "Hindi - Marwari",
     "Punjabi",
     "Hindi - Bihar/Jharkhand",
     "Hindi - Rajasthan",
@@ -850,6 +851,7 @@ console.log("...partner...",location.state)
                     onChange={(event) => setReligion(event.target.value)}
                     error={religionError}
                   >
+
                     <MenuItem value="Hindu">Hindu</MenuItem>
                     <MenuItem value="Muslim">Muslim</MenuItem>
                     <MenuItem value="Christian">Christian</MenuItem>
@@ -857,6 +859,7 @@ console.log("...partner...",location.state)
                     <MenuItem value="Buddhist">Buddhist</MenuItem>
                     <MenuItem value="Jain">Jain</MenuItem>
                     <MenuItem value="Bahai">Bahai</MenuItem>
+                    <MenuItem value="Parsi">Parsi</MenuItem>
                   </Select>
                   {religionError && (
                     <FormHelperText error>
@@ -970,6 +973,7 @@ console.log("...partner...",location.state)
                   >
                     <MenuItem value="Yes">Yes</MenuItem>
                     <MenuItem value="No">No</MenuItem>
+                    <MenuItem value="Don't know">Don't know</MenuItem>
                   </Select>
                   {petFriendlyError && (
                     <FormHelperText error>

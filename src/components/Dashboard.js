@@ -24,6 +24,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { Tab } from "bootstrap";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard({ setlogedIn }) {
   const [selectedPhoto, setSelectedPhoto] = useState("");
@@ -33,10 +34,13 @@ function Dashboard({ setlogedIn }) {
   const [religion, setReligion] = useState("");
   const [profiles, setProfiles] = useState([]);
   const [interestedProfiles, setInterestedProfiles] = useState([]);
-  const [subcaste, setSubCaste] = useState("");
+ const [registration,setRegistration] = useState("")
+  const [numberOfProfiles, setNumberOfProfiles] = useState(0);
+  const [active, setactive] = useState("");
 //   const navigate = useNavigate();
 
   const user = JSON.parse(sessionStorage.getItem("user"));
+  const navigate = useNavigate()
   console.log("..user...", user);
 //   console.log("..user email...", user.email);
   console.log("...age..", age);
@@ -55,16 +59,99 @@ function Dashboard({ setlogedIn }) {
       </List>
     </Box>
   );
+
+  const handleVerify = async (profileId) => {
+    console.log("Verify button clicked for profile:", profileId);
+    try {
+        const response = await axios.get(`${URL}/verify-profile/${profileId}`);
+        console.log("Profile verification updated:", response.data);
+
+        // Update the profiles state to reflect the verified status
+        setProfiles((prevProfiles) =>
+            prevProfiles.map((profile) =>
+                profile._id === profileId
+                    ? { ...profile, verifyProfile: true }
+                    : profile
+            )
+        );
+    } catch (error) {
+        console.error("Error verifying profile:", error);
+    }
+};
+
+
+const handleReject = async(profileId) => {
+  console.log("Reject button clicked for profile:", profileId);
+  try {
+    const response = await axios.delete(`${URL}/deleteProfile/${profileId}`);
+    console.log("Profile deleted:", response.data);
+
+    // Remove the rejected profile from the state
+    setProfiles((prevProfiles) => prevProfiles.filter(profile => profile._id !== profileId));
+
+  } catch (error) {
+    console.error("Error verifying profile:", error);
+  }
+};
+
   
+  useEffect(() => {
+    const fetchProfiles = async () => {
+      try {
+        const response = await axios.get(`${URL}/getNoOfProfiles`);
+        console.log("...response...",response)
+        setProfiles(response.data.profiles); // Set the profiles data in state
+        setNumberOfProfiles(response.data.numberOfProfiles); // Set the number of profiles in state
+      } catch (error) {
+        console.error('Error fetching profiles:', error);
+      }
+    };
+
+    fetchProfiles();
+  }, []);
+
+  useEffect(() => {
+    const fetchRegistration = async () => {
+      try {
+        const response = await axios.get(`${URL}/Today-registration`);
+        console.log("...fetchRegistration...",response.data.count)
+        setRegistration(response.data.count)
+        // setProfiles(response.data.profiles); // Set the profiles data in state
+        // setNumberOfProfiles(response.data.numberOfProfiles); // Set the number of profiles in state
+      } catch (error) {
+        console.error('Error fetching profiles:', error);
+      }
+    };
+
+    fetchRegistration();
+  }, []);
+
+  useEffect(() => {
+    const fetchActive = async () => {
+      try {
+        const response = await axios.get(`${URL}/active-subscription`);
+        console.log("...fetchactive...",response.data.ActiveSub)
+        setactive(response.data)
+        // setProfiles(response.data.profiles); // Set the profiles data in state
+        // setNumberOfProfiles(response.data.numberOfProfiles); // Set the number of profiles in state
+      } catch (error) {
+        console.error('Error fetching profiles:', error);
+      }
+    };
+
+    fetchActive();
+  }, []);
+
   const NewProfiles = () => (
     <Paper sx={{ p: 2, mb: 3 }}>
-      <Typography variant="h6" sx={{ mb: 2 }}>New Profiles</Typography>
+      <Typography variant="h6" sx={{ mb: 2 }}>All Profiles</Typography>
       <Grid container spacing={2}>
-        {[1, 2, 3, 4].map((profile) => (
+        {profiles.map((profile) => (
           <Grid item xs={3} key={profile}>
             <Paper sx={{ p: 1, textAlign: 'center' }}>
-              <Typography>User {profile}</Typography>
-              <Button size="small">View</Button>
+              <Typography>{profile.name || 'No Name'}</Typography>
+              {/* <Button size="small">View</Button> */}
+              <Button size="small" onClick={() => handleProfileDetails(profile._id)}>View</Button>
             </Paper>
           </Grid>
         ))}
@@ -72,18 +159,18 @@ function Dashboard({ setlogedIn }) {
     </Paper>
   );
   
-  const UserManagement = () => (
-    <Paper sx={{ p: 2, mb: 3 }}>
-      <Typography variant="h6" sx={{ mb: 2 }}>User Management</Typography>
-      <List>
-        {['Approve Users', 'Suspend Users', 'Delete Users', 'Edit User Profiles'].map((action) => (
-          <ListItem button key={action}>
-            <ListItemText primary={action} />
-          </ListItem>
-        ))}
-      </List>
-    </Paper>
-  );
+  // const UserManagement = () => (
+  //   <Paper sx={{ p: 2, mb: 3 }}>
+  //     <Typography variant="h6" sx={{ mb: 2 }}>User Management</Typography>
+  //     <List>
+  //       {['Approve Users', 'Suspend Users', 'Delete Users', 'Edit User Profiles'].map((action) => (
+  //         <ListItem button key={action}>
+  //           <ListItemText primary={action} />
+  //         </ListItem>
+  //       ))}
+  //     </List>
+  //   </Paper>
+  // );
   
   const VerificationRequests = () => (
     <Paper sx={{ p: 2, mb: 3 }}>
@@ -94,11 +181,17 @@ function Dashboard({ setlogedIn }) {
         <Tab label="Rejected" />
       </Tabs> */}
       <List>
-        {['John Doe', 'Jane Smith', 'Alice Johnson'].map((name) => (
-          <ListItem key={name}>
-            <ListItemText primary={name} secondary="Document verification pending" />
-            <Button size="small" color="primary">Verify</Button>
-            <Button size="small" color="secondary">Reject</Button>
+        {profiles.map((profile) => (
+          <ListItem key={profile._id}>
+            <ListItemText primary={profile.name}  />
+            <Button size="small"
+             color="primary"
+              onClick={() => handleVerify(profile._id)}
+            >{profile.verifyProfile === true ? "Verified" : "Verify"}</Button>
+            <Button size="small"
+             color="secondary"
+               onClick={() => handleReject(profile._id)}
+             >Reject</Button>
           </ListItem>
         ))}
       </List>
@@ -110,33 +203,39 @@ function Dashboard({ setlogedIn }) {
       <Typography variant="h6" sx={{ mb: 2 }}>Statistics</Typography>
       <List>
         <ListItem>
-          <ListItemText primary="Total Users" secondary="10,000" />
+          <ListItemText primary="Total Users" secondary={numberOfProfiles} />
         </ListItem>
         <ListItem>
-          <ListItemText primary="New Registrations (Today)" secondary="50" />
+          <ListItemText primary="New Registrations (Today)" secondary={registration} />
         </ListItem>
         <ListItem>
-          <ListItemText primary="Active Subscriptions" secondary="5,000" />
+          <ListItemText primary="Active Subscriptions" secondary={active.ActiveSub} />
         </ListItem>
         <ListItem>
-          <ListItemText primary="Successful Matches" secondary="500" />
+          <ListItemText primary="Gold Subscriptions" secondary={active.plan100} />
+        </ListItem>
+         <ListItem>
+          <ListItemText primary="Diamond Subscriptions" secondary={active.plan200} />
+        </ListItem>
+         <ListItem>
+          <ListItemText primary="Platinium Subscriptions" secondary={active.plan300} />
         </ListItem>
       </List>
     </Paper>
   );
   
-  const RecentActivity = () => (
-    <Paper sx={{ p: 2 }}>
-      <Typography variant="h6" sx={{ mb: 2 }}>Recent Activity</Typography>
-      <List>
-        {['New user registered', 'Profile verification completed', 'Subscription renewed', 'Match request sent'].map((activity) => (
-          <ListItem key={activity}>
-            <ListItemText primary={activity} secondary="2 minutes ago" />
-          </ListItem>
-        ))}
-      </List>
-    </Paper>
-  );
+  // const RecentActivity = () => (
+  //   <Paper sx={{ p: 2 }}>
+  //     <Typography variant="h6" sx={{ mb: 2 }}>Recent Activity</Typography>
+  //     <List>
+  //       {['New user registered', 'Profile verification completed', 'Subscription renewed', 'Match request sent'].map((activity) => (
+  //         <ListItem key={activity}>
+  //           <ListItemText primary={activity} secondary="2 minutes ago" />
+  //         </ListItem>
+  //       ))}
+  //     </List>
+  //   </Paper>
+  // );
   const handleChat = async () => {
     try {
       const payload = {
@@ -235,102 +334,102 @@ function Dashboard({ setlogedIn }) {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Submit updated profile data to API
-    console.log("Updated profile data:", profileData);
-    setIsEditMode(false);
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   // Submit updated profile data to API
+  //   console.log("Updated profile data:", profileData);
+  //   setIsEditMode(false);
+  // };
 
-  const renderField = (label, value, name, type = "text", options = []) => {
-    if (isEditMode) {
-      switch (type) {
-        case "select":
-          return (
-            <TextField
-              fullWidth
-              select
-              label={label}
-              variant="outlined"
-              name={name}
-              value={value}
-              onChange={handleInputChange}
-            >
-              {options.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
-          );
-        case "radio":
-          return (
-            <FormControl component="fieldset">
-              <RadioGroup
-                row
-                aria-label={name}
-                name={name}
-                value={value}
-                onChange={handleInputChange}
-              >
-                {options.map((option) => (
-                  <FormControlLabel
-                    key={option.value}
-                    value={option.value}
-                    control={<Radio />}
-                    label={option.label}
-                  />
-                ))}
-              </RadioGroup>
-            </FormControl>
-          );
-        case "checkbox":
-          return (
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={value}
-                  onChange={handleInputChange}
-                  name={name}
-                />
-              }
-              label={label}
-            />
-          );
-        case "textarea":
-          return (
-            <TextField
-              fullWidth
-              multiline
-              rows={4}
-              label={label}
-              variant="outlined"
-              name={name}
-              value={value}
-              onChange={handleInputChange}
-            />
-          );
-        default:
-          return (
-            <TextField
-              fullWidth
-              label={label}
-              variant="outlined"
-              name={name}
-              value={value}
-              onChange={handleInputChange}
-              type={type}
-            />
-          );
-      }
-    } else {
-      return (
-        <Typography variant="body1">
-          <strong>{label}:</strong> {value}
-        </Typography>
-      );
-    }
-  };
+  // const renderField = (label, value, name, type = "text", options = []) => {
+  //   if (isEditMode) {
+  //     switch (type) {
+  //       case "select":
+  //         return (
+  //           <TextField
+  //             fullWidth
+  //             select
+  //             label={label}
+  //             variant="outlined"
+  //             name={name}
+  //             value={value}
+  //             onChange={handleInputChange}
+  //           >
+  //             {options.map((option) => (
+  //               <MenuItem key={option.value} value={option.value}>
+  //                 {option.label}
+  //               </MenuItem>
+  //             ))}
+  //           </TextField>
+  //         );
+  //       case "radio":
+  //         return (
+  //           <FormControl component="fieldset">
+  //             <RadioGroup
+  //               row
+  //               aria-label={name}
+  //               name={name}
+  //               value={value}
+  //               onChange={handleInputChange}
+  //             >
+  //               {options.map((option) => (
+  //                 <FormControlLabel
+  //                   key={option.value}
+  //                   value={option.value}
+  //                   control={<Radio />}
+  //                   label={option.label}
+  //                 />
+  //               ))}
+  //             </RadioGroup>
+  //           </FormControl>
+  //         );
+  //       case "checkbox":
+  //         return (
+  //           <FormControlLabel
+  //             control={
+  //               <Checkbox
+  //                 checked={value}
+  //                 onChange={handleInputChange}
+  //                 name={name}
+  //               />
+  //             }
+  //             label={label}
+  //           />
+  //         );
+  //       case "textarea":
+  //         return (
+  //           <TextField
+  //             fullWidth
+  //             multiline
+  //             rows={4}
+  //             label={label}
+  //             variant="outlined"
+  //             name={name}
+  //             value={value}
+  //             onChange={handleInputChange}
+  //           />
+  //         );
+  //       default:
+  //         return (
+  //           <TextField
+  //             fullWidth
+  //             label={label}
+  //             variant="outlined"
+  //             name={name}
+  //             value={value}
+  //             onChange={handleInputChange}
+  //             type={type}
+  //           />
+  //         );
+  //     }
+  //   } else {
+  //     return (
+  //       <Typography variant="body1">
+  //         <strong>{label}:</strong> {value}
+  //       </Typography>
+  //     );
+  //   }
+  // };
 
   const triggerFileInput = () => {
     document.getElementById("fileInput").click();
@@ -339,6 +438,11 @@ function Dashboard({ setlogedIn }) {
 
   const handleProfileDetails = async (profileId) => {
     console.log("...handleProfileDetails for profileId...", profileId);
+    navigate("/dashboard-profiles",{
+      state: {
+        _id : profileId
+      }
+    })
     // navigate("/PersonDetails", { state: { profileId } });
   };
 
@@ -446,12 +550,12 @@ function Dashboard({ setlogedIn }) {
         <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
             <NewProfiles />
-            <UserManagement />
+            {/* <UserManagement /> */}
             <VerificationRequests />
           </Grid>
           <Grid item xs={12} md={4}>
             <Statistics />
-            <RecentActivity />
+            {/* <RecentActivity /> */}
           </Grid>
         </Grid>
       </Box>

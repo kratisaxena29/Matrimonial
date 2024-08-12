@@ -856,7 +856,7 @@ function Profiles({ setlogedIn }) {
                                   case "300":
                                     return "Platinum";
                                   default:
-                                    return "Free";
+                                    return "";
                                 }
                               })()}
                             </span>

@@ -41,7 +41,7 @@ function ProfileDetails() {
   );
   const [email, setEmail] = useState(location?.state?.email || "");
   const [phoneNo, setPhoneNo] = useState(location?.state?.phoneno || "");
-  const [address, setAddress] = useState(location?.state?.address || "");
+  // const [address, setAddress] = useState(location?.state?.address || "");
   const [hobbies, setHobbies] = useState(location?.state?.hobbies || []);
   const [indianCities, setIndianCities] = useState(
     location?.state?.indianCities || []
@@ -168,7 +168,7 @@ function ProfileDetails() {
             disabilityDetails: disability === "Yes" ? disabilityDetails : "",
             email,
             phoneNo,
-            address,
+            // address,
             hobbies,
             country,
           },
@@ -192,7 +192,7 @@ function ProfileDetails() {
             disabilityDetails: disability === "Yes" ? disabilityDetails : "",
             email,
             phoneNo,
-            address,
+            // address,
             hobbies,
             country,
           },
@@ -280,6 +280,7 @@ function ProfileDetails() {
     "Buddhist",
     "Jain",
     "Bahai",
+    "Parsi"
   ];
 
   const maritalStatusOptions = [
@@ -603,7 +604,8 @@ function ProfileDetails() {
                   }}
                 >
                   <TextField
-                    label="Differently-Abled Details"
+                    // label="Differently-Abled Details"
+                    label = "Specify"
                     variant="standard"
                     value={disabilityDetails}
                     onChange={handleChange(
@@ -685,7 +687,7 @@ function ProfileDetails() {
                   )}
                 </FormControl>
               </div>
-              <div
+              {/* <div
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -703,7 +705,7 @@ function ProfileDetails() {
                   helperText={errors.address}
                   sx={{ width: 490 }}
                 />
-              </div>
+              </div> */}
               <div
                 style={{
                   display: "flex",

@@ -21,7 +21,18 @@ const professionOptions = [
   "Teacher",
   "Business",
   "Artist",
-  "Other"
+  "Other",
+  
+];
+const MotherprofessionOptions = [
+  "Doctor",
+  "Engineer",
+  "Teacher",
+  "Business",
+  "Artist",
+  "Home Maker",
+  "Other",
+  
 ];
 
 function FamilyDetails() {
@@ -395,7 +406,7 @@ console.log("...family details ...",location.state)
                     error={!!errors.motherProf}
                   >
                     <MenuItem value="">Select</MenuItem>
-                    {professionOptions.map((prof, index) => (
+                    {MotherprofessionOptions.map((prof, index) => (
                       <MenuItem key={index} value={prof}>{prof}</MenuItem>
                     ))}
                   </Select>

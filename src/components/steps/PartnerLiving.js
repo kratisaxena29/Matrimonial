@@ -153,7 +153,7 @@ function PartnerLiving() {
             Part_alcohol : part_alcohol,
             Part_smoke : part_smoke,
             hobbies: location.state.hobbies,
-            address: location.state.address,
+            // address: location.state.address,
             phoneNo: location.state.phoneNo,
             aboutYourSelf: location.state.aboutYourself, // Ensure proper casing
           },
@@ -168,6 +168,7 @@ function PartnerLiving() {
   
         // Navigate to the next page with the updated state
         navigate('/Confirmation-Profile', {
+        // navigate('/upload-document',{
           state: {
             ...location.state,
           }

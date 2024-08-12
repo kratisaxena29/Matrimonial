@@ -41,6 +41,7 @@ function AdditionalDetails() {
     "Hindi - Delhi",
     "Hindi - MP/CG",
     "Hindi - UP/UK",
+    "Hindi - Marwari",
     "Punjabi",
     "Hindi - Bihar/Jharkhand",
     "Hindi - Rajasthan",
@@ -462,7 +463,7 @@ function AdditionalDetails() {
 "Other"
 ];
   // const gothraOptions = ["Gothra1", "Gothra2", "Gothra3", "Gothra4"];
-  const petFriendlyOptions = ["Yes", "No"];
+  const petFriendlyOptions = ["Yes", "No" , "Don't know"];
 
   useEffect(() => {
     const fetchData = async () => {
