@@ -1,9 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import logo from "../images/logo.png";
 import noProfile from "../images/profiles/noProfile.jpg";
-import { useNavigate } from 'react-router-dom';
-import { MenuItem, Select, InputLabel, FormControl, Button } from "@mui/material";
-import axios from 'axios';
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+
+import { useNavigate } from "react-router-dom";
+import {
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+  Button,
+  styled,
+  Avatar,
+  Menu,
+  AppBar,
+  Toolbar,
+  Box,
+  Typography,
+} from "@mui/material";
+import axios from "axios";
 
 function Profiles({ setlogedIn }) {
   const [selectedPhoto, setSelectedPhoto] = useState("");
@@ -13,17 +28,40 @@ function Profiles({ setlogedIn }) {
   const [religion, setReligion] = useState("");
   const [profiles, setProfiles] = useState([]);
   const [interestedProfiles, setInterestedProfiles] = useState([]);
-  const [subcaste, setSubCaste] = useState("")
-  const [oneProfile, setOneProfiles] = useState("")
+  const [subcaste, setSubCaste] = useState("");
+  const [oneProfile, setOneProfiles] = useState("");
   const navigate = useNavigate();
 
   const casteOptions = [
-    "Agarwal", "Kanyakubj Brahmin", "Gaur Brahmin", "Brahmin",
-    "Jat", "Jain", "Maheshwari", "Kayastha", "Khatri",
-    "Kshatriya", "Maratha", "Rajput", "Sindhi", "Sunni", "Oberoi",
-    "Arora", "Shwetamber", "Yadav", "Bania", "Scheduled Caste",
-    "Digamber", "Sikh Jat", "Gupta", "Scheduled Tribes",
-    "Tei", "Vaishnav", "Kurmi kshatriya", "Other"];
+    "Agarwal",
+    "Kanyakubj Brahmin",
+    "Gaur Brahmin",
+    "Brahmin",
+    "Jat",
+    "Jain",
+    "Maheshwari",
+    "Kayastha",
+    "Khatri",
+    "Kshatriya",
+    "Maratha",
+    "Rajput",
+    "Sindhi",
+    "Sunni",
+    "Oberoi",
+    "Arora",
+    "Shwetamber",
+    "Yadav",
+    "Bania",
+    "Scheduled Caste",
+    "Digamber",
+    "Sikh Jat",
+    "Gupta",
+    "Scheduled Tribes",
+    "Tei",
+    "Vaishnav",
+    "Kurmi kshatriya",
+    "Other",
+  ];
 
   const subCasteOptions = [
     "Select Sub Caste",
@@ -363,13 +401,19 @@ function Profiles({ setlogedIn }) {
     "Thuluva Vellala",
     "Vysya",
     "Yadav",
-    "Other"
+    "Other",
   ];
 
   const ReligionOptions = [
-    "Hindu", "Muslim", "Christian", "Sikh", "Buddhist", "Jain", "Bahai"
-  ]
-  const user = JSON.parse(sessionStorage.getItem('user'));
+    "Hindu",
+    "Muslim",
+    "Christian",
+    "Sikh",
+    "Buddhist",
+    "Jain",
+    "Bahai",
+  ];
+  const user = JSON.parse(sessionStorage.getItem("user"));
   console.log("..user...", user);
   console.log("..user email...", user.email);
   console.log("...age..", age);
@@ -381,7 +425,7 @@ function Profiles({ setlogedIn }) {
   const handleChat = async () => {
     try {
       const payload = {
-        AllprofilesId: interestedProfiles
+        AllprofilesId: interestedProfiles,
       };
 
       // Add email or phoneno to the payload based on available user data
@@ -394,28 +438,23 @@ function Profiles({ setlogedIn }) {
         return;
       }
 
-      const response = await axios.post(
-        `${URL}/allProfileId`,
-        payload,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axios.post(`${URL}/allProfileId`, payload, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       console.log("API Response:", response.data);
-      navigate('/chat');
+      navigate("/chat");
     } catch (error) {
       console.log("..error...", error);
     }
   };
 
-
   const handleInterest = (profileId) => {
     console.log("Interest button clicked for profile:", profileId);
 
-    setInterestedProfiles(prevState => {
+    setInterestedProfiles((prevState) => {
       const updatedProfiles = [...prevState, profileId];
       console.log("..updatedProfile..", updatedProfiles);
       return updatedProfiles;
@@ -432,25 +471,25 @@ function Profiles({ setlogedIn }) {
 
   const triggerFileInput = () => {
     // document.getElementById('fileInput').click();
-    navigate('/user-profile')
+    navigate("/user-profile");
   };
 
   const uploadImageToServer = async (file) => {
     console.log("...upload image...");
 
     const formData = new FormData();
-    formData.append('image', file);
+    formData.append("image", file);
 
     try {
       let apiUrl = `${URL}/upload?`;
       if (user.email) {
         apiUrl += `email=${user.email}`;
       } else if (user.phoneno) {
-        console.log("...user.phoneno...", user.phoneno)
+        console.log("...user.phoneno...", user.phoneno);
         apiUrl += `phoneno=${user.phoneno}`;
       }
       const response = await fetch(apiUrl, {
-        method: 'POST',
+        method: "POST",
         body: formData,
       });
 
@@ -459,20 +498,24 @@ function Profiles({ setlogedIn }) {
         console.log("File uploaded successfully:", data.fileUpload);
         handlegetImageUrl();
       } else {
-        console.error('Error uploading file:', response.statusText);
+        console.error("Error uploading file:", response.statusText);
       }
     } catch (error) {
-      console.error('Error uploading file:', error);
+      console.error("Error uploading file:", error);
     }
   };
 
   const handlegetImageUrl = async () => {
-    axios.get(`${URL}/getimagepath?email=${user.email}`)
-      .then(response => {
-        console.log(".get image url response...", response.data.response.imageUrl);
+    axios
+      .get(`${URL}/getimagepath?email=${user.email}`)
+      .then((response) => {
+        console.log(
+          ".get image url response...",
+          response.data.response.imageUrl
+        );
         setPhotoUrl(response.data.response.imageUrl);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log("...error..", error);
       });
   };
@@ -487,7 +530,7 @@ function Profiles({ setlogedIn }) {
     if (user.email) {
       apiUrl += `email=${user.email}`;
     } else if (user.phoneno) {
-      console.log("...user.phoneno...", user.phoneno)
+      console.log("...user.phoneno...", user.phoneno);
       apiUrl += `phoneno=${user.phoneno}`;
     }
 
@@ -501,46 +544,185 @@ function Profiles({ setlogedIn }) {
       apiUrl += `&caste=${caste}`;
     }
     if (subcaste) {
-      apiUrl += `&subcaste=${subcaste}`
+      apiUrl += `&subcaste=${subcaste}`;
     }
 
     console.log("Constructed API URL:", apiUrl);
 
-    axios.get(apiUrl)
-      .then(response => {
+    axios
+      .get(apiUrl)
+      .then((response) => {
         console.log("..response...", response.data);
         setProfiles(response.data.response);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log("...error..", error);
       });
   }, [age, religion, caste, subcaste]);
 
   useEffect(() => {
-    axios.get(`${URL}/oneProfileByEmail/${user.email}`)
-      .then(response => {
+    axios
+      .get(`${URL}/oneProfileByEmail/${user.email}`)
+      .then((response) => {
         console.log("..response...", response.data);
         setOneProfiles(response.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log("...error...", error);
       });
   }, []);
-  console.log("...krati...", oneProfile)
+  console.log("...krati...", oneProfile);
 
   const handleProfileDetails = async (profileId) => {
-    console.log("...handleProfileDetails for profileId...", profileId)
-    navigate('/PersonDetails', { state: { profileId } });
+    console.log("...handleProfileDetails for profileId...", profileId);
+    navigate("/PersonDetails", { state: { profileId } });
   };
+  const StyledAppBar = styled(AppBar)({
+    backgroundColor: "#6D0B32",
+  });
 
+  const StyledToolbar = styled(Toolbar)({
+    display: "flex",
+    justifyContent: "space-between",
+    padding: "0.5rem 1rem",
+  });
+
+  const LogoImage = styled("img")({
+    height: "40px",
+  });
+
+  const ButtonGroup = styled(Box)({
+    display: "flex",
+    alignItems: "center",
+    gap: "16px",
+  });
+
+  const StyledButton = styled(Button)(({ theme }) => ({
+    color: "white",
+    borderColor: "#F68C1E",
+    "&:hover": {
+      backgroundColor: "#E57D0F",
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.7rem",
+      padding: "6px 10px",
+    },
+  }));
+
+  const ProfileButton = styled(Button)({
+    textTransform: "none",
+    color: "white",
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    "&:hover": {
+      backgroundColor: "rgba(255, 255, 255, 0.2)",
+    },
+    borderRadius: "8px",
+    padding: "6px 12px",
+    border: "1px solid orange",
+    alignItems: "center",
+  });
+
+  const UserInfo = styled(Box)({
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    marginLeft: "12px",
+  });
+
+  const UserName = styled(Typography)({
+    fontWeight: "bold",
+    fontSize: "0.9rem",
+    lineHeight: "1.2",
+  });
+
+  const UserId = styled(Typography)({
+    fontSize: "0.75rem",
+    marginRight:6,
+    // opacity: 0.8,
+    color: "white",
+  });
+
+  const Navbar = ({
+    logo,
+    oneProfile,
+    handlePlans,
+    triggerFileInput,
+    photoUrl,
+    noProfile,
+    handleLogout,
+  }) => {
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+
+    const getPlanName = () => {
+      switch (oneProfile.plan) {
+        case "100":
+          return "Gold";
+        case "200":
+          return "Diamond";
+        case "300":
+          return "Platinum";
+        default:
+          return "Membership Plan";
+      }
+    };
+
+    return (
+      <StyledAppBar position="static">
+        <StyledToolbar>
+          <LogoImage src={logo} alt="Logo" />
+          <ButtonGroup>
+            <ProfileButton onClick={handleClick}>
+              <Avatar src={photoUrl || noProfile} alt={oneProfile?.name} />
+              <UserInfo>
+                <UserName>{oneProfile?.name}</UserName>
+                <UserId>ID: {oneProfile?.userId || "12345"}</UserId>
+              </UserInfo>
+              <KeyboardArrowDownIcon sx={{marginBottom:0.2}} />
+            </ProfileButton>
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={triggerFileInput}>
+                Change Profile Photo
+              </MenuItem>
+              <MenuItem onClick={handlePlans}>View Membership Plan</MenuItem>
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            </Menu>
+            <StyledButton variant="outlined" onClick={handlePlans}>
+              {getPlanName()}
+            </StyledButton>
+          </ButtonGroup>
+        </StyledToolbar>
+        <input
+          type="file"
+          id="fileInput"
+          style={{ display: "none" }}
+          onChange={(e) => {
+            // Your image upload logic here
+            handleClose();
+          }}
+        />
+      </StyledAppBar>
+    );
+  };
   const handleLogout = () => {
     sessionStorage.clear();
     setlogedIn(false);
     sessionStorage.setItem("logedIn", "false");
-    navigate('/');
+    navigate("/");
   };
   const handlePlans = () => {
-    navigate('/plan');
+    navigate("/plan");
   };
   useEffect(() => {
     console.log("..interestedProfiles after update..", interestedProfiles);
@@ -548,140 +730,15 @@ function Profiles({ setlogedIn }) {
 
   return (
     <div>
-      <nav
-        style={{
-          backgroundColor: "#6D0B32",
-          padding: "10px 20px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <img src={logo} alt="Logo" style={{ height: "60px" }} />
-        <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "transparent",
-              color: "white",
-              border: "2px solid",
-              borderColor: "#F68C1E",
-              "&:hover": {
-                backgroundColor: "#E57D0F",
-              },
-              textTransform: "none",
-              fontWeight: "bold",
-            }}
-
-          >
-            {oneProfile?.name}
-          </Button>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "transparent",
-              color: "white",
-              border: "2px solid",
-              borderColor: "#F68C1E",
-              "&:hover": {
-                backgroundColor: "#E57D0F",
-              },
-              textTransform: "none",
-              fontWeight: "bold",
-            }}
-            onClick={() => {
-              handlePlans();
-            }}
-          >
-            {(() => {
-              switch (oneProfile.plan) {
-                case "100":
-                  return "Gold";
-                case "200":
-                  return "Diamond";
-                case "300":
-                  return "Platinum";
-                default:
-                  return "Membership Plan";
-              }
-            })()}
-          </Button>
-          {/* <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "transparent",
-              color: "white",
-              border: "2px solid",
-              borderColor: "#F68C1E",
-              "&:hover": {
-                backgroundColor: "#E57D0F",
-              },
-              textTransform: "none",
-              fontWeight: "bold",
-            }}
-            onClick={() => {
-              handlePlans();
-            }}
-          >
-           Membership Plans
-          </Button> */}
-          <input
-            type="file"
-            id="fileInput"
-            style={{ display: "none" }}
-            onChange={uploadImage}
-          />
-          <div
-            onClick={triggerFileInput}
-            style={{
-              height: "50px",
-              width: "50px",
-              borderRadius: "50%",
-              backgroundColor: "#FFFFFF",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              cursor: "pointer",
-              overflow: "hidden",
-              boxShadow: "0 0 10px rgba(0,0,0,0.2)",
-              transition: "transform 0.3s ease",
-            }}
-            onMouseOver={(e) =>
-              (e.currentTarget.style.transform = "scale(1.1)")
-            }
-            onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
-          >
-            {photoUrl ? (
-              <img
-                src={photoUrl}
-                alt="Uploaded Profile"
-                style={{ height: "100%", width: "100%", objectFit: "cover" }}
-              />
-            ) : (
-              <img
-                src={noProfile}
-                alt="Default Profile"
-                style={{ height: "100%", width: "100%", objectFit: "cover" }}
-              />
-            )}
-          </div>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "#F68C1E",
-              color: "white",
-              "&:hover": {
-                backgroundColor: "red",
-              },
-              textTransform: "none",
-              fontWeight: "bold",
-            }}
-            onClick={handleLogout}
-          >
-            Logout
-          </Button>
-        </div>
-      </nav>
+      <Navbar
+        logo={logo}
+        oneProfile={oneProfile}
+        handlePlans={handlePlans}
+        triggerFileInput={triggerFileInput}
+        photoUrl={photoUrl}
+        noProfile={noProfile}
+        handleLogout={handleLogout}
+      />
       <div>
         <section style={{ paddingTop: "0px" }}>
           <div className="all-weddpro all-jobs all-serexp chosenini">
@@ -723,7 +780,6 @@ function Profiles({ setlogedIn }) {
                         value={religion}
                         onChange={(event) => setReligion(event.target.value)}
                       >
-
                         <option value="">Select Religion</option>
                         {ReligionOptions.map((option) => (
                           <option key={option} value={option}>
@@ -832,8 +888,12 @@ function Profiles({ setlogedIn }) {
                                   onClick={() => handleInterest(profile._id)}
                                   className="cta-interest"
                                   style={{
-                                    cursor: 'pointer',
-                                    color: interestedProfiles.includes(profile._id) ? 'red' : 'black',
+                                    cursor: "pointer",
+                                    color: interestedProfiles.includes(
+                                      profile._id
+                                    )
+                                      ? "red"
+                                      : "black",
                                   }}
                                 >
                                   Interested

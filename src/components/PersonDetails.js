@@ -1,19 +1,27 @@
 import React, { useEffect, useState } from "react";
 import logo from "../images/logo.png";
 import Profile1 from "../images/profiles/profile1.jpg";
+import Profile7 from "../images/profiles/Profile7.jpg";
+import Profile8 from "../images/profiles/Profile8.jpg";
 import "../styles/home.css";
 import "../styles/animate.css";
 import "../styles/bootstrap.css";
 import "../styles/fontAwesome.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Button } from "@mui/material";
 
 function PersonDetails({ setlogedIn }) {
   const location = useLocation();
   const [profileData, setProfileData] = useState(null);
   console.log("...location.state...",location?.state?.profileId)
   const profileId = location?.state?.profileId;
-
+  const galleryImages = [
+    Profile1,
+    Profile7,
+    Profile8,
+    
+  ];
   const URL = process.env.REACT_APP_API_BASE_URL;
 
   const navigate = useNavigate();
@@ -56,12 +64,25 @@ function PersonDetails({ setlogedIn }) {
           padding: "10px 20px",
           display: "flex",
           alignItems: "center",
+          justifyContent:"space-between"
         }}
       >
         <img onClick={handleLogo} src={logo} alt="Logo" style={{ height: "60px", marginRight: "40px" }} />
-        <div>
-          <button onClick={handleLogout}>Logout</button>
-        </div>
+        <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#F68C1E",
+              color: "white",
+              "&:hover": {
+                backgroundColor: "red",
+              },
+              textTransform: "none",
+              fontWeight: "bold",
+            }}
+            onClick={handleLogout}
+          >
+            Logout
+          </Button>
       </nav>
       <section className="main-content">
         <div className="profi-pg profi-ban">
@@ -165,6 +186,20 @@ function PersonDetails({ setlogedIn }) {
                       <p>Data is not available</p>
                     )}
                   </div>
+                  <div className="pr-bio-c pr-bio-gallery">
+                <h3>Photo Gallery</h3>
+                <div className="gallery-grid">
+                  {galleryImages.map((image, index) => (
+                    <div key={index} className="gallery-item">
+                      <img 
+                        src={image} 
+                        alt={`Gallery image ${index + 1}`}
+                        className="gallery-image"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
                   {/* <div className="pr-bio-c menu-pop-soci pr-bio-soc">
                     <h3>Social media</h3>
                     <ul>
