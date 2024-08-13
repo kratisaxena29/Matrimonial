@@ -5598,7 +5598,7 @@ span.mail::before {
     content:
         '';
     position: absolute;
-    background: url('../images/icon/couple_img.png');
+    background: url('../images/icon/cp.png');
     width: 600px;
     height: 344px;
     background-size: cover;
