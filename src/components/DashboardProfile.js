@@ -38,6 +38,7 @@ function DashboardProfiles({ setlogedIn }) {
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [profileData, setProfileData] = useState({
+    _id: "",
     fullName: "",
     dateOfBirth: "",
     gender: "",
@@ -138,6 +139,22 @@ console.log("...gallery...",gallery)
                   });
   },[])
   
+// console.log("...check..",profileData)
+
+  useEffect(() => {
+    console.log("...profile photo..",profileData._id)
+    axios.get(`${URL}/getphotosById/${profileData._id}`)
+    .then(response => {
+      console.log("..user profile response...", response.data);
+      const photos = response.data.photoUrl
+      
+      setGallery(photos);
+    })
+    .catch(error => {
+      console.log("...error...", error);
+    });
+   
+  }, [profileData]);
 
   const renderField = (label, value, name, type = "text", options = []) => {
     if (isEditMode) {
@@ -735,7 +752,7 @@ console.log("...gallery...",gallery)
             multiple
             onChange={handleGalleryUpload}
           />
-          <label htmlFor="gallery-upload">
+          {/* <label htmlFor="gallery-upload">
             <Button
               variant="outlined"
               startIcon={<AddPhotoAlternateIcon />}
@@ -751,7 +768,7 @@ console.log("...gallery...",gallery)
             >
               Add Photos
             </Button>
-          </label>
+          </label> */}
           <Grid container spacing={2} justifyContent="center">
             {gallery.map((photo, index) => (
               <Grid item xs={6} sm={4} md={3} key={index}>
@@ -781,7 +798,7 @@ console.log("...gallery...",gallery)
                       objectFit: "cover",
                     }}
                   />
-                  <IconButton
+                  {/* <IconButton
                     sx={{
                       position: "absolute",
                       top: 4,
@@ -795,7 +812,7 @@ console.log("...gallery...",gallery)
                     onClick={() => removePhoto(index)}
                   >
                     <CloseIcon fontSize="small" />
-                  </IconButton>
+                  </IconButton> */}
                 </Box>
               </Grid>
             ))}
