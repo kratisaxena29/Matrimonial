@@ -149,10 +149,10 @@ function Home() {
   return (
     <div className="body">
       <ToastContainer />
-      <div className="hom-top" style={{width:"100rem"}}>
-        <div className="container" >
+      <div className="hom-top" style={{ width: "100rem" }}>
+        <div className="container">
           <div className="row">
-            <div className="hom-nav" >
+            <div className="hom-nav">
               <div className="logo">
                 <a
                   style={{ cursor: "pointer" }}
@@ -164,7 +164,7 @@ function Home() {
               </div>
               <div className="bl">
                 <ul>
-                  <p style={{marginTop:10, paddingRight:"-30px"}}>
+                  <p style={{ marginTop: 10, paddingRight: "-30px" }}>
                     <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong>{" "}
                     <span style={{ color: "white" }}>94490 65433</span>
                   </p>
@@ -191,124 +191,103 @@ function Home() {
           </div>
         </div>
       </div>
-      <section>
-        <div className="str">
-          <div className="hom-head">
-            <div className="container">
-              <div className="row">
-                <div className="hom-ban">
-                  <div
-                    className="ban-tit"
-                    style={{ width: "85%", paddingTop: "10rem" }}
-                  >
-                    <span>
-                      <i className="no1">#1</i> Matrimony
-                    </span>
-                    <h1>
-                      Find your
-                      <br />
-                      <b>Right Match</b> here
-                    </h1>
-                    <p>Most trusted Matrimony Brand in the World.</p>
-                  </div>
+      <section className="responsive-section">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-6">
+              <div className="hom-ban">
+                <div className="ban-tit">
+                  <span>
+                    <i className="no1">#1</i> Matrimony
+                  </span>
+                  <h1>
+                    Find your
+                    <br />
+                    <b>Right Match</b> here
+                  </h1>
+                  <p>Most trusted Matrimony Brand in the World.</p>
                 </div>
               </div>
             </div>
-            <div className="form-container" ref={formContainerRef}>
-              <h1
-                style={{
-                  color: "#CD6900",
-                  textAlign: "center",
-                  paddingBottom: "40px",
-                  width: "250px",
-                }}
-              >
-                Sign up to Matrimony
-              </h1>
-              {registerMethod === null ? (
-                <div className="button-container">
-                  <button
-                    onClick={() => setRegisterMethod("email")}
-                    className="register-button"
-                  >
-                    Register with Email
-                  </button>
-                  <button
-                    onClick={() => setRegisterMethod("phone")}
-                    className="phone-button"
-                  >
-                    Register with Phone
-                  </button>
-                </div>
-              ) : (
-                <form className="form" onSubmit={handleRegister}>
-                  <div className="form-group">
-                    <label htmlFor="first">First Name</label>
-                    <input
-                      type="text"
-                      id="first"
-                      value={firstName}
-                      onChange={(event) => setFirstName(event.target.value)}
-                      required
-                    />
+            <div className="col-md-6">
+              <div className="form-container" ref={formContainerRef}>
+                <h1 className="form-title">Sign up to Matrimony</h1>
+                {registerMethod === null ? (
+                  <div className="button-container">
+                    <button
+                      onClick={() => setRegisterMethod("email")}
+                      className="register-button"
+                    >
+                      Register with Email
+                    </button>
+                    <button
+                      onClick={() => setRegisterMethod("phone")}
+                      className="phone-button"
+                    >
+                      Register with Phone
+                    </button>
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="last">Last Name</label>
-                    <input
-                      type="text"
-                      id="last"
-                      value={lastName}
-                      onChange={(event) => setLastName(event.target.value)}
-                      required
-                    />
-                  </div>
-                  {registerMethod === "email" ? (
+                ) : (
+                  <form className="form" onSubmit={handleRegister}>
                     <div className="form-group">
-                      <label htmlFor="email">Email</label>
+                      <label htmlFor="first">First Name</label>
                       <input
-                        type="email"
-                        id="email"
-                        value={email}
-                        onChange={(event) => setEmail(event.target.value)}
+                        type="text"
+                        id="first"
+                        value={firstName}
+                        onChange={(event) => setFirstName(event.target.value)}
                         required
                       />
                     </div>
-                  ) : (
                     <div className="form-group">
-                      <label htmlFor="phone">Phone</label>
+                      <label htmlFor="last">Last Name</label>
                       <input
-                        type="number"
-                        id="phone"
-                        value={phone}
-                        onChange={(event) => setPhone(event.target.value)}
+                        type="text"
+                        id="last"
+                        value={lastName}
+                        onChange={(event) => setLastName(event.target.value)}
                         required
                       />
                     </div>
-                  )}
-                  <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <input
-                      type="password"
-                      id="password"
-                      value={password}
-                      onChange={(event) => setPassword(event.target.value)}
-                      required
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className="register-button"
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      textAlign: "center",
-                      marginRight: "0px",
-                    }}
-                  >
-                    Register
-                  </button>
-                </form>
-              )}
+                    {registerMethod === "email" ? (
+                      <div className="form-group">
+                        <label htmlFor="email">Email</label>
+                        <input
+                          type="email"
+                          id="email"
+                          value={email}
+                          onChange={(event) => setEmail(event.target.value)}
+                          required
+                        />
+                      </div>
+                    ) : (
+                      <div className="form-group">
+                        <label htmlFor="phone">Phone</label>
+                        <input
+                          type="tel"
+                          id="phone"
+                          value={phone}
+                          onChange={(event) => setPhone(event.target.value)}
+                          required
+                        />
+                      </div>
+                    )}
+                    <div className="form-group">
+                      <label htmlFor="password">Password</label>
+                      <input
+                        type="password"
+                        id="password"
+                        value={password}
+                        onChange={(event) => setPassword(event.target.value)}
+                        required
+                      />
+                    </div>
+                    <button type="submit" className="register-button">
+                      Register
+                    </button>
+                  </form>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -421,48 +400,50 @@ function Home() {
         </div>
       </section>
       <section className="about-us-section py-5">
-  <div className="container">
-    <div className="row align-items-center">
-      <div className="col-md-6">
-        <div className="image-founders-container">
-          <img
-            src={aboutUsImage}
-            alt="Happy couple"
-            className="about-us-image img-fluid rounded shadow-lg"
-          />
-<div className="founders-info mt-4">
-  <h4 className="founders-title mb-3">The Visionaries Behind SoulMatch</h4>
-  <div className="founders-grid">
-    <div className="co-founder">
-      <p className="founder-name">Shipra Agarwala</p>
-      <p className="founder-role">Co-Founder</p>
-    </div>
-    <div className="founder">
-      <p className="founder-name">Ayush Agarwala</p>
-      <p className="founder-role">Founder</p>
-    </div>
-  </div>
-</div>
+        <div className="container">
+          <div className="row align-items-center">
+            <div className="col-md-6">
+              <div className="image-founders-container">
+                <img
+                  src={aboutUsImage}
+                  alt="Happy couple"
+                  className="about-us-image img-fluid rounded shadow-lg"
+                />
+                <div className="founders-info mt-4">
+                  <h4 className="founders-title mb-3">
+                    The Visionaries Behind SoulMatch
+                  </h4>
+                  <div className="founders-grid">
+                    <div className="co-founder">
+                      <p className="founder-name">Shipra Agarwala</p>
+                      <p className="founder-role">Co-Founder</p>
+                    </div>
+                    <div className="founder">
+                      <p className="founder-name">Ayush Agarwala</p>
+                      <p className="founder-role">Founder</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-6 about-us-content">
+              <h2 className="about-us-title mb-4">About Us</h2>
+              <h3 className="about-us-subtitle mb-4">
+                "Bringing Together Two Souls"
+              </h3>
+              <p className="about-us-text mb-4">
+                Soulmatch believes in building a bridge between prospective
+                Brides and Grooms. If you are seeking a forever relationship
+                through a sacred matrimonial alliance, we provide you with one
+                of the best platforms to meet your soulmate.
+              </p>
+              <a href="#" className="learn-more-btn">
+                Join Us Today
+              </a>
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="col-md-6 about-us-content">
-        <h2 className="about-us-title mb-4">About Us</h2>
-        <h3 className="about-us-subtitle mb-4">
-          "Bringing Together Two Souls"
-        </h3>
-        <p className="about-us-text mb-4">
-          Soulmatch believes in building a bridge between prospective
-          Brides and Grooms. If you are seeking a forever relationship
-          through a sacred matrimonial alliance, we provide you with one
-          of the best platforms to meet your soulmate.
-        </p>
-                <a href="#" className="learn-more-btn">
-          Join Us Today
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
       <section>
         <div className="cr">
           <div className="container">
@@ -476,10 +457,14 @@ function Home() {
               }}
             >
               <p>
-          <strong>Email: </strong> 
-          <a href="mailto:soulmatchinfo@gmail.com"  style={{ textDecoration: "none", color: "#FFBF0E" }}>
-          soulmatchinfo@gmail.com
-          </a>        </p>
+                <strong>Email: </strong>
+                <a
+                  href="mailto:soulmatchinfo@gmail.com"
+                  style={{ textDecoration: "none", color: "#FFBF0E" }}
+                >
+                  soulmatchinfo@gmail.com
+                </a>{" "}
+              </p>
               <p style={{ width: "200rem", textAlign: "center" }}>
                 Copyright © <span id="cry">2024</span>{" "}
                 <a
