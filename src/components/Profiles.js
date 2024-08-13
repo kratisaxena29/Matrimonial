@@ -633,6 +633,7 @@ function Profiles({ setlogedIn }) {
     fontWeight: "bold",
     fontSize: "0.9rem",
     lineHeight: "1.2",
+    color : "white"
   });
 
   const UserId = styled(Typography)({
