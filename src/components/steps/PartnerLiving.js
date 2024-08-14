@@ -167,8 +167,9 @@ function PartnerLiving() {
         console.log("Response:", response);
   
         // Navigate to the next page with the updated state
-        navigate('/Confirmation-Profile', {
+        // navigate('/Confirmation-Profile', {
         // navigate('/upload-document',{
+        navigate('/gallery-upload',{
           state: {
             ...location.state,
           }

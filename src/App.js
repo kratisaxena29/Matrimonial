@@ -34,6 +34,7 @@ import ConfirmationProfile from "./components/ConfirmationProfile";
 import UserProfile from "./components/steps/UserProfile";
 import Dashboard from "./components/Dashboard";
 import DashboardProfiles from "./components/DashboardProfile";
+import GalleryUpload from "./components/steps/GalleryUpload";
 
 function App() {
   const [logedIn, setlogedIn] = useState(
@@ -76,6 +77,7 @@ function App() {
           <Route path="/about-yourself" element={<AboutYourself />} />
           <Route path="/payment-fail" element={<PaymentFailure />} />
           <Route path="/payment-success" element={<PaymentSucess />} />
+          <Route path="/gallery-upload" element={<GalleryUpload />} />
           {/* <Route path="/dashboard" element={<Dashboard />} /> */}
         </Route>
 
@@ -87,7 +89,7 @@ function App() {
           <Route path="/chat" element={<Chat setlogedIn={setlogedIn} />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/plan" element={<Plan />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard setlogedIn={setlogedIn}/>} />
           <Route path="/user-profile" element={<UserProfile setlogedIn={setlogedIn}/>} />x
           <Route path="/dashboard-profiles" element={<DashboardProfiles setlogedIn={setlogedIn}/>} />
           <Route

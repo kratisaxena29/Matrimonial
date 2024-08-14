@@ -472,7 +472,7 @@ const handleReject = async(profileId) => {
       >
         <img src={logo} alt="Logo" style={{ height: "60px" }} />
         <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-          <Button
+          {/* <Button
             variant="contained"
             sx={{
               backgroundColor: "transparent",
@@ -490,9 +490,9 @@ const handleReject = async(profileId) => {
             }}
           >
             Plans
-          </Button>
+          </Button> */}
           
-          <div
+          {/* <div
             onClick={triggerFileInput}
             style={{
               height: "50px",
@@ -525,7 +525,8 @@ const handleReject = async(profileId) => {
                 style={{ height: "100%", width: "100%", objectFit: "cover" }}
               />
             )}
-          </div>
+          </div> */}
+          <h4 style={{color : "white"}}>Admin</h4>
           <Button
             variant="contained"
             sx={{
