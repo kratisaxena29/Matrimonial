@@ -5,7 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import CloseIcon from '@mui/icons-material/Close';
 
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   MenuItem,
   Select,
@@ -25,6 +25,7 @@ import {
 import axios from "axios";
 
 function GalleryUpload({ setlogedIn }) {
+  const location = useLocation()
   const [selectedPhoto, setSelectedPhoto] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
   const [age, setAge] = useState("");
@@ -76,6 +77,9 @@ function GalleryUpload({ setlogedIn }) {
     aboutMe: "",
   });
 
+  console.log("...phonene...",location.state)
+  const email = location.state.email
+  const phonene = location?.state?.phonene
 
 
   const handleEditToggle = () => {
@@ -104,7 +108,7 @@ console.log("...gallery...",gallery)
     const formData = new FormData();
   formData.append("file", file);
 
-  axios.post(`${URL}/upload-multiple-photo/kritika@gmail.com`, formData, {
+  axios.post(`${URL}/upload-multiple-photo/${email}`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -123,35 +127,89 @@ console.log("...gallery...",gallery)
   //   setGallery(gallery.filter((_, i) => i !== index));
   // };
 
-  const removePhoto = async (index) => {
-    console.log("...removePhoto...", index);
+  // const removePhoto = async (index) => {
+  //   console.log("...removePhoto...", index);
     
-    // Assuming gallery is an array of photo URLs
-    const photoToDelete = gallery[index];
-    const profileIdentifier = "kritika@gmail.com" || "9871627742"; // Replace with actual user data
+  //   // Assuming gallery is an array of photo URLs
+  //   const photoToDelete = gallery[index];
+  //   const profileIdentifier = email || phonene; // Replace with actual user data
   
-    try {
-      // Make an API call to delete the photo from the server
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/deletephotosByEmailOrPhoneNo/${profileIdentifier}`,
-        { photoToDelete: photoToDelete }, // Request body
-        { headers: { 'Content-Type': 'application/json' } }
-      );
+  //   try {
+  //     // Make an API call to delete the photo from the server
+  //     const response = await axios.post(
+  //       `${process.env.REACT_APP_API_BASE_URL}/deletephotosByEmailOrPhoneNo/${profileIdentifier}`,
+  //       { photoToDelete: photoToDelete }, // Request body
+  //       { headers: { 'Content-Type': 'application/json' } }
+  //     );
   
-      // Check if the API call was successful
-      if (response.status === 200) {
-        console.log('Photo deleted successfully:', response.data);
+  //     // Check if the API call was successful
+  //     if (response.status === 200) {
+  //       console.log('Photo deleted successfully:', response.data);
         
-        // Remove the photo from the gallery in the frontend
-        setGallery(gallery.filter((_, i) => i !== index));
-      } else {
-        console.error('Failed to delete photo:', response.data.message);
-      }
-    } catch (error) {
-      console.error('Error during photo deletion:', error);
-    }
-  };
+  //       // Remove the photo from the gallery in the frontend
+  //       setGallery(gallery.filter((_, i) => i !== index));
+  //     } else {
+  //       console.error('Failed to delete photo:', response.data.message);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error during photo deletion:', error);
+  //   }
+  // };
   
+  const refreshGallery = async () => {
+   
+};
+
+useEffect(() => {
+  const profileIdentifier = email || phonene;
+  axios.get(`${URL}/getphotosByEmailOrPhoneNo/${profileIdentifier}`)
+        .then(response => {
+          console.log("..user profile response...", response.data);
+          const photos = response.data.photoUrl
+          setGallery(photos);
+        })
+        .catch(error => {
+          console.log("...error...", error);
+        });
+  // if (userdata) {
+  //   const user = JSON.parse(userdata);
+  //   if (user && user.email) {
+  //     axios.get(`${URL}/getphotosByEmailOrPhoneNo/${user.email}`)
+  //       .then(response => {
+  //         console.log("..user profile response...", response.data);
+  //         const photos = response.data.photoUrl
+  //         setGallery(photos);
+  //       })
+  //       .catch(error => {
+  //         console.log("...error...", error);
+  //       });
+  //   }
+  // }
+}, [URL]);
+
+const removePhoto = async (index) => {
+  const photoToDelete = gallery[index];
+  const profileIdentifier = email || phonene;
+
+  try {
+    const response = await axios.post(
+      `${URL}/deletephotosByEmailOrPhoneNo/${profileIdentifier}`,
+      { photoToDelete },
+      { headers: { 'Content-Type': 'application/json' } }
+    );
+
+    if (response.status === 200) {
+      console.log('Photo deleted successfully:', response.data);
+      // Update the gallery state to remove the deleted photo from the frontend
+      setGallery((prevGallery) => prevGallery.filter((_, i) => i !== index));
+    } else {
+      console.error('Failed to delete photo:', response.data.message);
+    }
+  } catch (error) {
+    console.error('Error during photo deletion:', error);
+  }
+};
+
 
 
   const renderField = (label, value, name, type = "text", options = []) => {
@@ -263,8 +321,8 @@ console.log("...gallery...",gallery)
 
     try {
       let apiUrl = `${URL}/upload?`;
-      if ("kritika@gmail.com") {
-        apiUrl += `email=kritika@gmail.com`;
+      if (email) {
+        apiUrl += `email`;
       } else if ("9871627742") {
         // console.log("...user.phoneno...", user.phoneno);
         apiUrl += `phoneno=9871627742`;
@@ -286,12 +344,21 @@ console.log("...gallery...",gallery)
     }
   };
 //   
+console.log("...krati location...",location.state)
+const handleConfirmation = async () => {
+  navigate('/Confirmation-Profile',{
+        state: {
+      ...location.state,
+    }
+  }
+  )
+}
   
 
   const handlegetImageUrl = async () => {
     console.log("...handleImageUrl....")
     axios
-      .get(`${URL}/getimagepath?email=kritika@gmail.com`)
+      .get(`${URL}/getimagepath?email=${email}`)
       .then((response) => {
         console.log(
           ".get image url response...",
@@ -478,6 +545,7 @@ console.log("...gallery...",gallery)
               </Grid>
             ))}
           </Grid>
+          <button onClick={handleConfirmation}>Next</button>
         </Box>
       </Box>
       <section>

@@ -104,7 +104,7 @@ console.log("...gallery...",gallery)
     // Assuming gallery is an array of photo URLs
     const photoToDelete = gallery[index];
     // const profileIdentifier = user.email || user.phoneno; // Replace with actual user data
-  const profileIdentifier = "krati123saxena@gmail.com" || "9871627742"
+  const profileIdentifier = profileData.email || profileData.phoneno
     try {
       // Make an API call to delete the photo from the server
       const response = await axios.post(
@@ -287,9 +287,9 @@ console.log("...gallery...",gallery)
     sessionStorage.setItem("logedIn", "false");
     navigate("/");
   };
-  const handlePlans = () => {
-    navigate("/plan");
-  };
+  // const handlePlans = () => {
+  //   navigate("/plan");
+  // };
  
  
   
@@ -310,7 +310,7 @@ console.log("...gallery...",gallery)
       >
         <img onClick={handleLogo} src={logo} alt="Logo" style={{ height: "60px" }} />
         <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-          <Button
+          {/* <Button
             variant="contained"
             sx={{
               backgroundColor: "transparent",
@@ -328,7 +328,7 @@ console.log("...gallery...",gallery)
             }}
           >
             Plans
-          </Button>
+          </Button> */}
 
           <Button
             variant="contained"
@@ -798,7 +798,7 @@ console.log("...gallery...",gallery)
                       objectFit: "cover",
                     }}
                   />
-                  {/* <IconButton
+                  <IconButton
                     sx={{
                       position: "absolute",
                       top: 4,
@@ -812,7 +812,7 @@ console.log("...gallery...",gallery)
                     onClick={() => removePhoto(index)}
                   >
                     <CloseIcon fontSize="small" />
-                  </IconButton> */}
+                  </IconButton>
                 </Box>
               </Grid>
             ))}

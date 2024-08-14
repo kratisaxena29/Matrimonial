@@ -173,10 +173,15 @@ function Home() {
               </div>
               <div className="bl">
                 <ul>
-                  <p style={{ marginTop: 10, paddingRight: "-30px" }}>
-                    <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong>{" "}
-                    <span style={{ color: "white" }}>94490 65433</span>
-                  </p>
+                <p>
+                <strong>Contact Us: </strong>
+                <a
+                  href="mailto:soulmatchinfo@gmail.com"
+                  style={{ textDecoration: "none", color: "#FFBF0E" }}
+                >
+                  soulmatchinfo@gmail.com
+                </a>{" "}
+              </p>
                 </ul>
                 {/* <div className="bl"> */}
                 <ul>
@@ -466,7 +471,7 @@ function Home() {
               }}
             >
               <p>
-                <strong>Email: </strong>
+                <strong>Contact Us: </strong>
                 <a
                   href="mailto:soulmatchinfo@gmail.com"
                   style={{ textDecoration: "none", color: "#FFBF0E" }}
@@ -495,10 +500,10 @@ function Home() {
                   Terms and Conditions
                 </a>
               </p>
-              <p>
+              {/* <p>
                 <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong> 94490
                 65433
-              </p>
+              </p> */}
             </div>
           </div>
         </div>
