@@ -174,7 +174,7 @@ function Home() {
               <div className="bl">
                 <ul>
                 <p>
-                <strong>Contact Us: </strong>
+                <strong style={{color : "white"}}>Contact Us: </strong>
                 <a
                   href="mailto:soulmatchinfo@gmail.com"
                   style={{ textDecoration: "none", color: "#FFBF0E" }}

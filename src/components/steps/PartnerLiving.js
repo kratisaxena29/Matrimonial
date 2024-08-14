@@ -144,6 +144,7 @@ function PartnerLiving() {
             Part_height: location.state.part_height,
             Part_horoscopeMatch: location.state.part_horoscopeMatch,
             Part_petFriendly: location.state.part_petFriendly,
+            Part_gender : location.state.part_gender,
             Part_heighestEduction: location.state.part_highestEducation,
             Part_currentEmployee: location.state.part_currentEmployment,
             Part_profession: location.state.part_profession,

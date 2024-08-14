@@ -24,6 +24,7 @@ function PartnerFamily() {
   const [part_mothertongue, setMothertongue] = useState(location?.state?.part_mothertongue || "");
   const [part_height, setHeight] = useState(location?.state?.part_height || "");
   const [part_horoscopeMatch, setHoroscopeMatch] = useState(location?.state?.part_horoscopeMatch || "");
+  const [part_gender,setPartgender] = useState(location?.state?.part_gender)
   const [part_petFriendly, setPetFriendly] = useState(location?.state?.part_petFriendly || "");
   const [Part_subCaste,setPart_subCaste] = useState(location?.state?.Part_subCaste || "");
   const [ageError, setAgeError] = useState(false);
@@ -34,6 +35,7 @@ function PartnerFamily() {
   const [heightError, setHeightError] = useState(false);
   const [horoscopeMatchError, setHoroscopeMatchError] = useState(false);
   const [petFriendlyError, setPetFriendlyError] = useState(false);
+  const[PartgenderError,setPartgenderError] = useState(false)
 const [subcasteError,setSubCasteError] = useState(false)
  
   const navigate = useNavigate();
@@ -611,7 +613,8 @@ const [subcasteError,setSubCasteError] = useState(false)
       part_mothertongue &&
       part_height &&
       part_horoscopeMatch &&
-      part_petFriendly
+      part_petFriendly &&
+      part_gender
     );
   };
 console.log("...partner...",location.state)
@@ -625,6 +628,7 @@ console.log("...partner...",location.state)
     setHoroscopeMatchError(!part_horoscopeMatch);
     setPetFriendlyError(!part_petFriendly);
     setSubCasteError(!Part_subCaste)
+    setPartgenderError(!PartgenderError)
 
     if (validateForm()) {
       navigate("/partner-education", {
@@ -639,6 +643,7 @@ console.log("...partner...",location.state)
           part_height,
           part_horoscopeMatch,
           part_petFriendly,
+          part_gender
         },
       });
     }
@@ -976,6 +981,30 @@ console.log("...partner...",location.state)
                     <MenuItem value="Don't know">Don't know</MenuItem>
                   </Select>
                   {petFriendlyError && (
+                    <FormHelperText error>
+                      Please select if pet-friendly is required.
+                    </FormHelperText>
+                  )}
+                </FormControl>
+                <FormControl variant="standard" sx={{ minWidth: 195 }}>
+                  <InputLabel id="pet-friendly-label">Gender</InputLabel>
+                  <Select
+                    labelId="pet-friendly-label"
+                    id="pet-friendly"
+                    label="Gender"
+                    value={part_gender}
+                    onChange={(event) => setPartgender(event.target.value)}
+                    error={PartgenderError}
+                  >
+                     <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value="Male">Male</MenuItem>
+                    <MenuItem value="Female">Female</MenuItem>
+                    <MenuItem value="Other">Other</MenuItem>
+                  
+                  </Select>
+                  {PartgenderError && (
                     <FormHelperText error>
                       Please select if pet-friendly is required.
                     </FormHelperText>
