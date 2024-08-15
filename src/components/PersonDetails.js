@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import logo from "../images/logo.png";
-import Profile1 from "../images/profiles/profile1.jpg";
-import Profile7 from "../images/profiles/Profile7.jpg";
-import Profile8 from "../images/profiles/Profile8.jpg";
+import Profile1 from "../images/gallery/noProfile.jpg";
+// import Profile7 from "../images/profiles/Profile7.jpg";
+// import Profile8 from "../images/profiles/Profile8.jpg";
 import "../styles/home.css";
 import "../styles/animate.css";
 import "../styles/bootstrap.css";
@@ -14,14 +14,10 @@ import { Button } from "@mui/material";
 function PersonDetails({ setlogedIn }) {
   const location = useLocation();
   const [profileData, setProfileData] = useState(null);
+  const [gallery , setGallery] = useState("")
   console.log("...location.state...",location?.state?.profileId)
   const profileId = location?.state?.profileId;
-  const galleryImages = [
-    Profile1,
-    Profile7,
-    Profile8,
-    
-  ];
+ 
   const URL = process.env.REACT_APP_API_BASE_URL;
 
   const navigate = useNavigate();
@@ -54,6 +50,25 @@ function PersonDetails({ setlogedIn }) {
   const handleLogo = () => {
     navigate('/profiles')
   }
+
+  console.log("...personDetails....",profileData)
+
+  useEffect(() => {
+    if (profileData && profileData.email) {
+      axios
+        .get(`${URL}/getphotosByEmailOrPhoneNo/${profileData.email}`)
+        .then(response => {
+          console.log("..user profile response...", response.data);
+          const photos = response.data.photoUrl;
+          console.log("..photos...", photos);
+          setGallery(photos);
+        })
+        .catch(error => {
+          console.log("...error...", error);
+        });
+    }
+  }, [profileData, URL]);
+  
 
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
@@ -187,19 +202,24 @@ function PersonDetails({ setlogedIn }) {
                     )}
                   </div>
                   <div className="pr-bio-c pr-bio-gallery">
-                <h3>Photo Gallery</h3>
-                <div className="gallery-grid">
-                  {galleryImages.map((image, index) => (
-                    <div key={index} className="gallery-item">
-                      <img 
-                        src={image} 
-                        alt={`Gallery image ${index + 1}`}
-                        className="gallery-image"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
+  <h3>Photo Gallery</h3>
+  <div className="gallery-grid">
+    {gallery.length > 0 ? (
+      gallery.map((image, index) => (
+        <div key={index} className="gallery-item">
+          <img 
+            src={image} 
+            alt={`Gallery image ${index + 1}`}
+            className="gallery-image"
+          />
+        </div>
+      ))
+    ) : (
+      <p>No photos available</p>
+    )}
+  </div>
+</div>
+
                   {/* <div className="pr-bio-c menu-pop-soci pr-bio-soc">
                     <h3>Social media</h3>
                     <ul>
