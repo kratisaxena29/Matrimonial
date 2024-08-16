@@ -4,23 +4,14 @@ import "../styles/animate.css";
 import "../styles/bootstrap.css";
 import "../styles/fontAwesome.css";
 import { useNavigate } from "react-router-dom";
-import couple1 from "../images/gallery/img1.jpg";
-import couple2 from "../images/gallery/img2.jpg";
-import couple3 from "../images/gallery/img3.jpg";
-import couple4 from "../images/gallery/img4.jpg";
-import couple5 from "../images/gallery/img5.jpg";
-import couple6 from "../images/gallery/img6.jpg";
-import couple7 from "../images/gallery/img7.jpg";
-import couple8 from "../images/gallery/img8.jpg";
-
-// import couple1 from "../images/gallery/couple-1.jpg";
-// import couple2 from "../images/gallery/couple-2.jpg";
-// import couple3 from "../images/gallery/couple-3.jpg";
-// import couple4 from "../images/gallery/couple-4.png";
-// import couple5 from "../images/gallery/couple-5.png";
-// import couple6 from "../images/gallery/couple-6.png";
-// import couple7 from "../images/gallery/couple-7.jpg";
-// import couple8 from "../images/gallery/couple-8.jpg";
+import couple1 from "../images/gallery/couple-1.jpg";
+import couple2 from "../images/gallery/couple-2.jpg";
+import couple3 from "../images/gallery/couple-3.jpg";
+import couple4 from "../images/gallery/couple-4.png";
+import couple5 from "../images/gallery/couple-5.png";
+import couple6 from "../images/gallery/couple-6.png";
+import couple7 from "../images/gallery/couple-7.jpg";
+import couple8 from "../images/gallery/couple-8.jpg";
 import logo from "../images/logo.png";
 import aboutUsImage from "../images/gallery/owner_matrimonial.jpg";
 import axios from "axios";
@@ -158,53 +149,27 @@ function Home() {
   return (
     <div className="body">
       <ToastContainer />
-      <div className="hom-top" style={{ width: "100rem" }}>
-        <div className="container">
-          <div className="row">
-            <div className="hom-nav">
-              <div className="logo">
-                <a
-                  style={{ cursor: "pointer" }}
-                  onClick={() => navigate("/")}
-                  className="logo-brand"
-                >
-                  <img src={logo} alt="" loading="lazy" className="ic-logo" />
-                </a>
-              </div>
-              <div className="bl">
-                <ul>
-                <p>
-                <strong style={{color : "white"}}>Contact Us: </strong>
-                <a
-                  href="mailto:soulmatchinfo@gmail.com"
-                  style={{ textDecoration: "none", color: "#FFBF0E" }}
-                >
-                  soulmatchinfo@gmail.com
-                </a>{" "}
-              </p>
-                </ul>
-                {/* <div className="bl"> */}
-                <ul>
-                  <button
-                    onClick={() => navigate("/login")}
-                    className="custom-button"
-                  >
-                    Login
-                  </button>
-                </ul>
-                {/* </div> */}
-              </div>
-              {/* <div className="bl">
-                <ul>
-                <p>
-          <strong style={{color:"#FFBF0E"}}>Support:</strong> 94490 65433
-        </p>
-                </ul>
-              </div> */}
-            </div>
-          </div>
+      <header className="hom-top">
+  <div className="container">
+    <div className="row">
+      <nav className="hom-nav">
+        <div className="logo">
+          <a onClick={() => navigate("/")} className="logo-brand">
+            <img src={logo} alt="Soul Match Logo" className="ic-logo" />
+          </a>
         </div>
-      </div>
+        <div className="nav-actions">
+          <p className="contact-info">
+            <strong>Contact Us:</strong> 94490 65433
+          </p>
+          <button onClick={() => navigate("/login")} className="login-button">
+            Login
+          </button>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
       <section className="responsive-section">
         <div className="container">
           <div className="row">
@@ -471,7 +436,7 @@ function Home() {
               }}
             >
               <p>
-                <strong>Contact Us: </strong>
+                <strong>Email: </strong>
                 <a
                   href="mailto:soulmatchinfo@gmail.com"
                   style={{ textDecoration: "none", color: "#FFBF0E" }}
@@ -500,10 +465,10 @@ function Home() {
                   Terms and Conditions
                 </a>
               </p>
-              {/* <p>
+              <p>
                 <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong> 94490
                 65433
-              </p> */}
+              </p>
             </div>
           </div>
         </div>

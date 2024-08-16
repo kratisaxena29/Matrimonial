@@ -5588,22 +5588,32 @@ span.mail::before {
       padding-top: 40px;
     }
   }
-.ban-home {
-    padding: 110px 20px 115px 20px;
-    position: relative;
-    margin-top: 380px;
-}
-
-.ban-home:before {
-    content:
-        '';
-    position: absolute;
-    background: url('../images/icon/cp.png');
-    width: 600px;
-    height: 344px;
-    background-size: cover;
-    left: calc(45% - 220px);
-    top: -344px;
+  .ban-home {
+      padding: 20px;
+      position: relative;
+  }
+  
+  .ban-home:before {
+      content: none; /* This removes the pseudo-element on mobile */
+  }
+  @media (min-width: 758px) {
+    .ban-home {
+        padding: 110px 20px 115px 20px;
+        position: relative;
+        margin-top: 380px;
+    }
+    
+    .ban-home:before {
+        content:
+            '';
+        position: absolute;
+        background: url('../images/icon/cp.png');
+        width: 600px;
+        height: 344px;
+        background-size: cover;
+        left: calc(45% - 220px);
+        top: -344px;
+    }
 }
 
 
@@ -12927,4 +12937,50 @@ h2.db-tit{
     height: 150px;
     object-fit: cover;
   }
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
   
+  .contact-info {
+    color: white;
+    margin: 0;
+  }
+  
+  .contact-info strong {
+    color: #FFBF0E; /* Yellow color for "Contact Us:" */
+  }
+  
+  .login-button {
+    background-color: #F4A460; /* Orange color as shown in the image */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .hom-top { /* Dark red color as shown in the image */
+    padding: 10px 0;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+  
+  .hom-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo-brand {
+    cursor: pointer;
+  }
+  
+  .ic-logo {
+    height: 40px; /* Adjust as needed */
+  }
