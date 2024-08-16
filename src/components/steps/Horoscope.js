@@ -118,230 +118,216 @@ function Horoscope() {
               alignItems: "center",
             }}
           >
-            <img src={logo} alt="Logo" style={{ height: "60px", marginRight: "40px" }} />
+            <img
+              src={logo}
+              alt="Logo"
+              style={{
+                height: "50px", // Reduced logo size for mobile
+                marginRight: "20px", // Adjusted margin for mobile
+              }}
+            />
           </nav>
-          <div style={{ flex: 1, display: "flex" }}>
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column", // Stack columns vertically on mobile
+              padding: "20px", // Reduce padding for mobile
+            }}
+          >
             {/* Left part */}
             <div
               style={{
-                flex: 1,
                 backgroundColor: "#F7E7CE",
                 textAlign: "center",
-                padding: "10px 0",
+                padding: "20px 10px", // Adjusted padding for mobile
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
+                marginBottom: "20px", // Added margin for separation on mobile
               }}
             >
-              <VolunteerActivismIcon style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }} />
-              <Typography variant="h4" component="div" sx={{ color: "#6B0D37" }}>
-                "Let us be the bridge to your happily ever after. Start your journey to love with us today."
+              <VolunteerActivismIcon
+                style={{
+                  fontSize: 60, // Adjust icon size for mobile
+                  marginBottom: 10,
+                  color: "#6B0D37",
+                }}
+              />
+              <Typography
+                variant="h6" // Use a smaller font size for mobile
+                component="div"
+                sx={{ color: "#6B0D37" }}
+              >
+                "Let us be the bridge to your happily ever after. Start your
+                journey to love with us today."
               </Typography>
             </div>
             {/* Right part */}
             <div
               style={{
-                flex: 1,
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "space-between",
-                padding: "50px",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              <div>
-                <Typography sx={{ textAlign: "center" }} variant="h5" gutterBottom>
-                  Horoscope Details
-                </Typography>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "80px",
-                    marginBottom: "40px",
-                  }}
+              <Typography
+                sx={{ textAlign: "center", marginBottom: "20px" }} // Adjusted margin for mobile
+                variant="h6" // Use a smaller font size for mobile
+                gutterBottom
+              >
+                Horoscope Details
+              </Typography>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column", // Stack form controls vertically on mobile
+                  alignItems: "center",
+                  gap: "20px", // Reduce gap for mobile
+                  marginBottom: "20px", // Adjust margin for mobile
+                }}
+              >
+                <DatePicker
+                  label="Date of Birth"
+                  value={dateofBirth}
+                  onChange={(date) => setDateofBirth(date ? dayjs(date) : null)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      error={Boolean(errors.dateofBirth)}
+                      helperText={errors.dateofBirth}
+                      sx={{ minWidth: "100%" }} // Make full width on mobile
+                    />
+                  )}
+                />
+                <TimePicker
+                  label="Time of Birth"
+                  value={timeofBirth}
+                  onChange={(time) => setTimeofBirth(time ? dayjs(time) : null)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      error={Boolean(errors.timeofBirth)}
+                      helperText={errors.timeofBirth}
+                      sx={{ minWidth: "100%" }} // Make full width on mobile
+                    />
+                  )}
+                />
+                <FormControl
+                  variant="outlined"
+                  sx={{ minWidth: "100%" }} // Make full width on mobile
+                  error={Boolean(errors.placeofBirth)}
                 >
-                  <DatePicker
-                    label="Date of Birth"
-                    value={dateofBirth}
-                    onChange={(date) => setDateofBirth(date ? dayjs(date) : null)}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        error={Boolean(errors.dateofBirth)}
-                        helperText={errors.dateofBirth}
-                        sx={{ minWidth: 300 }}
-                      />
-                    )}
-                  />
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "80px",
-                    marginBottom: "40px",
-                  }}
-                >
-                  <TimePicker
-                    label="Time of Birth"
-                    value={timeofBirth}
-                    onChange={(time) => setTimeofBirth(time ? dayjs(time) : null)}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        error={Boolean(errors.timeofBirth)}
-                        helperText={errors.timeofBirth}
-                        sx={{ minWidth: 300 }}
-                      />
-                    )}
-                  />
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "80px",
-                    marginBottom: "40px",
-                  }}
-                >
-                  <FormControl variant="outlined" sx={{ minWidth: 260 }} error={Boolean(errors.placeofBirth)}>
-                    <InputLabel id="place-of-birth-label">Place of Birth</InputLabel>
-                    <Select
-                      labelId="place-of-birth-label"
-                      id="place-of-birth-select"
-                      name="placeofBirth"
-                      value={placeofBirth}
-                      onChange={handleInputChange}
-                    >
-                      {indianCities.map((city) => (
-                        <MenuItem key={city} value={city}>
-                          {city}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                    {errors.placeofBirth && <FormHelperText>{errors.placeofBirth}</FormHelperText>}
-                  </FormControl>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "80px",
-                    marginBottom: "40px",
-                  }}
-                >
-                  <FormControl variant="outlined" sx={{ minWidth: 260 }} error={Boolean(errors.areyouManglik)}>
-                    <InputLabel id="manglik-label">Are you Manglik?</InputLabel>
-                    <Select
-                      labelId="manglik-label"
-                      id="manglik-select"
-                      name="areyouManglik"
-                      value={areyouManglik}
-                      onChange={handleInputChange}
-                    >
-                      <MenuItem value="Yes">Yes</MenuItem>
-                      <MenuItem value="No">No</MenuItem>
-                    </Select>
-                    {errors.areyouManglik && <FormHelperText>{errors.areyouManglik}</FormHelperText>}
-                  </FormControl>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    gap: "20px",
-                    marginBottom: "40px",
-                  }}
-                >
-                  <Button
-                    onClick={() => navigate('/education-career',{state : location?.state})}
-                    variant="outlined"
-                    sx={{
-                      mt: 4,
-                      mb: 2,
-                      width: 150,
-                      height: 40,
-                      textTransform: "inherit",
-                      fontSize: "18px",
-                      borderColor: "#FB6A6B",
-                      color: "#FB6A6B",
-                    }}
+                  <InputLabel id="place-of-birth-label">Place of Birth</InputLabel>
+                  <Select
+                    labelId="place-of-birth-label"
+                    id="place-of-birth-select"
+                    name="placeofBirth"
+                    value={placeofBirth}
+                    onChange={handleInputChange}
                   >
-                    Back
-                  </Button>
-                  <Button
-                    onClick={handleNext}
-                    variant="contained"
-                    disabled={!isFormValid}
-                    sx={{
-                      mt: 4,
-                      mb: 2,
-                      width: 150,
-                      height: 40,
-                      textTransform: "inherit",
-                      fontSize: "18px",
+                    {indianCities.map((city) => (
+                      <MenuItem key={city} value={city}>
+                        {city}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {errors.placeofBirth && <FormHelperText>{errors.placeofBirth}</FormHelperText>}
+                </FormControl>
+                <FormControl
+                  variant="outlined"
+                  sx={{ minWidth: "100%" }} // Make full width on mobile
+                  error={Boolean(errors.areyouManglik)}
+                >
+                  <InputLabel id="manglik-label">Are you Manglik?</InputLabel>
+                  <Select
+                    labelId="manglik-label"
+                    id="manglik-select"
+                    name="areyouManglik"
+                    value={areyouManglik}
+                    onChange={handleInputChange}
+                  >
+                    <MenuItem value="Yes">Yes</MenuItem>
+                    <MenuItem value="No">No</MenuItem>
+                  </Select>
+                  {errors.areyouManglik && <FormHelperText>{errors.areyouManglik}</FormHelperText>}
+                </FormControl>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  gap: "10px", // Adjust gap for mobile
+                  marginTop: "20px",
+                  width: "100%", // Make buttons full width on mobile
+                }}
+              >
+                <Button
+                  onClick={() => navigate('/education-career', { state: location?.state })}
+                  variant="outlined"
+                  sx={{
+                    width: "100px", // Adjust button width for mobile
+                    borderColor: "#FB6A6B",
+                    color: "#FB6A6B",
+                  }}
+                >
+                  Back
+                </Button>
+                <Button
+                  onClick={handleNext}
+                  variant="contained"
+                  disabled={!isFormValid}
+                  sx={{
+                    width: "100px", // Adjust button width for mobile
+                    backgroundColor: "#FB6A6B",
+                    "&:hover": {
                       backgroundColor: "#FB6A6B",
-                      "&:hover": {
-                        backgroundColor: "#FB6A6B",
-                      },
-                    }}
-                  >
-                    Next
-                  </Button>
-                </div>
+                    },
+                  }}
+                >
+                  Next
+                </Button>
               </div>
             </div>
           </div>
           <section>
-          <div className="cr">
-            <div className="container">
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-evenly",
-                  alignItems: "center",
-                  padding: "20px 0",
-                }}
-              >
-                <p>
-                  <strong>Email: </strong>
-                  <a
-                    href="mailto:soulmatchinfo@gmail.com"
-                    style={{ textDecoration: "none", color: "#FFBF0E" }}
-                  >
-                    soulmatchinfo@gmail.com
-                  </a>{" "}
-                </p>
-                <p style={{ width: "200rem", textAlign: "center" }}>
-                  Copyright © <span id="cry">2024</span>{" "}
-                  <a
-                    style={{ textDecoration: "none", color: "#FFBF00" }}
-                    href="#!"
-                    target="_blank"
-                  >
-                    SoulMatch
-                  </a>{" "}
-                  All rights reserved.{" "}
-                </p>
-                <p>
-                  <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong>{" "}
-                  94490 65433
-                </p>
+            <div className="cr">
+              <div className="container">
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column", // Stack footer items vertically on mobile
+                    alignItems: "center",
+                    padding: "10px 0", // Reduce padding for mobile
+                  }}
+                >
+                  <p style={{ textAlign: "center" }}>
+                    <strong>Email: </strong>
+                    <a href="mailto:soulmatchinfo@gmail.com" style={{ textDecoration: "none", color: "#FFBF0E" }}>
+                      soulmatchinfo@gmail.com
+                    </a>
+                  </p>
+                  <p style={{ textAlign: "center", marginTop: "10px" }}>
+                    Copyright © <span id="cry">2024</span>{" "}
+                    <a style={{ textDecoration: "none", color: "#FFBF00" }} href="#!" target="_blank">
+                      SoulMatch
+                    </a>{" "}
+                    All rights reserved.
+                  </p>
+                  <p style={{ textAlign: "center", marginTop: "10px" }}>
+                    <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong> 94490 65433
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
         </div>
       </LocalizationProvider>
     </ThemeProvider>
   );
+  
 }
 
 export default Horoscope;

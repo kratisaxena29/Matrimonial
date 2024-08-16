@@ -526,7 +526,11 @@ console.log("...additional..",location.state)
   return (
     <ThemeProvider theme={theme}>
       <div
-        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100vh",
+        }}
       >
         <nav
           style={{
@@ -539,29 +543,47 @@ console.log("...additional..",location.state)
           <img
             src={logo}
             alt="Logo"
-            style={{ height: "60px", marginRight: "40px" }}
+            style={{
+              height: "60px",
+              marginRight: "40px",
+            }}
           />
         </nav>
-        <div style={{ display: "flex", flex: 1 }}>
+        <div
+          style={{
+            display: "flex",
+            flex: 1,
+            flexDirection: "column",
+          }}
+        >
           {/* Left part */}
           <div
             style={{
               flex: 1,
               backgroundColor: "#F7E7CE",
               textAlign: "center",
-              padding: "10px 0",
+              padding: "20px",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            {/* MUI icon */}
             <FavoriteBorderIcon
-              style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }}
+              style={{
+                fontSize: 60,
+                marginBottom: 10,
+                color: "#6B0D37",
+              }}
             />
-            {/* Big text */}
-            <Typography variant="h4" component="div" sx={{ color: "#6B0D37" }}>
+            <Typography
+              variant="h5"
+              component="div"
+              sx={{
+                color: "#6B0D37",
+                padding: "0 10px",
+              }}
+            >
               "Every love story is beautiful, but yours begins here. Let us help
               you find your happily ever after."
             </Typography>
@@ -573,13 +595,13 @@ console.log("...additional..",location.state)
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
-              padding: "50px",
+              padding: "20px",
             }}
           >
             <div>
               <Typography
                 sx={{ textAlign: "center" }}
-                variant="h5"
+                variant="h6"
                 gutterBottom
               >
                 Additional Details
@@ -587,15 +609,16 @@ console.log("...additional..",location.state)
               <div
                 style={{
                   display: "flex",
+                  flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
-                  gap: "80px",
-                  marginBottom: "40px",
+                  gap: "20px",
+                  marginBottom: "20px",
                 }}
               >
                 <FormControl
                   variant="standard"
-                  sx={{ minWidth: 195 }}
+                  sx={{ minWidth: 200, width: "100%" }}
                   error={!caste}
                 >
                   <InputLabel id="caste-select-label">Caste</InputLabel>
@@ -618,7 +641,7 @@ console.log("...additional..",location.state)
                 </FormControl>
                 <FormControl
                   variant="standard"
-                  sx={{ minWidth: 195 }}
+                  sx={{ minWidth: 200, width: "100%" }}
                   error={!subCaste}
                 >
                   <InputLabel id="sub-caste-select-label">Sub Caste</InputLabel>
@@ -636,25 +659,23 @@ console.log("...additional..",location.state)
                     ))}
                   </Select>
                   {!subCaste && (
-                    <FormHelperText>
-                      Please select your sub-caste
-                    </FormHelperText>
+                    <FormHelperText>Please select your sub-caste</FormHelperText>
                   )}
                 </FormControl>
               </div>
               <div
                 style={{
                   display: "flex",
+                  flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
-                  gap: "80px",
-                  marginBottom: "40px",
+                  gap: "20px",
+                  marginBottom: "20px",
                 }}
               >
-               
                 <FormControl
                   variant="standard"
-                  sx={{ minWidth: 195 }}
+                  sx={{ minWidth: 200, width: "100%" }}
                   error={!motherTongue}
                 >
                   <InputLabel id="mother-tongue-select-label">
@@ -685,10 +706,10 @@ console.log("...additional..",location.state)
                     </FormHelperText>
                   )}
                 </FormControl>
-
+  
                 <FormControl
                   variant="standard"
-                  sx={{ minWidth: 200 }}
+                  sx={{ minWidth: 200, width: "100%" }}
                   error={!petFriendly}
                 >
                   <InputLabel id="pet-friendly-select-label">
@@ -717,15 +738,16 @@ console.log("...additional..",location.state)
               <div
                 style={{
                   display: "flex",
+                  flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
-                  gap: "80px",
-                  marginBottom: "40px",
+                  gap: "20px",
+                  marginBottom: "20px",
                 }}
               >
                 <FormControl
                   variant="standard"
-                  sx={{ minWidth: 195 }}
+                  sx={{ minWidth: 200, width: "100%" }}
                   error={!height}
                 >
                   <InputLabel id="height-select-label">Height</InputLabel>
@@ -748,7 +770,7 @@ console.log("...additional..",location.state)
                 </FormControl>
                 <FormControl
                   variant="standard"
-                  sx={{ minWidth: 195 }}
+                  sx={{ minWidth: 200, width: "100%" }}
                   error={!weight}
                 >
                   <InputLabel id="weight-select-label">Weight</InputLabel>
@@ -770,80 +792,48 @@ console.log("...additional..",location.state)
                   )}
                 </FormControl>
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "start",
-                  marginLeft: "120px",
-                  marginBottom: "40px",
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: "20px",
+                marginTop: "20px",
+              }}
+            >
+              <Button
+                onClick={() =>
+                  navigate("/profile-details", { state: location?.state })
+                }
+                variant="outlined"
+                sx={{
+                  width: "100px",
+                  textTransform: "inherit",
+                  fontSize: "16px",
+                  borderColor: "#FB6A6B",
+                  color: "#FB6A6B",
                 }}
               >
-                {/* <FormControl variant="standard" sx={{ minWidth: 195 }} error={!gothra}>
-                  <InputLabel id="gothra-select-label">Gothra</InputLabel>
-                  <Select
-                    labelId="gothra-select-label"
-                    id="gothra-select"
-                    value={gothra}
-                    onChange={(event) => setGothra(event.target.value)}
-                    label="Gothra"
-                  >
-                    {gothraOptions.map(option => (
-                      <MenuItem key={option} value={option}>{option}</MenuItem>
-                    ))}
-                  </Select>
-                  {!gothra && <FormHelperText>Please select your gothra</FormHelperText>}
-                </FormControl> */}
-                
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  gap: "20px",
-                  marginBottom: "40px",
-                }}
-              >
-                <Button
-                  onClick={() =>
-                    navigate("/profile-details", { state: location?.state })
-                  }
-                  variant="outlined"
-                  sx={{
-                    mt: 4,
-                    mb: 2,
-                    width: 150,
-                    height: 40,
-                    textTransform: "inherit",
-                    fontSize: "18px",
-                    borderColor: "#FB6A6B",
-                    color: "#FB6A6B",
-                  }}
-                >
-                  Back
-                </Button>
-                <Button
-                  onClick={handleAdditionalDetails}
-                  type="submit"
-                  variant="contained"
-                  sx={{
-                    mt: 4,
-                    mb: 2,
-                    width: 150,
-                    height: 40,
-                    textTransform: "inherit",
-                    fontSize: "18px",
+                Back
+              </Button>
+              <Button
+                onClick={handleAdditionalDetails}
+                type="submit"
+                variant="contained"
+                sx={{
+                  width: "100px",
+                  textTransform: "inherit",
+                  fontSize: "16px",
+                  backgroundColor: "#FB6A6B",
+                  "&:hover": {
                     backgroundColor: "#FB6A6B",
-                    "&:hover": {
-                      backgroundColor: "#FB6A6B",
-                    },
-                  }}
-                  disabled={!formValid}
-                >
-                  Next
-                </Button>
-              </div>
+                  },
+                }}
+                disabled={!formValid}
+              >
+                Next
+              </Button>
             </div>
           </div>
         </div>
@@ -853,8 +843,8 @@ console.log("...additional..",location.state)
               <div
                 style={{
                   display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-evenly",
+                  flexDirection: "column",
+                  justifyContent: "center",
                   alignItems: "center",
                   padding: "20px 0",
                 }}
@@ -863,25 +853,31 @@ console.log("...additional..",location.state)
                   <strong>Email: </strong>
                   <a
                     href="mailto:soulmatchinfo@gmail.com"
-                    style={{ textDecoration: "none", color: "#FFBF0E" }}
+                    style={{
+                      textDecoration: "none",
+                      color: "#FFBF0E",
+                    }}
                   >
                     soulmatchinfo@gmail.com
-                  </a>{" "}
+                  </a>
                 </p>
-                <p style={{ width: "200rem", textAlign: "center" }}>
+                <p style={{ textAlign: "center" }}>
                   Copyright © <span id="cry">2024</span>{" "}
                   <a
-                    style={{ textDecoration: "none", color: "#FFBF00" }}
+                    style={{
+                      textDecoration: "none",
+                      color: "#FFBF00",
+                    }}
                     href="#!"
                     target="_blank"
                   >
                     SoulMatch
                   </a>{" "}
-                  All rights reserved.{" "}
+                  All rights reserved.
                 </p>
                 <p>
-                  <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong>{" "}
-                  94490 65433
+                  <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong> 94490
+                  65433
                 </p>
               </div>
             </div>
@@ -890,6 +886,7 @@ console.log("...additional..",location.state)
       </div>
     </ThemeProvider>
   );
+  
 }
 
 export default AdditionalDetails;

@@ -10,6 +10,9 @@ import {
   InputLabel,
   FormControl,
   FormHelperText,
+  Box,
+  Grid,
+  useMediaQuery,
 } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import Diversity3Icon from "@mui/icons-material/Diversity3";
@@ -618,6 +621,8 @@ const [subcasteError,setSubCasteError] = useState(false)
     );
   };
 console.log("...partner...",location.state)
+const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
   const handleNext = async () => {
     setAgeError(!part_ageFrom);
     setMartialStatusError(!part_martialStatus);
@@ -651,83 +656,29 @@ console.log("...partner...",location.state)
 
   return (
     <ThemeProvider theme={theme}>
-      <div
-        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
-      >
-        <nav
-          style={{
-            backgroundColor: "#6D0B32",
-            padding: "10px 20px",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <img
-            src={logo}
-            alt="Logo"
-            style={{ height: "60px", marginRight: "40px" }}
-          />
-        </nav>
-        <div style={{ display: "flex", flex: 1 }}>
-          <div
-            style={{
-              flex: 1,
-              backgroundColor: "#F7E7CE",
-              textAlign: "center",
-              padding: "10px 0",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Diversity3Icon
-              style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }}
-            />
-            <Typography variant="h4" component="div" sx={{ color: "#6B0D37" }}>
-              "Embark on a journey of companionship, where every moment is a
-              step closer to finding your perfect match."
+    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+      <nav style={{ backgroundColor: "#6D0B32", padding: "10px 20px", display: "flex", alignItems: "center" }}>
+        <img src={logo} alt="Logo" style={{ height: "60px", marginRight: "40px" }} />
+      </nav>
+      <div style={{ flex: 1 }}>
+        <Grid container direction={isSmallScreen ? "column" : "row"}>
+          <Grid item xs={12} sm={6} style={{ display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "#F7E7CE", padding: isSmallScreen ? "10px 0" : "50px" }}>
+            <Diversity3Icon style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }} />
+            <Typography variant="h4" component="div" sx={{ color: "#6B0D37", textAlign: "center" }}>
+              "Embark on a journey of companionship, where every moment is a step closer to finding your perfect match."
             </Typography>
-          </div>
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              padding: "50px",
-            }}
-          >
-            <div>
-              <Typography
-                sx={{
-                  textAlign: "center",
-                  fontWeight: "bold",
-                  marginBottom: 5,
-                }}
-                variant="h5"
-                gutterBottom
-              >
-                Please fill your desired partner details
-              </Typography>
-              <Typography
-                sx={{ textAlign: "center" }}
-                variant="h5"
-                gutterBottom
-              >
-                Personal Details
-              </Typography>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "80px",
-                  marginBottom: "40px",
-                  marginTop: "40px",
-                }}
-              >
-                <FormControl variant="standard" sx={{ minWidth: 195 }}>
+          </Grid>
+          <Grid item xs={12} sm={6} style={{ padding: isSmallScreen ? "10px" : "50px" }}>
+            <Typography sx={{ textAlign: "center", fontWeight: "bold", marginBottom: 5 }} variant="h5" gutterBottom>
+              Please fill your desired partner details
+            </Typography>
+            <Typography sx={{ textAlign: "center" }} variant="h5" gutterBottom>
+              Personal Details
+            </Typography>
+
+            <Grid container spacing={2} direction={isSmallScreen ? "column" : "row"} justifyContent="center">
+              <Grid item xs={12} sm={6} md={4}>
+                <FormControl variant="standard" fullWidth>
                   <InputLabel id="age-from-label">Age from</InputLabel>
                   <Select
                     labelId="age-from-label"
@@ -749,16 +700,12 @@ console.log("...partner...",location.state)
                     <MenuItem value="65-70">65-70 years</MenuItem>
                     <MenuItem value="70-75">70-75 years</MenuItem>
                   </Select>
-                  {ageError && (
-                    <FormHelperText error>
-                      Please select an age range.
-                    </FormHelperText>
-                  )}
+                  {ageError && <FormHelperText error>Please select an age range.</FormHelperText>}
                 </FormControl>
-                <FormControl variant="standard" sx={{ minWidth: 195 }}>
-                  <InputLabel id="martial-status-label">
-                    Marital Status
-                  </InputLabel>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4}>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel id="martial-status-label">Marital Status</InputLabel>
                   <Select
                     labelId="martial-status-label"
                     id="martial-status"
@@ -768,30 +715,19 @@ console.log("...partner...",location.state)
                     error={martialStatusError}
                   >
                     <MenuItem value="Never Married">Never Married</MenuItem>
-                    <MenuItem value="Awaiting Divorce">
-                      Awaiting Divorce
-                    </MenuItem>
+                    <MenuItem value="Awaiting Divorce">Awaiting Divorce</MenuItem>
                     <MenuItem value="Divorced">Divorced</MenuItem>
                     <MenuItem value="Widowed">Widowed</MenuItem>
                     <MenuItem value="Annulled">Annulled</MenuItem>
                   </Select>
-                  {martialStatusError && (
-                    <FormHelperText error>
-                      Please select marital status.
-                    </FormHelperText>
-                  )}
+                  {martialStatusError && <FormHelperText error>Please select marital status.</FormHelperText>}
                 </FormControl>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "80px",
-                  marginBottom: "40px",
-                }}
-              >
-                <FormControl variant="standard" sx={{ minWidth: 195 }}>
+              </Grid>
+            </Grid>
+
+            <Grid container spacing={2} direction={isSmallScreen ? "column" : "row"} justifyContent="center">
+              <Grid item xs={12} sm={6} md={4}>
+                <FormControl variant="standard" fullWidth>
                   <InputLabel id="caste-select-label">Caste</InputLabel>
                   <Select
                     labelId="caste-select-label"
@@ -802,51 +738,35 @@ console.log("...partner...",location.state)
                     error={casteError}
                   >
                     {casteOptions.map((option) => (
-                      <MenuItem key={option} value={option}>
-                        {option}
-                      </MenuItem>
+                      <MenuItem key={option} value={option}>{option}</MenuItem>
                     ))}
                   </Select>
-                  {casteError && (
-                    <FormHelperText error>
-                      Please select a caste.
-                    </FormHelperText>
-                  )}
+                  {casteError && <FormHelperText error>Please select a caste.</FormHelperText>}
                 </FormControl>
-                <FormControl variant="standard" sx={{ minWidth: 195 }}>
-                  <InputLabel id="caste-select-label">Sub Caste</InputLabel>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4}>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel id="sub-caste-select-label">Sub Caste</InputLabel>
                   <Select
-                    labelId="caste-select-label"
-                    id="caste-select"
-                    label="Caste"
+                    labelId="sub-caste-select-label"
+                    id="sub-caste-select"
+                    label="Sub Caste"
                     value={Part_subCaste}
                     onChange={(event) => setPart_subCaste(event.target.value)}
                     error={subcasteError}
                   >
                     {subCasteOptions.map((option) => (
-                      <MenuItem key={option} value={option}>
-                        {option}
-                      </MenuItem>
+                      <MenuItem key={option} value={option}>{option}</MenuItem>
                     ))}
                   </Select>
-                  {subcasteError && (
-                    <FormHelperText error>
-                      Please select a sub caste.
-                    </FormHelperText>
-                  )}
+                  {subcasteError && <FormHelperText error>Please select a sub caste.</FormHelperText>}
                 </FormControl>
-              </div>
+              </Grid>
+            </Grid>
 
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "80px",
-                  marginBottom: "40px",
-                }}
-              >
-                <FormControl variant="standard" sx={{ minWidth: 195 }}>
+            <Grid container spacing={2} direction={isSmallScreen ? "column" : "row"} justifyContent="center">
+              <Grid item xs={12} sm={6} md={4}>
+                <FormControl variant="standard" fullWidth>
                   <InputLabel id="religion-select-label">Religion</InputLabel>
                   <Select
                     labelId="religion-select-label"
@@ -856,7 +776,6 @@ console.log("...partner...",location.state)
                     onChange={(event) => setReligion(event.target.value)}
                     error={religionError}
                   >
-
                     <MenuItem value="Hindu">Hindu</MenuItem>
                     <MenuItem value="Muslim">Muslim</MenuItem>
                     <MenuItem value="Christian">Christian</MenuItem>
@@ -866,16 +785,12 @@ console.log("...partner...",location.state)
                     <MenuItem value="Bahai">Bahai</MenuItem>
                     <MenuItem value="Parsi">Parsi</MenuItem>
                   </Select>
-                  {religionError && (
-                    <FormHelperText error>
-                      Please select a religion.
-                    </FormHelperText>
-                  )}
+                  {religionError && <FormHelperText error>Please select a religion.</FormHelperText>}
                 </FormControl>
-                <FormControl variant="standard" sx={{ minWidth: 195 }}>
-                  <InputLabel id="mothertongue-select-label">
-                    Mother Tongue
-                  </InputLabel>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4}>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel id="mothertongue-select-label">Mother Tongue</InputLabel>
                   <Select
                     labelId="mothertongue-select-label"
                     id="mothertongue-select"
@@ -901,18 +816,15 @@ console.log("...partner...",location.state)
                       Please select your mother tongue.
                     </FormHelperText>
                   )}
+                  {/* </Select> */}
+                  {/* {mothertongueError && <FormHelperText error>Please select your mother tongue.</FormHelperText>} */}
                 </FormControl>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "80px",
-                  marginBottom: "40px",
-                }}
-              >
-                <FormControl variant="standard" sx={{ minWidth: 195 }}>
+              </Grid>
+            </Grid>
+
+            <Grid container spacing={2} direction={isSmallScreen ? "column" : "row"} justifyContent="center">
+              <Grid item xs={12} sm={6} md={4}>
+                <FormControl variant="standard" fullWidth>
                   <InputLabel id="height-select-label">Height</InputLabel>
                   <Select
                     labelId="height-select-label"
@@ -923,21 +835,15 @@ console.log("...partner...",location.state)
                     error={heightError}
                   >
                     {heightOptions.map((option) => (
-                      <MenuItem key={option} value={option}>
-                        {option}
-                      </MenuItem>
+                      <MenuItem key={option} value={option}>{option}</MenuItem>
                     ))}
                   </Select>
-                  {heightError && (
-                    <FormHelperText error>
-                      Please select your height.
-                    </FormHelperText>
-                  )}
+                  {heightError && <FormHelperText error>Please select your height.</FormHelperText>}
                 </FormControl>
-                <FormControl variant="standard" sx={{ minWidth: 195 }}>
-                  <InputLabel id="horoscope-match-label">
-                    Horoscope match?
-                  </InputLabel>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4}>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel id="horoscope-match-label">Horoscope match?</InputLabel>
                   <Select
                     labelId="horoscope-match-label"
                     id="horoscope-match"
@@ -949,24 +855,14 @@ console.log("...partner...",location.state)
                     <MenuItem value="Yes">Yes</MenuItem>
                     <MenuItem value="No">No</MenuItem>
                   </Select>
-                  {horoscopeMatchError && (
-                    <FormHelperText error>
-                      Please select if horoscope match is required.
-                    </FormHelperText>
-                  )}
+                  {horoscopeMatchError && <FormHelperText error>Please select if horoscope match is required.</FormHelperText>}
                 </FormControl>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "start",
-                  marginLeft: "120px",
-                  gap: "80px",
-                  marginBottom: "40px",
-                }}
-              >
-                <FormControl variant="standard" sx={{ minWidth: 195 }}>
+              </Grid>
+            </Grid>
+
+            <Grid container spacing={2} direction={isSmallScreen ? "column" : "row"} justifyContent="center">
+              <Grid item xs={12} sm={6} md={4}>
+                <FormControl variant="standard" fullWidth>
                   <InputLabel id="pet-friendly-label">Pet Friendly</InputLabel>
                   <Select
                     labelId="pet-friendly-label"
@@ -980,130 +876,92 @@ console.log("...partner...",location.state)
                     <MenuItem value="No">No</MenuItem>
                     <MenuItem value="Don't know">Don't know</MenuItem>
                   </Select>
-                  {petFriendlyError && (
-                    <FormHelperText error>
-                      Please select if pet-friendly is required.
-                    </FormHelperText>
-                  )}
+                  {petFriendlyError && <FormHelperText error>Please select if pet-friendly is required.</FormHelperText>}
                 </FormControl>
-                <FormControl variant="standard" sx={{ minWidth: 195 }}>
-                  <InputLabel id="pet-friendly-label">Gender</InputLabel>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4}>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel id="gender-select-label">Gender</InputLabel>
                   <Select
-                    labelId="pet-friendly-label"
-                    id="pet-friendly"
+                    labelId="gender-select-label"
+                    id="gender-select"
                     label="Gender"
                     value={part_gender}
                     onChange={(event) => setPartgender(event.target.value)}
                     error={PartgenderError}
                   >
-                     <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
+                    <MenuItem value=""><em>None</em></MenuItem>
                     <MenuItem value="Male">Male</MenuItem>
                     <MenuItem value="Female">Female</MenuItem>
                     <MenuItem value="Other">Other</MenuItem>
-                  
                   </Select>
-                  {PartgenderError && (
-                    <FormHelperText error>
-                      Please select if pet-friendly is required.
-                    </FormHelperText>
-                  )}
+                  {PartgenderError && <FormHelperText error>Please select gender.</FormHelperText>}
                 </FormControl>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  gap: "20px",
-                  marginBottom: "40px",
+              </Grid>
+            </Grid>
+
+            <div style={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row", alignItems: "center", justifyContent: "space-between", marginTop: "40px" }}>
+              <Button
+                onClick={() => navigate("/about-yourself", { state: location?.state })}
+                variant="outlined"
+                sx={{
+                  width: "150px",
+                  height: "40px",
+                  textTransform: "inherit",
+                  fontSize: "18px",
+                  borderColor: "#FB6A6B",
+                  color: "#FB6A6B",
+                  marginBottom: isSmallScreen ? "10px" : "0",
                 }}
               >
-                <Button
-                  onClick={() =>
-                    navigate("/about-yourself", { state: location?.state })
-                  }
-                  variant="outlined"
-                  sx={{
-                    mt: 4,
-                    mb: 2,
-                    width: 150,
-                    height: 40,
-                    textTransform: "inherit",
-                    fontSize: "18px",
-                    borderColor: "#FB6A6B",
-                    color: "#FB6A6B",
-                  }}
-                >
-                  Back
-                </Button>
-                <Button
-                  onClick={handleNext}
-                  type="submit"
-                  variant="contained"
-                  sx={{
-                    mt: 4,
-                    mb: 2,
-                    width: 150,
-                    height: 40,
-                    textTransform: "inherit",
-                    fontSize: "18px",
+                Back
+              </Button>
+              <Button
+                onClick={handleNext}
+                type="submit"
+                variant="contained"
+                sx={{
+                  width: "150px",
+                  height: "40px",
+                  textTransform: "inherit",
+                  fontSize: "18px",
+                  backgroundColor: "#FB6A6B",
+                  "&:hover": {
                     backgroundColor: "#FB6A6B",
-                    "&:hover": {
-                      backgroundColor: "#FB6A6B",
-                    },
-                  }}
-                  disabled={!validateForm()} // Disable the button if the form is not valid
-                >
-                  Next
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <section>
-          <div className="cr">
-            <div className="container">
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-evenly",
-                  alignItems: "center",
-                  padding: "20px 0",
+                  },
                 }}
+                disabled={!validateForm()} // Disable the button if the form is not valid
               >
-                <p>
-                  <strong>Email: </strong>
-                  <a
-                    href="mailto:soulmatchinfo@gmail.com"
-                    style={{ textDecoration: "none", color: "#FFBF0E" }}
-                  >
-                    soulmatchinfo@gmail.com
-                  </a>{" "}
-                </p>
-                <p style={{ width: "200rem", textAlign: "center" }}>
-                  Copyright © <span id="cry">2024</span>{" "}
-                  <a
-                    style={{ textDecoration: "none", color: "#FFBF00" }}
-                    href="#!"
-                    target="_blank"
-                  >
-                    SoulMatch
-                  </a>{" "}
-                  All rights reserved.{" "}
-                </p>
-                <p>
-                  <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong>{" "}
-                  94490 65433
-                </p>
-              </div>
+                Next
+              </Button>
             </div>
-          </div>
-        </section>
+          </Grid>
+        </Grid>
       </div>
-    </ThemeProvider>
+      <section style={{ backgroundColor: "#F7E7CE", padding: "10px 20px" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <p>
+            <strong>Email: </strong>
+            <a href="mailto:soulmatchinfo@gmail.com" style={{ textDecoration: "none", color: "#FFBF0E" }}>
+              soulmatchinfo@gmail.com
+            </a>
+          </p>
+          <p style={{ textAlign: "center", marginBottom: "10px" }}>
+            Copyright © <span id="cry">2024</span>{" "}
+            <a style={{ textDecoration: "none", color: "#FFBF00" }} href="#!" target="_blank">
+              SoulMatch
+            </a>{" "}
+            All rights reserved.
+          </p>
+          <p>
+            <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong>{" "}
+            94490 65433
+          </p>
+        </div>
+      </section>
+    </div>
+  </ThemeProvider>
+
   );
 }
 

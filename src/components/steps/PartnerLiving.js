@@ -9,6 +9,8 @@ import {
   ThemeProvider,
   InputLabel,
   FormControl,
+  useMediaQuery,
+  Grid,
 } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
@@ -182,11 +184,6 @@ function PartnerLiving() {
   };
   
   
-  
-  
-  
-  
-
   const theme = createTheme({
     components: {
       MuiPopover: {
@@ -198,49 +195,39 @@ function PartnerLiving() {
       },
     },
   });
+  
+  
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  
+
 
   return (
     <ThemeProvider theme={theme}>
       <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+        {/* Navigation bar */}
         <nav style={{ backgroundColor: "#6D0B32", padding: "10px 20px", display: "flex", alignItems: "center" }}>
           <img src={logo} alt="Logo" style={{ height: "60px", marginRight: "40px" }} />
         </nav>
-        <div style={{ display: "flex", flex: 1 }}>
-          <div
-            style={{
-              flex: 1,
-              backgroundColor: "#F7E7CE",
-              textAlign: "center",
-              padding: "10px 0",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <MonitorHeartIcon style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }} />
-            <Typography variant="h4" component="div" sx={{ color: "#6B0D37" }}>
-              "Crafting a Lifestyle: Exploring the Art of Living Well."
-            </Typography>
-          </div>
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              padding: "50px",
-            }}
-          >
-            <div>
-              <Typography sx={{ textAlign: "center", fontWeight: "bold", marginBottom: 5 }} variant="h5" gutterBottom>
-                Please fill your desired partner details
+        <div style={{ flex: 1 }}>
+          <Grid container direction={isSmallScreen ? "column" : "row"} spacing={2}>
+            <Grid item xs={12} sm={6} style={{ backgroundColor: "#F7E7CE", textAlign: "center", padding: "10px 0", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+              <MonitorHeartIcon style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }} />
+              <Typography variant="h4" component="div" sx={{ color: "#6B0D37" }}>
+                "Crafting a Lifestyle: Exploring the Art of Living Well."
               </Typography>
-              <Typography sx={{ textAlign: "center" }} variant="h5" gutterBottom>
-                Style of living
-              </Typography>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
-                <FormControl variant="standard" sx={{ minWidth: 300 }}>
+            </Grid>
+            <Grid item xs={12} sm={6} style={{ padding: isSmallScreen ? "20px" : "50px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+              <div>
+                <Typography sx={{ textAlign: "center", fontWeight: "bold", marginBottom: 5 }} variant="h5" gutterBottom>
+                  Please fill your desired partner details
+                </Typography>
+                <Typography sx={{ textAlign: "center" }} variant="h5" gutterBottom>
+                  Style of Living
+                </Typography>
+
+                {/* Diet */}
+                <FormControl variant="standard" fullWidth sx={{ marginBottom: "40px" }}>
                   <InputLabel id="diet-label">Diet</InputLabel>
                   <Select
                     labelId="diet-label"
@@ -257,9 +244,9 @@ function PartnerLiving() {
                   </Select>
                   {errors.diet && <Typography color="error">{errors.diet}</Typography>}
                 </FormControl>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
-                <FormControl variant="standard" sx={{ minWidth: 300 }}>
+
+                {/* Alcohol */}
+                <FormControl variant="standard" fullWidth sx={{ marginBottom: "40px" }}>
                   <InputLabel id="alcohol-label">Alcohol</InputLabel>
                   <Select
                     labelId="alcohol-label"
@@ -268,17 +255,16 @@ function PartnerLiving() {
                     onChange={(event) => setAlcohol(event.target.value)}
                     error={!!errors.alcohol}
                   >
-                         <MenuItem value="Occasionally">Occasionally</MenuItem>
+                    <MenuItem value="Occasionally">Occasionally</MenuItem>
                     <MenuItem value="Social Drinker">Social Drinker</MenuItem>
                     <MenuItem value="Regular Drinker">Regular Drinker</MenuItem>
                     <MenuItem value="Non-drinker">Non-drinker</MenuItem>
-                   
                   </Select>
                   {errors.alcohol && <Typography color="error">{errors.alcohol}</Typography>}
                 </FormControl>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px" }}>
-                <FormControl variant="standard" sx={{ minWidth: 300 }}>
+
+                {/* Smoke */}
+                <FormControl variant="standard" fullWidth sx={{ marginBottom: "40px" }}>
                   <InputLabel id="smoke-label">Smoke</InputLabel>
                   <Select
                     labelId="smoke-label"
@@ -294,86 +280,65 @@ function PartnerLiving() {
                   </Select>
                   {errors.smoke && <Typography color="error">{errors.smoke}</Typography>}
                 </FormControl>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "20px", marginBottom: "40px" }}>
-                <Button
-                  onClick={() => navigate("/partner-education",{state: location.state})}
-                  variant="outlined"
-                  sx={{
-                    mt: 4,
-                    mb: 2,
-                    width: 150,
-                    height: 40,
-                    textTransform: "inherit",
-                    fontSize: "18px",
-                    borderColor: "#FB6A6B",
-                    color: "#FB6A6B",
-                  }}
-                >
-                  Back
-                </Button>
-                <Button
-                  onClick={handleNext}
-                  type="submit"
-                  variant="contained"
-                  sx={{
-                    mt: 4,
-                    mb: 2,
-                    width: 150,
-                    height: 40,
-                    textTransform: "inherit",
-                    fontSize: "18px",
-                    backgroundColor: "#FB6A6B",
-                    "&:hover": {
+
+                {/* Navigation Buttons */}
+                <div style={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row", alignItems: "center", gap: "20px" }}>
+                  <Button
+                    onClick={() => navigate("/partner-education", { state: location.state })}
+                    variant="outlined"
+                    sx={{
+                      width: "150px",
+                      height: "40px",
+                      textTransform: "inherit",
+                      fontSize: "18px",
+                      borderColor: "#FB6A6B",
+                      color: "#FB6A6B",
+                    }}
+                  >
+                    Back
+                  </Button>
+                  <Button
+                    onClick={handleNext}
+                    type="submit"
+                    variant="contained"
+                    sx={{
+                      width: "150px",
+                      height: "40px",
+                      textTransform: "inherit",
+                      fontSize: "18px",
                       backgroundColor: "#FB6A6B",
-                    },
-                  }}
-                  disabled={!isFormValid}
-                >
-                  Next
-                </Button>
+                      "&:hover": {
+                        backgroundColor: "#FB6A6B",
+                      },
+                    }}
+                    disabled={!isFormValid}
+                  >
+                    Next
+                  </Button>
+                </div>
               </div>
-            </div>
-          </div>
+            </Grid>
+          </Grid>
         </div>
-        <section>
-          <div className="cr">
-            <div className="container">
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-evenly",
-                  alignItems: "center",
-                  padding: "20px 0",
-                }}
-              >
-                <p>
-                  <strong>Email: </strong>
-                  <a
-                    href="mailto:soulmatchinfo@gmail.com"
-                    style={{ textDecoration: "none", color: "#FFBF0E" }}
-                  >
-                    soulmatchinfo@gmail.com
-                  </a>{" "}
-                </p>
-                <p style={{ width: "200rem", textAlign: "center" }}>
-                  Copyright © <span id="cry">2024</span>{" "}
-                  <a
-                    style={{ textDecoration: "none", color: "#FFBF00" }}
-                    href="#!"
-                    target="_blank"
-                  >
-                    SoulMatch
-                  </a>{" "}
-                  All rights reserved.{" "}
-                </p>
-                <p>
-                  <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong>{" "}
-                  94490 65433
-                </p>
-              </div>
-            </div>
+        <section style={{ backgroundColor: "#F7E7CE", padding: "10px 20px" }}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <p>
+              <strong>Email: </strong>
+              <a href="mailto:soulmatchinfo@gmail.com" style={{ textDecoration: "none", color: "#FFBF0E" }}>
+                soulmatchinfo@gmail.com
+              </a>
+            </p>
+            <p style={{ textAlign: "center", marginBottom: "10px" }}>
+              Copyright © <span id="cry">2024</span>{" "}
+              <a style={{ textDecoration: "none", color: "#FFBF00" }} href="#!" target="_blank">
+                SoulMatch
+              </a>{" "}
+              All rights reserved.
+            </p>
+            <p>
+              <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong>{" "}
+              94490 65433
+            </p>
           </div>
         </section>
       </div>

@@ -298,7 +298,11 @@ function ProfileDetails() {
   return (
     <ThemeProvider theme={theme}>
       <div
-        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100vh",
+        }}
       >
         <ToastContainer />
         <nav
@@ -307,19 +311,29 @@ function ProfileDetails() {
             padding: "10px 20px",
             display: "flex",
             alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
           <img
             src={logo}
             alt="Logo"
-            style={{ height: "60px", marginRight: "40px" }}
+            style={{
+              height: "50px",
+              marginRight: "20px",
+            }}
           />
         </nav>
-        <div style={{ display: "flex", flex: 1 }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            flex: 1,
+            padding: "20px",
+          }}
+        >
           {/* Left part */}
           <div
             style={{
-              flex: 1,
               backgroundColor: "#F7E7CE",
               textAlign: "center",
               padding: "10px 0",
@@ -330,27 +344,39 @@ function ProfileDetails() {
             }}
           >
             <WorkspacePremiumIcon
-              style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }}
+              style={{
+                fontSize: "60px",
+                marginBottom: "10px",
+                color: "#6B0D37",
+              }}
             />
-            <Typography variant="h4" component="div" sx={{ color: "#6B0D37" }}>
-              "Chosen by Countless Indian Hearts Worldwide: A Premier
-              Matrimonial Platform"
+            <Typography
+              variant="h5"
+              component="div"
+              sx={{
+                color: "#6B0D37",
+                textAlign: "center",
+                padding: "0 10px",
+              }}
+            >
+              "Chosen by Countless Indian Hearts Worldwide: A Premier Matrimonial
+              Platform"
             </Typography>
           </div>
           {/* Right part */}
           <div
             style={{
-              flex: 1,
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
-              padding: "50px",
+              padding: "20px",
+              flex: 1,
             }}
           >
             <div>
               <Typography
                 sx={{ textAlign: "center" }}
-                variant="h5"
+                variant="h6"
                 gutterBottom
               >
                 Profile Details
@@ -358,25 +384,27 @@ function ProfileDetails() {
               <div
                 style={{
                   display: "flex",
+                  flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
-                  gap: "80px",
-                  marginBottom: "40px",
+                  gap: "20px",
+                  marginBottom: "20px",
                 }}
               >
                 <TextField
-                  label="FullName"
+                  label="Full Name"
                   variant="standard"
                   value={name}
                   onChange={handleChange(setName, "name")}
                   onBlur={handleBlur("name")}
                   error={!!errors.name}
                   helperText={errors.name}
+                  fullWidth
                 />
                 <FormControl
                   variant="standard"
-                  sx={{ minWidth: 200 }}
                   error={!!errors.gender}
+                  fullWidth
                 >
                   <InputLabel id="gender-label">Gender</InputLabel>
                   <Select
@@ -400,16 +428,17 @@ function ProfileDetails() {
               <div
                 style={{
                   display: "flex",
+                  flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
-                  gap: "80px",
-                  marginBottom: "40px",
+                  gap: "20px",
+                  marginBottom: "20px",
                 }}
               >
                 <FormControl
                   variant="standard"
-                  sx={{ minWidth: 200 }}
                   error={!!errors.age}
+                  fullWidth
                 >
                   <InputLabel id="age-label">Age</InputLabel>
                   <Select
@@ -431,8 +460,8 @@ function ProfileDetails() {
                 </FormControl>
                 <FormControl
                   variant="standard"
-                  sx={{ minWidth: 200 }}
                   error={!!errors.maritalStatus}
+                  fullWidth
                 >
                   <InputLabel id="marital-status-label">
                     Marital Status
@@ -440,7 +469,10 @@ function ProfileDetails() {
                   <Select
                     labelId="marital-status-label"
                     value={maritalStatus}
-                    onChange={handleChange(setMaritalStatus, "maritalStatus")}
+                    onChange={handleChange(
+                      setMaritalStatus,
+                      "maritalStatus"
+                    )}
                     onBlur={handleBlur("maritalStatus")}
                   >
                     <MenuItem value="">
@@ -460,17 +492,17 @@ function ProfileDetails() {
               <div
                 style={{
                   display: "flex",
+                  flexDirection: "column",
                   alignItems: "center",
-                  justifyContent: "start",
-                  marginLeft:110,
-                  gap: "80px",
-                  marginBottom: "40px",
+                  justifyContent: "center",
+                  gap: "20px",
+                  marginBottom: "20px",
                 }}
               >
                 <FormControl
                   variant="standard"
-                  sx={{ minWidth: 200 }}
                   error={!!errors.nationality}
+                  fullWidth
                 >
                   <InputLabel id="nationality-label">Nationality</InputLabel>
                   <Select
@@ -498,8 +530,8 @@ function ProfileDetails() {
                 {nationality === "Indian" && (
                   <FormControl
                     variant="standard"
-                    sx={{ minWidth: 200 }}
                     error={!!errors.city}
+                    fullWidth
                   >
                     <InputLabel id="city-label">City</InputLabel>
                     <Select
@@ -531,23 +563,24 @@ function ProfileDetails() {
                     onBlur={handleBlur("city")}
                     error={!!errors.country}
                     helperText={errors.country}
-                    sx={{ marginBottom: 2 }}
+                    fullWidth
                   />
                 )}
               </div>
               <div
                 style={{
                   display: "flex",
+                  flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
-                  gap: "80px",
-                  marginBottom: "40px",
+                  gap: "20px",
+                  marginBottom: "20px",
                 }}
               >
                 <FormControl
                   variant="standard"
-                  sx={{ minWidth: 200 }}
                   error={!!errors.religion}
+                  fullWidth
                 >
                   <InputLabel id="religion-label">Religion</InputLabel>
                   <Select
@@ -571,8 +604,8 @@ function ProfileDetails() {
                 </FormControl>
                 <FormControl
                   variant="standard"
-                  sx={{ minWidth: 200 }}
                   error={!!errors.disability}
+                  fullWidth
                 >
                   <InputLabel id="disability-label">
                     Differently-Abled
@@ -594,136 +627,16 @@ function ProfileDetails() {
                   )}
                 </FormControl>
               </div>
-              {disability === "Yes" && (
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginBottom: "40px",
-                  }}
-                >
-                  <TextField
-                    // label="Differently-Abled Details"
-                    label = "Specify"
-                    variant="standard"
-                    value={disabilityDetails}
-                    onChange={handleChange(
-                      setDisabilityDetails,
-                      "disabilityDetails"
-                    )}
-                    onBlur={handleBlur("disabilityDetails")}
-                    error={!!errors.disabilityDetails}
-                    helperText={errors.disabilityDetails}
-                    sx={{ width: 490 }}
-                  />
-                </div>
-              )}
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "70px",
-                  marginBottom: "40px",
-                }}
-              >
-                {location.state.email && (
-                  <TextField
-                    label="Email"
-                    variant="standard"
-                    value={email}
-                    onChange={handleChange(setEmail, "email")}
-                    onBlur={handleBlur("email")}
-                    error={!!errors.email}
-                    helperText={errors.email}
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                  />
-                )}
-                {location.state.phoneno && (
-                  <TextField
-                    label="Phone No"
-                    variant="standard"
-                    value={phoneNo}
-                    onChange={handleChange(setPhoneNo, "phoneNo")}
-                    onBlur={handleBlur("phoneNo")}
-                    error={!!errors.phoneNo}
-                    helperText={errors.phoneNo}
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                  />
-                )}
-                <FormControl
-                  variant="standard"
-                  sx={{ minWidth: 200 }}
-                  error={!!errors.hobbies}
-                  // fullWidth
-                >
-                  <InputLabel id="hobbies-label">Hobbies</InputLabel>
-                  <Select
-                    labelId="hobbies-label"
-                    id="hobbies-select"
-                    multiple
-                    value={hobbies}
-                    onChange={handleChange(setHobbies, "hobbies")}
-                    onClose={handleHobbiesClose}
-                    onOpen={handleHobbiesOpen}
-                    open={hobbiesOpen}
-                    renderValue={(selected) => selected.join(", ")}
-                    label="Hobbies"
-                  >
-                    {hobbiesOptions.map((hobby) => (
-                      <MenuItem key={hobby} value={hobby}>
-                        <Checkbox checked={hobbies.indexOf(hobby) > -1} />
-                        <ListItemText primary={hobby} />
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  {errors.hobbies && (
-                    <FormHelperText>{errors.hobbies}</FormHelperText>
-                  )}
-                </FormControl>
-              </div>
-              {/* <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginBottom: "40px",
-                }}
-              >
-                <TextField
-                  label="Address"
-                  variant="standard"
-                  value={address}
-                  onChange={handleChange(setAddress, "address")}
-                  onBlur={handleBlur("address")}
-                  error={!!errors.address}
-                  helperText={errors.address}
-                  sx={{ width: 490 }}
-                />
-              </div> */}
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginBottom: "40px",
-                }}
-              ></div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginTop: "20px",
-                }}
-              >
-                <Button
-                  variant="contained"
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "20px",
+              }}
+            >
+              <Button
+                variant="contained"
                   // color="primary"
                   onClick={handleProfileNext}
                   sx={{
@@ -734,8 +647,7 @@ function ProfileDetails() {
                   }}
                 >
                   Next
-                </Button>
-              </div>
+              </Button>
             </div>
           </div>
         </div>
@@ -782,6 +694,7 @@ function ProfileDetails() {
       </div>
     </ThemeProvider>
   );
+  
 }
 
 export default ProfileDetails;

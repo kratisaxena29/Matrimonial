@@ -92,25 +92,26 @@ function LifeStyle() {
             padding: "10px 20px",
             display: "flex",
             alignItems: "center",
+            justifyContent: "center", // Center the logo on smaller screens
           }}
         >
-          <img src={logo} alt="Logo" style={{ height: "60px", marginRight: "40px" }} />
+          <img src={logo} alt="Logo" style={{ height: "60px" }} />
         </nav>
-        <div style={{ display: "flex", flex: 1 }}>
+        <div style={{ display: "flex", flex: 1, flexDirection: "column" }}>
           <div
             style={{
               flex: 1,
               backgroundColor: "#F7E7CE",
               textAlign: "center",
-              padding: "10px 0",
+              padding: "20px", // Increased padding for better spacing on small screens
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            <MonitorHeartIcon style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }} />
-            <Typography variant="h4" component="div" sx={{ color: "#6B0D37" }}>
+            <MonitorHeartIcon style={{ fontSize: 60, marginBottom: 10, color: "#6B0D37" }} /> {/* Reduced icon size for mobile */}
+            <Typography variant="h5" component="div" sx={{ color: "#6B0D37" }}> {/* Reduced text size */}
               "Embrace the magic of love as we help you find the one who makes your heart skip a beat."
             </Typography>
           </div>
@@ -119,24 +120,24 @@ function LifeStyle() {
               flex: 1,
               display: "flex",
               flexDirection: "column",
-              justifyContent: "space-between",
-              padding: "50px",
+              justifyContent: "center", // Center the form on smaller screens
+              padding: "20px", // Reduced padding for mobile
             }}
           >
             <div>
-              <Typography sx={{ textAlign: "center" }} variant="h5" gutterBottom>
+              <Typography sx={{ textAlign: "center" }} variant="h6" gutterBottom> {/* Reduced text size */}
                 Living Style Details
               </Typography>
               <div
                 style={{
                   display: "flex",
+                  flexDirection: "column", // Stack inputs vertically on smaller screens
                   alignItems: "center",
-                  justifyContent: "center",
-                  gap: "80px",
-                  marginBottom: "40px",
+                  gap: "20px", // Reduced gap for better spacing on small screens
+                  marginBottom: "20px", // Reduced margin for mobile
                 }}
               >
-                <FormControl variant="standard" sx={{ minWidth: 300 }} error={Boolean(errors.diet)}>
+                <FormControl variant="standard" sx={{ width: "100%" }} error={Boolean(errors.diet)}>
                   <InputLabel id="diet-label">Diet</InputLabel>
                   <Select
                     labelId="diet-label"
@@ -158,13 +159,13 @@ function LifeStyle() {
               <div
                 style={{
                   display: "flex",
+                  flexDirection: "column", // Stack inputs vertically on smaller screens
                   alignItems: "center",
-                  justifyContent: "center",
-                  gap: "80px",
-                  marginBottom: "40px",
+                  gap: "20px", // Reduced gap for better spacing on small screens
+                  marginBottom: "20px", // Reduced margin for mobile
                 }}
               >
-                <FormControl variant="standard" sx={{ minWidth: 300 }} error={Boolean(errors.alcohol)}>
+                <FormControl variant="standard" sx={{ width: "100%" }} error={Boolean(errors.alcohol)}>
                   <InputLabel id="alcohol-label">Alcohol</InputLabel>
                   <Select
                     labelId="alcohol-label"
@@ -174,11 +175,10 @@ function LifeStyle() {
                     onChange={handleInputChange}
                     label="Alcohol"
                   >
-                     <MenuItem value="Occasionally">Occasionally</MenuItem>
+                    <MenuItem value="Occasionally">Occasionally</MenuItem>
                     <MenuItem value="Social Drinker">Social Drinker</MenuItem>
                     <MenuItem value="Regular Drinker">Regular Drinker</MenuItem>
                     <MenuItem value="Non-drinker">Non-drinker</MenuItem>
-                   
                   </Select>
                   {errors.alcohol && <FormHelperText>{errors.alcohol}</FormHelperText>}
                 </FormControl>
@@ -186,13 +186,13 @@ function LifeStyle() {
               <div
                 style={{
                   display: "flex",
+                  flexDirection: "column", // Stack inputs vertically on smaller screens
                   alignItems: "center",
-                  justifyContent: "center",
-                  gap: "80px",
-                  marginBottom: "40px",
+                  gap: "20px", // Reduced gap for better spacing on small screens
+                  marginBottom: "20px", // Reduced margin for mobile
                 }}
               >
-                <FormControl variant="standard" sx={{ minWidth: 300 }} error={Boolean(errors.smoke)}>
+                <FormControl variant="standard" sx={{ width: "100%" }} error={Boolean(errors.smoke)}>
                   <InputLabel id="smoke-label">Smoke</InputLabel>
                   <Select
                     labelId="smoke-label"
@@ -202,8 +202,6 @@ function LifeStyle() {
                     onChange={handleInputChange}
                     label="Smoke"
                   >
-                    
-
                     <MenuItem value="Non-smoker">Non-smoker</MenuItem>
                     <MenuItem value="Social Smoker">Social Smoker</MenuItem>
                     <MenuItem value="Regularly">Regular-Smoker</MenuItem>
@@ -215,22 +213,20 @@ function LifeStyle() {
               <div
                 style={{
                   display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  gap: "20px",
-                  marginBottom: "40px",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  gap: "10px", // Reduced gap between buttons for mobile
+                  marginBottom: "20px", // Reduced margin for mobile
                 }}
               >
                 <Button
                   onClick={() => navigate("/horoscope", { state: { ...location.state } })}
                   variant="outlined"
                   sx={{
-                    mt: 4,
-                    mb: 2,
-                    width: 150,
-                    height: 40,
+                    width: "120px", // Adjusted width for mobile
+                    height: "40px",
                     textTransform: "inherit",
-                    fontSize: "18px",
+                    fontSize: "16px", // Adjusted font size for mobile
                     borderColor: "#FB6A6B",
                     color: "#FB6A6B",
                   }}
@@ -243,12 +239,10 @@ function LifeStyle() {
                   variant="contained"
                   disabled={!isFormValid}
                   sx={{
-                    mt: 4,
-                    mb: 2,
-                    width: 150,
-                    height: 40,
+                    width: "120px", // Adjusted width for mobile
+                    height: "40px",
                     textTransform: "inherit",
-                    fontSize: "18px",
+                    fontSize: "16px", // Adjusted font size for mobile
                     backgroundColor: "#FB6A6B",
                     "&:hover": {
                       backgroundColor: "#FB6A6B",
@@ -267,22 +261,23 @@ function LifeStyle() {
               <div
                 style={{
                   display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-evenly",
+                  flexDirection: "column", // Stack items vertically on smaller screens
+                  justifyContent: "center",
                   alignItems: "center",
                   padding: "20px 0",
+                  gap: "10px", // Added gap for spacing between items
                 }}
               >
-                <p>
+                <p style={{ textAlign: "center" }}>
                   <strong>Email: </strong>
                   <a
                     href="mailto:soulmatchinfo@gmail.com"
                     style={{ textDecoration: "none", color: "#FFBF0E" }}
                   >
                     soulmatchinfo@gmail.com
-                  </a>{" "}
+                  </a>
                 </p>
-                <p style={{ width: "200rem", textAlign: "center" }}>
+                <p style={{ textAlign: "center" }}>
                   Copyright © <span id="cry">2024</span>{" "}
                   <a
                     style={{ textDecoration: "none", color: "#FFBF00" }}
@@ -291,11 +286,10 @@ function LifeStyle() {
                   >
                     SoulMatch
                   </a>{" "}
-                  All rights reserved.{" "}
+                  All rights reserved.
                 </p>
-                <p>
-                  <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong>{" "}
-                  94490 65433
+                <p style={{ textAlign: "center" }}>
+                  <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong> 94490 65433
                 </p>
               </div>
             </div>
@@ -304,6 +298,7 @@ function LifeStyle() {
       </div>
     </ThemeProvider>
   );
+  
 }
 
 export default LifeStyle;

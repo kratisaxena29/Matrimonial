@@ -10,7 +10,9 @@ import {
   createTheme,
   ThemeProvider,
   InputLabel,
-  FormControl
+  FormControl,
+  Grid,
+  useMediaQuery
 } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import Diversity1Icon from '@mui/icons-material/Diversity1';
@@ -95,6 +97,7 @@ function FamilyDetails() {
     setSisterNames(newSisterNames);
     setErrors({ ...errors, sisterNames: [] });
   };
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleSisterProfChange = (index, value) => {
     const newSisterProfs = [...sisterProfs];
@@ -296,125 +299,149 @@ console.log("...family details ...",location.state)
   return (
     <ThemeProvider theme={theme}>
       <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-        <nav style={{ backgroundColor: "#6D0B32", padding: "10px 20px", display: "flex", alignItems: "center" }}>
-          <img src={logo} alt="Logo" style={{ height: "60px", marginRight: "40px" }} />
+        <nav style={{ backgroundColor: "#6D0B32", padding: isMobile ? "10px" : "10px 20px", display: "flex", alignItems: "center" }}>
+          <img src={logo} alt="Logo" style={{ height: "60px", marginRight: isMobile ? "10px" : "40px" }} />
         </nav>
-        <div style={{ display: "flex", flex: 1 }}>
-          {/* Left part */}
-          <div
+        <Grid container style={{ flex: 1 }} direction={isMobile ? "column" : "row"}>
+          <Grid
+            item
+            xs={12}
+            md={6}
             style={{
-              flex: 1,
               backgroundColor: "#F7E7CE",
               textAlign: "center",
               padding: "10px 0",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              justifyContent: "center"
+              justifyContent: "center",
             }}
           >
-            {/* MUI icon */}
             <Diversity1Icon style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }} />
-            {/* Big text */}
-            <Typography variant="h4" component="div" sx={{ color: "#6B0D37" }}>
-              "Explore a realm where dreams meet reality, and true love are found with just a click."
+            <Typography variant="h4" component="div" sx={{ color: "#6B0D37", fontSize: isMobile ? "18px" : "24px" }}>
+              "Explore a realm where dreams meet reality, and true love is found with just a click."
             </Typography>
-          </div>
-          {/* Right part */}
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "50px" }}>
+          </Grid>
+
+          <Grid
+            item
+            xs={12}
+            md={6}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              padding: isMobile ? "20px" : "50px",
+            }}
+          >
             <div>
-              <Typography sx={{ textAlign: "center" }} variant="h5" gutterBottom>
+              <Typography sx={{ textAlign: "center", fontSize: isMobile ? "20px" : "24px" }} variant="h5" gutterBottom>
                 Family Details
               </Typography>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "80px", marginBottom: "40px", marginTop: "40px" }}>
-                <FormControl variant="standard" sx={{ minWidth: 380 }}>
-                  <InputLabel id="demo-simple-select-standard-label">Family Type</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                    label="Family Type"
-                    value={familyType}
-                    onChange={(event) => {
-                      setFamilyType(event.target.value);
-                      setErrors({ ...errors, familyType: "" });
-                    }}
-                    error={!!errors.familyType}
-                  >
-                    <MenuItem value="">Select</MenuItem>
-                    <MenuItem value="Nuclear">Nuclear</MenuItem>
-                    <MenuItem value="Joint">Joint</MenuItem>
-                    <MenuItem value="Extended">Extended</MenuItem>
-                    <MenuItem value="Others">Others</MenuItem>
-                  </Select>
-                  {errors.familyType && <Typography variant="caption" color="error">{errors.familyType}</Typography>}
-                </FormControl>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "40px", marginBottom: "40px" }}>
-                <TextField
-                  label="Father's Name"
-                  variant="standard"
-                  value={fatherName}
+              <FormControl variant="standard" sx={{ width: "100%", marginBottom: "20px" }}>
+                <InputLabel id="family-type-label">Family Type</InputLabel>
+                <Select
+                  labelId="family-type-label"
+                  id="family-type"
+                  value={familyType}
                   onChange={(event) => {
-                    setFatherName(event.target.value);
-                    setErrors({ ...errors, fatherName: "" });
+                    setFamilyType(event.target.value);
+                    setErrors({ ...errors, familyType: "" });
                   }}
-                  error={!!errors.fatherName}
-                  helperText={errors.fatherName}
-                />
-                <FormControl variant="standard" sx={{ minWidth: 150 }}>
-                  <InputLabel id="father-prof-label">Father's Profession</InputLabel>
-                  <Select
-                    labelId="father-prof-label"
-                    id="father-prof"
-                    value={fatherProf}
+                  error={!!errors.familyType}
+                >
+                  <MenuItem value="">Select</MenuItem>
+                  <MenuItem value="Nuclear">Nuclear</MenuItem>
+                  <MenuItem value="Joint">Joint</MenuItem>
+                  <MenuItem value="Extended">Extended</MenuItem>
+                  <MenuItem value="Others">Others</MenuItem>
+                </Select>
+                {errors.familyType && <Typography variant="caption" color="error">{errors.familyType}</Typography>}
+              </FormControl>
+
+              <Grid container spacing={isMobile ? 2 : 4}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    label="Father's Name"
+                    variant="standard"
+                    value={fatherName}
                     onChange={(event) => {
-                      setFatherProf(event.target.value);
-                      setErrors({ ...errors, fatherProf: "" });
+                      setFatherName(event.target.value);
+                      setErrors({ ...errors, fatherName: "" });
                     }}
-                    error={!!errors.fatherProf}
-                  >
-                    <MenuItem value="">Select</MenuItem>
-                    {professionOptions.map((prof, index) => (
-                      <MenuItem key={index} value={prof}>{prof}</MenuItem>
-                    ))}
-                  </Select>
-                  {errors.fatherProf && <Typography variant="caption" color="error">{errors.fatherProf}</Typography>}
-                </FormControl>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "40px", marginBottom: "40px" }}>
-                <TextField
-                  label="Mother's Name"
-                  variant="standard"
-                  value={motherName}
-                  onChange={(event) => {
-                    setMotherName(event.target.value);
-                    setErrors({ ...errors, motherName: "" });
-                  }}
-                  error={!!errors.motherName}
-                  helperText={errors.motherName}
-                />
-                <FormControl variant="standard" sx={{ minWidth: 150 }}>
-                  <InputLabel id="mother-prof-label">Mother's Profession</InputLabel>
-                  <Select
-                    labelId="mother-prof-label"
-                    id="mother-prof"
-                    value={motherProf}
+                    error={!!errors.fatherName}
+                    helperText={errors.fatherName}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <FormControl variant="standard" fullWidth>
+                    <InputLabel id="father-prof-label">Father's Profession</InputLabel>
+                    <Select
+                      labelId="father-prof-label"
+                      id="father-prof"
+                      value={fatherProf}
+                      onChange={(event) => {
+                        setFatherProf(event.target.value);
+                        setErrors({ ...errors, fatherProf: "" });
+                      }}
+                      error={!!errors.fatherProf}
+                    >
+                      <MenuItem value="">Select</MenuItem>
+                      {professionOptions.map((prof, index) => (
+                        <MenuItem key={index} value={prof}>
+                          {prof}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    {errors.fatherProf && <Typography variant="caption" color="error">{errors.fatherProf}</Typography>}
+                  </FormControl>
+                </Grid>
+              </Grid>
+
+              <Grid container spacing={isMobile ? 2 : 4} style={{ marginTop: "20px" }}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    label="Mother's Name"
+                    variant="standard"
+                    value={motherName}
                     onChange={(event) => {
-                      setMotherProf(event.target.value);
-                      setErrors({ ...errors, motherProf: "" });
+                      setMotherName(event.target.value);
+                      setErrors({ ...errors, motherName: "" });
                     }}
-                    error={!!errors.motherProf}
-                  >
-                    <MenuItem value="">Select</MenuItem>
-                    {MotherprofessionOptions.map((prof, index) => (
-                      <MenuItem key={index} value={prof}>{prof}</MenuItem>
-                    ))}
-                  </Select>
-                  {errors.motherProf && <Typography variant="caption" color="error">{errors.motherProf}</Typography>}
-                </FormControl>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "start",marginLeft:"160px", gap: "40px", marginBottom: "40px" }}>
+                    error={!!errors.motherName}
+                    helperText={errors.motherName}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <FormControl variant="standard" fullWidth>
+                    <InputLabel id="mother-prof-label">Mother's Profession</InputLabel>
+                    <Select
+                      labelId="mother-prof-label"
+                      id="mother-prof"
+                      value={motherProf}
+                      onChange={(event) => {
+                        setMotherProf(event.target.value);
+                        setErrors({ ...errors, motherProf: "" });
+                      }}
+                      error={!!errors.motherProf}
+                    >
+                      <MenuItem value="">Select</MenuItem>
+                      {MotherprofessionOptions.map((prof, index) => (
+                        <MenuItem key={index} value={prof}>
+                          {prof}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    {errors.motherProf && <Typography variant="caption" color="error">{errors.motherProf}</Typography>}
+                  </FormControl>
+                </Grid>
+              </Grid>
+
+              <div style={{ marginTop: "20px", display: "flex", flexDirection: isMobile ? "column" : "row", gap: "20px" }}>
                 <TextField
+                  fullWidth
                   label="Number of Brothers"
                   variant="standard"
                   type="number"
@@ -422,8 +449,10 @@ console.log("...family details ...",location.state)
                 />
               </div>
               {renderBrotherFields()}
-              <div style={{ display: "flex", alignItems: "center",  justifyContent: "start",marginLeft:"160px",  gap: "40px", marginBottom: "40px" }}>
+
+              <div style={{ marginTop: "20px", display: "flex", flexDirection: isMobile ? "column" : "row", gap: "20px" }}>
                 <TextField
+                  fullWidth
                   label="Number of Sisters"
                   variant="standard"
                   type="number"
@@ -431,13 +460,12 @@ console.log("...family details ...",location.state)
                 />
               </div>
               {renderSisterFields()}
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "20px", marginBottom: "40px" }}>
+
+              <div style={{ display: "flex", justifyContent: "space-between", marginTop: "20px" }}>
                 <Button
-                  onClick={() => navigate("/lifestyle", {state: location.state})}
+                  onClick={() => navigate("/lifestyle", { state: location.state })}
                   variant="outlined"
                   sx={{
-                    mt: 4,
-                    mb: 2,
                     width: 150,
                     height: 40,
                     textTransform: "inherit",
@@ -452,10 +480,7 @@ console.log("...family details ...",location.state)
                   onClick={handleNext}
                   type="submit"
                   variant="contained"
-                  // disabled={!isFormValid}
                   sx={{
-                    mt: 4,
-                    mb: 2,
                     width: 150,
                     height: 40,
                     textTransform: "inherit",
@@ -470,15 +495,15 @@ console.log("...family details ...",location.state)
                 </Button>
               </div>
             </div>
-          </div>
-        </div>
+          </Grid>
+        </Grid>
         <section>
           <div className="cr">
             <div className="container">
               <div
                 style={{
                   display: "flex",
-                  flexDirection: "row",
+                  flexDirection: isMobile ? "column" : "row",
                   justifyContent: "space-evenly",
                   alignItems: "center",
                   padding: "20px 0",
@@ -493,7 +518,7 @@ console.log("...family details ...",location.state)
                     soulmatchinfo@gmail.com
                   </a>{" "}
                 </p>
-                <p style={{ width: "200rem", textAlign: "center" }}>
+                <p style={{ textAlign: "center", margin: isMobile ? "10px 0" : "0" }}>
                   Copyright © <span id="cry">2024</span>{" "}
                   <a
                     style={{ textDecoration: "none", color: "#FFBF00" }}
