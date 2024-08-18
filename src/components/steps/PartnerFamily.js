@@ -662,13 +662,13 @@ const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
       </nav>
       <div style={{ flex: 1 }}>
         <Grid container direction={isSmallScreen ? "column" : "row"}>
-          <Grid item xs={12} sm={6} style={{ display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "#F7E7CE", padding: isSmallScreen ? "10px 0" : "50px" }}>
+          <Grid item xs={12} sm={6} style={{ display: "flex", flexDirection:"column", alignItems: "center", justifyContent: "center", backgroundColor: "#F7E7CE", padding: isSmallScreen ? "10px 0" : "50px" }}>
             <Diversity3Icon style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }} />
             <Typography variant="h4" component="div" sx={{ color: "#6B0D37", textAlign: "center" }}>
               "Embark on a journey of companionship, where every moment is a step closer to finding your perfect match."
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={6} style={{ padding: isSmallScreen ? "10px" : "50px" }}>
+          <Grid item xs={12} sm={6} style={{ padding: isSmallScreen ? "10px" : "50px", }}>
             <Typography sx={{ textAlign: "center", fontWeight: "bold", marginBottom: 5 }} variant="h5" gutterBottom>
               Please fill your desired partner details
             </Typography>
@@ -938,27 +938,48 @@ const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
           </Grid>
         </Grid>
       </div>
-      <section style={{ backgroundColor: "#F7E7CE", padding: "10px 20px" }}>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <p>
-            <strong>Email: </strong>
-            <a href="mailto:soulmatchinfo@gmail.com" style={{ textDecoration: "none", color: "#FFBF0E" }}>
-              soulmatchinfo@gmail.com
-            </a>
-          </p>
-          <p style={{ textAlign: "center", marginBottom: "10px" }}>
-            Copyright © <span id="cry">2024</span>{" "}
-            <a style={{ textDecoration: "none", color: "#FFBF00" }} href="#!" target="_blank">
-              SoulMatch
-            </a>{" "}
-            All rights reserved.
-          </p>
-          <p>
-            <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong>{" "}
-            94490 65433
-          </p>
-        </div>
-      </section>
+      <section>
+          <div className="cr">
+            <div className="container">
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  padding: "20px 0",
+                }}
+              >
+                <p>
+                  <strong>Contact Us: </strong>
+                  <a
+                    href="mailto:soulmatchinfo@gmail.com"
+                    style={{
+                      textDecoration: "none",
+                      color: "#FFBF0E",
+                    }}
+                  >
+                    soulmatchinfo@gmail.com
+                  </a>
+                </p>
+                <p style={{ textAlign: "center" }}>
+                  Copyright © <span id="cry">2024</span>{" "}
+                  <a
+                    style={{
+                      textDecoration: "none",
+                      color: "#FFBF00",
+                    }}
+                    href="#!"
+                    target="_blank"
+                  >
+                    SoulMatch
+                  </a>{" "}
+                  All rights reserved.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
     </div>
   </ThemeProvider>
 

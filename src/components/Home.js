@@ -4,14 +4,23 @@ import "../styles/animate.css";
 import "../styles/bootstrap.css";
 import "../styles/fontAwesome.css";
 import { useNavigate } from "react-router-dom";
-import couple1 from "../images/gallery/couple-1.jpg";
-import couple2 from "../images/gallery/couple-2.jpg";
-import couple3 from "../images/gallery/couple-3.jpg";
-import couple4 from "../images/gallery/couple-4.png";
-import couple5 from "../images/gallery/couple-5.png";
-import couple6 from "../images/gallery/couple-6.png";
-import couple7 from "../images/gallery/couple-7.jpg";
-import couple8 from "../images/gallery/couple-8.jpg";
+import couple1 from "../images/gallery/couple_new.png";
+import couple2 from "../images/gallery/img2.jpg";
+import couple3 from "../images/gallery/img3.jpg";
+import couple4 from "../images/gallery/img4.jpg";
+import couple5 from "../images/gallery/couple_new2.jpg";
+import couple6 from "../images/gallery/img6.jpg";
+import couple7 from "../images/gallery/couple_new3.jpg";
+import couple8 from "../images/gallery/img8.jpg";
+
+// import couple1 from "../images/gallery/couple-1.jpg";
+// import couple2 from "../images/gallery/couple-2.jpg";
+// import couple3 from "../images/gallery/couple-3.jpg";
+// import couple4 from "../images/gallery/couple-4.png";
+// import couple5 from "../images/gallery/couple-5.png";
+// import couple6 from "../images/gallery/couple-6.png";
+// import couple7 from "../images/gallery/couple-7.jpg";
+// import couple8 from "../images/gallery/couple-8.jpg";
 import logo from "../images/logo.png";
 import aboutUsImage from "../images/gallery/owner_matrimonial.jpg";
 import axios from "axios";
@@ -150,127 +159,199 @@ function Home() {
     <div className="body">
       <ToastContainer />
       <header className="hom-top">
-  <div className="container">
-    <div className="row">
-      <nav className="hom-nav">
-        <div className="logo">
-          <a onClick={() => navigate("/")} className="logo-brand">
-            <img src={logo} alt="Soul Match Logo" className="ic-logo" />
-          </a>
-        </div>
-        <div className="nav-actions">
-          <p className="contact-info">
-            <strong>Contact Us:</strong> 94490 65433
-          </p>
-          <button onClick={() => navigate("/login")} className="login-button">
-            Login
-          </button>
-        </div>
-      </nav>
-    </div>
-  </div>
-</header>
-      <section className="responsive-section">
         <div className="container">
           <div className="row">
-            <div className="col-md-6">
-              <div className="hom-ban">
-                <div className="ban-tit">
-                  <span>
-                    <i className="no1">#1</i> Matrimony
-                  </span>
-                  <h1>
-                    Find your
-                    <br />
-                    <b>Right Match</b> here
-                  </h1>
-                  <p>Most trusted Matrimony Brand in the World.</p>
-                </div>
+            <nav className="hom-nav">
+              <div className="logo">
+                <a onClick={() => navigate("/")} className="logo-brand">
+                  <img src={logo} alt="Soul Match Logo" className="ic-logo" />
+                </a>
               </div>
-            </div>
-            <div className="col-md-6">
-              <div className="form-container" ref={formContainerRef}>
-                <h1 className="form-title">Sign up to Matrimony</h1>
-                {registerMethod === null ? (
-                  <div className="button-container">
-                    <button
-                      onClick={() => setRegisterMethod("email")}
-                      className="register-button"
-                    >
-                      Register with Email
-                    </button>
-                    <button
-                      onClick={() => setRegisterMethod("phone")}
-                      className="phone-button"
-                    >
-                      Register with Phone
-                    </button>
-                  </div>
-                ) : (
-                  <form className="form" onSubmit={handleRegister}>
-                    <div className="form-group">
-                      <label htmlFor="first">First Name</label>
-                      <input
-                        type="text"
-                        id="first"
-                        value={firstName}
-                        onChange={(event) => setFirstName(event.target.value)}
-                        required
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="last">Last Name</label>
-                      <input
-                        type="text"
-                        id="last"
-                        value={lastName}
-                        onChange={(event) => setLastName(event.target.value)}
-                        required
-                      />
-                    </div>
-                    {registerMethod === "email" ? (
-                      <div className="form-group">
-                        <label htmlFor="email">Email</label>
-                        <input
-                          type="email"
-                          id="email"
-                          value={email}
-                          onChange={(event) => setEmail(event.target.value)}
-                          required
-                        />
-                      </div>
-                    ) : (
-                      <div className="form-group">
-                        <label htmlFor="phone">Phone</label>
-                        <input
-                          type="tel"
-                          id="phone"
-                          value={phone}
-                          onChange={(event) => setPhone(event.target.value)}
-                          required
-                        />
-                      </div>
-                    )}
-                    <div className="form-group">
-                      <label htmlFor="password">Password</label>
-                      <input
-                        type="password"
-                        id="password"
-                        value={password}
-                        onChange={(event) => setPassword(event.target.value)}
-                        required
-                      />
-                    </div>
-                    <button type="submit" className="register-button">
-                      Register
-                    </button>
-                  </form>
-                )}
+              <div className="nav-actions">
+                <p className="contact-info">
+                  <strong>Contact Us:</strong> 94490 65433
+                </p>
+                <button
+                  onClick={() => navigate("/login")}
+                  className="login-button"
+                >
+                  Login
+                </button>
               </div>
-            </div>
+            </nav>
           </div>
         </div>
-      </section>
+      </header>
+      <section
+  className="responsive-section"
+  style={{ backgroundColor: "#F7E7CE", padding: "50px 0" }}
+>
+  <div className="container">
+    <div className="row align-items-center">
+      <div className="col-md-6">
+        <div className="hom-ban">
+          <div className="ban-tit">
+            <span style={{ color: "#EC184A", fontWeight: "bold" }}>
+              <i className="no1" style={{ backgroundColor: "#EC184A", color: "white", padding: "2px 5px", borderRadius: "50%" }}>#1</i> Matrimony
+            </span>
+            <h1 style={{ fontSize: "3rem", color: "#333" }}>
+              Find your
+              <br />
+              <b style={{ color: "#EC184A" }}>Right Match</b> here
+            </h1>
+            <p style={{ fontSize: "1.2rem", color: "#666" }}>Most trusted Matrimony Brand in the World.</p>
+          </div>
+        </div>
+      </div>
+      <div className="col-md-6">
+        <div
+          className="form-container"
+          ref={formContainerRef}
+          style={{
+            padding: "30px 20px",
+            borderRadius: "15px",
+            backgroundColor: "#fff",
+            boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
+            marginTop: "10%",
+            transition: "all 0.3s ease",
+          }}
+        >
+          <h1 className="form-title" style={{ textAlign: "center", marginBottom: "30px", color: "#333" }}>Sign up to Matrimony</h1>
+          {registerMethod === null ? (
+            <div
+              className="button-container"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <button
+                onClick={() => setRegisterMethod("email")}
+                className="register-button"
+                style={{
+                  marginBottom: "15px",
+                  width: "100%",
+                  padding: "12px",
+                  backgroundColor: "#EC184A",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "25px",
+                  fontSize: "16px",
+                  cursor: "pointer",
+                  transition: "background-color 0.3s ease",
+                }}
+              >
+                Register with Email
+              </button>
+              <button
+                onClick={() => setRegisterMethod("phone")}
+                className="phone-button"
+                style={{
+                  width: "100%",
+                  padding: "12px",
+                  backgroundColor: "#FF4081",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "25px",
+                  fontSize: "16px",
+                  cursor: "pointer",
+                  transition: "background-color 0.3s ease",
+                }}
+              >
+                Register with Phone
+              </button>
+            </div>
+          ) : (
+            <form
+              className="form"
+              onSubmit={handleRegister}
+              style={{ marginTop: "20px" }}
+            >
+              <div className="form-group" style={{ marginBottom: "20px", position: "relative" }}>
+                <label htmlFor="first" style={{ position: "absolute", top: "-10px", left: "10px", backgroundColor: "white", padding: "0 5px", fontSize: "12px", color: "#666" }}>First Name</label>
+                <input
+                  type="text"
+                  id="first"
+                  value={firstName}
+                  onChange={(event) => setFirstName(event.target.value)}
+                  required
+                  style={{ width: "100%", padding: "12px", border: "1px solid #ddd", borderRadius: "5px", fontSize: "16px" }}
+                />
+              </div>
+              <div className="form-group" style={{ marginBottom: "20px", position: "relative" }}>
+                <label htmlFor="last" style={{ position: "absolute", top: "-10px", left: "10px", backgroundColor: "white", padding: "0 5px", fontSize: "12px", color: "#666" }}>Last Name</label>
+                <input
+                  type="text"
+                  id="last"
+                  value={lastName}
+                  onChange={(event) => setLastName(event.target.value)}
+                  required
+                  style={{ width: "100%", padding: "12px", border: "1px solid #ddd", borderRadius: "5px", fontSize: "16px" }}
+                />
+              </div>
+              {registerMethod === "email" ? (
+                <div className="form-group" style={{ marginBottom: "20px", position: "relative" }}>
+                  <label htmlFor="email" style={{ position: "absolute", top: "-10px", left: "10px", backgroundColor: "white", padding: "0 5px", fontSize: "12px", color: "#666" }}>Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    required
+                    style={{ width: "100%", padding: "12px", border: "1px solid #ddd", borderRadius: "5px", fontSize: "16px" }}
+                  />
+                </div>
+              ) : (
+                <div className="form-group" style={{ marginBottom: "20px", position: "relative" }}>
+                  <label htmlFor="phone" style={{ position: "absolute", top: "-10px", left: "10px", backgroundColor: "white", padding: "0 5px", fontSize: "12px", color: "#666" }}>Phone</label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    value={phone}
+                    onChange={(event) => setPhone(event.target.value)}
+                    required
+                    style={{ width: "100%", padding: "12px", border: "1px solid #ddd", borderRadius: "5px", fontSize: "16px" }}
+                  />
+                </div>
+              )}
+              <div className="form-group" style={{ marginBottom: "20px", position: "relative" }}>
+                <label htmlFor="password" style={{ position: "absolute", top: "-10px", left: "10px", backgroundColor: "white", padding: "0 5px", fontSize: "12px", color: "#666" }}>Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  required
+                  style={{ width: "100%", padding: "12px", border: "1px solid #ddd", borderRadius: "5px", fontSize: "16px" }}
+                />
+              </div>
+              <button
+                type="submit"
+                className="register-button"
+                style={{
+                  width: "100%",
+                  padding: "12px",
+                  backgroundColor: "#FF4081",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "25px",
+                  fontSize: "16px",
+                  cursor: "pointer",
+                  transition: "background-color 0.3s ease",
+                }}
+              >
+                Register
+              </button>
+            </form>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
       <section>
         <div className="str">
           <div className="ban-inn ban-home">
@@ -313,13 +394,13 @@ function Home() {
                 <li>
                   <div>
                     <img src={couple3} alt="" loading="lazy" />
-                    <h4>Amit & Shruti</h4>
+                    <h4>Arshdeep & Shruti</h4>
                   </div>
                 </li>
                 <li>
                   <div>
                     <img src={couple2} alt="" loading="lazy" />
-                    <h4>Arshdeep & Kirat</h4>
+                    <h4> Amit & Kirat</h4>
                   </div>
                 </li>
                 <li>
@@ -339,7 +420,7 @@ function Home() {
                 <li>
                   <div>
                     <img src={couple6} alt="" loading="lazy" />
-                    <h4>Mahesh & Sravani</h4>
+                    <h4>Adam & Eve</h4>
                   </div>
                 </li>
                 <li>
@@ -430,44 +511,36 @@ function Home() {
               style={{
                 display: "flex",
                 flexDirection: "row",
-                justifyContent: "space-evenly",
+                justifyContent: "center",
                 alignItems: "center",
                 padding: "20px 0",
               }}
             >
               <p>
-                <strong>Email: </strong>
+                <strong>Contact Us: </strong>
                 <a
                   href="mailto:soulmatchinfo@gmail.com"
-                  style={{ textDecoration: "none", color: "#FFBF0E" }}
+                  style={{
+                    textDecoration: "none",
+                    color: "#FFBF0E",
+                  }}
                 >
                   soulmatchinfo@gmail.com
-                </a>{" "}
+                </a>
               </p>
-              <p style={{ width: "200rem", textAlign: "center" }}>
+              <p style={{ textAlign: "center" }}>
                 Copyright © <span id="cry">2024</span>{" "}
                 <a
-                  style={{ textDecoration: "none", color: "#FFBF00" }}
+                  style={{
+                    textDecoration: "none",
+                    color: "#FFBF00",
+                  }}
                   href="#!"
                   target="_blank"
                 >
                   SoulMatch
                 </a>{" "}
-                All rights reserved. |{" "}
-                <a
-                  style={{
-                    cursor: "pointer",
-                    color: "#FFBF00",
-                    textDecoration: "none",
-                  }}
-                  onClick={() => navigate("/terms&conditions")}
-                >
-                  Terms and Conditions
-                </a>
-              </p>
-              <p>
-                <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong> 94490
-                65433
+                All rights reserved.
               </p>
             </div>
           </div>

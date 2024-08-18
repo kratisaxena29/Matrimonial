@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import logo from "../../images/logo.png";
-import { Typography, Button, Select, MenuItem, createTheme, ThemeProvider, InputLabel, FormControl, FormHelperText } from "@mui/material";
+import { Typography, Button, Select, MenuItem, createTheme, ThemeProvider, InputLabel, FormControl, FormHelperText, useMediaQuery } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import SchoolIcon from '@mui/icons-material/School';
 import { useLocation, useNavigate } from "react-router-dom";
@@ -379,89 +379,96 @@ function EducationCareer() {
       }
     });
   };
+  const isMobile = useMediaQuery('(max-width:768px)');
 
   return (
     <ThemeProvider theme={theme}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh",
+      }}
+    >
+      <nav
+        style={{
+          backgroundColor: "#6D0B32",
+          padding: "10px 20px",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <img
+          src={logo}
+          alt="Logo"
+          style={{
+            height: "50px", // Reduce logo size for mobile
+            marginRight: "20px", // Adjust margin for mobile
+          }}
+        />
+      </nav>
       <div
         style={{
           display: "flex",
-          flexDirection: "column",
-          minHeight: "100vh",
+          flexDirection: isMobile ? "column" : "row",
+          flex: 1,
+          padding: isMobile ? "20px" : "0", // Add padding on mobile
         }}
       >
-        <nav
-          style={{
-            backgroundColor: "#6D0B32",
-            padding: "10px 20px",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <img
-            src={logo}
-            alt="Logo"
-            style={{
-              height: "50px", // Reduce logo size for mobile
-              marginRight: "20px", // Adjust margin for mobile
-            }}
-          />
-        </nav>
+        {/* Caption Section */}
         <div
           style={{
+            backgroundColor: "#F7E7CE",
+            textAlign: "center",
+            padding: "20px 10px", // Add padding for better spacing on mobile
             display: "flex",
-            flexDirection: "column", // Stack elements on top of each other for mobile
-            flex: 1,
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            flex: isMobile ? "none" : "2", // Adjust flex basis for mobile
+            order: isMobile ? 1 : 2, // Adjust order to place caption before form on mobile
           }}
         >
+          <SchoolIcon
+            style={{
+              fontSize: 60, // Adjust icon size for mobile
+              marginBottom: 10,
+              color: "#6B0D37",
+            }}
+          />
+          <Typography
+            variant="h5" // Use smaller font size for mobile
+            component="div"
+            sx={{ color: "#6B0D37" }}
+          >
+            "Love knows no boundaries, and neither do we. Explore endless
+            possibilities in finding your Better half"
+          </Typography>
+        </div>
+        <div
+          style={{
+            padding: "20px 10px", // Adjust padding for mobile
+            flex: isMobile ? "none" : "2", // Adjust flex basis for mobile
+            order: isMobile ? 1 : 2, // Adjust order to place form after caption on mobile
+          }}
+        >
+          <Typography
+            sx={{ textAlign: "center" }}
+            variant="h6" // Use a smaller font size for mobile
+            gutterBottom
+          >
+            Education and Career
+          </Typography>
           <div
             style={{
-              backgroundColor: "#F7E7CE",
-              textAlign: "center",
-              padding: "20px 10px", // Add padding for better spacing on mobile
               display: "flex",
-              flexDirection: "column",
+              flexDirection: "column", // Stack form elements vertically on mobile
               alignItems: "center",
               justifyContent: "center",
+              gap: "20px", // Reduce gap between elements for mobile
+              marginBottom: "20px", // Adjust margin for mobile
             }}
           >
-            <SchoolIcon
-              style={{
-                fontSize: 60, // Adjust icon size for mobile
-                marginBottom: 10,
-                color: "#6B0D37",
-              }}
-            />
-            <Typography
-              variant="h5" // Use smaller font size for mobile
-              component="div"
-              sx={{ color: "#6B0D37" }}
-            >
-              "Love knows no boundaries, and neither do we. Explore endless
-              possibilities in finding your Better half"
-            </Typography>
-          </div>
-          <div
-            style={{
-              padding: "20px 10px", // Adjust padding for mobile
-            }}
-          >
-            <Typography
-              sx={{ textAlign: "center" }}
-              variant="h6" // Use a smaller font size for mobile
-              gutterBottom
-            >
-              Education and Career
-            </Typography>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column", // Stack form elements vertically on mobile
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "20px", // Reduce gap between elements for mobile
-                marginBottom: "20px", // Adjust margin for mobile
-              }}
-            >
               <FormControl
                 variant="standard"
                 sx={{ minWidth: "100%" }} // Make full width on mobile
@@ -650,34 +657,37 @@ function EducationCareer() {
               <div
                 style={{
                   display: "flex",
-                  flexDirection: "column", // Stack footer items vertically on mobile
+                  flexDirection: "row",
+                  justifyContent: "flex-start",
                   alignItems: "center",
-                  padding: "10px 0",
+                  padding: "20px 0",
                 }}
               >
-                <p style={{ textAlign: "center" }}>
-                  <strong>Email: </strong>
+                <p>
+                  <strong>Contact Us: </strong>
                   <a
                     href="mailto:soulmatchinfo@gmail.com"
-                    style={{ textDecoration: "none", color: "#FFBF0E" }}
+                    style={{
+                      textDecoration: "none",
+                      color: "#FFBF0E",
+                    }}
                   >
                     soulmatchinfo@gmail.com
                   </a>
                 </p>
-                <p style={{ textAlign: "center", marginTop: "10px" }}>
+                <p style={{ textAlign: "center" }}>
                   Copyright © <span id="cry">2024</span>{" "}
                   <a
-                    style={{ textDecoration: "none", color: "#FFBF00" }}
+                    style={{
+                      textDecoration: "none",
+                      color: "#FFBF00",
+                    }}
                     href="#!"
                     target="_blank"
                   >
                     SoulMatch
                   </a>{" "}
                   All rights reserved.
-                </p>
-                <p style={{ textAlign: "center", marginTop: "10px" }}>
-                  <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong>{" "}
-                  94490 65433
                 </p>
               </div>
             </div>

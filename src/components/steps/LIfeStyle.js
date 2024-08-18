@@ -11,6 +11,7 @@ import {
   InputLabel,
   FormControl,
   FormHelperText,
+  useMediaQuery,
 } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
@@ -82,10 +83,13 @@ function LifeStyle() {
     }
     setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
+  const isMobile = useMediaQuery('(max-width:768px)');
 
   return (
     <ThemeProvider theme={theme}>
-      <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+      <div
+        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+      >
         <nav
           style={{
             backgroundColor: "#6D0B32",
@@ -97,10 +101,17 @@ function LifeStyle() {
         >
           <img src={logo} alt="Logo" style={{ height: "60px" }} />
         </nav>
-        <div style={{ display: "flex", flex: 1, flexDirection: "column" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: isMobile ? "column" : "row",
+            flex: 1,
+            padding: isMobile ? "20px" : "0", // Add padding on mobile
+          }}
+        >
           <div
             style={{
-              flex: 1,
+              // flex: 1,
               backgroundColor: "#F7E7CE",
               textAlign: "center",
               padding: "20px", // Increased padding for better spacing on small screens
@@ -108,24 +119,36 @@ function LifeStyle() {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
+              flex: isMobile ? "none" : "2", // Adjust flex basis for mobile
+              order: isMobile ? 1 : 2, //
             }}
           >
-            <MonitorHeartIcon style={{ fontSize: 60, marginBottom: 10, color: "#6B0D37" }} /> {/* Reduced icon size for mobile */}
-            <Typography variant="h5" component="div" sx={{ color: "#6B0D37" }}> {/* Reduced text size */}
-              "Embrace the magic of love as we help you find the one who makes your heart skip a beat."
+            <MonitorHeartIcon
+              style={{ fontSize: 60, marginBottom: 10, color: "#6B0D37" }}
+            />{" "}
+            {/* Reduced icon size for mobile */}
+            <Typography variant="h5" component="div" sx={{ color: "#6B0D37" }}>
+              {" "}
+              {/* Reduced text size */}
+              "Embrace the magic of love as we help you find the one who makes
+              your heart skip a beat."
             </Typography>
           </div>
           <div
             style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center", // Center the form on smaller screens
-              padding: "20px", // Reduced padding for mobile
+              padding: "20px 10px", // Adjust padding for mobile
+            flex: isMobile ? "none" : "2", // Adjust flex basis for mobile
+            order: isMobile ? 1 : 2, //ced padding for mobile
             }}
           >
             <div>
-              <Typography sx={{ textAlign: "center" }} variant="h6" gutterBottom> {/* Reduced text size */}
+              <Typography
+                sx={{ textAlign: "center" }}
+                variant="h6"
+                gutterBottom
+              >
+                {" "}
+                {/* Reduced text size */}
                 Living Style Details
               </Typography>
               <div
@@ -137,7 +160,11 @@ function LifeStyle() {
                   marginBottom: "20px", // Reduced margin for mobile
                 }}
               >
-                <FormControl variant="standard" sx={{ width: "100%" }} error={Boolean(errors.diet)}>
+                <FormControl
+                  variant="standard"
+                  sx={{ width: "100%" }}
+                  // error={Boolean(errors.diet)}
+                >
                   <InputLabel id="diet-label">Diet</InputLabel>
                   <Select
                     labelId="diet-label"
@@ -153,7 +180,9 @@ function LifeStyle() {
                     <MenuItem value="Eggitarian">Eggitarian</MenuItem>
                     <MenuItem value="Pescatarian">Pescatarian</MenuItem>
                   </Select>
-                  {errors.diet && <FormHelperText>{errors.diet}</FormHelperText>}
+                  {/* {errors.diet && (
+                    <FormHelperText>{errors.diet}</FormHelperText>
+                  )} */}
                 </FormControl>
               </div>
               <div
@@ -165,7 +194,11 @@ function LifeStyle() {
                   marginBottom: "20px", // Reduced margin for mobile
                 }}
               >
-                <FormControl variant="standard" sx={{ width: "100%" }} error={Boolean(errors.alcohol)}>
+                <FormControl
+                  variant="standard"
+                  sx={{ width: "100%" }}
+                  // error={Boolean(errors.alcohol)}
+                >
                   <InputLabel id="alcohol-label">Alcohol</InputLabel>
                   <Select
                     labelId="alcohol-label"
@@ -180,7 +213,9 @@ function LifeStyle() {
                     <MenuItem value="Regular Drinker">Regular Drinker</MenuItem>
                     <MenuItem value="Non-drinker">Non-drinker</MenuItem>
                   </Select>
-                  {errors.alcohol && <FormHelperText>{errors.alcohol}</FormHelperText>}
+                  {/* {errors.alcohol && (
+                    <FormHelperText>{errors.alcohol}</FormHelperText>
+                  )} */}
                 </FormControl>
               </div>
               <div
@@ -192,7 +227,11 @@ function LifeStyle() {
                   marginBottom: "20px", // Reduced margin for mobile
                 }}
               >
-                <FormControl variant="standard" sx={{ width: "100%" }} error={Boolean(errors.smoke)}>
+                <FormControl
+                  variant="standard"
+                  sx={{ width: "100%" }}
+                  // error={Boolean(errors.smoke)}
+                >
                   <InputLabel id="smoke-label">Smoke</InputLabel>
                   <Select
                     labelId="smoke-label"
@@ -207,7 +246,9 @@ function LifeStyle() {
                     <MenuItem value="Regularly">Regular-Smoker</MenuItem>
                     <MenuItem value="Occasionally">Occasionally</MenuItem>
                   </Select>
-                  {errors.smoke && <FormHelperText>{errors.smoke}</FormHelperText>}
+                  {/* {errors.smoke && (
+                    <FormHelperText>{errors.smoke}</FormHelperText>
+                  )} */}
                 </FormControl>
               </div>
               <div
@@ -220,7 +261,9 @@ function LifeStyle() {
                 }}
               >
                 <Button
-                  onClick={() => navigate("/horoscope", { state: { ...location.state } })}
+                  onClick={() =>
+                    navigate("/horoscope", { state: { ...location.state } })
+                  }
                   variant="outlined"
                   sx={{
                     width: "120px", // Adjusted width for mobile
@@ -261,18 +304,20 @@ function LifeStyle() {
               <div
                 style={{
                   display: "flex",
-                  flexDirection: "column", // Stack items vertically on smaller screens
-                  justifyContent: "center",
+                  flexDirection: "row",
+                  justifyContent: "flex-start",
                   alignItems: "center",
                   padding: "20px 0",
-                  gap: "10px", // Added gap for spacing between items
                 }}
               >
-                <p style={{ textAlign: "center" }}>
-                  <strong>Email: </strong>
+                <p>
+                  <strong>Contact Us: </strong>
                   <a
                     href="mailto:soulmatchinfo@gmail.com"
-                    style={{ textDecoration: "none", color: "#FFBF0E" }}
+                    style={{
+                      textDecoration: "none",
+                      color: "#FFBF0E",
+                    }}
                   >
                     soulmatchinfo@gmail.com
                   </a>
@@ -280,16 +325,16 @@ function LifeStyle() {
                 <p style={{ textAlign: "center" }}>
                   Copyright © <span id="cry">2024</span>{" "}
                   <a
-                    style={{ textDecoration: "none", color: "#FFBF00" }}
+                    style={{
+                      textDecoration: "none",
+                      color: "#FFBF00",
+                    }}
                     href="#!"
                     target="_blank"
                   >
                     SoulMatch
                   </a>{" "}
                   All rights reserved.
-                </p>
-                <p style={{ textAlign: "center" }}>
-                  <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong> 94490 65433
                 </p>
               </div>
             </div>

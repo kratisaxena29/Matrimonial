@@ -209,9 +209,9 @@ function PartnerLiving() {
         <nav style={{ backgroundColor: "#6D0B32", padding: "10px 20px", display: "flex", alignItems: "center" }}>
           <img src={logo} alt="Logo" style={{ height: "60px", marginRight: "40px" }} />
         </nav>
-        <div style={{ flex: 1 }}>
-          <Grid container direction={isSmallScreen ? "column" : "row"} spacing={2}>
-            <Grid item xs={12} sm={6} style={{ backgroundColor: "#F7E7CE", textAlign: "center", padding: "10px 0", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ flex: 1, }}>
+          <Grid container direction={isSmallScreen ? "column" : "row"} sx={{marginTop:0,}} spacing={2}>
+            <Grid item xs={12} sm={6} style={{backgroundColor: "#F7E7CE", textAlign: "center", padding: "10px 0", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
               <MonitorHeartIcon style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }} />
               <Typography variant="h4" component="div" sx={{ color: "#6B0D37" }}>
                 "Crafting a Lifestyle: Exploring the Art of Living Well."
@@ -282,7 +282,7 @@ function PartnerLiving() {
                 </FormControl>
 
                 {/* Navigation Buttons */}
-                <div style={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row", alignItems: "center", gap: "20px" }}>
+                <div style={{ display: "flex",justifyContent:"space-between", flexDirection: isSmallScreen ? "column" : "row", alignItems: "center", gap: "20px" }}>
                   <Button
                     onClick={() => navigate("/partner-education", { state: location.state })}
                     variant="outlined"
@@ -320,25 +320,46 @@ function PartnerLiving() {
             </Grid>
           </Grid>
         </div>
-        <section style={{ backgroundColor: "#F7E7CE", padding: "10px 20px" }}>
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <p>
-              <strong>Email: </strong>
-              <a href="mailto:soulmatchinfo@gmail.com" style={{ textDecoration: "none", color: "#FFBF0E" }}>
-                soulmatchinfo@gmail.com
-              </a>
-            </p>
-            <p style={{ textAlign: "center", marginBottom: "10px" }}>
-              Copyright © <span id="cry">2024</span>{" "}
-              <a style={{ textDecoration: "none", color: "#FFBF00" }} href="#!" target="_blank">
-                SoulMatch
-              </a>{" "}
-              All rights reserved.
-            </p>
-            <p>
-              <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong>{" "}
-              94490 65433
-            </p>
+        <section>
+          <div className="cr">
+            <div className="container">
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  padding: "20px 0",
+                }}
+              >
+                <p>
+                  <strong>Contact Us: </strong>
+                  <a
+                    href="mailto:soulmatchinfo@gmail.com"
+                    style={{
+                      textDecoration: "none",
+                      color: "#FFBF0E",
+                    }}
+                  >
+                    soulmatchinfo@gmail.com
+                  </a>
+                </p>
+                <p style={{ textAlign: "center" }}>
+                  Copyright © <span id="cry">2024</span>{" "}
+                  <a
+                    style={{
+                      textDecoration: "none",
+                      color: "#FFBF00",
+                    }}
+                    href="#!"
+                    target="_blank"
+                  >
+                    SoulMatch
+                  </a>{" "}
+                  All rights reserved.
+                </p>
+              </div>
+            </div>
           </div>
         </section>
       </div>

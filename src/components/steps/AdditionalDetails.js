@@ -11,7 +11,8 @@ import {
   ThemeProvider,
   InputLabel,
   FormControl,
-  FormHelperText
+  FormHelperText,
+  useMediaQuery
 } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -22,6 +23,7 @@ function AdditionalDetails() {
   const location = useLocation()
   const [caste, setCaste] = useState(location?.state?.caste || "");
   const [subCaste, setSubCaste] = useState(location?.state?.subCaste || "");
+  const isMobile = useMediaQuery('(max-width:768px)');
 
   const [motherTongue, setMotherTongue] = useState(location?.state?.motherTongue || "");
   const [height, setHeight] = useState(location?.state?.height || "");
@@ -30,6 +32,7 @@ function AdditionalDetails() {
   const [petFriendly, setPetFriendly] = useState(location?.state?.petFriendly || "");
   const [indianCities, setIndianCities] = useState(location?.state?.indianCities || []);
   const [formValid, setFormValid] = useState(false);
+  const [showValidation, setShowValidation] = useState(false);
 
   const navigate = useNavigate();
 
@@ -501,15 +504,13 @@ console.log("...additional..",location.state)
         ...location.state,
         caste,
         subCaste,
-       
         motherTongue,
         height,
         weight,
-        
         petFriendly,
       }
     });
-  };
+};
 
   const theme = createTheme({
     components: {
@@ -525,87 +526,46 @@ console.log("...additional..",location.state)
 
   return (
     <ThemeProvider theme={theme}>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          minHeight: "100vh",
-        }}
-      >
-        <nav
-          style={{
-            backgroundColor: "#6D0B32",
-            padding: "10px 20px",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <img
-            src={logo}
-            alt="Logo"
-            style={{
-              height: "60px",
-              marginRight: "40px",
-            }}
-          />
-        </nav>
+     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+      <nav style={{ backgroundColor: "#6D0B32", padding: "10px 20px", display: "flex", alignItems: "center" }}>
+        <img src={logo} alt="Logo" style={{ height: "60px", marginRight: "40px" }} />
+      </nav>
         <div
           style={{
             display: "flex",
             flex: 1,
-            flexDirection: "column",
+            flexDirection: isMobile ?   "column" : "row"
           }}
         >
           {/* Left part */}
-          <div
-            style={{
-              flex: 1,
-              backgroundColor: "#F7E7CE",
-              textAlign: "center",
-              padding: "20px",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <FavoriteBorderIcon
-              style={{
-                fontSize: 60,
-                marginBottom: 10,
-                color: "#6B0D37",
-              }}
-            />
-            <Typography
-              variant="h5"
-              component="div"
-              sx={{
-                color: "#6B0D37",
-                padding: "0 10px",
-              }}
-            >
-              "Every love story is beautiful, but yours begins here. Let us help
-              you find your happily ever after."
-            </Typography>
-          </div>
+          <div style={{ display: "flex", flex: 1 }}>
+        {/* Left part - Caption */}
+        <div style={{
+          flex: 1,
+          backgroundColor: "#F7E7CE",
+          padding: "20px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}>
+          <FavoriteBorderIcon style={{ fontSize: 60, marginBottom: 10, color: "#6B0D37" }} />
+          <Typography variant="h5" component="div" sx={{ color: "#6B0D37", padding: "0 10px", textAlign: "center" }}>
+            "Every love story is beautiful, but yours begins here. Let us help you find your happily ever after."
+          </Typography>
+        </div>
           {/* Right part */}
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              padding: "20px",
-            }}
-          >
-            <div>
-              <Typography
-                sx={{ textAlign: "center" }}
-                variant="h6"
-                gutterBottom
-              >
-                Additional Details
-              </Typography>
+          <div style={{
+          flex: isMobile ? 'none' : 1,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          padding: "20px",
+        }}>
+          <div>
+            <Typography sx={{ textAlign: "center" }} variant="h6" gutterBottom>
+              Additional Details
+            </Typography>
               <div
                 style={{
                   display: "flex",
@@ -619,7 +579,7 @@ console.log("...additional..",location.state)
                 <FormControl
                   variant="standard"
                   sx={{ minWidth: 200, width: "100%" }}
-                  error={!caste}
+                  error={showValidation && !caste} 
                 >
                   <InputLabel id="caste-select-label">Caste</InputLabel>
                   <Select
@@ -635,14 +595,14 @@ console.log("...additional..",location.state)
                       </MenuItem>
                     ))}
                   </Select>
-                  {!caste && (
-                    <FormHelperText>Please select your caste</FormHelperText>
-                  )}
+                  {showValidation && !caste && (
+    <FormHelperText>Caste is required</FormHelperText>
+  )}
                 </FormControl>
                 <FormControl
                   variant="standard"
                   sx={{ minWidth: 200, width: "100%" }}
-                  error={!subCaste}
+                  error={showValidation && !subCaste}
                 >
                   <InputLabel id="sub-caste-select-label">Sub Caste</InputLabel>
                   <Select
@@ -658,9 +618,9 @@ console.log("...additional..",location.state)
                       </MenuItem>
                     ))}
                   </Select>
-                  {!subCaste && (
-                    <FormHelperText>Please select your sub-caste</FormHelperText>
-                  )}
+                  {showValidation && !subCaste && (
+    <FormHelperText>Sub Caste is required</FormHelperText>
+  )}
                 </FormControl>
               </div>
               <div
@@ -676,7 +636,7 @@ console.log("...additional..",location.state)
                 <FormControl
                   variant="standard"
                   sx={{ minWidth: 200, width: "100%" }}
-                  error={!motherTongue}
+                  error={showValidation && !motherTongue}
                 >
                   <InputLabel id="mother-tongue-select-label">
                     Mother Tongue
@@ -700,17 +660,15 @@ console.log("...additional..",location.state)
                       )
                     )}
                   </Select>
-                  {!motherTongue && (
-                    <FormHelperText>
-                      Please select your mother tongue
-                    </FormHelperText>
-                  )}
+                  {showValidation && !motherTongue && (
+    <FormHelperText>Mother Tongue is required</FormHelperText>
+  )}
                 </FormControl>
   
                 <FormControl
                   variant="standard"
                   sx={{ minWidth: 200, width: "100%" }}
-                  error={!petFriendly}
+                  error={showValidation && !petFriendly}
                 >
                   <InputLabel id="pet-friendly-select-label">
                     Pet Friendly
@@ -728,7 +686,7 @@ console.log("...additional..",location.state)
                       </MenuItem>
                     ))}
                   </Select>
-                  {!petFriendly && (
+                  { showValidation && !petFriendly && (
                     <FormHelperText>
                       Please select if you are pet friendly
                     </FormHelperText>
@@ -748,7 +706,7 @@ console.log("...additional..",location.state)
                 <FormControl
                   variant="standard"
                   sx={{ minWidth: 200, width: "100%" }}
-                  error={!height}
+                  error={showValidation && !height}
                 >
                   <InputLabel id="height-select-label">Height</InputLabel>
                   <Select
@@ -764,14 +722,14 @@ console.log("...additional..",location.state)
                       </MenuItem>
                     ))}
                   </Select>
-                  {!height && (
-                    <FormHelperText>Please select your height</FormHelperText>
-                  )}
+                  {showValidation && !height && (
+    <FormHelperText>Height is required</FormHelperText>
+  )}
                 </FormControl>
                 <FormControl
                   variant="standard"
                   sx={{ minWidth: 200, width: "100%" }}
-                  error={!weight}
+                  error={showValidation && !weight}
                 >
                   <InputLabel id="weight-select-label">Weight</InputLabel>
                   <Select
@@ -787,9 +745,9 @@ console.log("...additional..",location.state)
                       </MenuItem>
                     ))}
                   </Select>
-                  {!weight && (
-                    <FormHelperText>Please select your weight</FormHelperText>
-                  )}
+                  {showValidation && !weight && (
+    <FormHelperText>Weight is required</FormHelperText>
+  )}
                 </FormControl>
               </div>
             </div>
@@ -837,20 +795,21 @@ console.log("...additional..",location.state)
             </div>
           </div>
         </div>
+        </div>
         <section>
           <div className="cr">
             <div className="container">
               <div
                 style={{
                   display: "flex",
-                  flexDirection: "column",
+                  flexDirection: "row",
                   justifyContent: "center",
                   alignItems: "center",
                   padding: "20px 0",
                 }}
               >
                 <p>
-                  <strong>Email: </strong>
+                  <strong>Contact Us: </strong>
                   <a
                     href="mailto:soulmatchinfo@gmail.com"
                     style={{
@@ -874,10 +833,6 @@ console.log("...additional..",location.state)
                     SoulMatch
                   </a>{" "}
                   All rights reserved.
-                </p>
-                <p>
-                  <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong> 94490
-                  65433
                 </p>
               </div>
             </div>

@@ -11,19 +11,22 @@ import {
   FormControl,
   FormHelperText,
   TextField,
-  Grid
+  Grid,
+  useMediaQuery,
 } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function AboutYourself() {
-  const location = useLocation()
-  const [aboutYourself, setAboutYourself] = useState(location?.state?.aboutYourself ||"");
+  const location = useLocation();
+  const [aboutYourself, setAboutYourself] = useState(
+    location?.state?.aboutYourself || ""
+  );
   const [formValid, setFormValid] = useState(false);
 
   const navigate = useNavigate();
- 
+  const isMobile = useMediaQuery("(max-width:768px)");
 
   // Validation logic
   useEffect(() => {
@@ -33,13 +36,13 @@ function AboutYourself() {
       setFormValid(false);
     }
   }, [aboutYourself]);
-console.log("...about your self ...",location.state)
+  console.log("...about your self ...", location.state);
   const handleAdditionalDetails = async () => {
-    navigate('/partner-family', {
+    navigate("/partner-family", {
       state: {
         aboutYourself,
-        ...location.state
-      }
+        ...location.state,
+      },
     });
   };
 
@@ -57,7 +60,9 @@ console.log("...about your self ...",location.state)
 
   return (
     <ThemeProvider theme={theme}>
-      <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+      <div
+        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+      >
         <nav
           style={{
             backgroundColor: "#6D0B32",
@@ -66,14 +71,38 @@ console.log("...about your self ...",location.state)
             alignItems: "center",
           }}
         >
-          <img src={logo} alt="Logo" style={{ height: "60px", marginRight: "20px" }} />
+          <img
+            src={logo}
+            alt="Logo"
+            style={{ height: "60px", marginRight: "20px" }}
+          />
         </nav>
-        <Grid container style={{ flex: 1 }} spacing={2}>
+        <Grid container style={{ flex: 1, marginTop:0 }} spacing={2}>
           {/* Left part */}
-          <Grid item xs={12} md={6} style={{ backgroundColor: "#F7E7CE", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "10px" }}>
-            <FavoriteBorderIcon style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }} />
-            <Typography variant="h4" component="div" sx={{ color: "#6B0D37", fontSize: { xs: '1.5rem', md: '2rem' } }}>
-              "Every love story is beautiful, but yours begins here. Let us help you find your happily ever after."
+          <Grid
+            item
+            xs={12}
+            md={6}
+            style={{
+              backgroundColor: "#F7E7CE",
+              textAlign: "center",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "10px",
+            }}
+          >
+            <FavoriteBorderIcon
+              style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }}
+            />
+            <Typography
+              variant="h4"
+              component="div"
+              sx={{ color: "#6B0D37", fontSize: { xs: "1.5rem", md: "2rem" } }}
+            >
+              "Every love story is beautiful, but yours begins here. Let us help
+              you find your happily ever after."
             </Typography>
           </Grid>
           {/* Right part */}
@@ -104,9 +133,18 @@ console.log("...about your self ...",location.state)
                   },
                 }}
               />
-              {!aboutYourself && <FormHelperText>Express Yourself is required</FormHelperText>}
+              {!aboutYourself && (
+                <FormHelperText>Express Yourself is required</FormHelperText>
+              )}
             </FormControl>
-            <div style={{ display: "flex", justifyContent: "space-between", marginTop: "40px", flexDirection: { xs: 'column', sm: 'row' } }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: "40px",
+                flexDirection: { xs: "column", sm: "row" },
+              }}
+            >
               <Button
                 onClick={() => navigate("/family-details")}
                 variant="outlined"
@@ -117,7 +155,7 @@ console.log("...about your self ...",location.state)
                   height: 40,
                   textTransform: "inherit",
                   fontSize: "18px",
-                  marginBottom: { xs: '10px', sm: '0' },
+                  marginBottom: { xs: "10px", sm: "0" },
                 }}
               >
                 Back
@@ -150,35 +188,37 @@ console.log("...about your self ...",location.state)
               <div
                 style={{
                   display: "flex",
-                  flexDirection: "column",
+                  flexDirection: "row",
+                  justifyContent: "flex-start",
                   alignItems: "center",
                   padding: "20px 0",
-                  textAlign: "center",
                 }}
               >
                 <p>
-                  <strong>Email: </strong>
+                  <strong>Contact Us: </strong>
                   <a
                     href="mailto:soulmatchinfo@gmail.com"
-                    style={{ textDecoration: "none", color: "#FFBF0E" }}
+                    style={{
+                      textDecoration: "none",
+                      color: "#FFBF0E",
+                    }}
                   >
                     soulmatchinfo@gmail.com
-                  </a>{" "}
+                  </a>
                 </p>
-                <p style={{ margin: "10px 0" }}>
+                <p style={{ textAlign: "center" }}>
                   Copyright © <span id="cry">2024</span>{" "}
                   <a
-                    style={{ textDecoration: "none", color: "#FFBF00" }}
+                    style={{
+                      textDecoration: "none",
+                      color: "#FFBF00",
+                    }}
                     href="#!"
                     target="_blank"
                   >
                     SoulMatch
                   </a>{" "}
-                  All rights reserved.{" "}
-                </p>
-                <p>
-                  <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong>{" "}
-                  94490 65433
+                  All rights reserved.
                 </p>
               </div>
             </div>

@@ -11,6 +11,7 @@ import {
   InputLabel,
   FormControl,
   FormHelperText,
+  useMediaQuery,
 } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
@@ -105,6 +106,7 @@ function Horoscope() {
     }
     setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
+  const isMobile = useMediaQuery('(max-width:768px)');
 
   return (
     <ThemeProvider theme={theme}>
@@ -131,8 +133,8 @@ function Horoscope() {
             style={{
               flex: 1,
               display: "flex",
-              flexDirection: "column", // Stack columns vertically on mobile
-              padding: "20px", // Reduce padding for mobile
+              flexDirection: isMobile ? "column" : "row",
+              padding: isMobile ? "20px" : "0", // Add padding on mobile
             }}
           >
             {/* Left part */}
@@ -166,12 +168,11 @@ function Horoscope() {
             </div>
             {/* Right part */}
             <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+                style={{
+                  padding: "20px 10px", // Adjust padding for mobile
+                  flex: isMobile ? "none" : "2", // Adjust flex basis for mobile
+                  order: isMobile ? 1 : 2, // Adjust order to place form after caption on mobile
+                }}
             >
               <Typography
                 sx={{ textAlign: "center", marginBottom: "20px" }} // Adjusted margin for mobile
@@ -193,18 +194,22 @@ function Horoscope() {
                   label="Date of Birth"
                   value={dateofBirth}
                   onChange={(date) => setDateofBirth(date ? dayjs(date) : null)}
+                  sx={{ width: "100%" }}
                   renderInput={(params) => (
                     <TextField
                       {...params}
                       error={Boolean(errors.dateofBirth)}
                       helperText={errors.dateofBirth}
-                      sx={{ minWidth: "100%" }} // Make full width on mobile
+                      sx={{ width: "100%" }}
+                      fullWidth
                     />
                   )}
                 />
                 <TimePicker
                   label="Time of Birth"
                   value={timeofBirth}
+                  sx={{ width: "100%" }}
+
                   onChange={(time) => setTimeofBirth(time ? dayjs(time) : null)}
                   renderInput={(params) => (
                     <TextField
@@ -293,36 +298,47 @@ function Horoscope() {
             </div>
           </div>
           <section>
-            <div className="cr">
-              <div className="container">
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column", // Stack footer items vertically on mobile
-                    alignItems: "center",
-                    padding: "10px 0", // Reduce padding for mobile
-                  }}
-                >
-                  <p style={{ textAlign: "center" }}>
-                    <strong>Email: </strong>
-                    <a href="mailto:soulmatchinfo@gmail.com" style={{ textDecoration: "none", color: "#FFBF0E" }}>
-                      soulmatchinfo@gmail.com
-                    </a>
-                  </p>
-                  <p style={{ textAlign: "center", marginTop: "10px" }}>
-                    Copyright © <span id="cry">2024</span>{" "}
-                    <a style={{ textDecoration: "none", color: "#FFBF00" }} href="#!" target="_blank">
-                      SoulMatch
-                    </a>{" "}
-                    All rights reserved.
-                  </p>
-                  <p style={{ textAlign: "center", marginTop: "10px" }}>
-                    <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong> 94490 65433
-                  </p>
-                </div>
+          <div className="cr">
+            <div className="container">
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  padding: "20px 0",
+                }}
+              >
+                <p>
+                  <strong>Contact Us: </strong>
+                  <a
+                    href="mailto:soulmatchinfo@gmail.com"
+                    style={{
+                      textDecoration: "none",
+                      color: "#FFBF0E",
+                    }}
+                  >
+                    soulmatchinfo@gmail.com
+                  </a>
+                </p>
+                <p style={{ textAlign: "center" }}>
+                  Copyright © <span id="cry">2024</span>{" "}
+                  <a
+                    style={{
+                      textDecoration: "none",
+                      color: "#FFBF00",
+                    }}
+                    href="#!"
+                    target="_blank"
+                  >
+                    SoulMatch
+                  </a>{" "}
+                  All rights reserved.
+                </p>
               </div>
             </div>
-          </section>
+          </div>
+        </section>
         </div>
       </LocalizationProvider>
     </ThemeProvider>
