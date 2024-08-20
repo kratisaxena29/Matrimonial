@@ -677,56 +677,56 @@ const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
             </Typography>
 
             <Grid container spacing={2} direction={isSmallScreen ? "column" : "row"} justifyContent="center">
-              <Grid item xs={12} sm={6} md={4}>
-                <FormControl variant="standard" fullWidth>
-                  <InputLabel id="age-from-label">Age from</InputLabel>
-                  <Select
-                    labelId="age-from-label"
-                    id="age-from"
-                    label="Age"
-                    value={part_ageFrom}
-                    onChange={(event) => setAgeFrom(event.target.value)}
-                    error={ageError}
-                  >
-                    <MenuItem value="18-25">18-25 years</MenuItem>
-                    <MenuItem value="25-30">25-30 years</MenuItem>
-                    <MenuItem value="30-35">30-35 years</MenuItem>
-                    <MenuItem value="35-40">35-40 years</MenuItem>
-                    <MenuItem value="40-45">40-45 years</MenuItem>
-                    <MenuItem value="45-50">45-50 years</MenuItem>
-                    <MenuItem value="50-55">50-55 years</MenuItem>
-                    <MenuItem value="55-60">55-60 years</MenuItem>
-                    <MenuItem value="60-65">60-65 years</MenuItem>
-                    <MenuItem value="65-70">65-70 years</MenuItem>
-                    <MenuItem value="70-75">70-75 years</MenuItem>
-                  </Select>
-                  {ageError && <FormHelperText error>Please select an age range.</FormHelperText>}
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} sm={6} md={4}>
-                <FormControl variant="standard" fullWidth>
-                  <InputLabel id="martial-status-label">Marital Status</InputLabel>
-                  <Select
-                    labelId="martial-status-label"
-                    id="martial-status"
-                    label="Marital Status"
-                    value={part_martialStatus}
-                    onChange={(event) => setMartialStatus(event.target.value)}
-                    error={martialStatusError}
-                  >
-                    <MenuItem value="Never Married">Never Married</MenuItem>
-                    <MenuItem value="Awaiting Divorce">Awaiting Divorce</MenuItem>
-                    <MenuItem value="Divorced">Divorced</MenuItem>
-                    <MenuItem value="Widowed">Widowed</MenuItem>
-                    <MenuItem value="Annulled">Annulled</MenuItem>
-                  </Select>
-                  {martialStatusError && <FormHelperText error>Please select marital status.</FormHelperText>}
-                </FormControl>
-              </Grid>
-            </Grid>
+  <Grid item xs={12} sm={6} md={5}>
+    <FormControl variant="standard" fullWidth>
+      <InputLabel id="age-from-label">Age from</InputLabel>
+      <Select
+        labelId="age-from-label"
+        id="age-from"
+        label="Age"
+        value={part_ageFrom}
+        onChange={(event) => setAgeFrom(event.target.value)}
+        error={ageError}
+      >
+        <MenuItem value="18-25">18-25 years</MenuItem>
+        <MenuItem value="25-30">25-30 years</MenuItem>
+        <MenuItem value="30-35">30-35 years</MenuItem>
+        <MenuItem value="35-40">35-40 years</MenuItem>
+        <MenuItem value="40-45">40-45 years</MenuItem>
+        <MenuItem value="45-50">45-50 years</MenuItem>
+        <MenuItem value="50-55">50-55 years</MenuItem>
+        <MenuItem value="55-60">55-60 years</MenuItem>
+        <MenuItem value="60-65">60-65 years</MenuItem>
+        <MenuItem value="65-70">65-70 years</MenuItem>
+        <MenuItem value="70-75">70-75 years</MenuItem>
+      </Select>
+      {ageError && <FormHelperText error>Please select an age range.</FormHelperText>}
+    </FormControl>
+  </Grid>
+  <Grid item xs={12} sm={6} md={5}>
+    <FormControl variant="standard" fullWidth>
+      <InputLabel id="martial-status-label">Marital Status</InputLabel>
+      <Select
+        labelId="martial-status-label"
+        id="martial-status"
+        label="Marital Status"
+        value={part_martialStatus}
+        onChange={(event) => setMartialStatus(event.target.value)}
+        error={martialStatusError}
+      >
+        <MenuItem value="Never Married">Never Married</MenuItem>
+        <MenuItem value="Awaiting Divorce">Awaiting Divorce</MenuItem>
+        <MenuItem value="Divorced">Divorced</MenuItem>
+        <MenuItem value="Widowed">Widowed</MenuItem>
+        <MenuItem value="Annulled">Annulled</MenuItem>
+      </Select>
+      {martialStatusError && <FormHelperText error>Please select marital status.</FormHelperText>}
+    </FormControl>
+  </Grid>
+</Grid>
 
             <Grid container spacing={2} direction={isSmallScreen ? "column" : "row"} justifyContent="center">
-              <Grid item xs={12} sm={6} md={4}>
+              <Grid item xs={12} sm={6} md={5}>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel id="caste-select-label">Caste</InputLabel>
                   <Select
@@ -744,7 +744,7 @@ const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
                   {casteError && <FormHelperText error>Please select a caste.</FormHelperText>}
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={6} md={4}>
+              <Grid item xs={12} sm={6} md={5}>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel id="sub-caste-select-label">Sub Caste</InputLabel>
                   <Select
@@ -765,7 +765,7 @@ const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
             </Grid>
 
             <Grid container spacing={2} direction={isSmallScreen ? "column" : "row"} justifyContent="center">
-              <Grid item xs={12} sm={6} md={4}>
+              <Grid item xs={12} sm={6} md={5}>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel id="religion-select-label">Religion</InputLabel>
                   <Select
@@ -788,7 +788,7 @@ const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
                   {religionError && <FormHelperText error>Please select a religion.</FormHelperText>}
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={6} md={4}>
+              <Grid item xs={12} sm={6} md={5}>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel id="mothertongue-select-label">Mother Tongue</InputLabel>
                   <Select
@@ -823,7 +823,7 @@ const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
             </Grid>
 
             <Grid container spacing={2} direction={isSmallScreen ? "column" : "row"} justifyContent="center">
-              <Grid item xs={12} sm={6} md={4}>
+              <Grid item xs={12} sm={6} md={5}>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel id="height-select-label">Height</InputLabel>
                   <Select
@@ -841,7 +841,7 @@ const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
                   {heightError && <FormHelperText error>Please select your height.</FormHelperText>}
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={6} md={4}>
+              <Grid item xs={12} sm={6} md={5}>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel id="horoscope-match-label">Horoscope match?</InputLabel>
                   <Select
@@ -861,7 +861,7 @@ const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
             </Grid>
 
             <Grid container spacing={2} direction={isSmallScreen ? "column" : "row"} justifyContent="center">
-              <Grid item xs={12} sm={6} md={4}>
+              <Grid item xs={12} sm={6} md={5}>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel id="pet-friendly-label">Pet Friendly</InputLabel>
                   <Select
@@ -879,7 +879,7 @@ const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
                   {petFriendlyError && <FormHelperText error>Please select if pet-friendly is required.</FormHelperText>}
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={6} md={4}>
+              <Grid item xs={12} sm={6} md={5}>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel id="gender-select-label">Gender</InputLabel>
                   <Select

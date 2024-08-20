@@ -414,187 +414,337 @@ console.log("...location state in education...",location.state)
 
   return (
     <ThemeProvider theme={theme}>
-    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      {/* Navigation bar */}
-      <nav style={{ backgroundColor: "#6D0B32", padding: "10px 20px", display: "flex", alignItems: "center" }}>
-        <img src={logo} alt="Logo" style={{ height: "60px", marginRight: "40px" }} />
-      </nav>
-      <div style={{ flex: 1 }}>
-        <Grid container direction={isSmallScreen ? "column" : "row"}>
-          <Grid item xs={12} sm={6} style={{ backgroundColor: "#F7E7CE", textAlign: "center", padding: "10px 0", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-            <StarsIcon style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }} />
-            <Typography variant="h4" component="div" sx={{ color: "#6B0D37" }}>
-              "Join us in the quest for love, where every profile is a chapter waiting to be written in the book of destiny."
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6} style={{ padding: isSmallScreen ? "20px" : "50px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-            <div>
-              <Typography sx={{ textAlign: "center", fontWeight: "bold", marginBottom: 5 }} variant="h5" gutterBottom>
-                Please fill your desired partner details
+      <div
+        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+      >
+        {/* Navigation bar */}
+        <nav
+          style={{
+            backgroundColor: "#6D0B32",
+            padding: "10px 20px",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <img
+            src={logo}
+            alt="Logo"
+            style={{ height: "60px", marginRight: "40px" }}
+          />
+        </nav>
+        <div style={{ flex: 1 }}>
+          <Grid container direction={isSmallScreen ? "column" : "row"}>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              style={{
+                backgroundColor: "#F7E7CE",
+                textAlign: "center",
+                padding: "10px 0",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <StarsIcon
+                style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }}
+              />
+              <Typography
+                variant="h4"
+                component="div"
+                sx={{ color: "#6B0D37" }}
+              >
+                "Join us in the quest for love, where every profile is a chapter
+                waiting to be written in the book of destiny."
               </Typography>
-              <Typography sx={{ textAlign: "center" }} variant="h5" gutterBottom>
-                Education and Career
-              </Typography>
-
-              {/* Highest Education */}
-              <FormControl variant="standard" fullWidth sx={{ marginBottom: "40px" }}>
-                <InputLabel id="highest-education-label">Highest Education</InputLabel>
-                <Select
-                  labelId="highest-education-label"
-                  id="highest-education"
-                  value={part_highestEducation}
-                  onChange={(event) => setHighestEducation(event.target.value)}
-                  error={Boolean(errors.highestEducation)}
-                >
-                  {highestEducationOtption.map((option, index) => (
-                    typeof option === "string" ? (
-                      <MenuItem key={index} value={option}>{option}</MenuItem>
-                    ) : (
-                      <MenuItem key={index} disabled style={option.style}>{option.label}</MenuItem>
-                    )
-                  ))}
-                </Select>
-                {errors.highestEducation && <FormHelperText error>{errors.highestEducation}</FormHelperText>}
-              </FormControl>
-
-              {/* Current Employment */}
-              <FormControl variant="standard" fullWidth sx={{ marginBottom: "40px" }}>
-                <InputLabel id="current-employment-label">Current Employment</InputLabel>
-                <Select
-                  labelId="current-employment-label"
-                  id="current-employment"
-                  value={part_currentEmployment}
-                  onChange={(event) => setCurrentEmployment(event.target.value)}
-                  error={Boolean(errors.currentEmployment)}
-                >
-                  {employmentOptions.map((option) => (
-                    <MenuItem key={option} value={option}>{option}</MenuItem>
-                  ))}
-                </Select>
-                {errors.currentEmployment && <FormHelperText error>{errors.currentEmployment}</FormHelperText>}
-              </FormControl>
-
-              {/* Profession */}
-              <FormControl variant="standard" fullWidth sx={{ marginBottom: "40px" }}>
-                <InputLabel id="profession-label">Profession</InputLabel>
-                <Select
-                  labelId="profession-label"
-                  id="profession"
-                  value={part_profession}
-                  onChange={(event) => setProfession(event.target.value)}
-                  error={Boolean(errors.profession)}
-                >
-                  {ProfessionOption.map((option, index) => (
-                    typeof option === "string" ? (
-                      <MenuItem key={index} value={option}>{option}</MenuItem>
-                    ) : (
-                      <MenuItem key={index} disabled style={option.style}>{option.label}</MenuItem>
-                    )
-                  ))}
-                </Select>
-                {errors.profession && <FormHelperText error>{errors.profession}</FormHelperText>}
-              </FormControl>
-
-              {/* Annual Income */}
-              <FormControl variant="standard" fullWidth sx={{ marginBottom: "40px" }}>
-                <InputLabel id="annual-income-label">Annual Income</InputLabel>
-                <Select
-                  labelId="annual-income-label"
-                  id="annual-income"
-                  value={part_annualIncome}
-                  onChange={(event) => setAnnualIncome(event.target.value)}
-                  error={Boolean(errors.annualIncome)}
-                >
-                  <MenuItem value="Rs 2-5 lakh">Rs 2-5 lakh</MenuItem>
-                  <MenuItem value="Rs 5-7 lakh">Rs 5-7 lakh</MenuItem>
-                  <MenuItem value="Rs 7-10 lakh">Rs 7-10 lakh</MenuItem>
-                  <MenuItem value="Rs 10-15 lakh">Rs 10-15 lakh</MenuItem>
-                  <MenuItem value="Rs 15-20 lakh">Rs 15-20 lakh</MenuItem>
-                  <MenuItem value="Rs 20-30 lakh">Rs 20-30 lakh</MenuItem>
-                  <MenuItem value="More than 30 lakh">More than 30 lakh</MenuItem>
-                </Select>
-                {errors.annualIncome && <FormHelperText error>{errors.annualIncome}</FormHelperText>}
-              </FormControl>
-
-              {/* Years of Experience */}
-              <FormControl variant="standard" fullWidth sx={{ marginBottom: "40px" }}>
-                <InputLabel id="years-of-experience-label">Years of Experience</InputLabel>
-                <Select
-                  labelId="years-of-experience-label"
-                  id="years-of-experience"
-                  value={part_yearsOfExperience}
-                  onChange={(event) => setYearsOfExperience(event.target.value)}
-                  error={Boolean(errors.yearsOfExperience)}
-                >
-                  {experienceOptions.map((option) => (
-                    <MenuItem key={option} value={option}>{option}</MenuItem>
-                  ))}
-                </Select>
-                {errors.yearsOfExperience && <FormHelperText error>{errors.yearsOfExperience}</FormHelperText>}
-              </FormControl>
-
-              {/* Navigation Buttons */}
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "20px" }}>
-                <Button
-                  onClick={() => navigate('/partner-family', { state: location.state })}
-                  variant="outlined"
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              style={{
+                padding: isSmallScreen ? "20px" : "50px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
+            >
+              <div>
+                <Typography
                   sx={{
-                    width: "150px",
-                    height: "40px",
-                    textTransform: "inherit",
-                    fontSize: "18px",
-                    borderColor: "#FB6A6B",
-                    color: "#FB6A6B",
+                    textAlign: "center",
+                    fontWeight: "bold",
+                    marginBottom: 5,
+                  }}
+                  variant="h5"
+                  gutterBottom
+                >
+                  Please fill your desired partner details
+                </Typography>
+                <Typography
+                  sx={{ textAlign: "center" }}
+                  variant="h5"
+                  gutterBottom
+                >
+                  Education and Career
+                </Typography>
+
+                {/* Highest Education */}
+                <FormControl
+                  variant="standard"
+                  fullWidth
+                  sx={{ marginBottom: "40px" }}
+                >
+                  <InputLabel id="highest-education-label">
+                    Highest Education
+                  </InputLabel>
+                  <Select
+                    labelId="highest-education-label"
+                    id="highest-education"
+                    value={part_highestEducation}
+                    onChange={(event) =>
+                      setHighestEducation(event.target.value)
+                    }
+                    error={Boolean(errors.highestEducation)}
+                  >
+                    {highestEducationOtption.map((option, index) =>
+                      typeof option === "string" ? (
+                        <MenuItem key={index} value={option}>
+                          {option}
+                        </MenuItem>
+                      ) : (
+                        <MenuItem key={index} disabled style={option.style}>
+                          {option.label}
+                        </MenuItem>
+                      )
+                    )}
+                  </Select>
+                  {errors.highestEducation && (
+                    <FormHelperText error>
+                      {errors.highestEducation}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+
+                {/* Current Employment */}
+                <FormControl
+                  variant="standard"
+                  fullWidth
+                  sx={{ marginBottom: "40px" }}
+                >
+                  <InputLabel id="current-employment-label">
+                    Current Employment
+                  </InputLabel>
+                  <Select
+                    labelId="current-employment-label"
+                    id="current-employment"
+                    value={part_currentEmployment}
+                    onChange={(event) =>
+                      setCurrentEmployment(event.target.value)
+                    }
+                    error={Boolean(errors.currentEmployment)}
+                  >
+                    {employmentOptions.map((option) => (
+                      <MenuItem key={option} value={option}>
+                        {option}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {errors.currentEmployment && (
+                    <FormHelperText error>
+                      {errors.currentEmployment}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+
+                {/* Profession */}
+                <FormControl
+                  variant="standard"
+                  fullWidth
+                  sx={{ marginBottom: "40px" }}
+                >
+                  <InputLabel id="profession-label">Profession</InputLabel>
+                  <Select
+                    labelId="profession-label"
+                    id="profession"
+                    value={part_profession}
+                    onChange={(event) => setProfession(event.target.value)}
+                    error={Boolean(errors.profession)}
+                  >
+                    {ProfessionOption.map((option, index) =>
+                      typeof option === "string" ? (
+                        <MenuItem key={index} value={option}>
+                          {option}
+                        </MenuItem>
+                      ) : (
+                        <MenuItem key={index} disabled style={option.style}>
+                          {option.label}
+                        </MenuItem>
+                      )
+                    )}
+                  </Select>
+                  {errors.profession && (
+                    <FormHelperText error>{errors.profession}</FormHelperText>
+                  )}
+                </FormControl>
+
+                {/* Annual Income */}
+                <FormControl
+                  variant="standard"
+                  fullWidth
+                  sx={{ marginBottom: "40px" }}
+                >
+                  <InputLabel id="annual-income-label">
+                    Annual Income
+                  </InputLabel>
+                  <Select
+                    labelId="annual-income-label"
+                    id="annual-income"
+                    value={part_annualIncome}
+                    onChange={(event) => setAnnualIncome(event.target.value)}
+                    error={Boolean(errors.annualIncome)}
+                  >
+                    <MenuItem value="Rs 2-5 lakh">Rs 2-5 lakh</MenuItem>
+                    <MenuItem value="Rs 5-7 lakh">Rs 5-7 lakh</MenuItem>
+                    <MenuItem value="Rs 7-10 lakh">Rs 7-10 lakh</MenuItem>
+                    <MenuItem value="Rs 10-15 lakh">Rs 10-15 lakh</MenuItem>
+                    <MenuItem value="Rs 15-20 lakh">Rs 15-20 lakh</MenuItem>
+                    <MenuItem value="Rs 20-30 lakh">Rs 20-30 lakh</MenuItem>
+                    <MenuItem value="More than 30 lakh">
+                      More than 30 lakh
+                    </MenuItem>
+                  </Select>
+                  {errors.annualIncome && (
+                    <FormHelperText error>{errors.annualIncome}</FormHelperText>
+                  )}
+                </FormControl>
+
+                {/* Years of Experience */}
+                <FormControl
+                  variant="standard"
+                  fullWidth
+                  sx={{ marginBottom: "40px" }}
+                >
+                  <InputLabel id="years-of-experience-label">
+                    Years of Experience
+                  </InputLabel>
+                  <Select
+                    labelId="years-of-experience-label"
+                    id="years-of-experience"
+                    value={part_yearsOfExperience}
+                    onChange={(event) =>
+                      setYearsOfExperience(event.target.value)
+                    }
+                    error={Boolean(errors.yearsOfExperience)}
+                  >
+                    {experienceOptions.map((option) => (
+                      <MenuItem key={option} value={option}>
+                        {option}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {errors.yearsOfExperience && (
+                    <FormHelperText error>
+                      {errors.yearsOfExperience}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+
+                {/* Navigation Buttons */}
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    gap: "20px",
                   }}
                 >
-                  Back
-                </Button>
-                <Button
-                  onClick={handleNext}
-                  type="submit"
-                  variant="contained"
-                  sx={{
-                    width: "150px",
-                    height: "40px",
-                    textTransform: "inherit",
-                    fontSize: "18px",
-                    backgroundColor: "#FB6A6B",
-                    "&:hover": {
+                  <Button
+                    onClick={() =>
+                      navigate("/partner-family", { state: location.state })
+                    }
+                    variant="outlined"
+                    sx={{
+                      width: "150px",
+                      height: "40px",
+                      textTransform: "inherit",
+                      fontSize: "18px",
+                      borderColor: "#FB6A6B",
+                      color: "#FB6A6B",
+                    }}
+                  >
+                    Back
+                  </Button>
+                  <Button
+                    onClick={handleNext}
+                    type="submit"
+                    variant="contained"
+                    sx={{
+                      width: "150px",
+                      height: "40px",
+                      textTransform: "inherit",
+                      fontSize: "18px",
                       backgroundColor: "#FB6A6B",
-                    },
-                  }}
-                  disabled={!isFormValid}
-                >
-                  Next
-                </Button>
+                      "&:hover": {
+                        backgroundColor: "#FB6A6B",
+                      },
+                    }}
+                    disabled={!isFormValid}
+                  >
+                    Next
+                  </Button>
+                </div>
+              </div>
+            </Grid>
+          </Grid>
+        </div>
+        <section>
+          <div className="cr">
+            <div className="container">
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "20px 0",
+                }}
+              >
+                <p>
+                  <strong>Contact Us: </strong>
+                  <a
+                    href="mailto:soulmatchinfo@gmail.com"
+                    style={{
+                      textDecoration: "none",
+                      color: "#FFBF0E",
+                    }}
+                  >
+                    soulmatchinfo@gmail.com
+                  </a>
+                </p>
+                <p style={{ textAlign: "center" }}>
+                  Copyright © <span id="cry">2024</span>{" "}
+                  <a
+                    style={{
+                      textDecoration: "none",
+                      color: "#FFBF00",
+                    }}
+                    href="#!"
+                    target="_blank"
+                  >
+                    SoulMatch
+                  </a>{" "}
+                  All rights reserved.
+                </p>
               </div>
             </div>
-          </Grid>
-        </Grid>
+          </div>
+        </section>
       </div>
-      <section style={{ backgroundColor: "#F7E7CE", padding: "10px 20px" }}>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <p>
-            <strong>Email: </strong>
-            <a href="mailto:soulmatchinfo@gmail.com" style={{ textDecoration: "none", color: "#FFBF0E" }}>
-              soulmatchinfo@gmail.com
-            </a>
-          </p>
-          <p style={{ textAlign: "center", marginBottom: "10px" }}>
-            Copyright © <span id="cry">2024</span>{" "}
-            <a style={{ textDecoration: "none", color: "#FFBF00" }} href="#!" target="_blank">
-              SoulMatch
-            </a>{" "}
-            All rights reserved.
-          </p>
-          <p>
-            <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong>{" "}
-            94490 65433
-          </p>
-        </div>
-      </section>
-    </div>
-  </ThemeProvider>
+    </ThemeProvider>
   );
 }
 

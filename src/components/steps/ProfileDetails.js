@@ -12,7 +12,8 @@ import {
   InputLabel,
   FormControl,
   FormHelperText,
-  Checkbox, ListItemText
+  Checkbox, ListItemText,
+  Grid
 } from "@mui/material";
 import { Facebook, Instagram, Twitter, Email } from "@mui/icons-material";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
@@ -297,100 +298,61 @@ function ProfileDetails() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div
+    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+      <ToastContainer />
+      <nav
         style={{
+          backgroundColor: "#6D0B32",
+          padding: "10px 20px",
           display: "flex",
-          flexDirection: "column",
-          minHeight: "100vh",
+          alignItems: "center",
         }}
       >
-        <ToastContainer />
-        <nav
+        <img src={logo} alt="Logo" style={{ height: "60px", marginRight: "40px" }} />
+      </nav>
+
+      <Grid container style={{ flex: 1 }} spacing={0}>
+        {/* Left part */}
+        <Grid
+          item
+          xs={12} sm={12} md={6} lg={6}
           style={{
-            backgroundColor: "#6D0B32",
-            padding: "10px 20px",
+            backgroundColor: "#F7E7CE",
+            textAlign: "center",
+            padding: "10px 0",
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
-            justifyContent: "space-between",
+            justifyContent: "center",
           }}
         >
-          <img
-            src={logo}
-            alt="Logo"
-            style={{
-              height: "50px",
-              marginRight: "20px",
-            }}
+          <WorkspacePremiumIcon
+            style={{ fontSize: 80, marginBottom: 10, color: "#6B0D37" }}
           />
-        </nav>
-        <div
+          <Typography variant="h4" component="div" sx={{ color: "#6B0D37" }}>
+            "Chosen by Countless Indian Hearts Worldwide: A Premier Matrimonial Platform"
+          </Typography>
+        </Grid>
+
+        {/* Right part */}
+        <Grid
+          item
+          xs={12} sm={12} md={6} lg={6}
           style={{
             display: "flex",
             flexDirection: "column",
-            flex: 1,
-            padding: "20px",
+            justifyContent: "space-between",
+            padding: "50px",
           }}
         >
-          {/* Left part */}
-          <div
-            style={{
-              backgroundColor: "#F7E7CE",
-              textAlign: "center",
-              padding: "10px 0",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <WorkspacePremiumIcon
-              style={{
-                fontSize: "60px",
-                marginBottom: "10px",
-                color: "#6B0D37",
-              }}
-            />
-            <Typography
-              variant="h5"
-              component="div"
-              sx={{
-                color: "#6B0D37",
-                textAlign: "center",
-                padding: "0 10px",
-              }}
-            >
-              "Chosen by Countless Indian Hearts Worldwide: A Premier Matrimonial
-              Platform"
+          <div>
+            <Typography sx={{ textAlign: "center" }} variant="h5" gutterBottom>
+              Profile Details
             </Typography>
-          </div>
-          {/* Right part */}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              padding: "20px",
-              flex: 1,
-            }}
-          >
-            <div>
-              <Typography
-                sx={{ textAlign: "center" }}
-                variant="h6"
-                gutterBottom
-              >
-                Profile Details
-              </Typography>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "20px",
-                  marginBottom: "20px",
-                }}
-              >
+
+            {/* Form Grid */}
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   label="Full Name"
                   variant="standard"
@@ -401,10 +363,12 @@ function ProfileDetails() {
                   helperText={errors.name}
                   fullWidth
                 />
+              </Grid>
+              <Grid item xs={12} sm={6}>
                 <FormControl
                   variant="standard"
-                  error={!!errors.gender}
                   fullWidth
+                  error={!!errors.gender}
                 >
                   <InputLabel id="gender-label">Gender</InputLabel>
                   <Select
@@ -424,21 +388,12 @@ function ProfileDetails() {
                     <FormHelperText>{errors.gender}</FormHelperText>
                   )}
                 </FormControl>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "20px",
-                  marginBottom: "20px",
-                }}
-              >
+              </Grid>
+              <Grid item xs={12} sm={6}>
                 <FormControl
                   variant="standard"
-                  error={!!errors.age}
                   fullWidth
+                  error={!!errors.age}
                 >
                   <InputLabel id="age-label">Age</InputLabel>
                   <Select
@@ -458,10 +413,12 @@ function ProfileDetails() {
                   </Select>
                   {errors.age && <FormHelperText>{errors.age}</FormHelperText>}
                 </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
                 <FormControl
                   variant="standard"
-                  error={!!errors.maritalStatus}
                   fullWidth
+                  error={!!errors.maritalStatus}
                 >
                   <InputLabel id="marital-status-label">
                     Marital Status
@@ -469,10 +426,7 @@ function ProfileDetails() {
                   <Select
                     labelId="marital-status-label"
                     value={maritalStatus}
-                    onChange={handleChange(
-                      setMaritalStatus,
-                      "maritalStatus"
-                    )}
+                    onChange={handleChange(setMaritalStatus, "maritalStatus")}
                     onBlur={handleBlur("maritalStatus")}
                   >
                     <MenuItem value="">
@@ -488,21 +442,12 @@ function ProfileDetails() {
                     <FormHelperText>{errors.maritalStatus}</FormHelperText>
                   )}
                 </FormControl>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "20px",
-                  marginBottom: "20px",
-                }}
-              >
+              </Grid>
+              <Grid item xs={12} sm={6}>
                 <FormControl
                   variant="standard"
-                  error={!!errors.nationality}
                   fullWidth
+                  error={!!errors.nationality}
                 >
                   <InputLabel id="nationality-label">Nationality</InputLabel>
                   <Select
@@ -527,11 +472,13 @@ function ProfileDetails() {
                     <FormHelperText>{errors.nationality}</FormHelperText>
                   )}
                 </FormControl>
-                {nationality === "Indian" && (
+              </Grid>
+              {nationality === "Indian" && (
+                <Grid item xs={12} sm={6}>
                   <FormControl
                     variant="standard"
-                    error={!!errors.city}
                     fullWidth
+                    error={!!errors.city}
                   >
                     <InputLabel id="city-label">City</InputLabel>
                     <Select
@@ -553,8 +500,10 @@ function ProfileDetails() {
                       <FormHelperText>{errors.city}</FormHelperText>
                     )}
                   </FormControl>
-                )}
-                {isNRI && (
+                </Grid>
+              )}
+              {isNRI && (
+                <Grid item xs={12} sm={6}>
                   <TextField
                     label="Country"
                     variant="standard"
@@ -565,22 +514,13 @@ function ProfileDetails() {
                     helperText={errors.country}
                     fullWidth
                   />
-                )}
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "20px",
-                  marginBottom: "20px",
-                }}
-              >
+                </Grid>
+              )}
+              <Grid item xs={12} sm={6}>
                 <FormControl
                   variant="standard"
-                  error={!!errors.religion}
                   fullWidth
+                  error={!!errors.religion}
                 >
                   <InputLabel id="religion-label">Religion</InputLabel>
                   <Select
@@ -602,13 +542,15 @@ function ProfileDetails() {
                     <FormHelperText>{errors.religion}</FormHelperText>
                   )}
                 </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
                 <FormControl
                   variant="standard"
-                  error={!!errors.disability}
                   fullWidth
+                  error={!!errors.disability}
                 >
                   <InputLabel id="disability-label">
-                    Differently-Abled
+                    Any Disability?
                   </InputLabel>
                   <Select
                     labelId="disability-label"
@@ -626,75 +568,144 @@ function ProfileDetails() {
                     <FormHelperText>{errors.disability}</FormHelperText>
                   )}
                 </FormControl>
-              </div>
-            </div>
+              </Grid>
+              {disability === "Yes" && (
+                <Grid item xs={12}>
+                  <TextField
+                    label="Disability Details"
+                    variant="standard"
+                    value={disabilityDetails}
+                    onChange={handleChange(setDisabilityDetails, "disabilityDetails")}
+                    onBlur={handleBlur("disabilityDetails")}
+                    error={!!errors.disabilityDetails}
+                    helperText={errors.disabilityDetails}
+                    fullWidth
+                  />
+                </Grid>
+              )}
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Email"
+                  variant="standard"
+                  value={email}
+                  onChange={handleChange(setEmail, "email")}
+                  onBlur={handleBlur("email")}
+                  error={!!errors.email}
+                  helperText={errors.email}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Phone No"
+                  variant="standard"
+                  value={phoneNo}
+                  onChange={handleChange(setPhoneNo, "phoneNo")}
+                  onBlur={handleBlur("phoneNo")}
+                  error={!!errors.phoneNo}
+                  helperText={errors.phoneNo}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl
+                  variant="standard"
+                  fullWidth
+                  error={!!errors.hobbies}
+                >
+                  <InputLabel id="hobbies-label">Hobbies</InputLabel>
+                  <Select
+                    labelId="hobbies-label"
+                    multiple
+                    value={hobbies}
+                    onChange={handleChange(setHobbies, "hobbies")}
+                    onClose={handleHobbiesClose}
+                    onOpen={handleHobbiesOpen}
+                    open={hobbiesOpen}
+                    renderValue={(selected) => selected.join(", ")}
+                  >
+                    {hobbiesOptions.map((hobby) => (
+                      <MenuItem key={hobby} value={hobby}>
+                        <Checkbox checked={hobbies.indexOf(hobby) > -1} />
+                        <ListItemText primary={hobby} />
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {errors.hobbies && (
+                    <FormHelperText>{errors.hobbies}</FormHelperText>
+                  )}
+                </FormControl>
+              </Grid>
+            </Grid>
+
             <div
               style={{
                 display: "flex",
+                alignItems: "center",
                 justifyContent: "center",
                 marginTop: "20px",
               }}
             >
               <Button
                 variant="contained"
-                  // color="primary"
-                  onClick={handleProfileNext}
-                  sx={{
+                onClick={handleProfileNext}
+                sx={{
+                  backgroundColor: "#FB6A6B",
+                  "&:hover": {
                     backgroundColor: "#FB6A6B",
-                    "&:hover": {
-                      backgroundColor: "#FB6A6B",
-                    },
-                  }}
-                >
-                  Next
+                  },
+                }}
+              >
+                Next
               </Button>
             </div>
           </div>
-        </div>
-        <section>
-          <div className="cr">
-            <div className="container">
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-evenly",
-                  alignItems: "center",
-                  padding: "20px 0",
-                }}
-              >
-                <p>
-                  <strong>Email: </strong>
-                  <a
-                    href="mailto:soulmatchinfo@gmail.com"
-                    style={{ textDecoration: "none", color: "#FFBF0E" }}
-                  >
-                    soulmatchinfo@gmail.com
-                  </a>{" "}
-                </p>
-                <p style={{ width: "200rem", textAlign: "center" }}>
-                  Copyright © <span id="cry">2024</span>{" "}
-                  <a
-                    style={{ textDecoration: "none", color: "#FFBF00" }}
-                    href="#!"
-                    target="_blank"
-                  >
-                    SoulMatch
-                  </a>{" "}
-                  All rights reserved.{" "}
-                </p>
-                <p>
-                  <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong>{" "}
-                  94490 65433
-                </p>
-              </div>
+        </Grid>
+      </Grid>
+
+      <section>
+        <div className="cr">
+          <div className="container">
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-evenly",
+                alignItems: "center",
+                padding: "20px 0",
+              }}
+            >
+              <p>
+                <strong>Email: </strong>
+                <a
+                  href="mailto:soulmatchinfo@gmail.com"
+                  style={{ textDecoration: "none", color: "#FFBF0E" }}
+                >
+                  soulmatchinfo@gmail.com
+                </a>{" "}
+              </p>
+              <p style={{ width: "200rem", textAlign: "center" }}>
+                Copyright © <span id="cry">2024</span>{" "}
+                <a
+                  style={{ textDecoration: "none", color: "#FFBF00" }}
+                  href="#!"
+                  target="_blank"
+                >
+                  SoulMatch
+                </a>{" "}
+                All rights reserved.{" "}
+              </p>
+              <p>
+                <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong>{" "}
+                94490 65433
+              </p>
             </div>
           </div>
-        </section>
-      </div>
-    </ThemeProvider>
-  );
-  
+        </div>
+      </section>
+    </div>
+  </ThemeProvider>
+);
 }
 
 export default ProfileDetails;

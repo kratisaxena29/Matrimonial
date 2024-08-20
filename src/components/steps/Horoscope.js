@@ -66,9 +66,9 @@ function Horoscope() {
   const validate = useCallback(() => {
     const newErrors = {};
     if (!dateofBirth) newErrors.dateofBirth = "Date of Birth is required";
-    if (!timeofBirth) newErrors.timeofBirth = "Time of Birth is required";
-    if (!placeofBirth) newErrors.placeofBirth = "Place of Birth is required";
-    if (!areyouManglik) newErrors.areyouManglik = "This field is required";
+    // if (!timeofBirth) newErrors.timeofBirth = "Time of Birth is required";
+    // if (!placeofBirth) newErrors.placeofBirth = "Place of Birth is required";
+    if (!areyouManglik) newErrors.areyouManglik = null;
     setErrors(newErrors);
     setIsFormValid(Object.keys(newErrors).length === 0);
   }, [dateofBirth, timeofBirth, placeofBirth, areyouManglik]);
@@ -111,7 +111,13 @@ function Horoscope() {
   return (
     <ThemeProvider theme={theme}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            minHeight: "100vh",
+          }}
+        >
           <nav
             style={{
               backgroundColor: "#6D0B32",
@@ -124,8 +130,8 @@ function Horoscope() {
               src={logo}
               alt="Logo"
               style={{
-                height: "50px", // Reduced logo size for mobile
-                marginRight: "20px", // Adjusted margin for mobile
+                height: isMobile ? "50px" : "60px",
+                marginRight: isMobile ? "20px" : "40px",
               }}
             />
           </nav>
@@ -134,7 +140,7 @@ function Horoscope() {
               flex: 1,
               display: "flex",
               flexDirection: isMobile ? "column" : "row",
-              padding: isMobile ? "20px" : "0", // Add padding on mobile
+              padding: isMobile ? "20px" : "0",
             }}
           >
             {/* Left part */}
@@ -142,25 +148,28 @@ function Horoscope() {
               style={{
                 backgroundColor: "#F7E7CE",
                 textAlign: "center",
-                padding: "20px 10px", // Adjusted padding for mobile
+                padding: isMobile ? "20px 10px" : "50px 20px",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                marginBottom: "20px", // Added margin for separation on mobile
+                flex: isMobile ? "none" : "1",
               }}
             >
               <VolunteerActivismIcon
                 style={{
-                  fontSize: 60, // Adjust icon size for mobile
+                  fontSize: isMobile ? 60 : 80,
                   marginBottom: 10,
                   color: "#6B0D37",
                 }}
               />
               <Typography
-                variant="h6" // Use a smaller font size for mobile
+                variant={isMobile ? "h6" : "h4"}
                 component="div"
-                sx={{ color: "#6B0D37" }}
+                sx={{
+                  color: "#6B0D37",
+                  padding: isMobile ? "0 10px" : "0",
+                }}
               >
                 "Let us be the bridge to your happily ever after. Start your
                 journey to love with us today."
@@ -168,15 +177,20 @@ function Horoscope() {
             </div>
             {/* Right part */}
             <div
-                style={{
-                  padding: "20px 10px", // Adjust padding for mobile
-                  flex: isMobile ? "none" : "2", // Adjust flex basis for mobile
-                  order: isMobile ? 1 : 2, // Adjust order to place form after caption on mobile
-                }}
+              style={{
+                flex: isMobile ? "none" : "1",
+                order: isMobile ? 1 : 2,
+                padding: isMobile ? "20px 10px" : "50px",
+                marginLeft: isMobile ? "0" : "50px",
+                marginRight: isMobile ? "0" : "50px",
+              }}
             >
               <Typography
-                sx={{ textAlign: "center", marginBottom: "20px" }} // Adjusted margin for mobile
-                variant="h6" // Use a smaller font size for mobile
+                sx={{
+                  textAlign: "center",
+                  marginBottom: isMobile ? "20px" : "30px",
+                }}
+                variant={isMobile ? "h6" : "h5"}
                 gutterBottom
               >
                 Horoscope Details
@@ -184,10 +198,10 @@ function Horoscope() {
               <div
                 style={{
                   display: "flex",
-                  flexDirection: "column", // Stack form controls vertically on mobile
+                  flexDirection: "column",
                   alignItems: "center",
-                  gap: "20px", // Reduce gap for mobile
-                  marginBottom: "20px", // Adjust margin for mobile
+                  gap: isMobile ? "20px" : "30px",
+                  marginBottom: isMobile ? "20px" : "30px",
                 }}
               >
                 <DatePicker
@@ -209,20 +223,19 @@ function Horoscope() {
                   label="Time of Birth"
                   value={timeofBirth}
                   sx={{ width: "100%" }}
-
                   onChange={(time) => setTimeofBirth(time ? dayjs(time) : null)}
                   renderInput={(params) => (
                     <TextField
                       {...params}
                       error={Boolean(errors.timeofBirth)}
                       helperText={errors.timeofBirth}
-                      sx={{ minWidth: "100%" }} // Make full width on mobile
+                      sx={{ minWidth: "100%" }}
                     />
                   )}
                 />
                 <FormControl
                   variant="outlined"
-                  sx={{ minWidth: "100%" }} // Make full width on mobile
+                  sx={{ minWidth: "100%" }}
                   error={Boolean(errors.placeofBirth)}
                 >
                   <InputLabel id="place-of-birth-label">Place of Birth</InputLabel>
@@ -239,11 +252,13 @@ function Horoscope() {
                       </MenuItem>
                     ))}
                   </Select>
-                  {errors.placeofBirth && <FormHelperText>{errors.placeofBirth}</FormHelperText>}
+                  {errors.placeofBirth && (
+                    <FormHelperText>{errors.placeofBirth}</FormHelperText>
+                  )}
                 </FormControl>
                 <FormControl
                   variant="outlined"
-                  sx={{ minWidth: "100%" }} // Make full width on mobile
+                  sx={{ minWidth: "100%" }}
                   error={Boolean(errors.areyouManglik)}
                 >
                   <InputLabel id="manglik-label">Are you Manglik?</InputLabel>
@@ -257,7 +272,9 @@ function Horoscope() {
                     <MenuItem value="Yes">Yes</MenuItem>
                     <MenuItem value="No">No</MenuItem>
                   </Select>
-                  {errors.areyouManglik && <FormHelperText>{errors.areyouManglik}</FormHelperText>}
+                  {errors.areyouManglik && (
+                    <FormHelperText>{errors.areyouManglik}</FormHelperText>
+                  )}
                 </FormControl>
               </div>
               <div
