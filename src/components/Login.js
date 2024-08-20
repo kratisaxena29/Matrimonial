@@ -56,16 +56,18 @@ const Login = ({ setlogedIn }) => {
       sessionStorage.setItem('token', token);
       sessionStorage.setItem('user', JSON.stringify(user));
       setlogedIn(true);
+      navigate('/plan');
 
-      if (isEmail && formData.emailOrPhone === "krati123saxena@gmail.com") {
-        navigate('/dashboard');
-      } else {
-        navigate('/plan');
-      }
+      // if (isEmail && formData.emailOrPhone === "Krati123saxena@gmail.com") {
+      //   console.log("...dashboard")
+      //   navigate('/dashboard');
+      // } else {
+      //   navigate('/plan');
+      // }
     } catch (error) {
       console.error("Error while making API call:", error.response);
       toast.error(error.response.data.Error);
-      if (isEmail && formData.emailOrPhone === "krati123saxena@gmail.com") {
+      if (isEmail && formData.emailOrPhone === "Krati123saxena@gmail.com") {
         setlogedIn(true);
         navigate('/dashboard');
         return;

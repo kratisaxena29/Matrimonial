@@ -380,14 +380,14 @@ const handleConfirmation = async () => {
 
 
   const handleLogout = () => {
-    sessionStorage.clear();
-    setlogedIn(false);
-    sessionStorage.setItem("logedIn", "false");
+    // sessionStorage.clear();
+    // setlogedIn(false);
+    // sessionStorage.setItem("logedIn", "false");
     navigate("/");
   };
-  const handlePlans = () => {
-    navigate("/plan");
-  };
+  // const handlePlans = () => {
+  //   navigate("/plan");
+  // };
   useEffect(() => {
     console.log("..interestedProfiles after update..", interestedProfiles);
   }, [interestedProfiles]);
@@ -408,7 +408,7 @@ const handleConfirmation = async () => {
       >
         <img onClick={handleLogo} src={logo} alt="Logo" style={{ height: "60px" }} />
         <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-          <Button
+          {/* <Button
             variant="contained"
             sx={{
               backgroundColor: "transparent",
@@ -426,7 +426,7 @@ const handleConfirmation = async () => {
             }}
           >
             Plans
-          </Button>
+          </Button> */}
 
           <Button
             variant="contained"

@@ -35,6 +35,7 @@ function Dashboard({ setlogedIn }) {
   const [profiles, setProfiles] = useState([]);
   const [interestedProfiles, setInterestedProfiles] = useState([]);
  const [registration,setRegistration] = useState("")
+ const [monthlyUser,setMonthlyUser] = useState([])
   const [numberOfProfiles, setNumberOfProfiles] = useState(0);
   const [active, setactive] = useState("");
 //   const navigate = useNavigate();
@@ -142,6 +143,36 @@ const handleReject = async(profileId) => {
     fetchActive();
   }, []);
 
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${URL}/getMonthlyUserCount`); // Replace with your API endpoint
+        const data = response.data;
+
+        // Map the data to ensure all months are represented
+        const allMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const mappedData = allMonths.map(month => {
+          const found = data.find(item => item.month === month);
+          return {
+            month,
+            count: found ? found.count : 0,
+            year: found ? found.year : "No Year" // Include year here
+          };
+        });
+
+        setMonthlyUser(mappedData);
+      } catch (error) {
+        console.error("Error fetching activity data", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
+
   const NewProfiles = () => (
     <Paper sx={{ p: 2, mb: 3 }}>
       <Typography variant="h6" sx={{ mb: 2 }}>All Profiles</Typography>
@@ -224,18 +255,21 @@ const handleReject = async(profileId) => {
     </Paper>
   );
   
-  // const RecentActivity = () => (
-  //   <Paper sx={{ p: 2 }}>
-  //     <Typography variant="h6" sx={{ mb: 2 }}>Recent Activity</Typography>
-  //     <List>
-  //       {['New user registered', 'Profile verification completed', 'Subscription renewed', 'Match request sent'].map((activity) => (
-  //         <ListItem key={activity}>
-  //           <ListItemText primary={activity} secondary="2 minutes ago" />
-  //         </ListItem>
-  //       ))}
-  //     </List>
-  //   </Paper>
-  // );
+  const RecentActivity = () => (
+    <Paper sx={{ p: 2 }}>
+    <Typography variant="h6" sx={{ mb: 2 }}>Monthly Activity</Typography>
+    <List>
+      {monthlyUser.map((activity) => (
+        <ListItem key={activity.month}>
+          <ListItemText 
+            primary={`${activity.month} - ${activity.count} registrations (${activity.year})`} 
+            secondary={activity.count > 0 ? "Recently active" : "No activity"} 
+          />
+        </ListItem>
+      ))}
+    </List>
+  </Paper>
+  );
   const handleChat = async () => {
     try {
       const payload = {
@@ -556,7 +590,7 @@ const handleReject = async(profileId) => {
           </Grid>
           <Grid item xs={12} md={4}>
             <Statistics />
-            {/* <RecentActivity /> */}
+            <RecentActivity />
           </Grid>
         </Grid>
       </Box>
@@ -575,12 +609,12 @@ const handleReject = async(profileId) => {
                 }}
               >
                 <p>
-                  <strong>Email: </strong>
+                  <strong>Contact Us: </strong>
                   <a
                     href="mailto:thedreamytrails@gmail.com"
                     style={{ textDecoration: "none", color: "#FFBF0E" }}
                   >
-                    thedreamytrails@gmail.com
+                    soulmatchinfo@gmail.com
                   </a>{" "}
                 </p>
                 <p style={{ width: "200rem", textAlign: "center" }}>
@@ -594,10 +628,10 @@ const handleReject = async(profileId) => {
                   </a>{" "}
                   All rights reserved.{" "}
                 </p>
-                <p>
+                {/* <p>
                   <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong>{" "}
                   94490 65433
-                </p>
+                </p> */}
               </div>
             </div>
           </div>

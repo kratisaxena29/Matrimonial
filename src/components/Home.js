@@ -169,7 +169,7 @@ function Home() {
               </div>
               <div className="nav-actions">
                 <p className="contact-info">
-                  <strong>Contact Us:</strong> 94490 65433
+                  <strong>Contact Us:</strong> soulmatchinfo@gmail.com
                 </p>
                 <button
                   onClick={() => navigate("/login")}
