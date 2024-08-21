@@ -153,8 +153,10 @@ function ProfileDetails() {
   const handleProfileNext = async () => {
     const allFieldsValid = Object.keys(errors).length === 0;
 
-    if (!allFieldsValid) return;
+    // if (!allFieldsValid) return;
     if (location.state.email) {
+      console.log("...emiail...",email)
+      console.log("....location...",location.state.email)
       if (email === location.state.email) {
         navigate("/additional-details", {
           state: {
@@ -550,7 +552,7 @@ function ProfileDetails() {
                   error={!!errors.disability}
                 >
                   <InputLabel id="disability-label">
-                    Any Disability?
+                    Differently-abled
                   </InputLabel>
                   <Select
                     labelId="disability-label"
@@ -572,7 +574,7 @@ function ProfileDetails() {
               {disability === "Yes" && (
                 <Grid item xs={12}>
                   <TextField
-                    label="Disability Details"
+                    label="Specify"
                     variant="standard"
                     value={disabilityDetails}
                     onChange={handleChange(setDisabilityDetails, "disabilityDetails")}
