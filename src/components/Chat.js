@@ -15,6 +15,7 @@ import {
   Toolbar,
   IconButton,
   InputBase,
+  Drawer,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -22,6 +23,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
 import { io } from 'socket.io-client'
 import { useNavigate } from "react-router-dom";
+import MenuIcon from '@mui/icons-material/Menu';
 
 const ChatApp = ({ setlogedIn }) => {
   const [selectedChatIndex, setSelectedChatIndex] = useState(null);
@@ -38,21 +40,18 @@ const ChatApp = ({ setlogedIn }) => {
 
   const URL = process.env.REACT_APP_API_BASE_URL;
 
+  useEffect(() => {
+    setSocket(io('https://api.soulmatch.co.in/'))
+  }, [])
 
   useEffect(() => {
-    // setSocket(io('http://13.200.211.15:3001/'))
-    // setSocket(io('http://localhost:3001/'))
-    setSocket(io('https://api.soulmatch.co.in/'))
-}, [])
-
-useEffect(() => {
-  socket?.emit('addUser', user?.id);
-  socket?.on('getUsers', users => {
+    socket?.emit('addUser', user?.id);
+    socket?.on('getUsers', users => {
       console.log('activeUsers:...', users)
-  })
+    })
 
-  socket?.on('getMessage',data => {
-      console.log('data...',data)
+    socket?.on('getMessage', data => {
+      console.log('data...', data)
       setMessages(prev => ({
         ...prev,
         messages: [
@@ -67,26 +66,7 @@ useEffect(() => {
         ],
       }));
     });
-}, [socket])
-
-  // const handleSelectChat = async (index, conversationId) => {
-  //   setSelectedChatIndex(index);
-
-  //   try {
-  //     const response = await axios.get(`${URL}/conversation/messages/${conversationId}`);
-  //     const updatedChats = [...chats];
-  //     updatedChats[index].messages = response.data.messages;
-  //     setChats(updatedChats);
-  //     setMessages({
-  //       ...message,
-  //       conversationId,
-  //       receiver: { receiverId: updatedChats[index].id, fullName: updatedChats[index].name },
-  //       messages: response.data.messages,
-  //     });
-  //   } catch (error) {
-  //     console.error("Error fetching messages:", error);
-  //   }
-  // };
+  }, [socket])
 
   const handleSendMessage = async () => {
     if (newMessage.trim() === "") {
@@ -109,21 +89,6 @@ useEffect(() => {
         message: newMessage,
         receiverId: message?.receiver?.receiverId,
       });
-console.log("...handleSendMessage...",response)
-      // const newMessageData = {
-      //   user: { fullName: "You", id: loggedInUser },
-      //   message: newMessage,
-      // };
-
-      // if (selectedChatIndex !== null && selectedChatIndex >= 0 && selectedChatIndex < chats.length) {
-      //   const updatedChats = [...chats];
-      //   if (!updatedChats[selectedChatIndex].messages) {
-      //     updatedChats[selectedChatIndex].messages = [];
-      //   }
-      //   updatedChats[selectedChatIndex].messages.push(newMessageData);
-      //   updatedChats[selectedChatIndex].lastMessage = newMessage;
-      //   setChats(updatedChats);
-      // }
 
       setMessages((prevMessages) => ({
         ...prevMessages,
@@ -181,7 +146,11 @@ console.log("...handleSendMessage...",response)
       conversationId: "new",
     });
   };
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
+  const handleDrawerToggle = () => {
+    setDrawerOpen(!drawerOpen);
+  };
   useEffect(() => {
     const fetchProfiles = async () => {
       try {
@@ -190,7 +159,6 @@ console.log("...handleSendMessage...",response)
         const formattedChats = profiles.map((profile) => ({
           id: profile._id,
           name: profile.name,
-         
           conversationId: conversations.find((conv) => conv.participants.includes(profile._id))?.id || null,
         }));
         setChats(formattedChats);
@@ -203,297 +171,274 @@ console.log("...handleSendMessage...",response)
     fetchProfiles();
   }, [conversations, user.email]);
 
- 
- 
-  // useEffect(() => {
-  //   socket?.emit('addUser', loggedInUser);
-  //   socket?.on('getUsers', users => {
-  //     console.log('activeUsers-->', users);
-  //   });
-  //   socket?.on('getMessage', data => {
-  //     console.log('data...', data);
-  //     setMessages(prev => ({
-  //       ...prev,
-  //       messages: [...prev.messages, { user: data.sender, message: data.message }],
-  //     }));
-  //   });
-  // }, [socket]);
-console.log(message)
-return (
-  <Box
-    sx={{
-      flexGrow: 1,
-      height: "100vh",
-      display: "flex",
-      flexDirection: "column",
-    }}
-  >
-    <Grid container component={Paper} sx={{ flexGrow: 1 }}>
-      <Grid
-        item
-        xs={12}
-        sm={4}
-        md={3}
-        sx={{
-          borderRight: "1px solid #e0e0e0",
-          backgroundColor: "#f8f9fa",
-          display: "flex",
-          flexDirection: "column",
-          height: "100vh",
-        }}
-      >
-        <Box
+  return (
+    <Box
+      sx={{
+        flexGrow: 1,
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <Grid container component={Paper} sx={{ flexGrow: 1 }}>
+        <Grid
+          item
+          xs={12}
+          sm={4}
+          md={3}
           sx={{
-            padding: 2,
-            borderBottom: "1px solid #e0e0e0",
-            zIndex: 1,
-            display: { xs: 'flex', sm: 'flex', md: 'flex' },
-            justifyContent: { xs: 'space-between', sm: 'space-between', md: 'flex-start' },
-            alignItems: 'center',
+            borderRight: "1px solid #e0e0e0",
+            backgroundColor: "#f8f9fa",
+            display: "flex",
+            flexDirection: "column",
+            height: "100vh",
           }}
         >
-          <Typography variant="h6" sx={{ color: "#8B0000" }}>
-            Chats
-          </Typography>
-          <Button
-            variant="contained"
+          <Box
             sx={{
-              backgroundColor: "#F68C1E",
-              color: "white",
-              "&:hover": {
-                backgroundColor: "red",
-              },
-              textTransform: "none",
-              fontWeight: "bold",
-              display: { xs: 'inline-flex', sm: 'inline-flex', md: 'none' },
+              padding: 2,
+              borderBottom: "1px solid #e0e0e0",
+              zIndex: 1,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
             }}
-            onClick={handleLogout}
           >
-            Logout
-          </Button>
-        </Box>
-        <Divider />
-        <Box sx={{ flexGrow: 1, overflowY: "auto" }}>
-          <List component="nav" sx={{ paddingTop: 0 }}>
-            {conversations.map((conversationId, user) => (
-              <React.Fragment key={conversationId.conversationId}>
-                <ListItem
-                  button
-                  onClick={() => fetchMessages(conversationId, user)}
-                >
-                  <Avatar
-                    sx={{
-                      backgroundColor: "#FFC0CB",
-                      color: "#8B0000",
-                    }}
-                  >
-                    {/* send Image here */}
-                    {/* {conversationId?.user?.email} */}
-                  </Avatar>
-                  <ListItemText
-                    primary={conversationId?.user?.fullName}
-                    sx={{ marginLeft: 2, color: "#8B0000" }}
-                  />
-                </ListItem>
-                <Divider />
-              </React.Fragment>
-            ))}
-          </List>
-        </Box>
-      </Grid>
-      <Grid
-        item
-        xs={12}
-        sm={8}
-        md={6}
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          backgroundColor: "#fff",
-          height: "100vh",
-        }}
-      >
-        <AppBar
-          position="sticky"
-          sx={{
-            top: 0,
-            backgroundColor: "#F7E7CE",
-            color: "#76001C",
-            boxShadow: "none",
-            borderBottom: "1px solid #e0e0e0",
-            zIndex: 1,
-          }}
-        >
-          <Toolbar>
-            <Avatar
+            <Typography variant="h6" sx={{ color: "#8B0000" }}>
+              Chats
+            </Typography>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="end"
+              onClick={handleDrawerToggle}
               sx={{
-                marginRight: 2,
-                backgroundColor: "#8B0000",
-                color: "#FFF",
+                display: { xs: 'flex', sm: 'flex', md: 'none' },
               }}
             >
-              {/* Display the user's initial or any relevant content */}
-            </Avatar>
-            <Typography variant="h6" sx={{ flexGrow: 1 }}>
-              {message?.receiver?.fullName || "No conversation selected"}
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <Box
-          sx={{
-            flexGrow: 1,
-            overflowY: "auto",
-            padding: 2,
-            backgroundColor: "#f1f1f1",
-          }}
-        >
-          <List>
-            {message?.messages?.length > 0 ? (
-              message?.messages.map(({ message, user: { id } = {} }, index) => (
-                <ListItem
-                  key={index}
-                  sx={{
-                    justifyContent: id === loggedInUser ? 'flex-end' : 'flex-start',
-                  }}
-                >
-                  <Box
-                    sx={{
-                      backgroundColor: id === loggedInUser ? '#FFDAB9' : '#ffffff',
-                      borderRadius: 2,
-                      padding: 1,
-                      maxWidth: "60%",
-                      boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.1)",
-                    }}
+              <MenuIcon />
+            </IconButton>
+          </Box>
+          <Divider />
+          <Box sx={{ flexGrow: 1, overflowY: "auto" }}>
+            <List component="nav" sx={{ paddingTop: 0 }}>
+              {conversations.map((conversationId, user) => (
+                <React.Fragment key={conversationId.conversationId}>
+                  <ListItem
+                    button
+                    onClick={() => fetchMessages(conversationId, user)}
                   >
-                    <ListItemText
-                      primary={message}
+                    <Avatar
                       sx={{
-                        textAlign: id === loggedInUser ? 'right' : 'left',
+                        backgroundColor: "#FFC0CB",
+                        color: "#8B0000",
                       }}
+                    >
+                      {/* send Image here */}
+                      {/* {conversationId?.user?.email} */}
+                    </Avatar>
+                    <ListItemText
+                      primary={conversationId?.user?.fullName}
+                      sx={{ marginLeft: 2, color: "#8B0000" }}
                     />
-                  </Box>
-                </ListItem>
-              ))
-            ) : (
-              <Typography variant="body2" color="textSecondary" align="center">
-                No messages to display
-              </Typography>
-            )}
-          </List>
-        </Box>
-        <Box
+                  </ListItem>
+                  <Divider />
+                </React.Fragment>
+              ))}
+            </List>
+          </Box>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={8}
+          md={6}
           sx={{
             display: "flex",
-            alignItems: "center",
-            padding: 1,
-            borderTop: "1px solid #e0e0e0",
-            backgroundColor: "#FFF5F5",
-            position: "sticky",
-            bottom: 0,
-            zIndex: 1,
+            flexDirection: "column",
+            backgroundColor: "#fff",
+            height: "100vh",
           }}
         >
-          <TextField
-            fullWidth
-            variant="outlined"
-            placeholder="Type a message here..."
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            onKeyPress={(e) => {
-              if (e.key === "Enter") {
-                handleSendMessage();
-                e.preventDefault();
-              }
+          <AppBar
+            position="sticky"
+            sx={{
+              top: 0,
+              backgroundColor: "#F7E7CE",
+              color: "#76001C",
+              boxShadow: "none",
+              borderBottom: "1px solid #e0e0e0",
+              zIndex: 1,
             }}
-            sx={{ marginRight: 1 }}
-          />
-          {message?.receiver?.fullName && (
+          >
+            <Toolbar>
+              <Avatar
+                sx={{
+                  marginRight: 2,
+                  backgroundColor: "#8B0000",
+                  color: "#FFF",
+                }}
+              >
+                {/* Display the user's initial or any relevant content */}
+              </Avatar>
+              <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                {message?.receiver?.fullName || "No conversation selected"}
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <Box
+            sx={{
+              flexGrow: 1,
+              overflowY: "auto",
+              padding: 2,
+              backgroundColor: "#f1f1f1",
+            }}
+          >
+            <List>
+              {message?.messages?.length > 0 ? (
+                message?.messages.map(({ message, user: { id } = {} }, index) => (
+                  <ListItem
+                    key={index}
+                    sx={{
+                      justifyContent: id === loggedInUser ? 'flex-end' : 'flex-start',
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        backgroundColor: id === loggedInUser ? '#FFDAB9' : '#ffffff',
+                        borderRadius: 2,
+                        padding: 1,
+                        maxWidth: "60%",
+                        boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.1)",
+                      }}
+                    >
+                      <ListItemText
+                        primary={message}
+                        sx={{
+                          textAlign: id === loggedInUser ? 'right' : 'left',
+                        }}
+                      />
+                    </Box>
+                  </ListItem>
+                ))
+              ) : (
+                <Typography variant="body2" color="textSecondary" align="center">
+                  No messages to display
+                </Typography>
+              )}
+            </List>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              padding: 1,
+              borderTop: "1px solid #e0e0e0",
+              backgroundColor: "#FFF5F5",
+              position: "sticky",
+              bottom: 0,
+              zIndex: 1,
+            }}
+          >
+            <TextField
+              fullWidth
+              variant="outlined"
+              placeholder="Type a message here..."
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  handleSendMessage();
+                  e.preventDefault();
+                }
+              }}
+              sx={{ marginRight: 1 }}
+            />
+            {message?.receiver?.fullName && (
+              <Button
+                variant="contained"
+                sx={{ backgroundColor: "#8B0000", color: "#FFF" }}
+                onClick={handleSendMessage}
+                endIcon={<SendIcon sx={{ color: "#FFF" }} />}
+              >
+                Send
+              </Button>
+            )}
+          </Box>
+        </Grid>
+        <Drawer
+          anchor="left"
+          open={drawerOpen}
+          onClose={handleDrawerToggle}
+          sx={{
+            display: { xs: 'flex', sm: 'flex', md: 'none' },
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
+              width: '80%',
+            },
+          }}
+        >
+          <Box
+            sx={{
+              padding: 2,
+              borderBottom: "1px solid #e0e0e0",
+              zIndex: 1,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="h6" sx={{ color: "#8B0000" }}>
+              People
+            </Typography>
             <Button
               variant="contained"
-              sx={{ backgroundColor: "#8B0000", color: "#FFF" }}
-              onClick={handleSendMessage}
-              endIcon={<SendIcon sx={{ color: "#FFF" }} />}
+              sx={{
+                backgroundColor: "#F68C1E",
+                color: "white",
+                "&:hover": {
+                  backgroundColor: "red",
+                },
+                textTransform: "none",
+                fontWeight: "bold",
+              }}
+              onClick={handleLogout}
             >
-              Send
+              Logout
             </Button>
-          )}
-        </Box>
-      </Grid>
-      <Grid
-        item
-        xs={12}
-        sm={0}
-        md={3}
-        sx={{
-          borderLeft: "1px solid #e0e0e0",
-          backgroundColor: "#f8f9fa",
-          display: "flex",
-          flexDirection: "column",
-          height: "100vh",
-          display: { xs: 'none', sm: 'flex', md: 'flex' },
-        }}
-      >
-        <Box
-          sx={{
-            padding: 2,
-            borderBottom: "1px solid #e0e0e0",
-            zIndex: 1,
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Typography variant="h6" sx={{ color: "#8B0000" }}>
-            People
-          </Typography>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "#F68C1E",
-              color: "white",
-              "&:hover": {
-                backgroundColor: "red",
-              },
-              textTransform: "none",
-              fontWeight: "bold",
-              display: { xs: 'none', sm: 'inline-flex', md: 'inline-flex' },
-            }}
-            onClick={handleLogout}
-          >
-            Logout
-          </Button>
-        </Box>
-        <Divider />
-        <Box sx={{ flexGrow: 1, overflowY: "auto" }}>
-          <List component="nav" sx={{ paddingTop: 0 }}>
-            {people.map((person, index) => (
-              <React.Fragment key={index}>
-                <ListItem
-                  button
-                  onClick={() => handleSelectPerson(person)}
-                >
-                  <Avatar
-                    sx={{
-                      backgroundColor: "#FFC0CB",
-                      color: "#8B0000",
-                    }}
+          </Box>
+          <Divider />
+          <Box sx={{ flexGrow: 1, overflowY: "auto" }}>
+            <List component="nav" sx={{ paddingTop: 0 }}>
+              {people.map((person, index) => (
+                <React.Fragment key={index}>
+                  <ListItem
+                    button
+                    onClick={() => handleSelectPerson(person)}
                   >
-                    {person.name.charAt(0)}
-                  </Avatar>
-                  <ListItemText
-                    primary={person.name}
-                    sx={{ marginLeft: 2, color: "#8B0000" }}
-                  />
-                </ListItem>
-                <Divider />
-              </React.Fragment>
-            ))}
-          </List>
-        </Box>
+                    <Avatar
+                      sx={{
+                        backgroundColor: "#FFC0CB",
+                        color: "#8B0000",
+                      }}
+                    >
+                      {person.name.charAt(0)}
+                    </Avatar>
+                    <ListItemText
+                      primary={person.name}
+                      sx={{ marginLeft: 2, color: "#8B0000" }}
+                    />
+                  </ListItem>
+                  <Divider />
+                </React.Fragment>
+              ))}
+            </List>
+          </Box>
+        </Drawer>
       </Grid>
-    </Grid>
-  </Box>
-);
+    </Box>
+  );
+
 };
 
 export default ChatApp;

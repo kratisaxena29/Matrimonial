@@ -17,9 +17,10 @@ import {
   Toolbar,
   Box,
   Typography,
+  Grid,
 } from "@mui/material";
 import axios from "axios";
-
+import "../styles/profile.css"
 function Profiles({ setlogedIn }) {
   const [selectedPhoto, setSelectedPhoto] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
@@ -744,95 +745,108 @@ function Profiles({ setlogedIn }) {
         <section style={{ paddingTop: "0px" }}>
           <div className="all-weddpro all-jobs all-serexp chosenini">
             <div className="container">
-              <div className="row">
-                <div className="col-md-3 fil-mob-view">
-                  <span className="filter-clo">+</span>
+              <Grid container spacing={2}>
+                <Grid
+                  item
+                  xs={12}
+                  md={3}
+                  sx={{
+                    display: {
+                      xs: "block",
+                      md: "block",
+                    },
+                    marginTop:"70px"
+                  }}
+                >
+                  {/* <span className="">+</span> */}
                   <div className="filt-com lhs-cate">
-                    <h4>
+                    <Typography variant="h6">
                       <i className="fa fa-clock-o" aria-hidden="true" />
                       Age
-                    </h4>
+                    </Typography>
                     <div className="form-group">
-                      <select
-                        className="chosen-select"
+                      <Select
                         value={age}
                         onChange={(event) => setAge(event.target.value)}
+                        fullWidth
                       >
-                        <option value="">Select age</option>
-                        <option value="18-30">18 to 30</option>
-                        <option value="31-40">31 to 40</option>
-                        <option value="41-50">41 to 50</option>
-                        <option value="51-60">51 to 60</option>
-                        <option value="61-70">61 to 70</option>
-                        <option value="71-80">71 to 80</option>
-                        <option value="81-90">81 to 90</option>
-                        <option value="91-100">91 to 100</option>
-                      </select>
+                        <MenuItem value="">Select age</MenuItem>
+                        <MenuItem value="18-30">18 to 30</MenuItem>
+                        <MenuItem value="31-40">31 to 40</MenuItem>
+                        <MenuItem value="41-50">41 to 50</MenuItem>
+                        <MenuItem value="51-60">51 to 60</MenuItem>
+                        <MenuItem value="61-70">61 to 70</MenuItem>
+                        <MenuItem value="71-80">71 to 80</MenuItem>
+                        <MenuItem value="81-90">81 to 90</MenuItem>
+                        <MenuItem value="91-100">91 to 100</MenuItem>
+                      </Select>
                     </div>
                   </div>
+  
                   <div className="filt-com lhs-cate">
-                    <h4>
+                    <Typography variant="h6">
                       <i className="fa fa-bell-o" aria-hidden="true" />
                       Select Religion
-                    </h4>
+                    </Typography>
                     <div className="form-group">
-                      <select
-                        className="chosen-select"
+                      <Select
                         value={religion}
                         onChange={(event) => setReligion(event.target.value)}
+                        fullWidth
                       >
-                        <option value="">Select Religion</option>
+                        <MenuItem value="">Select Religion</MenuItem>
                         {ReligionOptions.map((option) => (
-                          <option key={option} value={option}>
+                          <MenuItem key={option} value={option}>
                             {option}
-                          </option>
+                          </MenuItem>
                         ))}
-                      </select>
+                      </Select>
                     </div>
                   </div>
+  
                   <div className="filt-com lhs-cate">
-                    <h4>
+                    <Typography variant="h6">
                       <i className="fa fa-users" aria-hidden="true" />
                       Select Caste
-                    </h4>
+                    </Typography>
                     <div className="form-group">
-                      <select
-                        className="chosen-select"
+                      <Select
                         value={caste}
                         onChange={(event) => setCaste(event.target.value)}
+                        fullWidth
                       >
-                        <option value="">Select Caste</option>
+                        <MenuItem value="">Select Caste</MenuItem>
                         {casteOptions.map((option) => (
-                          <option key={option} value={option}>
+                          <MenuItem key={option} value={option}>
                             {option}
-                          </option>
+                          </MenuItem>
                         ))}
-                      </select>
+                      </Select>
                     </div>
                   </div>
-
+  
                   <div className="filt-com lhs-cate">
-                    <h4>
+                    <Typography variant="h6">
                       <i className="fa fa-users" aria-hidden="true" />
                       Select Sub Caste
-                    </h4>
+                    </Typography>
                     <div className="form-group">
-                      <select
-                        className="chosen-select"
+                      <Select
                         value={subcaste}
                         onChange={(event) => setSubCaste(event.target.value)}
+                        fullWidth
                       >
-                        {/* <option value="">Select Sub Caste</option> */}
                         {subCasteOptions.map((option) => (
-                          <option key={option} value={option}>
+                          <MenuItem key={option} value={option}>
                             {option}
-                          </option>
+                          </MenuItem>
                         ))}
-                      </select>
+                      </Select>
                     </div>
                   </div>
-                </div>
-                <div className="col-md-9">
+                </Grid>
+  
+                <Grid item xs={12} md={9}>
                   <div className="short-all">
                     <div className="short-lhs">
                       Showing <b>{profiles.length}</b> profiles
@@ -848,11 +862,7 @@ function Profiles({ setlogedIn }) {
                             data-aviltxt="Available online"
                           >
                             <div className="pro-img">
-                              <a
-                                onClick={() =>
-                                  handleProfileDetails(profile._id)
-                                }
-                              >
+                              <a onClick={() => handleProfileDetails(profile._id)}>
                                 <img
                                   src={profile.fileUpload || noProfile}
                                   alt=""
@@ -866,7 +876,7 @@ function Profiles({ setlogedIn }) {
                               </div>
                             </div>
                             <div className="pro-detail">
-                              <h4>
+                              <Typography variant="h5">
                                 <a
                                   onClick={() =>
                                     handleProfileDetails(profile._id)
@@ -874,15 +884,18 @@ function Profiles({ setlogedIn }) {
                                 >
                                   {profile.name}
                                 </a>
-                              </h4>
+                              </Typography>
                               <div className="pro-bio">
                                 <span>{profile.heighestEduction}</span>
                                 <span>{profile.profession}</span>
                                 <span>{profile.age}</span>
                                 <span>Height: {profile.height}</span>
                               </div>
-                              <div className="links" style={{}}>
-                                <span onClick={handleChat} className="cta-chat">
+                              <div className="links">
+                                <span
+                                  onClick={handleChat}
+                                  className="cta-chat"
+                                >
                                   Chat now
                                 </span>
                                 <span
@@ -906,8 +919,6 @@ function Profiles({ setlogedIn }) {
                               data-toggle="tooltip"
                               title="Click to save this profile."
                             >
-                              {/* <h6>{profile.plan || "free"}</h6> */}
-
                               {(() => {
                                 switch (profile.plan) {
                                   case "100":
@@ -926,11 +937,8 @@ function Profiles({ setlogedIn }) {
                       ))}
                     </ul>
                   </div>
-                  {/* <div className="mor-prof">
-                    <button className="mor-but">Load more profiles</button>
-                  </div>*/}
-                </div>
-              </div>
+                </Grid>
+              </Grid>
             </div>
           </div>
         </section>
@@ -959,18 +967,7 @@ function Profiles({ setlogedIn }) {
                   target="_blank"
                 >
                   SoulMatch
-                </a>{" "}
-                {/* All rights reserved. |{" "} */}
-                {/* <a
-                  style={{
-                    cursor: "pointer",
-                    color: "#FFBF00",
-                    textDecoration: "none",
-                  }}
-                  onClick={() => navigate("/terms&conditions")}
-                >
-                  Terms and Conditions
-                </a> */}
+                </a>
               </p>
               <p>
                 <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong> 94490
