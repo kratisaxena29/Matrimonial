@@ -420,7 +420,7 @@ function Home() {
                 <li>
                   <div>
                     <img src={couple6} alt="" loading="lazy" />
-                    <h4>Adam & Eve</h4>
+                    <h4>Joseph & Eve</h4>
                   </div>
                 </li>
                 <li>
