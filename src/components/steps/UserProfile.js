@@ -587,6 +587,7 @@ console.log("...gallery...",gallery)
       <section className="profile-header">
         <div className="profile-image-container">
           <input
+            accept="image/*"
             type="file"
             id="fileInput"
             style={{ display: "none" }}
