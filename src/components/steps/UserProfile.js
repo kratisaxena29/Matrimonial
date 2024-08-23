@@ -564,7 +564,7 @@ console.log("...gallery...",gallery)
               handlePlans();
             }}
           >
-            Plans
+           Membership Plan
           </Button>
 
           <Button
