@@ -75,9 +75,9 @@ function Plan() {
   }, [URL]);
 
   const plans = [
-    { name: "Gold", amount: 100 },
-    { name: "Diamond", amount: 200 },
-    { name: "Platinum", amount: 300 },
+    { name: "Gold", amount: 799 },
+    { name: "Diamond", amount: 1099 },
+    { name: "Platinum", amount: 1499 },
   ];
 
   return (
