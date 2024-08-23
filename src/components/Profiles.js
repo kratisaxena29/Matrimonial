@@ -955,10 +955,10 @@ function Profiles({ setlogedIn }) {
                 padding: "20px 0",
               }}
             >
-              <p>
+              {/* <p>
                 <strong style={{ color: "#FFBF0E" }}>Email:</strong>{" "}
                 soulmatchinfo@gmail.com
-              </p>
+              </p> */}
               <p style={{ width: "200rem", textAlign: "center" }}>
                 Copyright © <span id="cry">2024</span>{" "}
                 <a
@@ -970,8 +970,7 @@ function Profiles({ setlogedIn }) {
                 </a>
               </p>
               <p>
-                <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong> 94490
-                65433
+                <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong> soulmatchinfo@gmail.com
               </p>
             </div>
           </div>

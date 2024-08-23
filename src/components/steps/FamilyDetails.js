@@ -509,15 +509,7 @@ console.log("...family details ...",location.state)
                   padding: "20px 0",
                 }}
               >
-                <p>
-                  <strong>Email: </strong>
-                  <a
-                    href="mailto:soulmatchinfo@gmail.com"
-                    style={{ textDecoration: "none", color: "#FFBF0E" }}
-                  >
-                    soulmatchinfo@gmail.com
-                  </a>{" "}
-                </p>
+                
                 <p style={{ textAlign: "center", margin: isMobile ? "10px 0" : "0" }}>
                   Copyright © <span id="cry">2024</span>{" "}
                   <a
@@ -530,9 +522,18 @@ console.log("...family details ...",location.state)
                   All rights reserved.{" "}
                 </p>
                 <p>
+                  <strong>Contact Us: </strong>
+                  <a
+                    href="mailto:soulmatchinfo@gmail.com"
+                    style={{ textDecoration: "none", color: "#FFBF0E" }}
+                  >
+                    soulmatchinfo@gmail.com
+                  </a>{" "}
+                </p>
+                {/* <p>
                   <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong>{" "}
                   94490 65433
-                </p>
+                </p> */}
               </div>
             </div>
           </div>

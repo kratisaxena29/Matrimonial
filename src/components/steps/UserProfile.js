@@ -1422,15 +1422,7 @@ console.log("...gallery...",gallery)
                 padding: "20px 0",
               }}
             >
-              <p>
-                <strong>Email: </strong>
-                <a
-                  href="mailto:soulmatchinfo@gmail.com"
-                  style={{ textDecoration: "none", color: "#FFBF0E" }}
-                >
-                  soulmatchinfo@gmail.com
-                </a>{" "}
-              </p>
+             
               <p style={{ width: "200rem", textAlign: "center" }}>
                 Copyright © <span id="cry">2024</span>{" "}
                 <a
@@ -1442,9 +1434,18 @@ console.log("...gallery...",gallery)
                 </a>{" "}
                 All rights reserved.{" "}
               </p>
-              <p>
+              {/* <p>
                 <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong> 94490
                 65433
+              </p> */}
+               <p>
+                <strong>Email: </strong>
+                <a
+                  href="mailto:soulmatchinfo@gmail.com"
+                  style={{ textDecoration: "none", color: "#FFBF0E" }}
+                >
+                  soulmatchinfo@gmail.com
+                </a>{" "}
               </p>
             </div>
           </div>

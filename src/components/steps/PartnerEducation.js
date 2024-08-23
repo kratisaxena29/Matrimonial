@@ -713,18 +713,7 @@ console.log("...location state in education...",location.state)
                   padding: "20px 0",
                 }}
               >
-                <p>
-                  <strong>Contact Us: </strong>
-                  <a
-                    href="mailto:soulmatchinfo@gmail.com"
-                    style={{
-                      textDecoration: "none",
-                      color: "#FFBF0E",
-                    }}
-                  >
-                    soulmatchinfo@gmail.com
-                  </a>
-                </p>
+               
                 <p style={{ textAlign: "center" }}>
                   Copyright © <span id="cry">2024</span>{" "}
                   <a
@@ -738,6 +727,18 @@ console.log("...location state in education...",location.state)
                     SoulMatch
                   </a>{" "}
                   All rights reserved.
+                </p>
+                <p>
+                  <strong>Contact Us: </strong>
+                  <a
+                    href="mailto:soulmatchinfo@gmail.com"
+                    style={{
+                      textDecoration: "none",
+                      color: "#FFBF0E",
+                    }}
+                  >
+                    soulmatchinfo@gmail.com
+                  </a>
                 </p>
               </div>
             </div>

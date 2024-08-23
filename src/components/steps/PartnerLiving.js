@@ -332,18 +332,7 @@ function PartnerLiving() {
                   padding: "20px 0",
                 }}
               >
-                <p>
-                  <strong>Contact Us: </strong>
-                  <a
-                    href="mailto:soulmatchinfo@gmail.com"
-                    style={{
-                      textDecoration: "none",
-                      color: "#FFBF0E",
-                    }}
-                  >
-                    soulmatchinfo@gmail.com
-                  </a>
-                </p>
+                
                 <p style={{ textAlign: "center" }}>
                   Copyright © <span id="cry">2024</span>{" "}
                   <a
@@ -357,6 +346,18 @@ function PartnerLiving() {
                     SoulMatch
                   </a>{" "}
                   All rights reserved.
+                </p>
+                <p>
+                  <strong>Contact Us: </strong>
+                  <a
+                    href="mailto:soulmatchinfo@gmail.com"
+                    style={{
+                      textDecoration: "none",
+                      color: "#FFBF0E",
+                    }}
+                  >
+                    soulmatchinfo@gmail.com
+                  </a>
                 </p>
               </div>
             </div>
