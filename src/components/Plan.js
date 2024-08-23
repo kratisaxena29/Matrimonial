@@ -49,7 +49,7 @@ function Plan() {
     const data = {
       email: user?.email || "Not Available",
       phoneno: user?.phoneno || "Not Available",
-      amount: amount,
+      amount: amount*100,
       MUID: "MUID" + Date.now(),
       transactionId: 'T' + Date.now(),
     };
@@ -75,9 +75,9 @@ function Plan() {
   }, [URL]);
 
   const plans = [
-    { name: "Gold", amount: 799 },
-    { name: "Diamond", amount: 1099 },
-    { name: "Platinum", amount: 1499 },
+    { name: "Gold", amount: 699 },
+    { name: "Diamond", amount: 999 },
+    { name: "Platinum", amount: 1399 },
   ];
 
   return (
