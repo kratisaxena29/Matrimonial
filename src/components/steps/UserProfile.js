@@ -74,6 +74,7 @@ function UserProfile({ setlogedIn }) {
     ageRange: "",
     heightRange: "",
     aboutMe: "",
+    plan : "",
   });
 
 
@@ -520,6 +521,7 @@ console.log("...gallery...",gallery)
         ageRange: response.data.Part_ageFrom || "Not Available" ,
         heightRange: response.data.Part_height || "Not Available" ,
         aboutMe: response.data.aboutYourSelf || "Not Available" ,
+        plan : response.data.plan || "Not Available"
       };
       setProfileData(dummyData);
       } catch (error) {
@@ -533,6 +535,19 @@ console.log("...gallery...",gallery)
   const handleLogo = () => {
     navigate('/profiles')
   }
+  const getPlanName = () => {
+    console.log("...getplan...",profileData?.plan)
+    switch (profileData?.plan) {
+      case "69900":
+        return "Gold";
+      case "99900":
+        return "Diamond";
+      case "139900":
+        return "Platinum";
+      default:
+        return "Membership Plan";
+    }
+  };
 
   return (
     <div>
@@ -564,7 +579,8 @@ console.log("...gallery...",gallery)
               handlePlans();
             }}
           >
-           Membership Plan
+  
+  {getPlanName()}
           </Button>
 
           <Button

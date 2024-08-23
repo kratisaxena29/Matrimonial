@@ -118,7 +118,7 @@ function Plan() {
         </Typography>
         <Grid container spacing={3} justifyContent="center" alignItems="center">
           {plans.map((plan) => (
-            (oneProfile.plan !== plan.amount.toString()) && (
+            (oneProfile.plan !== (plan.amount*100).toString()) && (
               <Grid item xs={12} md={4} key={plan.name}>
                 <Paper
                   elevation={3}
@@ -166,10 +166,10 @@ function Plan() {
                       <Grid item>
                         <Typography variant="body1" style={{ marginLeft: "5px" }}>
                           {plan.name === "Gold"
-                            ? "View up to 50 contact numbers"
-                            : plan.name === "Diamond"
                             ? "View up to 100 contact numbers"
-                            : "View up to 200 contact numbers"}
+                            : plan.name === "Diamond"
+                            ? "View up to 150 contact numbers"
+                            : "View up to 300 contact numbers"}
                         </Typography>
                       </Grid>
                     </Grid>

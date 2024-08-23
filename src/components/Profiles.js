@@ -665,11 +665,11 @@ function Profiles({ setlogedIn }) {
 
     const getPlanName = () => {
       switch (oneProfile.plan) {
-        case "100":
+        case "69900":
           return "Gold";
-        case "200":
+        case "99900":
           return "Diamond";
-        case "300":
+        case "139900":
           return "Platinum";
         default:
           return "Membership Plan";
@@ -921,11 +921,11 @@ function Profiles({ setlogedIn }) {
                             >
                               {(() => {
                                 switch (profile.plan) {
-                                  case "100":
+                                  case "69900":
                                     return "Gold";
-                                  case "200":
-                                    return "Diamond";
-                                  case "300":
+                                  case "99900":
+                                    return "Diamonds";
+                                  case "139900":
                                     return "Platinum";
                                   default:
                                     return "";
