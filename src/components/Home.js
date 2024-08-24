@@ -663,7 +663,7 @@ function Home() {
           </a>{" "}
           All rights reserved.
         </p>
-        <p className="contact-info" style={{ fontSize: "18px" }}>
+        <p  style={{ fontSize: "18px" }}>
           <strong>Contact Us: </strong>
           <a
             href="mailto:soulmatchinfo@gmail.com"
