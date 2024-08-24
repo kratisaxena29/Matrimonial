@@ -1,22 +1,10 @@
-import React, { lazy, useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "../../images/logo.png";
-import noProfile from "../../images/profiles/noProfile.jpg";
-import EditIcon from '@mui/icons-material/Edit';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import CloseIcon from '@mui/icons-material/Close';
-
 import { useLocation, useNavigate } from "react-router-dom";
 import {
-  MenuItem,
-  Select,
-  InputLabel,
-  FormControl,
   Button,
-  TextField,
-  Checkbox,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
   Typography,
   Box,
   Grid,
@@ -25,77 +13,13 @@ import {
 import axios from "axios";
 
 function GalleryUpload({ setlogedIn }) {
-  const location = useLocation()
-  const [selectedPhoto, setSelectedPhoto] = useState("");
-  const [photoUrl, setPhotoUrl] = useState("");
-  const [age, setAge] = useState("");
-  const [caste, setCaste] = useState("");
-  const [religion, setReligion] = useState("");
-  const [profiles, setProfiles] = useState([]);
-  const [interestedProfiles, setInterestedProfiles] = useState([]);
-  const [subcaste, setSubCaste] = useState("");
+  const location = useLocation();
+  const [gallery, setGallery] = useState([]);
   const navigate = useNavigate();
-
-//   const user = JSON.parse(sessionStorage.getItem("user"));
-//   console.log("..user...", user);
-//   console.log("..user email...", user.email);
-//   console.log("...age..", age);
-//   console.log("...caste..", caste);
-//   console.log("...religion...", religion);
-
+  const email = location.state?.email;
+  const phonene = location.state?.phonene;
   const URL = process.env.REACT_APP_API_BASE_URL;
 
-
-  const handleInterest = (profileId) => {
-    console.log("Interest button clicked for profile:", profileId);
-
-    setInterestedProfiles((prevState) => {
-      const updatedProfiles = [...prevState, profileId];
-      console.log("..updatedProfile..", updatedProfiles);
-      return updatedProfiles;
-    });
-  };
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [profileData, setProfileData] = useState({
-    fullName: "",
-    dateOfBirth: "",
-    gender: "",
-    maritalStatus: "",
-    religion: "",
-    caste: "",
-    fatherOccupation: "",
-    motherOccupation: "",
-    familyType: "",
-    highestEducation: "",
-    occupation: "",
-    annualIncome: "",
-    diet: "",
-    smoking: false,
-    drinking: false,
-    ageRange: "",
-    heightRange: "",
-    aboutMe: "",
-  });
-
-  console.log("...phonene...",location.state)
-  const email = location.state.email
-  const phonene = location?.state?.phonene
-
-
-  const handleEditToggle = () => {
-    setIsEditMode(!isEditMode);
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setProfileData({
-      ...profileData,
-      [name]: type === "checkbox" ? checked : value,
-    });
-  };
-
-  const [gallery, setGallery] = useState([]);
-console.log("...gallery...",gallery)
   const handleGalleryUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -106,297 +30,61 @@ console.log("...gallery...",gallery)
       reader.readAsDataURL(file);
     }
     const formData = new FormData();
-  formData.append("file", file);
+    formData.append("file", file);
 
-  axios.post(`${URL}/upload-multiple-photo/${email}`, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  })
+    axios.post(`${URL}/upload-multiple-photo/${email}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
     .then((response) => {
-      console.log("phot updated successfully:", response.data);
-     
+      console.log("Photo updated successfully:", response.data);
     })
     .catch((error) => {
       console.error("Error updating profile:", error);
     });
   };
 
-  // const removePhoto = (index) => {
-  //   console.log("...removePhoto...",index)
-  //   setGallery(gallery.filter((_, i) => i !== index));
-  // };
-
-  // const removePhoto = async (index) => {
-  //   console.log("...removePhoto...", index);
-    
-  //   // Assuming gallery is an array of photo URLs
-  //   const photoToDelete = gallery[index];
-  //   const profileIdentifier = email || phonene; // Replace with actual user data
-  
-  //   try {
-  //     // Make an API call to delete the photo from the server
-  //     const response = await axios.post(
-  //       `${process.env.REACT_APP_API_BASE_URL}/deletephotosByEmailOrPhoneNo/${profileIdentifier}`,
-  //       { photoToDelete: photoToDelete }, // Request body
-  //       { headers: { 'Content-Type': 'application/json' } }
-  //     );
-  
-  //     // Check if the API call was successful
-  //     if (response.status === 200) {
-  //       console.log('Photo deleted successfully:', response.data);
-        
-  //       // Remove the photo from the gallery in the frontend
-  //       setGallery(gallery.filter((_, i) => i !== index));
-  //     } else {
-  //       console.error('Failed to delete photo:', response.data.message);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error during photo deletion:', error);
-  //   }
-  // };
-  
-  const refreshGallery = async () => {
-   
-};
-
-useEffect(() => {
-  const profileIdentifier = email || phonene;
-  axios.get(`${URL}/getphotosByEmailOrPhoneNo/${profileIdentifier}`)
-        .then(response => {
-          console.log("..user profile response...", response.data);
-          const photos = response.data.photoUrl
-          setGallery(photos);
-        })
-        .catch(error => {
-          console.log("...error...", error);
-        });
-  // if (userdata) {
-  //   const user = JSON.parse(userdata);
-  //   if (user && user.email) {
-  //     axios.get(`${URL}/getphotosByEmailOrPhoneNo/${user.email}`)
-  //       .then(response => {
-  //         console.log("..user profile response...", response.data);
-  //         const photos = response.data.photoUrl
-  //         setGallery(photos);
-  //       })
-  //       .catch(error => {
-  //         console.log("...error...", error);
-  //       });
-  //   }
-  // }
-}, [URL]);
-
-const removePhoto = async (index) => {
-  const photoToDelete = gallery[index];
-  const profileIdentifier = email || phonene;
-
-  try {
-    const response = await axios.post(
-      `${URL}/deletephotosByEmailOrPhoneNo/${profileIdentifier}`,
-      { photoToDelete },
-      { headers: { 'Content-Type': 'application/json' } }
-    );
-
-    if (response.status === 200) {
-      console.log('Photo deleted successfully:', response.data);
-      // Update the gallery state to remove the deleted photo from the frontend
-      setGallery((prevGallery) => prevGallery.filter((_, i) => i !== index));
-    } else {
-      console.error('Failed to delete photo:', response.data.message);
-    }
-  } catch (error) {
-    console.error('Error during photo deletion:', error);
-  }
-};
-
-
-
-  const renderField = (label, value, name, type = "text", options = []) => {
-    if (isEditMode) {
-      switch (type) {
-        case "select":
-          return (
-            <TextField
-              fullWidth
-              select
-              label={label}
-              variant="outlined"
-              name={name}
-              value={value}
-              onChange={handleInputChange}
-            >
-              {options.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
-          );
-        case "radio":
-          return (
-            <FormControl component="fieldset">
-              <RadioGroup
-                row
-                aria-label={name}
-                name={name}
-                value={value}
-                onChange={handleInputChange}
-              >
-                {options.map((option) => (
-                  <FormControlLabel
-                    key={option.value}
-                    value={option.value}
-                    control={<Radio />}
-                    label={option.label}
-                  />
-                ))}
-              </RadioGroup>
-            </FormControl>
-          );
-        case "checkbox":
-          return (
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={value}
-                  onChange={handleInputChange}
-                  name={name}
-                />
-              }
-              label={label}
-            />
-          );
-        case "textarea":
-          return (
-            <TextField
-              fullWidth
-              multiline
-              rows={4}
-              label={label}
-              variant="outlined"
-              name={name}
-              value={value}
-              onChange={handleInputChange}
-            />
-          );
-        default:
-          return (
-            <TextField
-              fullWidth
-              label={label}
-              variant="outlined"
-              name={name}
-              value={value}
-              onChange={handleInputChange}
-              type={type}
-            />
-          );
-      }
-    } else {
-      return (
-        <Typography variant="body1">
-          <strong>{label}:</strong> {value}
-        </Typography>
-      );
-    }
-  };
-  const uploadImage = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setSelectedPhoto(file);
-      uploadImageToServer(file);
-    }
-  };
-
-  const triggerFileInput = () => {
-    document.getElementById("fileInput").click();
-  };
-
-  const uploadImageToServer = async (file) => {
-    console.log("...upload image...");
-
-    const formData = new FormData();
-    formData.append("image", file);
+  const removePhoto = async (index) => {
+    const photoToDelete = gallery[index];
+    const profileIdentifier = email || phonene;
 
     try {
-      let apiUrl = `${URL}/upload?`;
-      if (email) {
-        apiUrl += `email`;
-      } else if ("9871627742") {
-        // console.log("...user.phoneno...", user.phoneno);
-        apiUrl += `phoneno=9871627742`;
-      }
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        body: formData,
-      });
+      const response = await axios.post(
+        `${URL}/deletephotosByEmailOrPhoneNo/${profileIdentifier}`,
+        { photoToDelete },
+        { headers: { 'Content-Type': 'application/json' } }
+      );
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log("File uploaded successfully:", data.fileUpload);
-        handlegetImageUrl();
+      if (response.status === 200) {
+        console.log('Photo deleted successfully:', response.data);
+        setGallery((prevGallery) => prevGallery.filter((_, i) => i !== index));
       } else {
-        console.error("Error uploading file:", response.statusText);
+        console.error('Failed to delete photo:', response.data.message);
       }
     } catch (error) {
-      console.error("Error uploading file:", error);
+      console.error('Error during photo deletion:', error);
     }
   };
-//   
-console.log("...krati location...",location.state)
-const handleConfirmation = async () => {
-  navigate('/Confirmation-Profile',{
-        state: {
-      ...location.state,
-    }
-  }
-  )
-}
-  
 
-  const handlegetImageUrl = async () => {
-    console.log("...handleImageUrl....")
-    axios
-      .get(`${URL}/getimagepath?email=${email}`)
-      .then((response) => {
-        console.log(
-          ".get image url response...",
-          response.data.response.imageUrl
-        );
-        setPhotoUrl(response.data.response.imageUrl);
+  const handleConfirmation = () => {
+    navigate('/Confirmation-Profile', { state: { ...location.state } });
+  };
+
+  useEffect(() => {
+    const profileIdentifier = email || phonene;
+    axios.get(`${URL}/getphotosByEmailOrPhoneNo/${profileIdentifier}`)
+      .then(response => {
+        const photos = response.data.photoUrl;
+        setGallery(photos);
       })
-      .catch((error) => {
-        console.log("...error..", error);
+      .catch(error => {
+        console.log("Error fetching photos:", error);
       });
-  };
-
-  useEffect(() => {
-    handlegetImageUrl();
-  }, []);
-
-
-
-
-
-  const handleLogout = () => {
-    // sessionStorage.clear();
-    // setlogedIn(false);
-    // sessionStorage.setItem("logedIn", "false");
-    navigate("/");
-  };
-  // const handlePlans = () => {
-  //   navigate("/plan");
-  // };
-  useEffect(() => {
-    console.log("..interestedProfiles after update..", interestedProfiles);
-  }, [interestedProfiles]);
-  const handleLogo = () => {
-    navigate('/profiles')
-  }
+  }, [URL]);
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <nav
         style={{
           backgroundColor: "#6D0B32",
@@ -406,66 +94,45 @@ const handleConfirmation = async () => {
           justifyContent: "space-between",
         }}
       >
-        <img onClick={handleLogo} src={logo} alt="Logo" style={{ height: "60px" }} />
-        <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-          {/* <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "transparent",
-              color: "white",
-              border: "2px solid",
-              borderColor: "#F68C1E",
-              "&:hover": {
-                backgroundColor: "#E57D0F",
-              },
-              textTransform: "none",
-              fontWeight: "bold",
-            }}
-            onClick={() => {
-              handlePlans();
-            }}
-          >
-            Plans
-          </Button> */}
-
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "#F68C1E",
-              color: "white",
-              "&:hover": {
-                backgroundColor: "red",
-              },
-              textTransform: "none",
-              fontWeight: "bold",
-            }}
-            onClick={handleLogout}
-          >
-            Logout
-          </Button>
-        </div>
+        <img onClick={() => navigate('/profiles')} src={logo} alt="Logo" style={{ height: "60px" }} />
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: "#F68C1E",
+            color: "white",
+            "&:hover": {
+              backgroundColor: "red",
+            },
+            textTransform: "none",
+            fontWeight: "bold",
+          }}
+          onClick={() => navigate("/")}
+        >
+          Logout
+        </Button>
       </nav>
-      <Box sx={{ padding: 14, borderRadius: 2, marginTop:20 }}>
-            <Typography
-              variant="h4"
-              gutterBottom
-              sx={{
-                // color: "#333",
-                fontWeight: "bold",
-                textAlign: "center",
-                marginTop: "20px",
-                color:"#76001C"
-              }}
-            >
-              Photo Gallery
-            </Typography>
+
+        <Typography
+          variant="h4"
+          gutterBottom
+          sx={{
+            fontWeight: "bold",
+            textAlign: "center",
+            color: "#76001C",
+            marginBottom: "0px",
+            paddingTop: "40px",
+          }}
+        >
+          Photo Gallery
+        </Typography>
+      <Box sx={{ flex: '1 0 auto', padding: 14, borderRadius: 2,}}>
+
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             gap: 3,
-            marginTop: 3,
             padding: 3,
             backgroundColor: "white",
             borderRadius: 2,
@@ -497,6 +164,7 @@ const handleConfirmation = async () => {
               Add Photos
             </Button>
           </label>
+
           <Grid container spacing={2} justifyContent="center">
             {gallery.map((photo, index) => (
               <Grid item xs={6} sm={4} md={3} key={index}>
@@ -545,49 +213,67 @@ const handleConfirmation = async () => {
               </Grid>
             ))}
           </Grid>
-          <button onClick={handleConfirmation}>Next</button>
+
+          <Button
+            variant="contained"
+            sx={{
+              width: "100px", // Adjust button width for mobile
+              backgroundColor: "#FB6A6B",
+              "&:hover": {
+                backgroundColor: "#FB6A6B",
+              },
+              mt:10
+            }}
+            onClick={handleConfirmation}
+          >
+            Next
+          </Button>
         </Box>
       </Box>
+
       <section>
-        <div className="cr">
-          <div className="container">
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-evenly",
-                alignItems: "center",
-                padding: "20px 0",
-              }}
-            >
-              <p>
-                <strong>Email: </strong>
-                <a
-                  href="mailto:soulmatchinfo@gmail.com"
-                  style={{ textDecoration: "none", color: "#FFBF0E" }}
-                >
-                  soulmatchinfo@gmail.com
-                </a>{" "}
-              </p>
-              <p style={{ width: "200rem", textAlign: "center" }}>
-                Copyright © <span id="cry">2024</span>{" "}
-                <a
-                  style={{ textDecoration: "none", color: "#FFBF00" }}
-                  href="#!"
-                  target="_blank"
-                >
-                  SoulMatch
-                </a>{" "}
-                All rights reserved.{" "}
-              </p>
-              <p>
-                <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong> 94490
-                65433
-              </p>
+          <div className="cr">
+            <div className="container">
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  padding: "20px 0",
+                }}
+              >
+                
+                <p style={{ textAlign: "center" }}>
+                  Copyright © <span id="cry">2024</span>{" "}
+                  <a
+                    style={{
+                      textDecoration: "none",
+                      color: "#FFBF00",
+                    }}
+                    href="#!"
+                    target="_blank"
+                  >
+                    SoulMatch
+                  </a>{" "}
+                  All rights reserved.
+                </p>
+                <p>
+                  <strong>Contact Us: </strong>
+                  <a
+                    href="mailto:soulmatchinfo@gmail.com"
+                    style={{
+                      textDecoration: "none",
+                      color: "#FFBF0E",
+                    }}
+                  >
+                    soulmatchinfo@gmail.com
+                  </a>
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
     </div>
   );
 }

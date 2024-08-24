@@ -472,7 +472,7 @@ function EducationCareer() {
               <FormControl
                 variant="standard"
                 sx={{ minWidth: "100%" }} // Make full width on mobile
-                error={!highestEducation}
+                // error={!highestEducation}
               >
                 <InputLabel id="highest-education-label">
                   Highest Education
@@ -496,14 +496,14 @@ function EducationCareer() {
                     )
                   )}
                 </Select>
-                {!highestEducation && (
+                {/* {!highestEducation && (
                   <FormHelperText>Highest education is required</FormHelperText>
-                )}
+                )} */}
               </FormControl>
               <FormControl
                 variant="standard"
                 sx={{ minWidth: "100%" }} // Make full width on mobile
-                error={!currentEmployment}
+                // error={!currentEmployment}
               >
                 <InputLabel id="current-employment-label">
                   Current Employment
@@ -520,16 +520,16 @@ function EducationCareer() {
                   <MenuItem value="Unemployed">Unemployed</MenuItem>
                   <MenuItem value="Student">Student</MenuItem>
                 </Select>
-                {!currentEmployment && (
+                {/* {!currentEmployment && (
                   <FormHelperText>
                     Current employment status is required
                   </FormHelperText>
-                )}
+                )} */}
               </FormControl>
               <FormControl
                 variant="standard"
                 sx={{ minWidth: "100%" }} // Make full width on mobile
-                error={!profession}
+                // error={!profession}
               >
                 <InputLabel id="profession-label">Profession</InputLabel>
                 <Select
@@ -551,14 +551,14 @@ function EducationCareer() {
                     )
                   )}
                 </Select>
-                {!profession && (
+                {/* {!profession && (
                   <FormHelperText>Profession is required</FormHelperText>
-                )}
+                )} */}
               </FormControl>
               <FormControl
                 variant="standard"
                 sx={{ minWidth: "100%" }} // Make full width on mobile
-                error={!annualIncome}
+                // error={!annualIncome}
               >
                 <InputLabel id="annual-income-label">Annual Income</InputLabel>
                 <Select
@@ -578,14 +578,14 @@ function EducationCareer() {
                     More than 30 lakh
                   </MenuItem>
                 </Select>
-                {!annualIncome && (
+                {/* {!annualIncome && (
                   <FormHelperText>Annual income is required</FormHelperText>
-                )}
+                )} */}
               </FormControl>
               <FormControl
                 variant="standard"
                 sx={{ minWidth: "100%" }} // Make full width on mobile
-                error={!yearsOfExperience}
+                // error={!yearsOfExperience}
               >
                 <InputLabel id="years-of-experience-label">
                   Years of Experience
@@ -606,11 +606,11 @@ function EducationCareer() {
                     More than 10 years
                   </MenuItem>
                 </Select>
-                {!yearsOfExperience && (
+                {/* {!yearsOfExperience && (
                   <FormHelperText>
                     Years of experience is required
                   </FormHelperText>
-                )}
+                )} */}
               </FormControl>
             </div>
             <div

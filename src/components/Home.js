@@ -183,174 +183,306 @@ function Home() {
         </div>
       </header>
       <section
-  className="responsive-section"
-  style={{ backgroundColor: "#F7E7CE", padding: "50px 0" }}
->
-  <div className="container">
-    <div className="row align-items-center">
-      <div className="col-md-6">
-        <div className="hom-ban">
-          <div className="ban-tit">
-            <span style={{ color: "#EC184A", fontWeight: "bold" }}>
-              <i className="no1" style={{ backgroundColor: "#EC184A", color: "white", padding: "2px 5px", borderRadius: "50%" }}>#1</i> Matrimony
-            </span>
-            <h1 style={{ fontSize: "3rem", color: "#333" }}>
-              Find your
-              <br />
-              <b style={{ color: "#EC184A" }}>Right Match</b> here
-            </h1>
-            <p style={{ fontSize: "1.2rem", color: "#666" }}>Most trusted Matrimony Brand in the World.</p>
+        className="responsive-section"
+        style={{ backgroundColor: "#F7E7CE", padding: "50px 0" }}
+      >
+        <div className="container">
+          <div className="row align-items-center">
+            <div className="col-md-6">
+              <div className="hom-ban">
+                <div className="ban-tit">
+                  <span style={{ color: "#EC184A", fontWeight: "bold" }}>
+                    <i
+                      className="no1"
+                      style={{
+                        backgroundColor: "#EC184A",
+                        color: "white",
+                        padding: "2px 5px",
+                        borderRadius: "50%",
+                      }}
+                    >
+                      #1
+                    </i>{" "}
+                    Matrimony
+                  </span>
+                  <h1 style={{ fontSize: "3rem", color: "#333" }}>
+                    Find your
+                    <br />
+                    <b style={{ color: "#EC184A" }}>Right Match</b> here
+                  </h1>
+                  <p style={{ fontSize: "1.2rem", color: "#666" }}>
+                    Most trusted Matrimony Brand in the World.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-6">
+              <div
+                className="form-container"
+                ref={formContainerRef}
+                style={{
+                  padding: "30px 20px",
+                  borderRadius: "15px",
+                  backgroundColor: "#fff",
+                  boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
+                  marginTop: "10%",
+                  transition: "all 0.3s ease",
+                }}
+              >
+                <h1
+                  className="form-title"
+                  style={{
+                    textAlign: "center",
+                    marginBottom: "30px",
+                    color: "#333",
+                  }}
+                >
+                  Sign up to Matrimony
+                </h1>
+                {registerMethod === null ? (
+                  <div
+                    className="button-container"
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
+                    <button
+                      onClick={() => setRegisterMethod("email")}
+                      className="register-button"
+                      style={{
+                        marginBottom: "15px",
+                        width: "100%",
+                        padding: "12px",
+                        backgroundColor: "#EC184A",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "25px",
+                        fontSize: "16px",
+                        cursor: "pointer",
+                        transition: "background-color 0.3s ease",
+                      }}
+                    >
+                      Register with Email
+                    </button>
+                    <button
+                      onClick={() => setRegisterMethod("phone")}
+                      className="phone-button"
+                      style={{
+                        width: "100%",
+                        padding: "12px",
+                        backgroundColor: "#FF4081",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "25px",
+                        fontSize: "16px",
+                        cursor: "pointer",
+                        transition: "background-color 0.3s ease",
+                      }}
+                    >
+                      Register with Phone
+                    </button>
+                  </div>
+                ) : (
+                  <form
+                    className="form"
+                    onSubmit={handleRegister}
+                    style={{ marginTop: "20px" }}
+                  >
+                    <div
+                      className="form-group"
+                      style={{ marginBottom: "20px", position: "relative" }}
+                    >
+                      <label
+                        htmlFor="first"
+                        style={{
+                          position: "absolute",
+                          top: "-10px",
+                          left: "10px",
+                          backgroundColor: "white",
+                          padding: "0 5px",
+                          fontSize: "12px",
+                          color: "#666",
+                        }}
+                      >
+                        First Name
+                      </label>
+                      <input
+                        type="text"
+                        id="first"
+                        value={firstName}
+                        onChange={(event) => setFirstName(event.target.value)}
+                        required
+                        style={{
+                          width: "100%",
+                          padding: "12px",
+                          border: "1px solid #ddd",
+                          borderRadius: "5px",
+                          fontSize: "16px",
+                        }}
+                      />
+                    </div>
+                    <div
+                      className="form-group"
+                      style={{ marginBottom: "20px", position: "relative" }}
+                    >
+                      <label
+                        htmlFor="last"
+                        style={{
+                          position: "absolute",
+                          top: "-10px",
+                          left: "10px",
+                          backgroundColor: "white",
+                          padding: "0 5px",
+                          fontSize: "12px",
+                          color: "#666",
+                        }}
+                      >
+                        Last Name
+                      </label>
+                      <input
+                        type="text"
+                        id="last"
+                        value={lastName}
+                        onChange={(event) => setLastName(event.target.value)}
+                        required
+                        style={{
+                          width: "100%",
+                          padding: "12px",
+                          border: "1px solid #ddd",
+                          borderRadius: "5px",
+                          fontSize: "16px",
+                        }}
+                      />
+                    </div>
+                    {registerMethod === "email" ? (
+                      <div
+                        className="form-group"
+                        style={{ marginBottom: "20px", position: "relative" }}
+                      >
+                        <label
+                          htmlFor="email"
+                          style={{
+                            position: "absolute",
+                            top: "-10px",
+                            left: "10px",
+                            backgroundColor: "white",
+                            padding: "0 5px",
+                            fontSize: "12px",
+                            color: "#666",
+                          }}
+                        >
+                          Email
+                        </label>
+                        <input
+                          type="email"
+                          id="email"
+                          value={email}
+                          onChange={(event) => setEmail(event.target.value)}
+                          required
+                          style={{
+                            width: "100%",
+                            padding: "12px",
+                            border: "1px solid #ddd",
+                            borderRadius: "5px",
+                            fontSize: "16px",
+                          }}
+                        />
+                      </div>
+                    ) : (
+                      <div
+                        className="form-group"
+                        style={{ marginBottom: "20px", position: "relative" }}
+                      >
+                        <label
+                          htmlFor="phone"
+                          style={{
+                            position: "absolute",
+                            top: "-10px",
+                            left: "10px",
+                            backgroundColor: "white",
+                            padding: "0 5px",
+                            fontSize: "12px",
+                            color: "#666",
+                          }}
+                        >
+                          Phone
+                        </label>
+                        <input
+                          type="tel"
+                          id="phone"
+                          value={phone}
+                          onChange={(event) => setPhone(event.target.value)}
+                          required
+                          style={{
+                            width: "100%",
+                            padding: "12px",
+                            border: "1px solid #ddd",
+                            borderRadius: "5px",
+                            fontSize: "16px",
+                          }}
+                        />
+                      </div>
+                    )}
+                    <div
+                      className="form-group"
+                      style={{ marginBottom: "20px", position: "relative" }}
+                    >
+                      <label
+                        htmlFor="password"
+                        style={{
+                          position: "absolute",
+                          top: "-10px",
+                          left: "10px",
+                          backgroundColor: "white",
+                          padding: "0 5px",
+                          fontSize: "12px",
+                          color: "#666",
+                        }}
+                      >
+                        Password
+                      </label>
+                      <input
+                        type="password"
+                        id="password"
+                        value={password}
+                        onChange={(event) => setPassword(event.target.value)}
+                        required
+                        style={{
+                          width: "100%",
+                          padding: "12px",
+                          border: "1px solid #ddd",
+                          borderRadius: "5px",
+                          fontSize: "16px",
+                        }}
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      className="register-button"
+                      style={{
+                        width: "100%",
+                        padding: "12px",
+                        backgroundColor: "#FF4081",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "25px",
+                        fontSize: "16px",
+                        cursor: "pointer",
+                        transition: "background-color 0.3s ease",
+                      }}
+                    >
+                      Register
+                    </button>
+                  </form>
+                )}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="col-md-6">
-        <div
-          className="form-container"
-          ref={formContainerRef}
-          style={{
-            padding: "30px 20px",
-            borderRadius: "15px",
-            backgroundColor: "#fff",
-            boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
-            marginTop: "10%",
-            transition: "all 0.3s ease",
-          }}
-        >
-          <h1 className="form-title" style={{ textAlign: "center", marginBottom: "30px", color: "#333" }}>Sign up to Matrimony</h1>
-          {registerMethod === null ? (
-            <div
-              className="button-container"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <button
-                onClick={() => setRegisterMethod("email")}
-                className="register-button"
-                style={{
-                  marginBottom: "15px",
-                  width: "100%",
-                  padding: "12px",
-                  backgroundColor: "#EC184A",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "25px",
-                  fontSize: "16px",
-                  cursor: "pointer",
-                  transition: "background-color 0.3s ease",
-                }}
-              >
-                Register with Email
-              </button>
-              <button
-                onClick={() => setRegisterMethod("phone")}
-                className="phone-button"
-                style={{
-                  width: "100%",
-                  padding: "12px",
-                  backgroundColor: "#FF4081",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "25px",
-                  fontSize: "16px",
-                  cursor: "pointer",
-                  transition: "background-color 0.3s ease",
-                }}
-              >
-                Register with Phone
-              </button>
-            </div>
-          ) : (
-            <form
-              className="form"
-              onSubmit={handleRegister}
-              style={{ marginTop: "20px" }}
-            >
-              <div className="form-group" style={{ marginBottom: "20px", position: "relative" }}>
-                <label htmlFor="first" style={{ position: "absolute", top: "-10px", left: "10px", backgroundColor: "white", padding: "0 5px", fontSize: "12px", color: "#666" }}>First Name</label>
-                <input
-                  type="text"
-                  id="first"
-                  value={firstName}
-                  onChange={(event) => setFirstName(event.target.value)}
-                  required
-                  style={{ width: "100%", padding: "12px", border: "1px solid #ddd", borderRadius: "5px", fontSize: "16px" }}
-                />
-              </div>
-              <div className="form-group" style={{ marginBottom: "20px", position: "relative" }}>
-                <label htmlFor="last" style={{ position: "absolute", top: "-10px", left: "10px", backgroundColor: "white", padding: "0 5px", fontSize: "12px", color: "#666" }}>Last Name</label>
-                <input
-                  type="text"
-                  id="last"
-                  value={lastName}
-                  onChange={(event) => setLastName(event.target.value)}
-                  required
-                  style={{ width: "100%", padding: "12px", border: "1px solid #ddd", borderRadius: "5px", fontSize: "16px" }}
-                />
-              </div>
-              {registerMethod === "email" ? (
-                <div className="form-group" style={{ marginBottom: "20px", position: "relative" }}>
-                  <label htmlFor="email" style={{ position: "absolute", top: "-10px", left: "10px", backgroundColor: "white", padding: "0 5px", fontSize: "12px", color: "#666" }}>Email</label>
-                  <input
-                    type="email"
-                    id="email"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
-                    required
-                    style={{ width: "100%", padding: "12px", border: "1px solid #ddd", borderRadius: "5px", fontSize: "16px" }}
-                  />
-                </div>
-              ) : (
-                <div className="form-group" style={{ marginBottom: "20px", position: "relative" }}>
-                  <label htmlFor="phone" style={{ position: "absolute", top: "-10px", left: "10px", backgroundColor: "white", padding: "0 5px", fontSize: "12px", color: "#666" }}>Phone</label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    value={phone}
-                    onChange={(event) => setPhone(event.target.value)}
-                    required
-                    style={{ width: "100%", padding: "12px", border: "1px solid #ddd", borderRadius: "5px", fontSize: "16px" }}
-                  />
-                </div>
-              )}
-              <div className="form-group" style={{ marginBottom: "20px", position: "relative" }}>
-                <label htmlFor="password" style={{ position: "absolute", top: "-10px", left: "10px", backgroundColor: "white", padding: "0 5px", fontSize: "12px", color: "#666" }}>Password</label>
-                <input
-                  type="password"
-                  id="password"
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
-                  required
-                  style={{ width: "100%", padding: "12px", border: "1px solid #ddd", borderRadius: "5px", fontSize: "16px" }}
-                />
-              </div>
-              <button
-                type="submit"
-                className="register-button"
-                style={{
-                  width: "100%",
-                  padding: "12px",
-                  backgroundColor: "#FF4081",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "25px",
-                  fontSize: "16px",
-                  cursor: "pointer",
-                  transition: "background-color 0.3s ease",
-                }}
-              >
-                Register
-              </button>
-            </form>
-          )}
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
 
       <section>
         <div className="str">
@@ -505,48 +637,49 @@ function Home() {
         </div>
       </section>
       <section>
-        <div className="cr">
-          <div className="container">
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "20px 0",
-              }}
-            >
-             
-              <p style={{ textAlign: "center" }}>
-                Copyright © <span id="cry">2024</span>{" "}
-                <a
-                  style={{
-                    textDecoration: "none",
-                    color: "#FFBF00",
-                  }}
-                  href="#!"
-                  target="_blank"
-                >
-                  SoulMatch
-                </a>{" "}
-                All rights reserved.
-              </p>
-              <p>
-                <strong>Contact Us: </strong>
-                <a
-                  href="mailto:soulmatchinfo@gmail.com"
-                  style={{
-                    textDecoration: "none",
-                    color: "#FFBF0E",
-                  }}
-                >
-                  soulmatchinfo@gmail.com
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+  <div className="cr">
+    <div className="container">
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "20px 0",
+        }}
+      >
+        <p style={{color:"#FFF", textAlign: "center", fontSize: "18px" }}>
+          Copyright © <span id="cry">2024</span>{" "}
+          <a
+            style={{
+              textDecoration: "none",
+              color: "#FFBF00",
+              fontSize:"19px"
+            }}
+            href="#!"
+            target="_blank"
+          >
+            SoulMatch
+          </a>{" "}
+          All rights reserved.
+        </p>
+        <p className="contact-info" style={{ fontSize: "18px" }}>
+          <strong>Contact Us: </strong>
+          <a
+            href="mailto:soulmatchinfo@gmail.com"
+            style={{
+              textDecoration: "none",
+              color: "#FFF",
+            }}
+          >
+            soulmatchinfo@gmail.com
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
     </div>
   );
 }
