@@ -120,7 +120,7 @@ function Home() {
       const response = await axios.post(
         `${URL}/phone-otp`,
         {
-          subject: "Hey! Your One Time Password",
+          subject: "Hey! Your One Time Password From SoulMatch",
           phoneno: phone,
         },
         {
@@ -140,7 +140,7 @@ function Home() {
       const response = await axios.post(
         `${URL}/email-otp`,
         {
-          subject: "Hey! Your One Time Password",
+          subject: "Hey! Your One Time Password From SoulMatch",
           email,
         },
         {
