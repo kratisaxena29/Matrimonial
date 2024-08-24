@@ -2953,7 +2953,7 @@ table td{}
 .cr * {
     color: #FFF;
     font-weight: 400;
-    font-size: 14px;
+    font-size: 18px;
 }
 
 .cr p {
@@ -12953,7 +12953,7 @@ h2.db-tit{
   }
   
   .login-button {
-    background-color: #F4A460; /* Orange color as shown in the image */
+    background-color: #ff9d00; /* Orange color as shown in the image */
     color: white;
     border: none;
     padding: 8px 16px;
