@@ -44,15 +44,15 @@ function PartnerLiving() {
       };
 
       if (!part_diet) {
-        newErrors.diet = "Please select a diet";
+        // newErrors.diet = "Please select a diet";
         valid = false;
       }
       if (!part_alcohol) {
-        newErrors.alcohol = "Please select alcohol consumption";
+        // newErrors.alcohol = "Please select alcohol consumption";
         valid = false;
       }
       if (!part_smoke) {
-        newErrors.smoke = "Please select smoking status";
+        // newErrors.smoke = "Please select smoking status";
         valid = false;
       }
 
