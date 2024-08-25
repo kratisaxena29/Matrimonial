@@ -12984,11 +12984,11 @@ h2.db-tit{
   .ic-logo {
     height: 40px; /* Adjust as needed */
   }
-  /* @media (max-width: 768px) {
+  @media (max-width: 768px) {
     .contact-info {
       display: none;
     }
-  } */
+  }
   .footer-content {
     display: flex;
     flex-direction: row;
