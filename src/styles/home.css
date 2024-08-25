@@ -12949,7 +12949,7 @@ h2.db-tit{
   }
   
   .contact-info strong {
-    color: #FFBF0E; /* Yellow color for "Contact Us:" */
+    color: #FFF; /* Yellow color for "Contact Us:" */
   }
   
   .login-button {
@@ -12984,9 +12984,27 @@ h2.db-tit{
   .ic-logo {
     height: 40px; /* Adjust as needed */
   }
-  @media (max-width: 768px) {
+  /* @media (max-width: 768px) {
     .contact-info {
       display: none;
+    }
+  } */
+  .footer-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+  }
+  
+  @media (max-width: 768px) {
+    .footer-content {
+      flex-direction: column;
+    }
+  
+    .footer-content p {
+      margin: 5px 0;
+      text-align: center;
     }
   }
   
