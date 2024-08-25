@@ -31,6 +31,9 @@ function ConfirmationProfile() {
   // console.log("...user...",user)
   const URL = process.env.REACT_APP_API_BASE_URL;
   const handleContinue = async() => {
+    
+    if(location.state.email){
+      console.log("..under email")
     try {
       const response = await axios.post(`${URL}/welcome-email`,
         {
@@ -51,6 +54,13 @@ function ConfirmationProfile() {
     } catch (error) {
       console.log("Error:", error);
     }
+  }
+ else if(location.state.phoneNo){
+  console.log("..under phone no")
+    navigate('/login')
+         
+      
+  }
     
     // if(location.state.email){
     //   navigate('/profile-details',{

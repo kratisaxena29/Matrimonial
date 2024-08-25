@@ -50,7 +50,8 @@ function ConfirmationOtp() {
         Thank you!
       </Typography>
       <Typography variant="h6" style={textStyle}>
-        You have verified your email !
+        {/* You have verified your email ! */}
+        {"for your verification!"}
       </Typography>
       <Button
       onClick={handleContinue}

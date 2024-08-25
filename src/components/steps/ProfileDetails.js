@@ -586,29 +586,32 @@ function ProfileDetails() {
                 </Grid>
               )}
               <Grid item xs={12} sm={6}>
-                <TextField
-                  label="Email"
-                  variant="standard"
-                  value={email}
-                  onChange={handleChange(setEmail, "email")}
-                  onBlur={handleBlur("email")}
-                  error={!!errors.email}
-                  helperText={errors.email}
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="Phone No"
-                  variant="standard"
-                  value={phoneNo}
-                  onChange={handleChange(setPhoneNo, "phoneNo")}
-                  onBlur={handleBlur("phoneNo")}
-                  error={!!errors.phoneNo}
-                  helperText={errors.phoneNo}
-                  fullWidth
-                />
-              </Grid>
+  {location.state.email ? (
+    <TextField
+      label="Email"
+      variant="standard"
+      value={email}
+      onChange={handleChange(setEmail, "email")}
+      onBlur={handleBlur("email")}
+      error={!!errors.email}
+      helperText={errors.email}
+      fullWidth
+    />
+  ) : (
+    <TextField
+      label="Phone No"
+      variant="standard"
+      value={phoneNo}
+      onChange={handleChange(setPhoneNo, "phoneNo")}
+      onBlur={handleBlur("phoneNo")}
+      error={!!errors.phoneNo}
+      helperText={errors.phoneNo}
+      fullWidth
+    />
+  )}
+</Grid>
+
+             
               <Grid item xs={12}>
                 <FormControl
                   variant="standard"
