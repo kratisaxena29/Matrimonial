@@ -10,7 +10,7 @@ import couple3 from "../images/gallery/img3.jpg";
 import couple4 from "../images/gallery/img4.jpg";
 import couple5 from "../images/gallery/couple_new2.jpg";
 import couple6 from "../images/gallery/img6.jpg";
-import couple7 from "../images/gallery/couple_new3.jpg";
+// import couple7 from "../images/gallery/couple_new3.jpg";
 import couple8 from "../images/gallery/img8.jpg";
 
 // import couple1 from "../images/gallery/couple-1.jpg";
@@ -18,7 +18,7 @@ import couple8 from "../images/gallery/img8.jpg";
 // import couple3 from "../images/gallery/couple-3.jpg";
 // import couple4 from "../images/gallery/couple-4.png";
 // import couple5 from "../images/gallery/couple-5.png";
-// import couple6 from "../images/gallery/couple-6.png";
+import couple7 from "../images/gallery/couple-6.png";
 // import couple7 from "../images/gallery/couple-7.jpg";
 // import couple8 from "../images/gallery/couple-8.jpg";
 import logo from "../images/logo.png";

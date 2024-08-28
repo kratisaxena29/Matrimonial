@@ -96,13 +96,13 @@ console.log("...profileData...",profileData.dateOfBirth)
     e.preventDefault();
     // Submit updated profile data to API
     console.log("Updated profile data:", profileData);
-    let data  = user.email
-      if(data.includes('@')){
-        data = user.email
-      }
-      else{
-        data = user.phoneno
-      }
+    let data  = user.email ? user.email : user.phoneno
+      // if(data.includes('@')){
+      //   data = user.email
+      // }
+      // else{
+      //   data = user.phoneno
+      // }
     axios.put(`${URL}/ProfileUpdate/${data}`,{
       name : profileData.fullName,
       aboutYourSelf :    profileData.aboutMe,
@@ -135,6 +135,13 @@ console.log("...profileData...",profileData.dateOfBirth)
   const [gallery, setGallery] = useState([]);
 console.log("...gallery...",gallery)
   const handleGalleryUpload = (event) => {
+    console.log("...handlegallery...")
+    const identifier = user.email || "+919871627742";
+
+    if (!identifier) {
+        console.error("Identifier is undefined. Please check if the email or phone number is being passed correctly.");
+        return;
+    }
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -146,7 +153,7 @@ console.log("...gallery...",gallery)
     const formData = new FormData();
   formData.append("file", file);
 
-  axios.post(`${URL}/upload-multiple-photo/${user.email}`, formData, {
+  axios.post(`${URL}/upload-multiple-photo/${identifier}`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -195,21 +202,15 @@ console.log("...gallery...",gallery)
   };
   
   useEffect(() => {
-    const userdata = sessionStorage.getItem('user');
-    if (userdata) {
-      const user = JSON.parse(userdata);
-      if (user && user.email) {
-        axios.get(`${URL}/getphotosByEmailOrPhoneNo/${user.email}`)
-          .then(response => {
-            console.log("..user profile response...", response.data);
-            const photos = response.data.photoUrl
-            setGallery(photos);
-          })
-          .catch(error => {
-            console.log("...error...", error);
-          });
-      }
-    }
+    const profileIdentifier = user.email ? user.email : user.phoneno;
+    axios.get(`${URL}/getphotosByEmailOrPhoneNo/${profileIdentifier}`)
+      .then(response => {
+        const photos = response.data.photoUrl;
+        setGallery(photos);
+      })
+      .catch(error => {
+        console.log("Error fetching photos:", error);
+      });
   }, [URL]);
 
   const renderField = (label, value, name, type = "text", options = []) => {
@@ -454,8 +455,10 @@ console.log("...gallery...",gallery)
 
   const handlegetImageUrl = async () => {
     console.log("...handleImageUrl....")
+    const identifier = user.email  ? user.email : user.phoneno
+    
     axios
-      .get(`${URL}/getimagepath?email=${user.email}`)
+      .get(`${URL}/getimagepath/${identifier}`)
       .then((response) => {
         console.log(
           ".get image url response...",
@@ -491,13 +494,14 @@ console.log("...gallery...",gallery)
   useEffect(() => {
     const handleData = async () => {
       console.log("....user krati...",user.email)
-      let data  = user.email
-      if(data.includes('@')){
-        data = user.email
-      }
-      else{
-        data = user.phoneno
-      }
+      let data  = user.email  ? user.email : user.phoneno
+      console.log("..data...", data)
+      // if(data.includes('@')){
+      //   data = user.email
+      // }
+      // else{
+      //   data = user.phoneno
+      // }
       try {
         const response = await axios.get(`${URL}/profilebyid/${data}`);
       
@@ -1373,7 +1377,9 @@ console.log("...gallery...",gallery)
                   backgroundColor: "rgba(63, 81, 181, 0.04)",
                 },
               }}
+                 onChange={handleGalleryUpload}
             >
+              
               Add Photos
             </Button>
           </label>

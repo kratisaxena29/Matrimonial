@@ -52,6 +52,7 @@ const Login = ({ setlogedIn }) => {
           },
         }
       );
+      console.log("....loginresponse...",response.data.response)
       const { token, user } = response.data.response;
       sessionStorage.setItem('token', token);
       sessionStorage.setItem('user', JSON.stringify(user));
@@ -75,11 +76,26 @@ const Login = ({ setlogedIn }) => {
 
       if (error.response.data.Error === "Email or PhoneNo not verified") {
         toast.warning("Please verify your email");
-        navigate('/verify-otp', {
-          state: {
-            state: isEmail ? { email: formData.emailOrPhone } : { phoneno: formData.emailOrPhone },
-          },
-        });
+        // navigate('/verify-otp', {
+        //   state: {
+        //     state: isEmail ? { email: formData.emailOrPhone } : { phoneno: formData.emailOrPhone },
+        //   },
+        // });
+        const email = isEmail ? formData.emailOrPhone : null;
+        const phoneno = !isEmail ? formData.emailOrPhone : null;
+        if (email) {
+          navigate('/verify-otp', {
+            state: {
+              email: email,
+            },
+          });
+        } else if (phoneno) {
+          navigate('/verify-otp', {
+            state: {
+              phoneno: phoneno,
+            },
+          });
+        }
       } else if (error.response.data.Error === "Profile not verified") {
         toast.warning("Please complete your profile");
         const email = isEmail ? formData.emailOrPhone : null;

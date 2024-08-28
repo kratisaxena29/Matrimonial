@@ -157,7 +157,8 @@ function PartnerLiving() {
             Part_smoke : part_smoke,
             hobbies: location.state.hobbies,
             // address: location.state.address,
-            phoneNo: location.state.phoneNo,
+            phoneNo:   location.state.phoneNo.startsWith('+91') ? location.state.phoneNo : `+91${location.state.phoneNo}`,
+            
             aboutYourSelf: location.state.aboutYourself, // Ensure proper casing
           },
           {

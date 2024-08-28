@@ -48,20 +48,17 @@ function VerifyOtp() {
 
   const URL = process.env.REACT_APP_API_BASE_URL;
   const handleEmailOtp = async () => {
+    const combinedOtp = otp.join('');
     if(phoneno){
     console.log("...under phone number");
-    }
-    if(email){
-      console.log("...under email");
-    }
+   
+     const  formattedPhoneNo = phoneno.startsWith('+91') ? phoneno : `+91${phoneno}`;
     try {
-      
- 
       const response = await axios.post(
-        `${URL}/email-otp`,
+        `${URL}/phoneverify-otp`,
         {
-          "subject": "Hey! Your One Time Password From SoulMatch",
-          email: email
+          phoneno: formattedPhoneNo,
+          otp: combinedOtp
         },
         {
           headers: {
@@ -69,11 +66,37 @@ function VerifyOtp() {
           },
         }
       );
-      console.log("...otp response..", response);
-      setResendTimer(120); // Set the timer to 2 minutes (120 seconds)
+      console.log("API Response:", response);
+      navigate('/confirmation-otp', { state: { phoneno: location.state.phoneno } });
     } catch (error) {
-      console.log("...catch..", error);
+      console.error("Error while making API call:", error);
+      toast.error("Wrong OTP");
     }
+    }
+    if(email){
+      console.log("...under email");
+      try {
+      
+ 
+        const response = await axios.post(
+          `${URL}/email-otp`,
+          {
+            "subject": "Hey! Your One Time Password From SoulMatch",
+            email: email
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log("...otp response..", response);
+        setResendTimer(120); // Set the timer to 2 minutes (120 seconds)
+      } catch (error) {
+        console.log("...catch..", error);
+      }
+    }
+    
   };
 
   const handleVerifyClick = async () => {
@@ -84,11 +107,12 @@ function VerifyOtp() {
   
     if (phoneno) {
       console.log("...under phone number");
+      const  formattedPhoneNo = phoneno.startsWith('+91') ? phoneno : `+91${phoneno}`;
       try {
         const response = await axios.post(
           `${URL}/phoneverify-otp`,
           {
-            phoneno: phoneno,
+            phoneno: formattedPhoneNo,
             otp: combinedOtp
           },
           {
@@ -160,7 +184,7 @@ function VerifyOtp() {
       </Typography>
       <Typography variant="h6" style={{ color: "#363640", fontWeight: "400" }}>
         Enter the OTP sent to
-        <strong>&nbsp;{email}</strong>
+        <strong>&nbsp;{location.state.email ? location.state.email : location.state.phoneno }</strong>
       </Typography>
       <Box style={{ display: "flex", justifyContent: "center", marginTop: 20 }}>
         <Grid container spacing={4} justifyContent="center">

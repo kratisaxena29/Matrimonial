@@ -16,38 +16,51 @@ function GalleryUpload({ setlogedIn }) {
   const location = useLocation();
   const [gallery, setGallery] = useState([]);
   const navigate = useNavigate();
+  console.log("...gallery-upload...",location.state)
   const email = location.state?.email;
-  const phonene = location.state?.phonene;
+  const phoneno = location.state?.phoneno;
   const URL = process.env.REACT_APP_API_BASE_URL;
 
+ 
+
+
   const handleGalleryUpload = (event) => {
+      const identifier = location.state?.email || "+919871627742";
+
+      if (!identifier) {
+          console.error("Identifier is undefined. Please check if the email or phone number is being passed correctly.");
+          return;
+      }
+
     const file = event.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setGallery([...gallery, e.target.result]);
-      };
-      reader.readAsDataURL(file);
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            setGallery([...gallery, e.target.result]);
+        };
+        reader.readAsDataURL(file);
     }
+
     const formData = new FormData();
     formData.append("file", file);
 
-    axios.post(`${URL}/upload-multiple-photo/${email}`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
+    axios.post(`${URL}/upload-multiple-photo/${identifier}`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
     })
     .then((response) => {
-      console.log("Photo updated successfully:", response.data);
+        console.log("Photo updated successfully:", response.data);
     })
     .catch((error) => {
-      console.error("Error updating profile:", error);
+        console.error("Error updating profile:", error);
     });
-  };
+};
+
 
   const removePhoto = async (index) => {
     const photoToDelete = gallery[index];
-    const profileIdentifier = email || phonene;
+    const profileIdentifier = email || "+919871627742";
 
     try {
       const response = await axios.post(
@@ -72,7 +85,7 @@ function GalleryUpload({ setlogedIn }) {
   };
 
   useEffect(() => {
-    const profileIdentifier = email || phonene;
+    const profileIdentifier = email || "+919871627742";
     axios.get(`${URL}/getphotosByEmailOrPhoneNo/${profileIdentifier}`)
       .then(response => {
         const photos = response.data.photoUrl;

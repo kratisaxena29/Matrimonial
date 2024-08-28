@@ -507,8 +507,11 @@ function Profiles({ setlogedIn }) {
   };
 
   const handlegetImageUrl = async () => {
+    console.log("...handleImageUrl....")
+    const identifier = user.email  ? user.email : user.phoneno
+    
     axios
-      .get(`${URL}/getimagepath?email=${user.email}`)
+      .get(`${URL}/getimagepath/${identifier}`)
       .then((response) => {
         console.log(
           ".get image url response...",
@@ -524,7 +527,7 @@ function Profiles({ setlogedIn }) {
   useEffect(() => {
     handlegetImageUrl();
   }, []);
-
+console.log("..check...",user.phoneno)
   useEffect(() => {
     // Construct the API URL based on filters
     let apiUrl = `${URL}/getAllprofile?`;
@@ -562,8 +565,9 @@ function Profiles({ setlogedIn }) {
   }, [age, religion, caste, subcaste]);
 
   useEffect(() => {
+    let identifier = user.email ? user.email : user.phoneno
     axios
-      .get(`${URL}/oneProfileByEmail/${user.email}`)
+      .get(`${URL}/oneProfileByEmail/${identifier}`)
       .then((response) => {
         console.log("..response...", response.data);
         setOneProfiles(response.data);
