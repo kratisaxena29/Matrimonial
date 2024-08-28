@@ -366,6 +366,79 @@ const ChatApp = ({ setlogedIn }) => {
             )}
           </Box>
         </Grid>
+        <Grid
+        item
+        xs={12}
+        sm={0}
+        md={3}
+        sx={{
+          borderLeft: "1px solid #e0e0e0",
+          backgroundColor: "#f8f9fa",
+          display: "flex",
+          flexDirection: "column",
+          height: "100vh",
+          display: { xs: 'none', sm: 'flex', md: 'flex' },
+        }}
+      >
+        <Box
+          sx={{
+            padding: 2,
+            borderBottom: "1px solid #e0e0e0",
+            zIndex: 1,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Typography variant="h6" sx={{ color: "#8B0000" }}>
+            People
+          </Typography>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#F68C1E",
+              color: "white",
+              "&:hover": {
+                backgroundColor: "red",
+              },
+              textTransform: "none",
+              fontWeight: "bold",
+              display: { xs: 'none', sm: 'inline-flex', md: 'inline-flex' },
+            }}
+            onClick={handleLogout}
+          >
+            Logout
+          </Button>
+        </Box>
+        <Divider />
+        <Box sx={{ flexGrow: 1, overflowY: "auto" }}>
+          <List component="nav" sx={{ paddingTop: 0 }}>
+            {people.map((person, index) => (
+              <React.Fragment key={index}>
+                <ListItem
+                  button
+                  onClick={() => handleSelectPerson(person)}
+                >
+                  <Avatar
+                    sx={{
+                      backgroundColor: "#FFC0CB",
+                      color: "#8B0000",
+                    }}
+                  >
+                    {person.name.charAt(0)}
+                  </Avatar>
+                  <ListItemText
+                    primary={person.name}
+                    sx={{ marginLeft: 2, color: "#8B0000" }}
+                  />
+                </ListItem>
+                <Divider />
+              </React.Fragment>
+            ))}
+          </List>
+        </Box>
+      </Grid>
+    
         <Drawer
           anchor="left"
           open={drawerOpen}
