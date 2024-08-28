@@ -58,27 +58,35 @@ function GalleryUpload({ setlogedIn }) {
 };
 
 
-  const removePhoto = async (index) => {
-    const photoToDelete = gallery[index];
-    const profileIdentifier = email || "+919871627742";
+const removePhoto = async (index) => {
+  const photoToDelete = gallery[index];
+  const profileIdentifier = email || "+919871627742";
 
-    try {
-      const response = await axios.post(
-        `${URL}/deletephotosByEmailOrPhoneNo/${profileIdentifier}`,
-        { photoToDelete },
-        { headers: { 'Content-Type': 'application/json' } }
-      );
+  // Optimistically update the state
+  const updatedGallery = gallery.filter((_, i) => i !== index);
+  setGallery(updatedGallery);
 
-      if (response.status === 200) {
-        console.log('Photo deleted successfully:', response.data);
-        setGallery((prevGallery) => prevGallery.filter((_, i) => i !== index));
-      } else {
-        console.error('Failed to delete photo:', response.data.message);
-      }
-    } catch (error) {
-      console.error('Error during photo deletion:', error);
+  try {
+    const response = await axios.post(
+      `${URL}/deletephotosByEmailOrPhoneNo/${profileIdentifier}`,
+      { photoToDelete },
+      { headers: { 'Content-Type': 'application/json' } }
+    );
+
+    if (response.status === 200) {
+      console.log('Photo deleted successfully:', response.data);
+    } else {
+      console.error('Failed to delete photo:', response.data.message);
+      // Revert state if deletion fails
+      setGallery(gallery);
     }
-  };
+  } catch (error) {
+    console.error('Error during photo deletion:', error);
+    // Revert state if there's an error
+    setGallery(gallery);
+  }
+};
+
 
   const handleConfirmation = () => {
     navigate('/Confirmation-Profile', { state: { ...location.state } });

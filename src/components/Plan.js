@@ -24,19 +24,38 @@ function Plan() {
   useEffect(() => {
     const userdata = sessionStorage.getItem('user');
     if (userdata) {
-      const user = JSON.parse(userdata);
-      if (user && user.email) {
-        axios.get(`${URL}/oneProfileByEmail/${user.email}`)
-          .then(response => {
-            console.log("..plan response...", response.data);
-            setOneProfile(response.data);
-          })
-          .catch(error => {
-            console.log("...error...", error);
-          });
-      }
+        const user = JSON.parse(userdata);
+        let id;
+
+        if (user.email) {
+            console.log("...email");
+            id = user.email;
+        } else if (user.phoneno && user.phoneno !== '+91') {
+            console.log("...phone");
+            id = user.phoneno;
+        }
+
+        if (id) {
+            axios.get(`${URL}/oneProfileByEmail/${id}`)
+                .then(response => {
+                    console.log("..plan response...", response.data);
+                    setOneProfile(response.data);
+                    console.log("...response of oneProfile..", response.data);
+                })
+                .catch(error => {
+                    console.log("...error...", error);
+                });
+        }
     }
-  }, [URL]);
+}, [URL]);
+
+  let userdata = sessionStorage.getItem('user');
+  console.log("...user.phoneNo...",userdata.phoneno)
+  let user = null;
+    if (userdata) {
+      user = JSON.parse(userdata);
+    }
+    console.log("...userData...",user.phoneno)
 
   const handlePayment = useCallback(async (e, amount) => {
     e.preventDefault();
