@@ -639,22 +639,13 @@ function Home() {
       <section>
   <div className="cr">
     <div className="container">
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: "20px 0",
-        }}
-      >
-        <p style={{color:"#FFF", textAlign: "center", fontSize: "18px" }}>
+      <div className="footer-content">
+        <p style={{ textAlign: "center", fontSize: "18px" }}>
           Copyright © <span id="cry">2024</span>{" "}
           <a
             style={{
               textDecoration: "none",
               color: "#FFBF00",
-              fontSize:"19px"
             }}
             href="#!"
             target="_blank"
@@ -663,13 +654,13 @@ function Home() {
           </a>{" "}
           All rights reserved.
         </p>
-        <p  style={{ fontSize: "18px" }}>
+        <p style={{ fontSize: "20px" }}>
           <strong>Contact Us: </strong>
           <a
             href="mailto:soulmatchinfo@gmail.com"
             style={{
               textDecoration: "none",
-              color: "#FFF",
+              color: "#FFBF0E",
             }}
           >
             soulmatchinfo@gmail.com
@@ -679,6 +670,7 @@ function Home() {
     </div>
   </div>
 </section>
+
 
     </div>
   );
