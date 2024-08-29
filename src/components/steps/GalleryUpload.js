@@ -24,43 +24,88 @@ function GalleryUpload({ setlogedIn }) {
  
 
 
-  const handleGalleryUpload = (event) => {
-      const identifier = location.state?.email || "+919871627742";
+//   const handleGalleryUpload = (event) => {
+//       const identifier = location.state?.email || "+919871627742";
 
-      if (!identifier) {
-          console.error("Identifier is undefined. Please check if the email or phone number is being passed correctly.");
-          return;
-      }
+//       if (!identifier) {
+//           console.error("Identifier is undefined. Please check if the email or phone number is being passed correctly.");
+//           return;
+//       }
 
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            setGallery([...gallery, e.target.result]);
-        };
-        reader.readAsDataURL(file);
-    }
+//     const file = event.target.files[0];
+//     if (file) {
+//         const reader = new FileReader();
+//         reader.onload = (e) => {
+//             setGallery([...gallery, e.target.result]);
+//         };
+//         reader.readAsDataURL(file);
+//     }
 
-    const formData = new FormData();
-    formData.append("file", file);
+//     const formData = new FormData();
+//     formData.append("file", file);
 
-    axios.post(`${URL}/upload-multiple-photo/${identifier}`, formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data',
-        },
-    })
-    .then((response) => {
-        console.log("Photo updated successfully:", response.data);
-    })
-    .catch((error) => {
-        console.error("Error updating profile:", error);
-    });
+//     axios.post(`${URL}/upload-multiple-photo/${identifier}`, formData, {
+//         headers: {
+//             'Content-Type': 'multipart/form-data',
+//         },
+//     })
+//     .then((response) => {
+//         console.log("Photo updated successfully:", response.data);
+//     })
+//     .catch((error) => {
+//         console.error("Error updating profile:", error);
+//     });
+// };
+
+const handleGalleryUpload = (event) => {
+  const identifier = location.state?.email || location.state?.phoneNo;
+
+  if (!identifier) {
+      console.error("Identifier is undefined. Please check if the email or phone number is being passed correctly.");
+      return;
+  }
+
+  const file = event.target.files[0];
+  if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      axios.post(`${URL}/upload-multiple-photo/${identifier}`, formData, {
+          headers: {
+              'Content-Type': 'multipart/form-data',
+          },
+      })
+      .then((response) => {
+          console.log("Photo uploaded successfully:", response.data);
+          // Fetch the updated gallery from the backend
+          fetchGallery();
+      })
+      .catch((error) => {
+          console.error("Error uploading photo:", error);
+      });
+  }
 };
+
+const fetchGallery = () => {
+  const profileIdentifier = email || location.state?.phoneNo;
+  axios.get(`${URL}/getphotosByEmailOrPhoneNo/${profileIdentifier}`)
+      .then(response => {
+          const photos = response.data.photoUrl;
+          setGallery(photos);
+      })
+      .catch(error => {
+          console.log("Error fetching photos:", error);
+      });
+};
+
+useEffect(() => {
+  fetchGallery();
+}, [URL]);
 
 
 const removePhoto = async (index) => {
   const photoToDelete = gallery[index];
-  const profileIdentifier = email || "+919871627742";
+  const profileIdentifier = email || location.state?.phoneNo;
 
   // Optimistically update the state
   const updatedGallery = gallery.filter((_, i) => i !== index);
@@ -93,7 +138,7 @@ const removePhoto = async (index) => {
   };
 
   useEffect(() => {
-    const profileIdentifier = email || "+919871627742";
+    const profileIdentifier = email || location.state?.phoneNo;
     axios.get(`${URL}/getphotosByEmailOrPhoneNo/${profileIdentifier}`)
       .then(response => {
         const photos = response.data.photoUrl;

@@ -121,13 +121,13 @@ function ProfileDetails() {
           newErrors.email = "Email is invalid";
         else delete newErrors.email;
         break;
-      case "phoneNo":
-        if (!value) newErrors.phoneNo = "Phone number is required";
-        else if (value.length < 10)
-          newErrors.phoneNo = "Phone number must be 10 digits";
-        else if (value.length > 10)
-          newErrors.phoneNo = "Phone number must not be more than 10 digits";
-        else delete newErrors.phoneNo;
+      // case "phoneNo":
+      //   if (!value) newErrors.phoneNo = "Phone number is required";
+      //   else if (value.length < 10)
+      //     newErrors.phoneNo = "Phone number must be 10 digits";
+      //   else if (value.length > 10)
+      //     newErrors.phoneNo = "Phone number must not be more than 10 digits";
+      //   else delete newErrors.phoneNo;
         break;
       
       case "hobbies":
@@ -596,6 +596,9 @@ function ProfileDetails() {
       error={!!errors.email}
       helperText={errors.email}
       fullWidth
+      InputProps={{
+        readOnly: !!email, // Make it read-only if email is present
+      }}
     />
   ) : (
     <TextField
@@ -607,6 +610,9 @@ function ProfileDetails() {
       error={!!errors.phoneNo}
       helperText={errors.phoneNo}
       fullWidth
+      InputProps={{
+        readOnly: !!phoneNo, // Make it read-only if phoneNo is present
+      }}
     />
   )}
 </Grid>

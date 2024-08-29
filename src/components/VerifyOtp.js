@@ -55,10 +55,11 @@ function VerifyOtp() {
      const  formattedPhoneNo = phoneno.startsWith('+91') ? phoneno : `+91${phoneno}`;
     try {
       const response = await axios.post(
-        `${URL}/phoneverify-otp`,
+        `${URL}/phone-otp`,
         {
+          subject: "Hey! Your One Time Password From SoulMatch",
           phoneno: formattedPhoneNo,
-          otp: combinedOtp
+        
         },
         {
           headers: {
@@ -67,7 +68,8 @@ function VerifyOtp() {
         }
       );
       console.log("API Response:", response);
-      navigate('/confirmation-otp', { state: { phoneno: location.state.phoneno } });
+      // navigate('/confirmation-otp', { state: { phoneno: location.state.phoneno } });
+      setResendTimer(120);
     } catch (error) {
       console.error("Error while making API call:", error);
       toast.error("Wrong OTP");

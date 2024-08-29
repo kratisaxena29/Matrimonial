@@ -45,7 +45,7 @@ function UserProfile({ setlogedIn }) {
   const URL = process.env.REACT_APP_API_BASE_URL;
 
 
-  const handleInterest = (profileId) => {
+  const Interest = (profileId) => {
     console.log("Interest button clicked for profile:", profileId);
 
     setInterestedProfiles((prevState) => {
@@ -134,38 +134,52 @@ console.log("...profileData...",profileData.dateOfBirth)
   };
   const [gallery, setGallery] = useState([]);
 console.log("...gallery...",gallery)
+
+
   const handleGalleryUpload = (event) => {
     console.log("...handlegallery...")
-    const identifier = user.email || "+919871627742";
+    const identifier = user.email || user.phoneno;
 
     if (!identifier) {
-        console.error("Identifier is undefined. Please check if the email or phone number is being passed correctly.");
-        return;
-    }
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setGallery([...gallery, e.target.result]);
-      };
-      reader.readAsDataURL(file);
-    }
-    const formData = new FormData();
-  formData.append("file", file);
+      console.error("Identifier is undefined. Please check if the email or phone number is being passed correctly.");
+      return;
+  }
 
-  axios.post(`${URL}/upload-multiple-photo/${identifier}`, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  })
-    .then((response) => {
-      console.log("phot updated successfully:", response.data);
-     
-    })
-    .catch((error) => {
-      console.error("Error updating profile:", error);
-    });
-  };
+  const file = event.target.files[0];
+  if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      axios.post(`${URL}/upload-multiple-photo/${identifier}`, formData, {
+          headers: {
+              'Content-Type': 'multipart/form-data',
+          },
+      })
+      .then((response) => {
+          console.log("Photo uploaded successfully:", response.data);
+          // Fetch the updated gallery from the backend
+          fetchGallery();
+      })
+      .catch((error) => {
+          console.error("Error uploading photo:", error);
+      });
+  }
+};
+
+const fetchGallery = () => {
+  const profileIdentifier = user.email || user.phoneno;
+  axios.get(`${URL}/getphotosByEmailOrPhoneNo/${profileIdentifier}`)
+      .then(response => {
+          const photos = response.data.photoUrl;
+          setGallery(photos);
+      })
+      .catch(error => {
+          console.log("Error fetching photos:", error);
+      });
+};
+useEffect(() => {
+  fetchGallery();
+}, [URL]);
 
   // const removePhoto = (index) => {
   //   console.log("...removePhoto...",index)
@@ -178,7 +192,9 @@ console.log("...gallery...",gallery)
     // Assuming gallery is an array of photo URLs
     const photoToDelete = gallery[index];
     const profileIdentifier = user.email || user.phoneno; // Replace with actual user data
-  
+    const updatedGallery = gallery.filter((_, i) => i !== index);
+    setGallery(updatedGallery);
+
     try {
       // Make an API call to delete the photo from the server
       const response = await axios.post(
@@ -192,12 +208,15 @@ console.log("...gallery...",gallery)
         console.log('Photo deleted successfully:', response.data);
         
         // Remove the photo from the gallery in the frontend
-        setGallery(gallery.filter((_, i) => i !== index));
+        // setGallery(gallery.filter((_, i) => i !== index));
       } else {
+
         console.error('Failed to delete photo:', response.data.message);
+        setGallery(gallery);
       }
     } catch (error) {
       console.error('Error during photo deletion:', error);
+      setGallery(gallery);
     }
   };
   
