@@ -298,48 +298,39 @@ const removePhoto = async (index) => {
       </Box>
 
       <section>
-          <div className="cr">
-            <div className="container">
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                  padding: "20px 0",
-                }}
-              >
-                
-                <p style={{ textAlign: "center" }}>
-                  Copyright © <span id="cry">2024</span>{" "}
-                  <a
-                    style={{
-                      textDecoration: "none",
-                      color: "#FFBF00",
-                    }}
-                    href="#!"
-                    target="_blank"
-                  >
-                    SoulMatch
-                  </a>{" "}
-                  All rights reserved.
-                </p>
-                <p>
-                  <strong>Contact Us: </strong>
-                  <a
-                    href="mailto:soulmatchinfo@gmail.com"
-                    style={{
-                      textDecoration: "none",
-                      color: "#FFBF0E",
-                    }}
-                  >
-                    soulmatchinfo@gmail.com
-                  </a>
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+  <div className="cr">
+    <div className="container">
+      <div className="footer-content">
+        <p style={{ textAlign: "center", fontSize: "18px" }}>
+          Copyright © <span id="cry">2024</span>{" "}
+          <a
+            style={{
+              textDecoration: "none",
+              color: "#FFBF00",
+            }}
+            href="#!"
+            target="_blank"
+          >
+            SoulMatch
+          </a>{" "}
+          All rights reserved.
+        </p>
+        <p style={{ fontSize: "20px" }}>
+          <strong>Contact Us: </strong>
+          <a
+            href="mailto:soulmatchinfo@gmail.com"
+            style={{
+              textDecoration: "none",
+              color: "#FFBF0E",
+            }}
+          >
+            soulmatchinfo@gmail.com
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
     </div>
   );
 }

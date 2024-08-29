@@ -1,5 +1,6 @@
 import React, { lazy, useEffect, useState } from "react";
 import logo from "../../images/logo.png";
+import mobileLogo from "../../images/logo_maroon.png";
 import noProfile from "../../images/profiles/noProfile.jpg";
 import EditIcon from '@mui/icons-material/Edit';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
@@ -21,8 +22,12 @@ import {
   Box,
   Grid,
   IconButton,
+  Dialog,
+  DialogContent,
+  useMediaQuery,
 } from "@mui/material";
 import axios from "axios";
+import ZoomInIcon from '@mui/icons-material/ZoomIn';
 
 function UserProfile({ setlogedIn }) {
   const [selectedPhoto, setSelectedPhoto] = useState("");
@@ -165,6 +170,7 @@ console.log("...gallery...",gallery)
       });
   }
 };
+const [openImage, setOpenImage] = useState(null);
 
 const fetchGallery = () => {
   const profileIdentifier = user.email || user.phoneno;
@@ -244,7 +250,13 @@ useEffect(() => {
               variant="outlined"
               name={name}
               value={value}
+              margin="normal"
               onChange={handleInputChange}
+              InputLabelProps={{
+                style: {
+                  marginTop: '-4px', // Adjust this value as needed
+                },
+              }}
             >
               {options.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
@@ -310,6 +322,7 @@ useEffect(() => {
               value={value}
               onChange={handleInputChange}
               type={type}
+              //  margin="normal"
             />
           );
       }
@@ -571,6 +584,7 @@ useEffect(() => {
         return "Membership Plan";
     }
   };
+  const isMobile = useMediaQuery('(max-width:600px)');
 
   return (
     <div>
@@ -583,7 +597,12 @@ useEffect(() => {
           justifyContent: "space-between",
         }}
       >
-        <img onClick={handleLogo} src={logo} alt="Logo" style={{ height: "60px" }} />
+        <img
+        onClick={handleLogo}
+        src={isMobile ? mobileLogo : logo}  // Conditional rendering based on screen size
+        alt="Logo"
+        style={{ height: "60px" }}
+      />
         <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
           <Button
             variant="contained"
@@ -602,8 +621,7 @@ useEffect(() => {
               handlePlans();
             }}
           >
-  
-  {getPlanName()}
+            {getPlanName()}
           </Button>
 
           <Button
@@ -677,7 +695,7 @@ useEffect(() => {
       </section>
 
       <section>
-        <div className="login pro-edit-update">
+        <div className="login pro-edit-update" sx={{marginTop:"00px"}}>
           <div className="container">
             <div className="row">
               <div className="inn">
@@ -710,22 +728,22 @@ useEffect(() => {
                         <div className="form-tit">
                           <h4>Basic Information</h4>
                         </div>
-                        <div className="form-group">
+                        <div style={{ paddingBottom: "15px" }}>
                           {renderField(
                             "Full Name",
                             profileData.fullName,
                             "fullName"
                           )}
                         </div>
-                        <div className="form-group">
+                        <div style={{ paddingBottom: "15px" }}>
                           {renderField(
                             "Date of Birth",
                             profileData.dateOfBirth,
-                            "dateOfBirth",
+                            "dateOfBirth"
                             // "date"
                           )}
                         </div>
-                        <div className="form-group">
+                        <div style={{ paddingBottom: "15px" }}>
                           {renderField(
                             "Gender",
                             profileData.gender,
@@ -1198,18 +1216,23 @@ useEffect(() => {
                           {renderField(
                             "Smoking",
                             profileData.smoking,
-                            "smoking","select",
-                            
+                            "smoking",
+                            "select",
+
                             [
                               { value: "Non-smoker", label: "Non-smoker" },
-                              { value: "Social Smoker", label: "Social Smoker" },
-                              { value: "Regular-Smoker", label: "Regular-Smoker" },
-                              { value: "Occasionally", label: "Occasionally" }
+                              {
+                                value: "Social Smoker",
+                                label: "Social Smoker",
+                              },
+                              {
+                                value: "Regular-Smoker",
+                                label: "Regular-Smoker",
+                              },
+                              { value: "Occasionally", label: "Occasionally" },
                             ]
                             // "checkbox"
                           )}
-                          
-                          
                         </div>
                         <div className="form-group">
                           {renderField(
@@ -1218,12 +1241,18 @@ useEffect(() => {
                             "drinking",
                             // "checkbox"
                             "select",
-                            
+
                             [
                               { value: "Occasionally", label: "Occasionally" },
-                              { value: "Social Drinker", label: "Social Drinker" },
-                              { value: "Regular Drinker", label: "Regular Drinker" },
-                              { value: "Non-drinker", label: "Non-drinker" }
+                              {
+                                value: "Social Drinker",
+                                label: "Social Drinker",
+                              },
+                              {
+                                value: "Regular Drinker",
+                                label: "Regular Drinker",
+                              },
+                              { value: "Non-drinker", label: "Non-drinker" },
                             ]
                           )}
                         </div>
@@ -1320,24 +1349,34 @@ useEffect(() => {
                       </div>
 
                       {isEditMode && (
-                        <Button
-                          type="submit"
-                          variant="contained"
+                        <Box
                           sx={{
-                            mt: 4,
-                            mb: 2,
-                            width: 150,
-                            height: 40,
-                            textTransform: "inherit",
-                            fontSize: "18px",
-                            backgroundColor: "#FB6A6B",
-                            "&:hover": {
-                              backgroundColor: "#FB6A6B",
-                            },
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "center",
+                            textAlign: "center",
                           }}
                         >
-                          Save
-                        </Button>
+                          <Button
+                            type="submit"
+                            variant="contained"
+                            sx={{
+                              mt: 4,
+                              mb: 2,
+                              width: 150,
+                              height: 40,
+                              textTransform: "inherit",
+                              fontSize: "18px",
+                              backgroundColor: "#FB6A6B",
+
+                              "&:hover": {
+                                backgroundColor: "#FB6A6B",
+                              },
+                            }}
+                          >
+                            Save
+                          </Button>
+                        </Box>
                       )}
                     </form>
                   </div>
@@ -1348,146 +1387,157 @@ useEffect(() => {
         </div>
       </section>
       {/* </div> */}
-      <Box sx={{ padding: 14, borderRadius: 2, marginTop:20 }}>
-            <Typography
-              variant="h4"
-              gutterBottom
-              sx={{
-                // color: "#333",
-                fontWeight: "bold",
-                textAlign: "center",
-                marginTop: "20px",
-                color:"#76001C"
-              }}
-            >
-              Photo Gallery
-            </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 3,
-            marginTop: 3,
-            padding: 3,
-            backgroundColor: "white",
-            borderRadius: 2,
-            boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
-          }}
-        >
-          <input
-            accept="image/*"
-            style={{ display: "none" }}
-            id="gallery-upload"
-            type="file"
-            multiple
-            onChange={handleGalleryUpload}
-          />
-          <label htmlFor="gallery-upload">
-            <Button
-              variant="outlined"
-              startIcon={<AddPhotoAlternateIcon />}
-              component="span"
-              sx={{
-                padding: "10px 20px",
-                borderColor: "#3f51b5",
-                color: "#3f51b5",
-                "&:hover": {
-                  backgroundColor: "rgba(63, 81, 181, 0.04)",
-                },
-              }}
-                 onChange={handleGalleryUpload}
-            >
-              
-              Add Photos
-            </Button>
-          </label>
-          <Grid container spacing={2} justifyContent="center">
-            {gallery.map((photo, index) => (
-              <Grid item xs={6} sm={4} md={3} key={index}>
+      <Box sx={{ width: '100%', maxWidth: 800, margin: '0 auto', mt: 4, mb: 4 }}>
+      <Typography
+        variant="h4"
+        gutterBottom
+        sx={{
+          fontWeight: "bold",
+          textAlign: "center",
+          color: "#76001C",
+          mb: 3,
+          marginTop:20
+        }}
+      >
+        Photo Gallery
+      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 3,
+          padding: 3,
+          backgroundColor: "white",
+          borderRadius: 2,
+          boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+        }}
+      >
+        <input
+          accept="image/*"
+          style={{ display: "none" }}
+          id="gallery-upload"
+          type="file"
+          multiple
+          onChange={handleGalleryUpload}
+        />
+        <label htmlFor="gallery-upload">
+          <Button
+            variant="contained"
+            startIcon={<AddPhotoAlternateIcon />}
+            component="span"
+            sx={{
+              padding: "10px 20px",
+              backgroundColor: "#FB6A6B",
+              color: "white",
+              "&:hover": {
+                backgroundColor: "#e55657",
+              },
+            }}
+          >
+            Add Photos
+          </Button>
+        </label>
+        <Grid container spacing={2} justifyContent="center">
+          {gallery.map((photo, index) => (
+            <Grid item xs={6} sm={4} md={3} key={index}>
+              <Box
+                sx={{
+                  position: "relative",
+                  width: "100%",
+                  paddingTop: "100%",
+                  borderRadius: 2,
+                  overflow: "hidden",
+                  boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                  transition: "transform 0.3s ease",
+                  "&:hover": {
+                    transform: "scale(1.05)",
+                  },
+                }}
+              >
+                <img
+                  src={photo}
+                  alt={`Gallery ${index + 1}`}
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
                 <Box
                   sx={{
-                    position: "relative",
-                    width: "100%",
-                    paddingTop: "100%",
-                    borderRadius: 2,
-                    overflow: "hidden",
-                    boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
-                    transition: "transform 0.3s ease",
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: "rgba(0,0,0,0.5)",
+                    opacity: 0,
+                    transition: "opacity 0.3s ease",
                     "&:hover": {
-                      transform: "scale(1.05)",
+                      opacity: 1,
                     },
                   }}
                 >
-                  <img
-                    src={photo}
-                    alt={`Gallery ${index + 1}`}
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
                   <IconButton
-                    sx={{
-                      position: "absolute",
-                      top: 4,
-                      right: 4,
-                      backgroundColor: "rgba(0,0,0,0.5)",
-                      color: "white",
-                      "&:hover": {
-                        backgroundColor: "rgba(0,0,0,0.7)",
-                      },
-                    }}
+                    sx={{ color: "white", mr: 1 }}
+                    onClick={() => setOpenImage(photo)}
+                  >
+                    <ZoomInIcon />
+                  </IconButton>
+                  <IconButton
+                    sx={{ color: "white" }}
                     onClick={() => removePhoto(index)}
                   >
-                    <CloseIcon fontSize="small" />
+                    <CloseIcon />
                   </IconButton>
                 </Box>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
+              </Box>
+            </Grid>
+          ))}
+        </Grid>
       </Box>
+      <Dialog open={!!openImage} onClose={() => setOpenImage(null)} maxWidth="md">
+        <DialogContent>
+          <img src={openImage} alt="Enlarged" style={{ width: '100%', height: 'auto' }} />
+        </DialogContent>
+      </Dialog>
+    </Box>
       <section>
         <div className="cr">
           <div className="container">
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-evenly",
-                alignItems: "center",
-                padding: "20px 0",
-              }}
-            >
-             
-              <p style={{ width: "200rem", textAlign: "center" }}>
+            <div className="footer-content">
+              <p style={{ textAlign: "center", fontSize: "18px" }}>
                 Copyright © <span id="cry">2024</span>{" "}
                 <a
-                  style={{ textDecoration: "none", color: "#FFBF00" }}
+                  style={{
+                    textDecoration: "none",
+                    color: "#FFBF00",
+                  }}
                   href="#!"
                   target="_blank"
                 >
                   SoulMatch
                 </a>{" "}
-                All rights reserved.{" "}
+                All rights reserved.
               </p>
-              {/* <p>
-                <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong> 94490
-                65433
-              </p> */}
-               <p>
-                <strong>Email: </strong>
+              <p style={{ fontSize: "20px" }}>
+                <strong>Contact Us: </strong>
                 <a
                   href="mailto:soulmatchinfo@gmail.com"
-                  style={{ textDecoration: "none", color: "#FFBF0E" }}
+                  style={{
+                    textDecoration: "none",
+                    color: "#FFBF0E",
+                  }}
                 >
                   soulmatchinfo@gmail.com
-                </a>{" "}
+                </a>
               </p>
             </div>
           </div>

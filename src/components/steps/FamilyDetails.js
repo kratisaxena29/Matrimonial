@@ -498,46 +498,39 @@ console.log("...family details ...",location.state)
           </Grid>
         </Grid>
         <section>
-          <div className="cr">
-            <div className="container">
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: isMobile ? "column" : "row",
-                  justifyContent: "space-evenly",
-                  alignItems: "center",
-                  padding: "20px 0",
-                }}
-              >
-                
-                <p style={{ textAlign: "center", margin: isMobile ? "10px 0" : "0" }}>
-                  Copyright © <span id="cry">2024</span>{" "}
-                  <a
-                    style={{ textDecoration: "none", color: "#FFBF00" }}
-                    href="#!"
-                    target="_blank"
-                  >
-                    SoulMatch
-                  </a>{" "}
-                  All rights reserved.{" "}
-                </p>
-                <p>
-                  <strong>Contact Us: </strong>
-                  <a
-                    href="mailto:soulmatchinfo@gmail.com"
-                    style={{ textDecoration: "none", color: "#FFBF0E" }}
-                  >
-                    soulmatchinfo@gmail.com
-                  </a>{" "}
-                </p>
-                {/* <p>
-                  <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong>{" "}
-                  94490 65433
-                </p> */}
-              </div>
-            </div>
-          </div>
-        </section>
+  <div className="cr">
+    <div className="container">
+      <div className="footer-content">
+        <p style={{ textAlign: "center", fontSize: "18px" }}>
+          Copyright © <span id="cry">2024</span>{" "}
+          <a
+            style={{
+              textDecoration: "none",
+              color: "#FFBF00",
+            }}
+            href="#!"
+            target="_blank"
+          >
+            SoulMatch
+          </a>{" "}
+          All rights reserved.
+        </p>
+        <p style={{ fontSize: "20px" }}>
+          <strong>Contact Us: </strong>
+          <a
+            href="mailto:soulmatchinfo@gmail.com"
+            style={{
+              textDecoration: "none",
+              color: "#FFBF0E",
+            }}
+          >
+            soulmatchinfo@gmail.com
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
       </div>
     </ThemeProvider>
   );

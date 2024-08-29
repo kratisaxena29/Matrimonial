@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import mobileLogo from "../images/logo_maroon.png";
 import logo from "../images/logo.png";
 import noProfile from "../images/profiles/noProfile.jpg";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -18,6 +19,7 @@ import {
   Box,
   Typography,
   Grid,
+  useMediaQuery,
 } from "@mui/material";
 import axios from "axios";
 import "../styles/profile.css"
@@ -733,11 +735,11 @@ console.log("..check...",user.phoneno)
   useEffect(() => {
     console.log("..interestedProfiles after update..", interestedProfiles);
   }, [interestedProfiles]);
-
+  const isMobile = useMediaQuery('(max-width:600px)');
   return (
     <div>
       <Navbar
-        logo={logo}
+         logo={isMobile ? mobileLogo : logo} 
         oneProfile={oneProfile}
         handlePlans={handlePlans}
         triggerFileInput={triggerFileInput}
