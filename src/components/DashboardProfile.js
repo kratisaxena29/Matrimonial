@@ -104,7 +104,8 @@ console.log("...gallery...",gallery)
     // Assuming gallery is an array of photo URLs
     const photoToDelete = gallery[index];
     // const profileIdentifier = user.email || user.phoneno; // Replace with actual user data
-  const profileIdentifier = profileData.email || profileData.phoneno
+  console.log("...profile...",profileData)
+    const profileIdentifier = profileData.email || profileData.phoneNo
     try {
       // Make an API call to delete the photo from the server
       const response = await axios.post(

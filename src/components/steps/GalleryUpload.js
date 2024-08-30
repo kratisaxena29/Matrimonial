@@ -11,6 +11,7 @@ import {
   IconButton,
 } from "@mui/material";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 function GalleryUpload({ setlogedIn }) {
   const location = useLocation();
@@ -57,7 +58,8 @@ function GalleryUpload({ setlogedIn }) {
 //     });
 // };
 
-const handleGalleryUpload = (event) => {
+const handleGalleryUpload = async (event) => {
+  console.log("...handlegallery...");
   const identifier = location.state?.email || location.state?.phoneNo;
 
   if (!identifier) {
@@ -67,22 +69,38 @@ const handleGalleryUpload = (event) => {
 
   const file = event.target.files[0];
   if (file) {
+      // Check file type and size (example: limit size to 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+         toast.error("File size exceeds the 5MB limit.")
+          console.error("File size exceeds the 5MB limit.");
+          return;
+      }
+
       const formData = new FormData();
       formData.append("file", file);
 
-      axios.post(`${URL}/upload-multiple-photo/${identifier}`, formData, {
-          headers: {
-              'Content-Type': 'multipart/form-data',
-          },
-      })
-      .then((response) => {
+      try {
+          const response = await axios.post(`${URL}/upload-multiple-photo/${identifier}`, formData, {
+              headers: {
+                  'Content-Type': 'multipart/form-data',
+              },
+              timeout: 30000, // Set a timeout for the request (10 seconds)
+          });
+// toast.success("Photo uploaded successfully")
           console.log("Photo uploaded successfully:", response.data);
-          // Fetch the updated gallery from the backend
           fetchGallery();
-      })
-      .catch((error) => {
-          console.error("Error uploading photo:", error);
-      });
+      } catch (error) {
+          if (error.code === 'ECONNABORTED') {
+            toast.error("Upload timed out. Please try again.")
+              console.error("Upload timed out. Please try again.");
+          } else if (error.response) {
+              console.error("Server error:", error.response.data.message);
+          } else {
+              console.error("Error uploading photo:", error.message);
+          }
+      }
+  } else {
+      console.error("No file selected for upload.");
   }
 };
 
@@ -331,6 +349,7 @@ const removePhoto = async (index) => {
     </div>
   </div>
 </section>
+<ToastContainer/>
     </div>
   );
 }

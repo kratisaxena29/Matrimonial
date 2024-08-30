@@ -5,6 +5,7 @@ import noProfile from "../../images/profiles/noProfile.jpg";
 import EditIcon from '@mui/icons-material/Edit';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import CloseIcon from '@mui/icons-material/Close';
+import { ToastContainer, toast } from "react-toastify";
 
 import { useNavigate } from "react-router-dom";
 import {
@@ -141,35 +142,52 @@ console.log("...profileData...",profileData.dateOfBirth)
 console.log("...gallery...",gallery)
 
 
-  const handleGalleryUpload = (event) => {
-    console.log("...handlegallery...")
-    const identifier = user.email || user.phoneno;
+const handleGalleryUpload = async (event) => {
+  console.log("...handlegallery...");
+  const identifier = user.email || user.phoneno;
 
-    if (!identifier) {
+  if (!identifier) {
       console.error("Identifier is undefined. Please check if the email or phone number is being passed correctly.");
       return;
   }
 
   const file = event.target.files[0];
   if (file) {
+      // Check file type and size (example: limit size to 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+         toast.error("File size exceeds the 5MB limit.")
+          console.error("File size exceeds the 5MB limit.");
+          return;
+      }
+
       const formData = new FormData();
       formData.append("file", file);
 
-      axios.post(`${URL}/upload-multiple-photo/${identifier}`, formData, {
-          headers: {
-              'Content-Type': 'multipart/form-data',
-          },
-      })
-      .then((response) => {
+      try {
+          const response = await axios.post(`${URL}/upload-multiple-photo/${identifier}`, formData, {
+              headers: {
+                  'Content-Type': 'multipart/form-data',
+              },
+              timeout: 30000, // Set a timeout for the request (10 seconds)
+          });
+// toast.success("Photo uploaded successfully")
           console.log("Photo uploaded successfully:", response.data);
-          // Fetch the updated gallery from the backend
           fetchGallery();
-      })
-      .catch((error) => {
-          console.error("Error uploading photo:", error);
-      });
+      } catch (error) {
+          if (error.code === 'ECONNABORTED') {
+            toast.error("Upload timed out. Please try again.")
+              console.error("Upload timed out. Please try again.");
+          } else if (error.response) {
+              console.error("Server error:", error.response.data.message);
+          } else {
+              console.error("Error uploading photo:", error.message);
+          }
+      }
+  } else {
+      console.error("No file selected for upload.");
   }
 };
+
 const [openImage, setOpenImage] = useState(null);
 
 const fetchGallery = () => {
@@ -587,7 +605,9 @@ useEffect(() => {
   const isMobile = useMediaQuery('(max-width:600px)');
 
   return (
+    
     <div>
+  
       <nav
         style={{
           backgroundColor: "#6D0B32",
@@ -1543,7 +1563,9 @@ useEffect(() => {
           </div>
         </div>
       </section>
+      <ToastContainer/>
     </div>
+  
   );
 }
 
