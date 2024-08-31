@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import logo from "../images/logo.png";
+import mobileLogo from "../images/logo_maroon.png";
 import noProfile from "../images/profiles/noProfile.jpg";
 // import { useNavigate } from "react-router-dom";
 import {
@@ -21,11 +22,44 @@ import {
   List,
   Tabs,
   Grid,
+  useMediaQuery,
+  styled,
+  Card,
+  CardContent,
+  Avatar,
+  CardActions,
+  IconButton,
+  Divider,
+  Tooltip,
 } from "@mui/material";
 import axios from "axios";
 import { Tab } from "bootstrap";
 import { useNavigate } from "react-router-dom";
+import { Cancel, CheckCircle, Visibility } from "@mui/icons-material";
 
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(3),
+  height: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+}));
+
+const ScrollableBox = styled(Box)({
+  maxHeight: 440,
+  overflowY: 'auto',
+  '&::-webkit-scrollbar': {
+    width: '0.3em'
+  },
+  '&::-webkit-scrollbar-track': {
+    boxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+    webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)'
+  },
+  '&::-webkit-scrollbar-thumb': {
+    backgroundColor: 'rgba(0,0,0,.1)',
+    outline: '1px solid slategrey'
+  }
+});
 function Dashboard({ setlogedIn }) {
   const [selectedPhoto, setSelectedPhoto] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
@@ -39,6 +73,7 @@ function Dashboard({ setlogedIn }) {
   const [numberOfProfiles, setNumberOfProfiles] = useState(0);
   const [active, setactive] = useState("");
 //   const navigate = useNavigate();
+const isMobile = useMediaQuery('(max-width:600px)');
 
   const user = JSON.parse(sessionStorage.getItem("user"));
   const navigate = useNavigate()
@@ -174,20 +209,34 @@ const handleReject = async(profileId) => {
 
 
   const NewProfiles = () => (
-    <Paper sx={{ p: 2, mb: 3 }}>
-      <Typography variant="h6" sx={{ mb: 2 }}>All Profiles</Typography>
-      <Grid container spacing={2}>
-        {profiles.map((profile) => (
-          <Grid item xs={3} key={profile}>
-            <Paper sx={{ p: 1, textAlign: 'center' }}>
-              <Typography>{profile.name || 'No Name'}</Typography>
-              {/* <Button size="small">View</Button> */}
-              <Button size="small" onClick={() => handleProfileDetails(profile._id)}>View</Button>
-            </Paper>
-          </Grid>
-        ))}
-      </Grid>
-    </Paper>
+    <StyledPaper elevation={3}>
+      <Typography variant="h6" gutterBottom>All Profiles</Typography>
+      <ScrollableBox>
+        <Grid container spacing={2}>
+          {profiles.map((profile) => (
+            <Grid item xs={12} key={profile._id}>
+              <Card sx={{display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
+                <CardContent>
+                  <Box display="flex" alignItems="center">
+                    <Avatar sx={{ marginRight: 2, pb:"1px", textAlign:"center" }}>{profile.name ? profile.name[0] : 'U'}</Avatar>
+                    <Typography variant="subtitle1">{profile.name || 'No Name'}</Typography>
+                  </Box>
+                </CardContent>
+                <CardActions>
+                  <Button 
+                    size="small" 
+                    startIcon={<Visibility />}
+                    onClick={() => handleProfileDetails(profile._id)}
+                  >
+                    View
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </ScrollableBox>
+    </StyledPaper>
   );
   
   // const UserManagement = () => (
@@ -204,34 +253,75 @@ const handleReject = async(profileId) => {
   // );
   
   const VerificationRequests = () => (
-    <Paper sx={{ p: 2, mb: 3 }}>
-      <Typography variant="h6" sx={{ mb: 2 }}>Verification Requests</Typography>
-      {/* <Tabs value={0}>
-        <Tab label="Pending" />
-        <Tab label="Approved" />
-        <Tab label="Rejected" />
-      </Tabs> */}
-      <List>
-        {profiles.map((profile) => (
-          <ListItem key={profile._id}>
-            <ListItemText primary={profile.name}  />
-            <Button size="small"
-             color="primary"
-              onClick={() => handleVerify(profile._id)}
-            >{profile.verifyProfile === true ? "Verified" : "Verify"}</Button>
-            <Button size="small"
-             color="secondary"
-               onClick={() => handleReject(profile._id)}
-             >Reject</Button>
-          </ListItem>
-        ))}
-      </List>
-    </Paper>
+    <StyledPaper elevation={3}>
+      <Typography variant="h6" gutterBottom>
+        Verification Requests
+      </Typography>
+      <ScrollableBox>
+        <List>
+          {profiles.map((profile, index) => (
+            <React.Fragment key={profile._id}>
+              <ListItem>
+                <ListItemText
+                  primary={profile.name}
+                  secondary={`Status: ${
+                    profile.verifyProfile ? "Verified" : "Pending"
+                  }`}
+                />
+                <Tooltip
+                  componentsProps={{
+                    tooltip: {
+                      sx: {
+                        color: "black",
+                        backgroundColor: "#E5E4E2",
+                        fontSize: "12px",
+                      },
+                    },
+                  }}
+                  title="Verfiy"
+                  placement="top"
+                  arrow
+                >
+                  <IconButton
+                    color="success"
+                    onClick={() => handleVerify(profile._id)}
+                  >
+                    <CheckCircle />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip
+                  componentsProps={{
+                    tooltip: {
+                      sx: {
+                        color: "black",
+                        backgroundColor: "#E5E4E2",
+                        fontSize: "12px",
+                      },
+                    },
+                  }}
+                  title="Reject"
+                  placement="top"
+                  arrow
+                >
+                  <IconButton
+                    color="error"
+                    onClick={() => handleReject(profile._id)}
+                  >
+                    <Cancel />
+                  </IconButton>
+                </Tooltip>
+              </ListItem>
+              {index < profiles.length - 1 && <Divider />}
+            </React.Fragment>
+          ))}
+        </List>
+      </ScrollableBox>
+    </StyledPaper>
   );
   
   const Statistics = () => (
-    <Paper sx={{ p: 2, mb: 3 }}>
-      <Typography variant="h6" sx={{ mb: 2 }}>Statistics</Typography>
+    <StyledPaper elevation={3}>
+      <Typography variant="h6" gutterBottom>Statistics</Typography>
       <List>
         <ListItem>
           <ListItemText primary="Total Users" secondary={numberOfProfiles} />
@@ -245,31 +335,35 @@ const handleReject = async(profileId) => {
         <ListItem>
           <ListItemText primary="Gold Subscriptions" secondary={active.plan100} />
         </ListItem>
-         <ListItem>
+        <ListItem>
           <ListItemText primary="Diamond Subscriptions" secondary={active.plan200} />
         </ListItem>
-         <ListItem>
-          <ListItemText primary="Platinium Subscriptions" secondary={active.plan300} />
+        <ListItem>
+          <ListItemText primary="Platinum Subscriptions" secondary={active.plan300} />
         </ListItem>
       </List>
-    </Paper>
+    </StyledPaper>
   );
   
+  
   const RecentActivity = () => (
-    <Paper sx={{ p: 2 }}>
-    <Typography variant="h6" sx={{ mb: 2 }}>Monthly Activity</Typography>
-    <List>
-      {monthlyUser.map((activity) => (
-        <ListItem key={activity.month}>
-          <ListItemText 
-            primary={`${activity.month} - ${activity.count} registrations (${activity.year})`} 
-            secondary={activity.count > 0 ? "Recently active" : "No activity"} 
-          />
-        </ListItem>
-      ))}
-    </List>
-  </Paper>
+    <StyledPaper elevation={3}>
+      <Typography variant="h6" gutterBottom>Monthly Activity</Typography>
+      <ScrollableBox>
+        <List>
+          {monthlyUser.map((activity) => (
+            <ListItem key={activity.month}>
+              <ListItemText 
+                primary={`${activity.month} - ${activity.count} registrations (${activity.year})`} 
+                secondary={activity.count > 0 ? "Recently active" : "No activity"} 
+              />
+            </ListItem>
+          ))}
+        </List>
+      </ScrollableBox>
+    </StyledPaper>
   );
+
   const handleChat = async () => {
     try {
       const payload = {
@@ -504,7 +598,8 @@ const handleReject = async(profileId) => {
           justifyContent: "space-between",
         }}
       >
-        <img src={logo} alt="Logo" style={{ height: "60px" }} />
+        
+        <img src={isMobile ? mobileLogo : logo} alt="Logo" style={{ height: "60px" }} />
         <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
           {/* <Button
             variant="contained"
@@ -560,7 +655,7 @@ const handleReject = async(profileId) => {
               />
             )}
           </div> */}
-          <h4 style={{color : "white"}}>Admin</h4>
+          <h5  style={{color : "white", marginBottom:0}}>Admin</h5 >
           <Button
             variant="contained"
             sx={{
@@ -578,64 +673,66 @@ const handleReject = async(profileId) => {
           </Button>
         </div>
       </nav>
-      <Box sx={{ display: 'flex' }}>
-      {/* <Sidebar /> */}
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <Typography variant="h4" sx={{ mb: 4 }}>Admin Dashboard</Typography>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={8}>
-            <NewProfiles />
-            {/* <UserManagement /> */}
-            <VerificationRequests />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Statistics />
-            <RecentActivity />
+      <Box sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}>
+      <Typography variant="h4" sx={{ mb: 4 }}>Admin Dashboard</Typography>
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={8}>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <NewProfiles />
+            </Grid>
+            <Grid item xs={12}>
+              <VerificationRequests />
+            </Grid>
           </Grid>
         </Grid>
-      </Box>
+        <Grid item xs={12} md={4}>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Statistics />
+            </Grid>
+            <Grid item xs={12}>
+              <RecentActivity />
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
     </Box>
 
-      <section>
-          <div className="cr">
-            <div className="container">
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-evenly",
-                  alignItems: "center",
-                  padding: "20px 0",
-                }}
-              >
-                <p>
-                  <strong>Contact Us: </strong>
-                  <a
-                    href="mailto:thedreamytrails@gmail.com"
-                    style={{ textDecoration: "none", color: "#FFBF0E" }}
-                  >
-                    soulmatchinfo@gmail.com
-                  </a>{" "}
-                </p>
-                <p style={{ width: "200rem", textAlign: "center" }}>
-                  Copyright © <span id="cry">2024</span>{" "}
-                  <a
-                    style={{ textDecoration: "none", color: "#FFBF00" }}
-                    href="#!"
-                    target="_blank"
-                  >
-                    SoulMatch
-                  </a>{" "}
-                  All rights reserved.{" "}
-                </p>
-                {/* <p>
-                  <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong>{" "}
-                  94490 65433
-                </p> */}
-              </div>
+    <section>
+        <div className="cr">
+          <div className="container">
+            <div className="footer-content">
+              <p style={{ textAlign: "center", fontSize: "18px" }}>
+                Copyright © <span id="cry">2024</span>{" "}
+                <a
+                  style={{
+                    textDecoration: "none",
+                    color: "#FFBF00",
+                  }}
+                  href="#!"
+                  target="_blank"
+                >
+                  SoulMatch
+                </a>{" "}
+                All rights reserved.
+              </p>
+              <p style={{ fontSize: "20px" }}>
+                <strong>Contact Us: </strong>
+                <a
+                  href="mailto:soulmatchinfo@gmail.com"
+                  style={{
+                    textDecoration: "none",
+                    color: "#FFBF0E",
+                  }}
+                >
+                  soulmatchinfo@gmail.com
+                </a>
+              </p>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
     </div>
   );
 }

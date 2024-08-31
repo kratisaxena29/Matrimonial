@@ -595,7 +595,7 @@ console.log("..check...",user.phoneno)
   });
 
   const LogoImage = styled("img")({
-    height: "40px",
+    height: "52px",
   });
 
   const ButtonGroup = styled(Box)({
@@ -607,12 +607,16 @@ console.log("..check...",user.phoneno)
   const StyledButton = styled(Button)(({ theme }) => ({
     color: "white",
     borderColor: "#F68C1E",
+    borderRadius:"8px",
+    padding: "13px 15px",
+    fontSize:"14px",
+    
     "&:hover": {
       backgroundColor: "#E57D0F",
     },
     [theme.breakpoints.down("sm")]: {
       fontSize: "0.7rem",
-      padding: "6px 10px",
+      padding: "16px 10px",
     },
   }));
 
@@ -952,31 +956,32 @@ console.log("..check...",user.phoneno)
       <section>
         <div className="cr">
           <div className="container">
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-evenly",
-                alignItems: "center",
-                padding: "20px 0",
-              }}
-            >
-              {/* <p>
-                <strong style={{ color: "#FFBF0E" }}>Email:</strong>{" "}
-                soulmatchinfo@gmail.com
-              </p> */}
-              <p style={{ width: "200rem", textAlign: "center" }}>
+            <div className="footer-content">
+              <p style={{ textAlign: "center", fontSize: "18px" }}>
                 Copyright © <span id="cry">2024</span>{" "}
                 <a
-                  style={{ textDecoration: "none", color: "#FFBF00" }}
+                  style={{
+                    textDecoration: "none",
+                    color: "#FFBF00",
+                  }}
                   href="#!"
                   target="_blank"
                 >
                   SoulMatch
-                </a>
+                </a>{" "}
+                All rights reserved.
               </p>
-              <p>
-                <strong style={{ color: "#FFBF0E" }}>Contact Us:</strong> soulmatchinfo@gmail.com
+              <p style={{ fontSize: "20px" }}>
+                <strong>Contact Us: </strong>
+                <a
+                  href="mailto:soulmatchinfo@gmail.com"
+                  style={{
+                    textDecoration: "none",
+                    color: "#FFBF0E",
+                  }}
+                >
+                  soulmatchinfo@gmail.com
+                </a>
               </p>
             </div>
           </div>
