@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import logo from "../images/logo.png";
 import mobileLogo from "../images/logo_maroon.png";
 import noProfile from "../images/profiles/noProfile.jpg";
-// import { useNavigate } from "react-router-dom";
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import {
   MenuItem,
   Select,
@@ -35,7 +35,7 @@ import {
 import axios from "axios";
 import { Tab } from "bootstrap";
 import { useNavigate } from "react-router-dom";
-import { Cancel, CheckCircle, Visibility } from "@mui/icons-material";
+import { Cancel, CheckCircle, Verified, Visibility } from "@mui/icons-material";
 
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
@@ -72,9 +72,12 @@ function Dashboard({ setlogedIn }) {
  const [monthlyUser,setMonthlyUser] = useState([])
   const [numberOfProfiles, setNumberOfProfiles] = useState(0);
   const [active, setactive] = useState("");
+  const [isVerified, setIsVerified] = useState(false);
+
+
 //   const navigate = useNavigate();
 const isMobile = useMediaQuery('(max-width:600px)');
-
+const [verifiedProfiles, setVerifiedProfiles] = useState({});
   const user = JSON.parse(sessionStorage.getItem("user"));
   const navigate = useNavigate()
   console.log("..user...", user);
@@ -99,21 +102,24 @@ const isMobile = useMediaQuery('(max-width:600px)');
   const handleVerify = async (profileId) => {
     console.log("Verify button clicked for profile:", profileId);
     try {
-        const response = await axios.get(`${URL}/verify-profile/${profileId}`);
-        console.log("Profile verification updated:", response.data);
+      const response = await axios.get(`${URL}/verify-profile/${profileId}`);
+      console.log("Profile verification updated:", response.data);
+      
+      // Update the verified status for this profile
+      setVerifiedProfiles(prev => ({...prev, [profileId]: true}));
 
-        // Update the profiles state to reflect the verified status
-        setProfiles((prevProfiles) =>
-            prevProfiles.map((profile) =>
-                profile._id === profileId
-                    ? { ...profile, verifyProfile: true }
-                    : profile
-            )
-        );
+      // Update the profiles state to reflect the verified status
+      setProfiles((prevProfiles) =>
+        prevProfiles.map((profile) =>
+          profile._id === profileId
+            ? { ...profile, verifyProfile: true }
+            : profile
+        )
+      );
     } catch (error) {
-        console.error("Error verifying profile:", error);
+      console.error("Error verifying profile:", error);
     }
-};
+  };
 
 
 const handleReject = async(profileId) => {
@@ -210,21 +216,36 @@ const handleReject = async(profileId) => {
 
   const NewProfiles = () => (
     <StyledPaper elevation={3}>
-      <Typography variant="h6" gutterBottom>All Profiles</Typography>
+      <Typography variant="h6" gutterBottom>
+        All Profiles
+      </Typography>
       <ScrollableBox>
         <Grid container spacing={2}>
           {profiles.map((profile) => (
             <Grid item xs={12} key={profile._id}>
-              <Card sx={{display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
+              <Card
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
                 <CardContent>
                   <Box display="flex" alignItems="center">
-                    <Avatar sx={{ marginRight: 2, pb:"1px", textAlign:"center" }}>{profile.name ? profile.name[0] : 'U'}</Avatar>
-                    <Typography variant="subtitle1">{profile.name || 'No Name'}</Typography>
+                    <Avatar
+                      sx={{ marginRight: 2, pb: "1px", textAlign: "center" }}
+                    >
+                      {profile.name ? profile.name[0] : "U"}
+                    </Avatar>
+                    <Typography variant="subtitle1">
+                      {profile.name || "No Name"}
+                    </Typography>
                   </Box>
                 </CardContent>
                 <CardActions>
-                  <Button 
-                    size="small" 
+                  <Button
+                    size="small"
                     startIcon={<Visibility />}
                     onClick={() => handleProfileDetails(profile._id)}
                   >
@@ -265,36 +286,53 @@ const handleReject = async(profileId) => {
                 <ListItemText
                   primary={profile.name}
                   secondary={`Status: ${
-                    profile.verifyProfile ? "Verified" : "Pending"
+                    profile.verifyProfile || verifiedProfiles[profile._id]
+                      ? "Verified"
+                      : "Pending"
                   }`}
                 />
                 <Tooltip
                   componentsProps={{
                     tooltip: {
                       sx: {
-                        color: "black",
-                        backgroundColor: "#E5E4E2",
+                        color: "white",
+                        backgroundColor:
+                          profile.verifyProfile || verifiedProfiles[profile._id]
+                            ? "#4CAF50"
+                            : "#FFA500",
                         fontSize: "12px",
                       },
                     },
                   }}
-                  title="Verfiy"
+                  title={
+                    profile.verifyProfile || verifiedProfiles[profile._id]
+                      ? "Verified"
+                      : "Verify"
+                  }
                   placement="top"
                   arrow
                 >
                   <IconButton
-                    color="success"
+                    color={
+                      profile.verifyProfile || verifiedProfiles[profile._id]
+                        ? "success"
+                        : "warning"
+                    }
                     onClick={() => handleVerify(profile._id)}
                   >
-                    <CheckCircle />
+                    {profile.verifyProfile || verifiedProfiles[profile._id] ? (
+                      <Verified />
+                    ) : (
+                      <NewReleasesIcon />
+                    )}
                   </IconButton>
                 </Tooltip>
                 <Tooltip
                   componentsProps={{
                     tooltip: {
                       sx: {
-                        color: "black",
-                        backgroundColor: "#E5E4E2",
+                        color: "white",
+                        backgroundColor: "red",
                         fontSize: "12px",
                       },
                     },
