@@ -705,7 +705,7 @@ console.log("..check...",user.phoneno)
               onClose={handleClose}
             >
               <MenuItem onClick={triggerFileInput}>
-                Change Profile Photo
+                Edit Your Profile
               </MenuItem>
               <MenuItem onClick={handlePlans}>View Membership Plan</MenuItem>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
