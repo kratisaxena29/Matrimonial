@@ -20,6 +20,8 @@ import {
   Typography,
   Grid,
   useMediaQuery,
+  Card,
+  CardContent,
 } from "@mui/material";
 import axios from "axios";
 import "../styles/profile.css"
@@ -406,7 +408,34 @@ function Profiles({ setlogedIn }) {
     "Yadav",
     "Other",
   ];
+  const [requests, setRequests] = useState([
+    { _id: "1", name: "John Doe", photo: "https://via.placeholder.com/50" },
+    { _id: "2", name: "Jane Smith", photo: "https://via.placeholder.com/50" },
+    { _id: "3", name: "Sam Wilson", photo: "https://via.placeholder.com/50" },
+    { _id: "4", name: "Alice Johnson", photo: "https://via.placeholder.com/50" },
+    { _id: "5", name: "Alice Johnson", photo: "https://via.placeholder.com/50" },
+    { _id: "6", name: "Alice Johnson", photo: "https://via.placeholder.com/50" },
+    { _id: "7", name: "Alice Johnson", photo: "https://via.placeholder.com/50" },
+    { _id: "8", name: "Alice Johnson", photo: "https://via.placeholder.com/50" },
+    { _id: "9", name: "Alice Johnson", photo: "https://via.placeholder.com/50" },
+  ]);
 
+  const handleAccept = (id) => {
+    console.log(`Accepted request with id: ${id}`);
+    // Here, you can add the logic to handle the acceptance, like making an API call.
+
+    // Removing the accepted request from the list
+    setRequests((prevRequests) => prevRequests.filter((request) => request._id !== id));
+  };
+
+  // Handle Reject Button Click
+  const handleReject = (id) => {
+    console.log(`Rejected request with id: ${id}`);
+    // Here, you can add the logic to handle the rejection, like making an API call.
+
+    // Removing the rejected request from the list
+    setRequests((prevRequests) => prevRequests.filter((request) => request._id !== id));
+  };  
   const ReligionOptions = [
     "Hindu",
     "Muslim",
@@ -740,10 +769,12 @@ console.log("..check...",user.phoneno)
     console.log("..interestedProfiles after update..", interestedProfiles);
   }, [interestedProfiles]);
   const isMobile = useMediaQuery('(max-width:600px)');
+
+
   return (
     <div>
       <Navbar
-         logo={isMobile ? mobileLogo : logo} 
+        logo={isMobile ? mobileLogo : logo}
         oneProfile={oneProfile}
         handlePlans={handlePlans}
         triggerFileInput={triggerFileInput}
@@ -756,6 +787,7 @@ console.log("..check...",user.phoneno)
           <div className="all-weddpro all-jobs all-serexp chosenini">
             <div className="container">
               <Grid container spacing={2}>
+                {/* Filters Section */}
                 <Grid
                   item
                   xs={12}
@@ -765,10 +797,9 @@ console.log("..check...",user.phoneno)
                       xs: "block",
                       md: "block",
                     },
-                    marginTop:"70px"
+                    marginTop: "70px",
                   }}
                 >
-                  {/* <span className="">+</span> */}
                   <div className="filt-com lhs-cate">
                     <Typography variant="h6">
                       <i className="fa fa-clock-o" aria-hidden="true" />
@@ -856,7 +887,8 @@ console.log("..check...",user.phoneno)
                   </div>
                 </Grid>
   
-                <Grid item xs={12} md={9}>
+                {/* Profiles Section */}
+                <Grid item xs={12} md={6}>
                   <div className="short-all">
                     <div className="short-lhs">
                       Showing <b>{profiles.length}</b> profiles
@@ -948,45 +980,68 @@ console.log("..check...",user.phoneno)
                     </ul>
                   </div>
                 </Grid>
+  
+                {/* Requests Section */}
+                <Grid item xs={12} md={3} sx={{
+                    marginTop: "70px",
+                    // maxHeight: "500px",
+                    // overflowY: "scroll",
+                  }}>
+                  <div style={{ padding: "16px", borderRadius: "8px", boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)" }}>
+                    <Typography variant="h6" style={{ marginBottom: "16px", fontWeight: "bold", textAlign: "center" }}>
+                      Requests
+                    </Typography>
+                    <div style={{ maxHeight: "500px", overflowY: "auto" }}>
+                      {requests.map((request) => (
+                        <Card
+                          key={request.id}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            marginBottom: "12px",
+                            padding: "8px",
+                            borderRadius: "8px",
+                            boxShadow: "0 2px 6px rgba(0, 0, 0, 0.1)",
+                            transition: "transform 0.2s",
+                          }}
+                          onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.02)")}
+                          onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                        >
+                          <Avatar src={request.photo} alt={request.name} style={{ marginRight: "16px", width: "50px", height: "50px" }} />
+                          <CardContent style={{ flex: 1, padding: "0" }}>
+                            <Typography variant="body1" style={{ fontWeight: "500", marginBottom: "8px" }}>
+                              {request.name}
+                            </Typography>
+                            <Box>
+                              <Button
+                                variant="contained"
+                                color="success"
+                                size="small"
+                                onClick={() => handleAccept(request.id)}
+                                style={{ marginRight: "8px" }}
+                              >
+                                Accept
+                              </Button>
+                              <Button
+                                variant="contained"
+                                color="error"
+                                size="small"
+                                onClick={() => handleReject(request.id)}
+                              >
+                                Reject
+                              </Button>
+                            </Box>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  </div>
+                </Grid>
               </Grid>
             </div>
           </div>
         </section>
       </div>
-      <section>
-        <div className="cr">
-          <div className="container">
-            <div className="footer-content">
-              <p style={{ textAlign: "center", fontSize: "18px" }}>
-                Copyright © <span id="cry">2024</span>{" "}
-                <a
-                  style={{
-                    textDecoration: "none",
-                    color: "#FFBF00",
-                  }}
-                  href="#!"
-                  target="_blank"
-                >
-                  SoulMatch
-                </a>{" "}
-                All rights reserved.
-              </p>
-              <p style={{ fontSize: "20px" }}>
-                <strong>Contact Us: </strong>
-                <a
-                  href="mailto:soulmatchinfo@gmail.com"
-                  style={{
-                    textDecoration: "none",
-                    color: "#FFBF0E",
-                  }}
-                >
-                  soulmatchinfo@gmail.com
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
