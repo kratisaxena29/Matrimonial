@@ -3,7 +3,7 @@ import mobileLogo from "../images/logo_maroon.png";
 import logo from "../images/logo.png";
 import noProfile from "../images/profiles/noProfile.jpg";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-
+import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import {
   MenuItem,
@@ -35,6 +35,8 @@ function Profiles({ setlogedIn }) {
   const [interestedProfiles, setInterestedProfiles] = useState([]);
   const [subcaste, setSubCaste] = useState("");
   const [oneProfile, setOneProfiles] = useState("");
+  const [sendRequest,setSendRequest] = useState([]);
+  
   const navigate = useNavigate();
 
   const casteOptions = [
@@ -408,33 +410,66 @@ function Profiles({ setlogedIn }) {
     "Yadav",
     "Other",
   ];
-  const [requests, setRequests] = useState([
-    { _id: "1", name: "John Doe", photo: "https://via.placeholder.com/50" },
-    { _id: "2", name: "Jane Smith", photo: "https://via.placeholder.com/50" },
-    { _id: "3", name: "Sam Wilson", photo: "https://via.placeholder.com/50" },
-    { _id: "4", name: "Alice Johnson", photo: "https://via.placeholder.com/50" },
-    { _id: "5", name: "Alice Johnson", photo: "https://via.placeholder.com/50" },
-    { _id: "6", name: "Alice Johnson", photo: "https://via.placeholder.com/50" },
-    { _id: "7", name: "Alice Johnson", photo: "https://via.placeholder.com/50" },
-    { _id: "8", name: "Alice Johnson", photo: "https://via.placeholder.com/50" },
-    { _id: "9", name: "Alice Johnson", photo: "https://via.placeholder.com/50" },
-  ]);
+  const [requests, setRequests] = useState([]);
 
-  const handleAccept = (id) => {
+  const handleAccept = async (id) => {
     console.log(`Accepted request with id: ${id}`);
-    // Here, you can add the logic to handle the acceptance, like making an API call.
-
-    // Removing the accepted request from the list
-    setRequests((prevRequests) => prevRequests.filter((request) => request._id !== id));
+  
+    try {
+      const payload = {
+        AllprofilesId: [id],  // Wrap the ID in an array as expected by the backend
+      };
+  
+      // Add email or phoneno to the payload based on available user data
+      const { email, phoneno } = user;
+      if (email) {
+        payload.email = email;
+      } else if (phoneno) {
+        payload.phoneno = phoneno;
+      } else {
+        console.log("Neither email nor phone number is available.");
+        return;
+      }
+  
+      // Make API request
+      const response = await axios.post(`${URL}/allProfileId`, payload, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      console.log("API Response:", response.data);
+  
+      // Remove the accepted request from the list (Optimistic update)
+      setRequests((prevRequests) => prevRequests.filter((request) => request._id !== id));
+  
+      // Navigate to the chat page after successful API response
+      // navigate("/chat");
+      toast.success("Hurry! Now we are able to chat")
+      handleReject(id)
+    } catch (error) {
+      console.log("..error...", error);
+  
+      // Optional: Add user feedback for the error
+      alert("An error occurred while processing the request.");
+    }
   };
-
+  
   // Handle Reject Button Click
-  const handleReject = (id) => {
+  const handleReject = async(id) => {
     console.log(`Rejected request with id: ${id}`);
-    // Here, you can add the logic to handle the rejection, like making an API call.
-
-    // Removing the rejected request from the list
-    setRequests((prevRequests) => prevRequests.filter((request) => request._id !== id));
+   console.log("...profileid...",oneProfile._id)
+   console.log("...id...",id)
+    try {
+      // POST request with the updatedProfiles in AllprofilesId
+      const response = await axios.get(`${URL}/deleteRequestById?id=${oneProfile._id}&requestId=${id}`);
+      console.log('Request sent successfully:', response.data);
+      setRequests((prevRequests) => prevRequests.filter((request) => request._id !== id));
+  
+    } catch (error) {
+      console.error('Error sending request:', error);
+    }
+   
   };  
   const ReligionOptions = [
     "Hindu",
@@ -454,34 +489,7 @@ function Profiles({ setlogedIn }) {
 
   const URL = process.env.REACT_APP_API_BASE_URL;
 
-  const handleChat = async () => {
-    try {
-      const payload = {
-        AllprofilesId: interestedProfiles,
-      };
-
-      // Add email or phoneno to the payload based on available user data
-      if (user.email) {
-        payload.email = user.email;
-      } else if (user.phoneno) {
-        payload.phoneno = user.phoneno;
-      } else {
-        console.log("Neither email nor phone number is available.");
-        return;
-      }
-
-      const response = await axios.post(`${URL}/allProfileId`, payload, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      console.log("API Response:", response.data);
-      navigate("/chat");
-    } catch (error) {
-      console.log("..error...", error);
-    }
-  };
+  
 
   const handleInterest = (profileId) => {
     console.log("Interest button clicked for profile:", profileId);
@@ -492,6 +500,47 @@ function Profiles({ setlogedIn }) {
       return updatedProfiles;
     });
   };
+//  const handleSendRequest = (profileId) => {
+//   setSendRequest((prevState) => {
+//     const updatedProfiles = [...prevState, profileId];
+//     console.log("..updatedsend ..", updatedProfiles);
+//     return updatedProfiles;
+//   });
+
+//  }
+
+
+
+const handleSendRequest = async (profileId) => {
+  // Update the state first and capture the updated profiles
+  let updatedProfiles = [];
+  setSendRequest((prevState) => {
+    updatedProfiles = [...prevState, profileId]; // Updated profiles
+    console.log("Updated send request:", updatedProfiles);
+    return updatedProfiles;
+  });
+
+  // Request body that includes updatedProfiles as AllprofilesId
+  const requestBody = {
+    email : user.email ? user.email : "",
+    phoneno: user.phoneno ? user.phoneno : "", // Replace with dynamic value if needed
+    profileId: oneProfile._id, 
+    AllprofilesId: updatedProfiles // Use updatedProfiles in request body
+  };
+
+  console.log("..requestBody..", requestBody);
+
+  try {
+    // POST request with the updatedProfiles in AllprofilesId
+    const response = await axios.post(`${URL}/AlltheSendRequestId`, requestBody);
+    console.log('Request sent successfully:', response.data);
+
+  } catch (error) {
+    console.error('Error sending request:', error);
+  }
+};
+
+
 
   const uploadImage = (event) => {
     const file = event.target.files[0];
@@ -559,6 +608,32 @@ function Profiles({ setlogedIn }) {
     handlegetImageUrl();
   }, []);
 console.log("..check...",user.phoneno)
+
+useEffect(() => {
+  let id = oneProfile._id;
+  console.log("...id...", id);
+
+  // Make the axios request without wrapping it inside a function
+  axios.get(`${URL}/getAllRequestById/${id}`)
+    .then((response) => {
+      console.log("..request...", response.data);
+      // Update state with the response data (uncomment this when you're ready to use it)
+      // setProfiles(response.data.response);
+      const fetchedRequests = response.data.data.map((item) => ({
+        _id: item._id,
+        name: item.name,
+        photo: item.fileUpload // Assuming fileUpload is the image URL
+      }));
+      setRequests(fetchedRequests);
+    })
+    .catch((error) => {
+      console.log("...error...", error);
+    });
+
+  // No need to call request() since axios.get() is already executed
+}, [oneProfile._id]); // Assuming oneProfile._id is the dependency
+
+
   useEffect(() => {
     // Construct the API URL based on filters
     let apiUrl = `${URL}/getAllprofile?`;
@@ -687,6 +762,7 @@ console.log("..check...",user.phoneno)
     logo,
     oneProfile,
     handlePlans,
+    handleChat,
     triggerFileInput,
     photoUrl,
     noProfile,
@@ -737,6 +813,7 @@ console.log("..check...",user.phoneno)
                 Edit Your Profile
               </MenuItem>
               <MenuItem onClick={handlePlans}>View Membership Plan</MenuItem>
+              <MenuItem onClick={handleChat}>Chat</MenuItem>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
             <StyledButton variant="outlined" onClick={handlePlans}>
@@ -765,6 +842,9 @@ console.log("..check...",user.phoneno)
   const handlePlans = () => {
     navigate("/plan");
   };
+  const handleChat = () => {
+    navigate("/chat")
+  }
   useEffect(() => {
     console.log("..interestedProfiles after update..", interestedProfiles);
   }, [interestedProfiles]);
@@ -777,6 +857,7 @@ console.log("..check...",user.phoneno)
         logo={isMobile ? mobileLogo : logo}
         oneProfile={oneProfile}
         handlePlans={handlePlans}
+        handleChat={handleChat}
         triggerFileInput={triggerFileInput}
         photoUrl={photoUrl}
         noProfile={noProfile}
@@ -933,7 +1014,7 @@ console.log("..check...",user.phoneno)
                                 <span>{profile.age}</span>
                                 <span>Height: {profile.height}</span>
                               </div>
-                              <div className="links">
+                              {/* <div className="links">
                                 <span
                                   onClick={handleChat}
                                   className="cta-chat"
@@ -954,6 +1035,24 @@ console.log("..check...",user.phoneno)
                                 >
                                   Interested
                                 </span>
+                              </div> */}
+                               <div className="links">
+                                <span
+                                 onClick={() => handleSendRequest(profile._id)}
+                        
+                                  className="cta-chat"
+                                  style={{
+                                    cursor: "pointer",
+                                    color: sendRequest.includes(
+                                      profile._id
+                                    )
+                                      ? "red"
+                                      : "black",
+                                  }}
+                                >
+                                  Send Request
+                                </span>
+                              
                               </div>
                             </div>
                             <span
@@ -994,7 +1093,7 @@ console.log("..check...",user.phoneno)
                     <div style={{ maxHeight: "500px", overflowY: "auto" }}>
                       {requests.map((request) => (
                         <Card
-                          key={request.id}
+                          key={request._id}
                           style={{
                             display: "flex",
                             alignItems: "center",
@@ -1017,7 +1116,7 @@ console.log("..check...",user.phoneno)
                                 variant="contained"
                                 color="success"
                                 size="small"
-                                onClick={() => handleAccept(request.id)}
+                                onClick={() => handleAccept(request._id)}
                                 style={{ marginRight: "8px" }}
                               >
                                 Accept
@@ -1026,7 +1125,7 @@ console.log("..check...",user.phoneno)
                                 variant="contained"
                                 color="error"
                                 size="small"
-                                onClick={() => handleReject(request.id)}
+                                onClick={() => handleReject(request._id)}
                               >
                                 Reject
                               </Button>
@@ -1042,6 +1141,7 @@ console.log("..check...",user.phoneno)
           </div>
         </section>
       </div>
+     <ToastContainer/>
     </div>
   );
 }

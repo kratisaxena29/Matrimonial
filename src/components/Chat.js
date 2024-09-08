@@ -154,19 +154,36 @@ const ChatApp = ({ setlogedIn }) => {
   useEffect(() => {
     const fetchProfiles = async () => {
       try {
-        const response = await axios.get(`${URL}/getallProfileById?email=${user.email}`);
+        let url;
+        
+        // Check if the user has a phone number or email
+        if (user.phoneno) {
+          url = `${URL}/getallProfileById?phoneno=${user.phoneno}`;
+        } else if (user.email) {
+          url = `${URL}/getallProfileById?email=${user.email}`;
+        } else {
+          throw new Error("No phone number or email provided for user.");
+        }
+        
+        // Make the API request
+        const response = await axios.get(url);
+        
         const profiles = response.data.response.allProfilesDetails;
         const formattedChats = profiles.map((profile) => ({
           id: profile._id,
           name: profile.name,
           conversationId: conversations.find((conv) => conv.participants.includes(profile._id))?.id || null,
         }));
+        
+        // Set the data to state
         setChats(formattedChats);
         setPeople(profiles);
+        
       } catch (error) {
         console.error("Error fetching profiles:", error);
       }
     };
+    
 
     fetchProfiles();
   }, [conversations, user.email]);
