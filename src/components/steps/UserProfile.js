@@ -6,6 +6,14 @@ import EditIcon from '@mui/icons-material/Edit';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import CloseIcon from '@mui/icons-material/Close';
 import { ToastContainer, toast } from "react-toastify";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'; // Icon for Accepted
+import MailIcon from '@mui/icons-material/Mail'; // Icon for Interest Received
+import SendIcon from '@mui/icons-material/Send'; // Icon for Interest Sent
+import BlockIcon from '@mui/icons-material/Block'; // Icon for Declined Interest
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+// import SendIcon from '@mui/icons-material/Send';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 import { useNavigate } from "react-router-dom";
 import {
@@ -26,6 +34,9 @@ import {
   Dialog,
   DialogContent,
   useMediaQuery,
+  Card,
+  CardContent,
+  Icon,
 } from "@mui/material";
 import axios from "axios";
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
@@ -39,6 +50,10 @@ function UserProfile({ setlogedIn }) {
   const [profiles, setProfiles] = useState([]);
   const [interestedProfiles, setInterestedProfiles] = useState([]);
   const [subcaste, setSubCaste] = useState("");
+  const [deletecount ,setDeleteCount] = useState("")
+  const[interestSent , setInterestSent] = useState("")
+  const[interestRecived , setInterestRecived] = useState("")
+  const[acceptRecived , setAcceptRecived] = useState("")
   const navigate = useNavigate();
 
   const user = JSON.parse(sessionStorage.getItem("user"));
@@ -62,6 +77,7 @@ function UserProfile({ setlogedIn }) {
   };
   const [isEditMode, setIsEditMode] = useState(false);
   const [profileData, setProfileData] = useState({
+    _id : "",
     fullName: "",
     dateOfBirth: "",
     gender: "",
@@ -255,7 +271,13 @@ useEffect(() => {
         console.log("Error fetching photos:", error);
       });
   }, [URL]);
-
+  const data = {
+    accepted: 1,
+    received: 6,
+    sent: 1075,
+    declined: deletecount,
+    shortlisted: 0, // you can add more cards if needed
+  };
   const renderField = (label, value, name, type = "text", options = []) => {
     if (isEditMode) {
       switch (type) {
@@ -541,6 +563,64 @@ useEffect(() => {
   useEffect(() => {
     console.log("..interestedProfiles after update..", interestedProfiles);
   }, [interestedProfiles]);
+
+  useEffect(() => {
+    // const profileIdentifier = user.email ? user.email : user.phoneno;
+    // console.log("...deletekrati....",profileData._id)
+    axios.get(`${URL}/getDeleteRequest/${profileData._id}`)
+      .then(response => {
+        const deleteResponse = response.data.count;
+        console.log("...deleteResponse..",deleteResponse)
+         setDeleteCount(deleteResponse);
+      })
+      .catch(error => {
+        console.log("Error fetching photos:", error);
+      });
+  }, [URL]);
+
+  useEffect(() => {
+    const identifier = user.email ? user.email : user.phoneno;
+    axios.get(`${URL}/getSendRequestIds/${identifier}`)
+      .then(response => {
+        const sendResponse = response.data.count;
+        console.log("...sendResponse..",sendResponse)
+        setInterestSent(sendResponse)
+        
+      })
+      .catch(error => {
+        console.log("Error fetching photos:", error);
+      });
+  }, [URL]);
+
+  useEffect(() => {
+    const identifier = user.email ? user.email : user.phoneno;
+    axios.get(`${URL}/getAcceptInterest/${identifier}`)
+      .then(response => {
+        const responseRecived = response.data.count;
+        console.log("...accepted response received..",responseRecived)
+        setAcceptRecived(responseRecived)
+        
+      })
+      .catch(error => {
+        console.log("Error fetching photos:", error);
+      });
+  }, [URL]);
+
+  useEffect(() => {
+    // const identifier = user.email ? user.email : user.phoneno;
+    // ${profileData?._id}
+    axios.get(`${URL}/getAllRequestById/66a9dd0a2f09a26ad9514521`)
+      .then(response => {
+        const responseRecived = response.data.counts;
+        console.log("...interest response ..",responseRecived)
+          setInterestRecived(responseRecived)
+        
+      })
+      .catch(error => {
+        console.log("Error fetching photos:", error);
+      });
+  }, [URL]);
+
   useEffect(() => {
     const handleData = async () => {
       console.log("....user krati...",user.email)
@@ -554,9 +634,11 @@ useEffect(() => {
       // }
       try {
         const response = await axios.get(`${URL}/profilebyid/${data}`);
-      
+     
        console.log("...response...",response.data)
+      //  setUser(response.data)
        const dummyData = {
+        _id : response.data._id || "Not Available", 
         fullName: response.data.name || "Not Available",
         dateOfBirth: response.data.dateOfBirth || "Not Available" ,
         gender: response.data.gender || "Not Available" ,
@@ -603,11 +685,14 @@ useEffect(() => {
     }
   };
   const isMobile = useMediaQuery('(max-width:600px)');
-
+  const statusData = [
+    { label: 'Accepted', icon: <CheckCircleIcon /> },
+    { label: 'Interest Received', icon: <MailIcon /> },
+    { label: 'Interest Sent', icon: <SendIcon /> },
+    { label: 'Declined Interest', icon: <BlockIcon /> },
+  ];
   return (
-    
     <div>
-  
       <nav
         style={{
           backgroundColor: "#6D0B32",
@@ -618,11 +703,11 @@ useEffect(() => {
         }}
       >
         <img
-        onClick={handleLogo}
-        src={isMobile ? mobileLogo : logo}  // Conditional rendering based on screen size
-        alt="Logo"
-        style={{ height: "60px" }}
-      />
+          onClick={handleLogo}
+          src={isMobile ? mobileLogo : logo} // Conditional rendering based on screen size
+          alt="Logo"
+          style={{ height: "60px" }}
+        />
         <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
           <Button
             variant="contained"
@@ -715,13 +800,133 @@ useEffect(() => {
       </section>
 
       <section>
-        <div className="login pro-edit-update" sx={{marginTop:"00px"}}>
+      <div className="login pro-edit-update" sx={{ marginTop: '00px' }}>
+        <div className="container">
+          <div className="row">
+            <Grid container spacing={2} sx={{ marginBottom: 2 }}>
+              {/* Accepted Interests */}
+              <Grid item xs={3}>
+                <Box
+                  component={Card}
+                  sx={{
+                    textAlign: 'center',
+                    backgroundColor: '#e0f7fa',
+                    cursor: 'pointer',
+                    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                    '&:hover': {
+                      transform: 'scale(1.05)',
+                      boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
+                    },
+                  }}
+                >
+                  <CardContent>
+                    <IconButton>
+                      <CheckCircleOutlineIcon sx={{ color: 'green', fontSize: 30 }} />
+                    </IconButton>
+                    <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                      {/* {data.accepted < 10 ? `0${data.accepted}` : data.accepted} */}
+                      {acceptRecived || 0}
+                    </Typography>
+                    <Typography variant="body2">Accepted Interests</Typography>
+                  </CardContent>
+                </Box>
+              </Grid>
+
+              {/* Interests Received */}
+              <Grid item xs={3}>
+                <Box
+                  component={Card}
+                  sx={{
+                    textAlign: 'center',
+                    backgroundColor: '#fff3e0',
+                    cursor: 'pointer',
+                    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                    '&:hover': {
+                      transform: 'scale(1.05)',
+                      boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
+                    },
+                  }}
+                >
+                  <CardContent>
+                    <IconButton>
+                      <FavoriteBorderIcon sx={{ color: 'orange', fontSize: 30 }} />
+                    </IconButton>
+                    <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                      {/* {data.received < 10 ? `0${data.received}` : data.received} */}
+                      {interestRecived || 0}
+                    </Typography>
+                    <Typography variant="body2">Interests Received</Typography>
+                  </CardContent>
+                </Box>
+              </Grid>
+
+              {/* Interests Sent */}
+              <Grid item xs={3}>
+                <Box
+                  component={Card}
+                  sx={{
+                    textAlign: 'center',
+                    backgroundColor: '#f3e5f5',
+                    cursor: 'pointer',
+                    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                    '&:hover': {
+                      transform: 'scale(1.05)',
+                      boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
+                    },
+                  }}
+                >
+                  <CardContent>
+                    <IconButton>
+                      <SendIcon sx={{ color: 'purple', fontSize: 30 }} />
+                    </IconButton>
+                    <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                      {interestSent || 0 }
+                    </Typography>
+                    <Typography variant="body2">Interests Sent</Typography>
+                  </CardContent>
+                </Box>
+              </Grid>
+
+              {/* Declined Interests */}
+              <Grid item xs={3}>
+                <Box
+                  component={Card}
+                  sx={{
+                    textAlign: 'center',
+                    backgroundColor: '#ffebee',
+                    cursor: 'pointer',
+                    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                    '&:hover': {
+                      transform: 'scale(1.05)',
+                      boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
+                    },
+                  }}
+                >
+                  <CardContent>
+                    <IconButton>
+                      <HighlightOffIcon sx={{ color: 'red', fontSize: 30 }} />
+                    </IconButton>
+                    <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                      {deletecount || 0}
+                    </Typography>
+                    <Typography variant="body2">Declined Interests</Typography>
+                  </CardContent>
+                </Box>
+              </Grid>
+            </Grid>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+      <section>
+        <div className="login pro-edit-update" sx={{ marginTop: "00px" }}>
           <div className="container">
             <div className="row">
               <div className="inn">
                 <div className="rhs">
                   <div className="form-login">
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit || 0}>
                       <Box
                         display="flex"
                         justifyContent="space-between"
@@ -1407,128 +1612,138 @@ useEffect(() => {
         </div>
       </section>
       {/* </div> */}
-      <Box sx={{ width: '100%', maxWidth: 800, margin: '0 auto', mt: 4, mb: 4 }}>
-      <Typography
-        variant="h4"
-        gutterBottom
-        sx={{
-          fontWeight: "bold",
-          textAlign: "center",
-          color: "#76001C",
-          mb: 3,
-          marginTop:20
-        }}
-      >
-        Photo Gallery
-      </Typography>
       <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 3,
-          padding: 3,
-          backgroundColor: "white",
-          borderRadius: 2,
-          boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
-        }}
+        sx={{ width: "100%", maxWidth: 800, margin: "0 auto", mt: 4, mb: 4 }}
       >
-        <input
-          accept="image/*"
-          style={{ display: "none" }}
-          id="gallery-upload"
-          type="file"
-          multiple
-          onChange={handleGalleryUpload}
-        />
-        <label htmlFor="gallery-upload">
-          <Button
-            variant="contained"
-            startIcon={<AddPhotoAlternateIcon />}
-            component="span"
-            sx={{
-              padding: "10px 20px",
-              backgroundColor: "#FB6A6B",
-              color: "white",
-              "&:hover": {
-                backgroundColor: "#e55657",
-              },
-            }}
-          >
-            Add Photos
-          </Button>
-        </label>
-        <Grid container spacing={2} justifyContent="center">
-          {gallery.map((photo, index) => (
-            <Grid item xs={6} sm={4} md={3} key={index}>
-              <Box
-                sx={{
-                  position: "relative",
-                  width: "100%",
-                  paddingTop: "100%",
-                  borderRadius: 2,
-                  overflow: "hidden",
-                  boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
-                  transition: "transform 0.3s ease",
-                  "&:hover": {
-                    transform: "scale(1.05)",
-                  },
-                }}
-              >
-                <img
-                  src={photo}
-                  alt={`Gallery ${index + 1}`}
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
+        <Typography
+          variant="h4"
+          gutterBottom
+          sx={{
+            fontWeight: "bold",
+            textAlign: "center",
+            color: "#76001C",
+            mb: 3,
+            marginTop: 20,
+          }}
+        >
+          Photo Gallery
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 3,
+            padding: 3,
+            backgroundColor: "white",
+            borderRadius: 2,
+            boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+          }}
+        >
+          <input
+            accept="image/*"
+            style={{ display: "none" }}
+            id="gallery-upload"
+            type="file"
+            multiple
+            onChange={handleGalleryUpload}
+          />
+          <label htmlFor="gallery-upload">
+            <Button
+              variant="contained"
+              startIcon={<AddPhotoAlternateIcon />}
+              component="span"
+              sx={{
+                padding: "10px 20px",
+                backgroundColor: "#FB6A6B",
+                color: "white",
+                "&:hover": {
+                  backgroundColor: "#e55657",
+                },
+              }}
+            >
+              Add Photos
+            </Button>
+          </label>
+          <Grid container spacing={2} justifyContent="center">
+            {gallery.map((photo, index) => (
+              <Grid item xs={6} sm={4} md={3} key={index}>
                 <Box
                   sx={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    backgroundColor: "rgba(0,0,0,0.5)",
-                    opacity: 0,
-                    transition: "opacity 0.3s ease",
+                    position: "relative",
+                    width: "100%",
+                    paddingTop: "100%",
+                    borderRadius: 2,
+                    overflow: "hidden",
+                    boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                    transition: "transform 0.3s ease",
                     "&:hover": {
-                      opacity: 1,
+                      transform: "scale(1.05)",
                     },
                   }}
                 >
-                  <IconButton
-                    sx={{ color: "white", mr: 1 }}
-                    onClick={() => setOpenImage(photo)}
+                  <img
+                    src={photo}
+                    alt={`Gallery ${index + 1}`}
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      backgroundColor: "rgba(0,0,0,0.5)",
+                      opacity: 0,
+                      transition: "opacity 0.3s ease",
+                      "&:hover": {
+                        opacity: 1,
+                      },
+                    }}
                   >
-                    <ZoomInIcon />
-                  </IconButton>
-                  <IconButton
-                    sx={{ color: "white" }}
-                    onClick={() => removePhoto(index)}
-                  >
-                    <CloseIcon />
-                  </IconButton>
+                    <IconButton
+                      sx={{ color: "white", mr: 1 }}
+                      onClick={() => setOpenImage(photo)}
+                    >
+                      <ZoomInIcon />
+                    </IconButton>
+                    <IconButton
+                      sx={{ color: "white" }}
+                      onClick={() => removePhoto(index)}
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                  </Box>
                 </Box>
-              </Box>
-            </Grid>
-          ))}
-        </Grid>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+        <Dialog
+          open={!!openImage}
+          onClose={() => setOpenImage(null)}
+          maxWidth="md"
+        >
+          <DialogContent>
+            <img
+              src={openImage}
+              alt="Enlarged"
+              style={{ width: "100%", height: "auto" }}
+            />
+          </DialogContent>
+        </Dialog>
       </Box>
-      <Dialog open={!!openImage} onClose={() => setOpenImage(null)} maxWidth="md">
-        <DialogContent>
-          <img src={openImage} alt="Enlarged" style={{ width: '100%', height: 'auto' }} />
-        </DialogContent>
-      </Dialog>
-    </Box>
       <section>
         <div className="cr">
           <div className="container">
@@ -1563,9 +1778,8 @@ useEffect(() => {
           </div>
         </div>
       </section>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
-  
   );
 }
 

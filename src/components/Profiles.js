@@ -3,7 +3,7 @@ import mobileLogo from "../images/logo_maroon.png";
 import logo from "../images/logo.png";
 import noProfile from "../images/profiles/noProfile.jpg";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-
+import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import {
   MenuItem,
@@ -20,6 +20,8 @@ import {
   Typography,
   Grid,
   useMediaQuery,
+  Card,
+  CardContent,
 } from "@mui/material";
 import axios from "axios";
 import "../styles/profile.css"
@@ -33,7 +35,11 @@ function Profiles({ setlogedIn }) {
   const [interestedProfiles, setInterestedProfiles] = useState([]);
   const [subcaste, setSubCaste] = useState("");
   const [oneProfile, setOneProfiles] = useState("");
+  const [sendRequest,setSendRequest] = useState([]);
+  const[interestSent , setInterestSent] = useState("")
+  
   const navigate = useNavigate();
+  const URL = process.env.REACT_APP_API_BASE_URL;
 
   const casteOptions = [
     "Agarwal",
@@ -406,6 +412,69 @@ function Profiles({ setlogedIn }) {
     "Yadav",
     "Other",
   ];
+  const [requests, setRequests] = useState([]);
+
+  const handleAccept = async (id) => {
+    console.log(`Accepted request with id: ${id}`);
+  
+    try {
+      const payload = {
+        AllprofilesId: [id],  // Wrap the ID in an array as expected by the backend
+      };
+  
+      // Add email or phoneno to the payload based on available user data
+      const { email, phoneno } = user;
+      if (email) {
+        payload.email = email;
+      } else if (phoneno) {
+        payload.phoneno = phoneno;
+      } else {
+        console.log("Neither email nor phone number is available.");
+        return;
+      }
+  
+      // Make API request
+      const response = await axios.post(`${URL}/allProfileId`, payload, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      console.log("API Response:", response.data);
+  
+      // Remove the accepted request from the list (Optimistic update)
+      setRequests((prevRequests) => prevRequests.filter((request) => request._id !== id));
+  
+      // Navigate to the chat page after successful API response
+      // navigate("/chat");
+      toast.success("Hurry! Now we are able to chat")
+      handleReject(id)
+    } catch (error) {
+      console.log("..error...", error);
+  
+      // Optional: Add user feedback for the error
+      alert("An error occurred while processing the request.");
+    }
+  };
+  
+  // Handle Reject Button Click
+  const handleReject = async(id) => {
+    console.log(`Rejected request with id: ${id}`);
+   console.log("...profileid...",oneProfile._id)
+   console.log("...id...",id)
+    try {
+      // POST request with the updatedProfiles in AllprofilesId
+      const response = await axios.get(`${URL}/deleteRequestById?id=${oneProfile._id}&requestId=${id}`);
+      console.log('delete request successfully:', response.data);
+      setRequests((prevRequests) => prevRequests.filter((request) => request._id !== id));
+  
+    } catch (error) {
+      console.error('Error sending request:', error);
+    }
+   
+  };  
+
+ 
 
   const ReligionOptions = [
     "Hindu",
@@ -423,36 +492,9 @@ function Profiles({ setlogedIn }) {
   console.log("...caste..", caste);
   console.log("...religion...", religion);
 
-  const URL = process.env.REACT_APP_API_BASE_URL;
 
-  const handleChat = async () => {
-    try {
-      const payload = {
-        AllprofilesId: interestedProfiles,
-      };
 
-      // Add email or phoneno to the payload based on available user data
-      if (user.email) {
-        payload.email = user.email;
-      } else if (user.phoneno) {
-        payload.phoneno = user.phoneno;
-      } else {
-        console.log("Neither email nor phone number is available.");
-        return;
-      }
-
-      const response = await axios.post(`${URL}/allProfileId`, payload, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      console.log("API Response:", response.data);
-      navigate("/chat");
-    } catch (error) {
-      console.log("..error...", error);
-    }
-  };
+  
 
   const handleInterest = (profileId) => {
     console.log("Interest button clicked for profile:", profileId);
@@ -463,6 +505,47 @@ function Profiles({ setlogedIn }) {
       return updatedProfiles;
     });
   };
+//  const handleSendRequest = (profileId) => {
+//   setSendRequest((prevState) => {
+//     const updatedProfiles = [...prevState, profileId];
+//     console.log("..updatedsend ..", updatedProfiles);
+//     return updatedProfiles;
+//   });
+
+//  }
+
+
+
+const handleSendRequest = async (profileId) => {
+  // Update the state first and capture the updated profiles
+  let updatedProfiles = [];
+  setSendRequest((prevState) => {
+    updatedProfiles = [...prevState, profileId]; // Updated profiles
+    console.log("Updated send request:", updatedProfiles);
+    return updatedProfiles;
+  });
+
+  // Request body that includes updatedProfiles as AllprofilesId
+  const requestBody = {
+    email : user.email ? user.email : "",
+    phoneno: user.phoneno ? user.phoneno : "", // Replace with dynamic value if needed
+    profileId: oneProfile._id, 
+    AllprofilesId: updatedProfiles // Use updatedProfiles in request body
+  };
+
+  console.log("..requestBody..", requestBody);
+
+  try {
+    // POST request with the updatedProfiles in AllprofilesId
+    const response = await axios.post(`${URL}/AlltheSendRequestId`, requestBody);
+    console.log('Request sent successfully:', response.data);
+
+  } catch (error) {
+    console.error('Error sending request:', error);
+  }
+};
+
+
 
   const uploadImage = (event) => {
     const file = event.target.files[0];
@@ -530,6 +613,32 @@ function Profiles({ setlogedIn }) {
     handlegetImageUrl();
   }, []);
 console.log("..check...",user.phoneno)
+
+useEffect(() => {
+  let id = oneProfile._id;
+  console.log("...id...", id);
+
+  // Make the axios request without wrapping it inside a function
+  axios.get(`${URL}/getAllRequestById/${id}`)
+    .then((response) => {
+      console.log("..request...", response.data);
+      // Update state with the response data (uncomment this when you're ready to use it)
+      // setProfiles(response.data.response);
+      const fetchedRequests = response.data.data.map((item) => ({
+        _id: item._id,
+        name: item.name,
+        photo: item.fileUpload // Assuming fileUpload is the image URL
+      }));
+      setRequests(fetchedRequests);
+    })
+    .catch((error) => {
+      console.log("...error...", error);
+    });
+
+  // No need to call request() since axios.get() is already executed
+}, [oneProfile._id]); // Assuming oneProfile._id is the dependency
+
+
   useEffect(() => {
     // Construct the API URL based on filters
     let apiUrl = `${URL}/getAllprofile?`;
@@ -579,6 +688,20 @@ console.log("..check...",user.phoneno)
       });
   }, []);
   console.log("...krati...", oneProfile);
+
+  useEffect(() => {
+    const identifier = user.email ? user.email : user.phoneno;
+    axios.get(`${URL}/getSendRequestIds/${identifier}`)
+      .then(response => {
+        const sendResponse = response.data.data.AllprofilesId;
+        console.log("...sendResponse..",sendResponse)
+        setInterestSent(sendResponse)
+        
+      })
+      .catch(error => {
+        console.log("Error fetching photos:", error);
+      });
+  }, [URL, user.email, user.phoneno]);
 
   const handleProfileDetails = async (profileId) => {
     console.log("...handleProfileDetails for profileId...", profileId);
@@ -658,6 +781,7 @@ console.log("..check...",user.phoneno)
     logo,
     oneProfile,
     handlePlans,
+    handleChat,
     triggerFileInput,
     photoUrl,
     noProfile,
@@ -695,7 +819,7 @@ console.log("..check...",user.phoneno)
               <Avatar src={photoUrl || noProfile} alt={oneProfile?.name} />
               <UserInfo>
                 <UserName>{oneProfile?.name}</UserName>
-                <UserId>ID: {oneProfile?.userId || "12345"}</UserId>
+                {/* <UserId>ID: {oneProfile?.userId || "12345"}</UserId> */}
               </UserInfo>
               <KeyboardArrowDownIcon sx={{marginBottom:0.2}} />
             </ProfileButton>
@@ -708,6 +832,7 @@ console.log("..check...",user.phoneno)
                 Edit Your Profile
               </MenuItem>
               <MenuItem onClick={handlePlans}>View Membership Plan</MenuItem>
+              <MenuItem onClick={handleChat}>Chat</MenuItem>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
             <StyledButton variant="outlined" onClick={handlePlans}>
@@ -736,16 +861,22 @@ console.log("..check...",user.phoneno)
   const handlePlans = () => {
     navigate("/plan");
   };
+  const handleChat = () => {
+    navigate("/chat")
+  }
   useEffect(() => {
     console.log("..interestedProfiles after update..", interestedProfiles);
   }, [interestedProfiles]);
   const isMobile = useMediaQuery('(max-width:600px)');
+
+
   return (
     <div>
       <Navbar
-         logo={isMobile ? mobileLogo : logo} 
+        logo={isMobile ? mobileLogo : logo}
         oneProfile={oneProfile}
         handlePlans={handlePlans}
+        handleChat={handleChat}
         triggerFileInput={triggerFileInput}
         photoUrl={photoUrl}
         noProfile={noProfile}
@@ -756,6 +887,7 @@ console.log("..check...",user.phoneno)
           <div className="all-weddpro all-jobs all-serexp chosenini">
             <div className="container">
               <Grid container spacing={2}>
+                {/* Filters Section */}
                 <Grid
                   item
                   xs={12}
@@ -765,10 +897,9 @@ console.log("..check...",user.phoneno)
                       xs: "block",
                       md: "block",
                     },
-                    marginTop:"70px"
+                    marginTop: "70px",
                   }}
                 >
-                  {/* <span className="">+</span> */}
                   <div className="filt-com lhs-cate">
                     <Typography variant="h6">
                       <i className="fa fa-clock-o" aria-hidden="true" />
@@ -856,7 +987,8 @@ console.log("..check...",user.phoneno)
                   </div>
                 </Grid>
   
-                <Grid item xs={12} md={9}>
+                {/* Profiles Section */}
+                <Grid item xs={12} md={6}>
                   <div className="short-all">
                     <div className="short-lhs">
                       Showing <b>{profiles.length}</b> profiles
@@ -901,7 +1033,7 @@ console.log("..check...",user.phoneno)
                                 <span>{profile.age}</span>
                                 <span>Height: {profile.height}</span>
                               </div>
-                              <div className="links">
+                              {/* <div className="links">
                                 <span
                                   onClick={handleChat}
                                   className="cta-chat"
@@ -922,7 +1054,41 @@ console.log("..check...",user.phoneno)
                                 >
                                   Interested
                                 </span>
-                              </div>
+                              </div> */}
+                               {/* <div className="links">
+                                <span
+                                 onClick={() => handleSendRequest(profile._id)}
+                        
+                                  className="cta-chat"
+                                  style={{
+                                    cursor: "pointer",
+                                    color: sendRequest.includes(
+                                      profile._id
+                                    )
+                                      ? "red"
+                                      : "black",
+                                  }}
+                                >
+                                  Send Request
+                                </span>
+                              
+                              </div> */}
+          
+  <div className="links">
+    <span
+      onClick={() => handleSendRequest(profile._id)}
+      className="cta-chat"
+      style={{
+        cursor: "pointer",
+        
+        color: sendRequest.includes(profile._id) ? "red" : "black", // Check if the request is already sent
+      }}
+    >
+      {sendRequest.includes(profile._id) ? "Request Sent" : "Send Request"} 
+    </span>
+  </div>
+
+
                             </div>
                             <span
                               className="enq-sav"
@@ -948,45 +1114,69 @@ console.log("..check...",user.phoneno)
                     </ul>
                   </div>
                 </Grid>
+  
+                {/* Requests Section */}
+                <Grid item xs={12} md={3} sx={{
+                    marginTop: "70px",
+                    // maxHeight: "500px",
+                    // overflowY: "scroll",
+                  }}>
+                  <div style={{ padding: "16px", borderRadius: "8px", boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)" }}>
+                    <Typography variant="h6" style={{ marginBottom: "16px", fontWeight: "bold", textAlign: "center" }}>
+                      Requests
+                    </Typography>
+                    <div style={{ maxHeight: "500px", overflowY: "auto" }}>
+                      {requests.map((request) => (
+                        <Card
+                          key={request._id}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            marginBottom: "12px",
+                            padding: "8px",
+                            borderRadius: "8px",
+                            boxShadow: "0 2px 6px rgba(0, 0, 0, 0.1)",
+                            transition: "transform 0.2s",
+                          }}
+                          onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.02)")}
+                          onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                        >
+                          <Avatar src={request.photo} alt={request.name} style={{ marginRight: "16px", width: "50px", height: "50px" }} />
+                          <CardContent style={{ flex: 1, padding: "0" }}>
+                            <Typography variant="body1" style={{ fontWeight: "500", marginBottom: "8px" }}>
+                              {request.name}
+                            </Typography>
+                            <Box>
+                              <Button
+                                variant="contained"
+                                color="success"
+                                size="small"
+                                onClick={() => handleAccept(request._id)}
+                                style={{ marginRight: "8px" }}
+                              >
+                                Accept
+                              </Button>
+                              <Button
+                                variant="contained"
+                                color="error"
+                                size="small"
+                                onClick={() => handleReject(request._id)}
+                              >
+                                Reject
+                              </Button>
+                            </Box>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  </div>
+                </Grid>
               </Grid>
             </div>
           </div>
         </section>
       </div>
-      <section>
-        <div className="cr">
-          <div className="container">
-            <div className="footer-content">
-              <p style={{ textAlign: "center", fontSize: "18px" }}>
-                Copyright © <span id="cry">2024</span>{" "}
-                <a
-                  style={{
-                    textDecoration: "none",
-                    color: "#FFBF00",
-                  }}
-                  href="#!"
-                  target="_blank"
-                >
-                  SoulMatch
-                </a>{" "}
-                All rights reserved.
-              </p>
-              <p style={{ fontSize: "20px" }}>
-                <strong>Contact Us: </strong>
-                <a
-                  href="mailto:soulmatchinfo@gmail.com"
-                  style={{
-                    textDecoration: "none",
-                    color: "#FFBF0E",
-                  }}
-                >
-                  soulmatchinfo@gmail.com
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+     <ToastContainer/>
     </div>
   );
 }
