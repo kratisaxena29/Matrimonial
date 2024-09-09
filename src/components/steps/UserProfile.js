@@ -50,6 +50,10 @@ function UserProfile({ setlogedIn }) {
   const [profiles, setProfiles] = useState([]);
   const [interestedProfiles, setInterestedProfiles] = useState([]);
   const [subcaste, setSubCaste] = useState("");
+  const [deletecount ,setDeleteCount] = useState("")
+  const[interestSent , setInterestSent] = useState("")
+  const[interestRecived , setInterestRecived] = useState("")
+  const[acceptRecived , setAcceptRecived] = useState("")
   const navigate = useNavigate();
 
   const user = JSON.parse(sessionStorage.getItem("user"));
@@ -73,6 +77,7 @@ function UserProfile({ setlogedIn }) {
   };
   const [isEditMode, setIsEditMode] = useState(false);
   const [profileData, setProfileData] = useState({
+    _id : "",
     fullName: "",
     dateOfBirth: "",
     gender: "",
@@ -270,7 +275,7 @@ useEffect(() => {
     accepted: 1,
     received: 6,
     sent: 1075,
-    declined: 144,
+    declined: deletecount,
     shortlisted: 0, // you can add more cards if needed
   };
   const renderField = (label, value, name, type = "text", options = []) => {
@@ -558,6 +563,64 @@ useEffect(() => {
   useEffect(() => {
     console.log("..interestedProfiles after update..", interestedProfiles);
   }, [interestedProfiles]);
+
+  useEffect(() => {
+    // const profileIdentifier = user.email ? user.email : user.phoneno;
+    // console.log("...deletekrati....",profileData._id)
+    axios.get(`${URL}/getDeleteRequest/${profileData._id}`)
+      .then(response => {
+        const deleteResponse = response.data.count;
+        console.log("...deleteResponse..",deleteResponse)
+         setDeleteCount(deleteResponse);
+      })
+      .catch(error => {
+        console.log("Error fetching photos:", error);
+      });
+  }, [URL]);
+
+  useEffect(() => {
+    const identifier = user.email ? user.email : user.phoneno;
+    axios.get(`${URL}/getSendRequestIds/${identifier}`)
+      .then(response => {
+        const sendResponse = response.data.count;
+        console.log("...sendResponse..",sendResponse)
+        setInterestSent(sendResponse)
+        
+      })
+      .catch(error => {
+        console.log("Error fetching photos:", error);
+      });
+  }, [URL]);
+
+  useEffect(() => {
+    const identifier = user.email ? user.email : user.phoneno;
+    axios.get(`${URL}/getAcceptInterest/${identifier}`)
+      .then(response => {
+        const responseRecived = response.data.count;
+        console.log("...accepted response received..",responseRecived)
+        setAcceptRecived(responseRecived)
+        
+      })
+      .catch(error => {
+        console.log("Error fetching photos:", error);
+      });
+  }, [URL]);
+
+  useEffect(() => {
+    // const identifier = user.email ? user.email : user.phoneno;
+    // ${profileData?._id}
+    axios.get(`${URL}/getAllRequestById/66a9dd0a2f09a26ad9514521`)
+      .then(response => {
+        const responseRecived = response.data.counts;
+        console.log("...interest response ..",responseRecived)
+          setInterestRecived(responseRecived)
+        
+      })
+      .catch(error => {
+        console.log("Error fetching photos:", error);
+      });
+  }, [URL]);
+
   useEffect(() => {
     const handleData = async () => {
       console.log("....user krati...",user.email)
@@ -571,9 +634,11 @@ useEffect(() => {
       // }
       try {
         const response = await axios.get(`${URL}/profilebyid/${data}`);
-      
+     
        console.log("...response...",response.data)
+      //  setUser(response.data)
        const dummyData = {
+        _id : response.data._id || "Not Available", 
         fullName: response.data.name || "Not Available",
         dateOfBirth: response.data.dateOfBirth || "Not Available" ,
         gender: response.data.gender || "Not Available" ,
@@ -759,7 +824,8 @@ useEffect(() => {
                       <CheckCircleOutlineIcon sx={{ color: 'green', fontSize: 30 }} />
                     </IconButton>
                     <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                      {data.accepted < 10 ? `0${data.accepted}` : data.accepted}
+                      {/* {data.accepted < 10 ? `0${data.accepted}` : data.accepted} */}
+                      {acceptRecived || 0}
                     </Typography>
                     <Typography variant="body2">Accepted Interests</Typography>
                   </CardContent>
@@ -786,7 +852,8 @@ useEffect(() => {
                       <FavoriteBorderIcon sx={{ color: 'orange', fontSize: 30 }} />
                     </IconButton>
                     <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                      {data.received < 10 ? `0${data.received}` : data.received}
+                      {/* {data.received < 10 ? `0${data.received}` : data.received} */}
+                      {interestRecived || 0}
                     </Typography>
                     <Typography variant="body2">Interests Received</Typography>
                   </CardContent>
@@ -813,7 +880,7 @@ useEffect(() => {
                       <SendIcon sx={{ color: 'purple', fontSize: 30 }} />
                     </IconButton>
                     <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                      {data.sent}
+                      {interestSent || 0 }
                     </Typography>
                     <Typography variant="body2">Interests Sent</Typography>
                   </CardContent>
@@ -840,7 +907,7 @@ useEffect(() => {
                       <HighlightOffIcon sx={{ color: 'red', fontSize: 30 }} />
                     </IconButton>
                     <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                      {data.declined}
+                      {deletecount || 0}
                     </Typography>
                     <Typography variant="body2">Declined Interests</Typography>
                   </CardContent>
@@ -859,7 +926,7 @@ useEffect(() => {
               <div className="inn">
                 <div className="rhs">
                   <div className="form-login">
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit || 0}>
                       <Box
                         display="flex"
                         justifyContent="space-between"

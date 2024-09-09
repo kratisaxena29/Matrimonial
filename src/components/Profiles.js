@@ -36,8 +36,10 @@ function Profiles({ setlogedIn }) {
   const [subcaste, setSubCaste] = useState("");
   const [oneProfile, setOneProfiles] = useState("");
   const [sendRequest,setSendRequest] = useState([]);
+  const[interestSent , setInterestSent] = useState("")
   
   const navigate = useNavigate();
+  const URL = process.env.REACT_APP_API_BASE_URL;
 
   const casteOptions = [
     "Agarwal",
@@ -463,7 +465,7 @@ function Profiles({ setlogedIn }) {
     try {
       // POST request with the updatedProfiles in AllprofilesId
       const response = await axios.get(`${URL}/deleteRequestById?id=${oneProfile._id}&requestId=${id}`);
-      console.log('Request sent successfully:', response.data);
+      console.log('delete request successfully:', response.data);
       setRequests((prevRequests) => prevRequests.filter((request) => request._id !== id));
   
     } catch (error) {
@@ -471,6 +473,9 @@ function Profiles({ setlogedIn }) {
     }
    
   };  
+
+ 
+
   const ReligionOptions = [
     "Hindu",
     "Muslim",
@@ -487,7 +492,7 @@ function Profiles({ setlogedIn }) {
   console.log("...caste..", caste);
   console.log("...religion...", religion);
 
-  const URL = process.env.REACT_APP_API_BASE_URL;
+
 
   
 
@@ -684,6 +689,20 @@ useEffect(() => {
   }, []);
   console.log("...krati...", oneProfile);
 
+  useEffect(() => {
+    const identifier = user.email ? user.email : user.phoneno;
+    axios.get(`${URL}/getSendRequestIds/${identifier}`)
+      .then(response => {
+        const sendResponse = response.data.data.AllprofilesId;
+        console.log("...sendResponse..",sendResponse)
+        setInterestSent(sendResponse)
+        
+      })
+      .catch(error => {
+        console.log("Error fetching photos:", error);
+      });
+  }, [URL, user.email, user.phoneno]);
+
   const handleProfileDetails = async (profileId) => {
     console.log("...handleProfileDetails for profileId...", profileId);
     navigate("/PersonDetails", { state: { profileId } });
@@ -800,7 +819,7 @@ useEffect(() => {
               <Avatar src={photoUrl || noProfile} alt={oneProfile?.name} />
               <UserInfo>
                 <UserName>{oneProfile?.name}</UserName>
-                <UserId>ID: {oneProfile?.userId || "12345"}</UserId>
+                {/* <UserId>ID: {oneProfile?.userId || "12345"}</UserId> */}
               </UserInfo>
               <KeyboardArrowDownIcon sx={{marginBottom:0.2}} />
             </ProfileButton>
@@ -1036,7 +1055,7 @@ useEffect(() => {
                                   Interested
                                 </span>
                               </div> */}
-                               <div className="links">
+                               {/* <div className="links">
                                 <span
                                  onClick={() => handleSendRequest(profile._id)}
                         
@@ -1053,7 +1072,23 @@ useEffect(() => {
                                   Send Request
                                 </span>
                               
-                              </div>
+                              </div> */}
+          
+  <div className="links">
+    <span
+      onClick={() => handleSendRequest(profile._id)}
+      className="cta-chat"
+      style={{
+        cursor: "pointer",
+        
+        color: sendRequest.includes(profile._id) ? "red" : "black", // Check if the request is already sent
+      }}
+    >
+      {sendRequest.includes(profile._id) ? "Request Sent" : "Send Request"} 
+    </span>
+  </div>
+
+
                             </div>
                             <span
                               className="enq-sav"
