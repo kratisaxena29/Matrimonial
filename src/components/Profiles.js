@@ -22,9 +22,10 @@ import {
   useMediaQuery,
   Card,
   CardContent,
+  CardMedia,
 } from "@mui/material";
 import axios from "axios";
-import "../styles/profile.css"
+// import "../styles/profile.css"
 function Profiles({ setlogedIn }) {
   const [selectedPhoto, setSelectedPhoto] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
@@ -891,12 +892,10 @@ useEffect(() => {
                 <Grid
                   item
                   xs={12}
+                  sm={6}
                   md={3}
+                  lg={2}
                   sx={{
-                    display: {
-                      xs: "block",
-                      md: "block",
-                    },
                     marginTop: "70px",
                   }}
                 >
@@ -923,7 +922,7 @@ useEffect(() => {
                       </Select>
                     </div>
                   </div>
-  
+
                   <div className="filt-com lhs-cate">
                     <Typography variant="h6">
                       <i className="fa fa-bell-o" aria-hidden="true" />
@@ -944,7 +943,7 @@ useEffect(() => {
                       </Select>
                     </div>
                   </div>
-  
+
                   <div className="filt-com lhs-cate">
                     <Typography variant="h6">
                       <i className="fa fa-users" aria-hidden="true" />
@@ -965,7 +964,7 @@ useEffect(() => {
                       </Select>
                     </div>
                   </div>
-  
+
                   <div className="filt-com lhs-cate">
                     <Typography variant="h6">
                       <i className="fa fa-users" aria-hidden="true" />
@@ -986,189 +985,180 @@ useEffect(() => {
                     </div>
                   </div>
                 </Grid>
-  
+
                 {/* Profiles Section */}
-                <Grid item xs={12} md={6}>
-                  <div className="short-all">
-                    <div className="short-lhs">
+                <Grid item xs={12} sm={12} md={6} lg={8}>
+                  <div
+                    className="profiles-container"
+                    style={{
+                      marginTop: "70px",
+                      height: "calc(100vh - 100px)",
+                      overflowY: "auto",
+                    }}
+                  >
+                    <Typography variant="h5" className="profiles-count" sx={{marginBottom:2}}>
                       Showing <b>{profiles.length}</b> profiles
-                    </div>
-                  </div>
-                  <div className="all-list-sh">
-                    <ul>
+                    </Typography>
+                    <Grid container spacing={2} className="profiles-grid">
                       {profiles.map((profile) => (
-                        <li key={profile._id}>
-                          <div
-                            className="all-pro-box user-avil-onli"
-                            data-useravil="avilyes"
-                            data-aviltxt="Available online"
-                          >
-                            <div className="pro-img">
-                              <a onClick={() => handleProfileDetails(profile._id)}>
-                                <img
-                                  src={profile.fileUpload || noProfile}
-                                  alt=""
-                                />
-                              </a>
-                              <div
-                                className="pro-ave"
-                                title="User currently available"
-                              >
-                                <span />
-                              </div>
-                            </div>
-                            <div className="pro-detail">
-                              <Typography variant="h5">
-                                <a
-                                  onClick={() =>
-                                    handleProfileDetails(profile._id)
-                                  }
-                                >
-                                  {profile.name}
-                                </a>
+                        <Grid item xs={12} sm={4} md={3} key={profile._id}>
+                          <Card className="profile-card">
+                            <CardMedia
+                              component="img"
+                              height="140"
+                              image={profile.fileUpload || noProfile}
+                              alt={profile.name}
+                              onClick={() => handleProfileDetails(profile._id)}
+                            />
+                            <CardContent>
+                              <Typography variant="h6">
+                                {profile.name}
                               </Typography>
-                              <div className="pro-bio">
-                                <span>{profile.heighestEduction}</span>
-                                <span>{profile.profession}</span>
-                                <span>{profile.age}</span>
-                                <span>Height: {profile.height}</span>
+                              <Typography
+                                variant="body2"
+                                color="text.secondary"
+                              >
+                                {profile.heighestEduction} •{" "}
+                                {profile.profession}
+                                <br />
+                                {profile.age} years • Height: {profile.height}
+                              </Typography>
+                              <div className="links">
+                                <span
+                                  onClick={() => handleSendRequest(profile._id)}
+                                  className="cta-chat"
+                                  style={{
+                                    cursor: "pointer",
+                                    marginTop:"10px",
+                                    color: sendRequest.includes(profile._id)
+                                      ? "red"
+                                      : "black", // Check if the request is already sent
+                                  }}
+                                >
+                                  {sendRequest.includes(profile._id)
+                                    ? "Request Sent"
+                                    : "Send Request"}
+                                </span>
                               </div>
-                              {/* <div className="links">
-                                <span
-                                  onClick={handleChat}
-                                  className="cta-chat"
-                                >
-                                  Chat now
-                                </span>
-                                <span
-                                  onClick={() => handleInterest(profile._id)}
-                                  className="cta-interest"
-                                  style={{
-                                    cursor: "pointer",
-                                    color: interestedProfiles.includes(
-                                      profile._id
-                                    )
-                                      ? "red"
-                                      : "black",
-                                  }}
-                                >
-                                  Interested
-                                </span>
-                              </div> */}
-                               {/* <div className="links">
-                                <span
-                                 onClick={() => handleSendRequest(profile._id)}
-                        
-                                  className="cta-chat"
-                                  style={{
-                                    cursor: "pointer",
-                                    color: sendRequest.includes(
-                                      profile._id
-                                    )
-                                      ? "red"
-                                      : "black",
-                                  }}
-                                >
-                                  Send Request
-                                </span>
-                              
-                              </div> */}
-          
-  <div className="links">
-    <span
-      onClick={() => handleSendRequest(profile._id)}
-      className="cta-chat"
-      style={{
-        cursor: "pointer",
-        
-        color: sendRequest.includes(profile._id) ? "red" : "black", // Check if the request is already sent
-      }}
-    >
-      {sendRequest.includes(profile._id) ? "Request Sent" : "Send Request"} 
-    </span>
-  </div>
-
-
-                            </div>
-                            <span
-                              className="enq-sav"
-                              data-toggle="tooltip"
-                              title="Click to save this profile."
-                            >
-                              {(() => {
-                                switch (profile.plan) {
-                                  case "69900":
-                                    return "Gold";
-                                  case "99900":
-                                    return "Diamonds";
-                                  case "139900":
-                                    return "Platinum";
-                                  default:
-                                    return "";
+                              {/* <Button
+                                variant="contained"
+                                color={
+                                  sendRequest.includes(profile._id)
+                                    ? "default"
+                                    : "primary"
                                 }
-                              })()}
-                            </span>
-                          </div>
-                        </li>
+                                fullWidth
+                                onClick={() => handleSendRequest(profile._id)}
+                                sX={{ marginTop: "10px" }}
+                              >
+                                {sendRequest.includes(profile._id)
+                                  ? "Request Sent"
+                                  : "Send Request"}
+                              </Button> */}
+                            </CardContent>
+                            {/* <div className="profile-plan">
+                            {(() => {
+                              switch (profile.plan) {
+                                case "69900": return "Gold";
+                                case "99900": return "Diamonds";
+                                case "139900": return "Platinum";
+                                default: return "";
+                              }
+                            })()}
+                          </div> */}
+                          </Card>
+                        </Grid>
                       ))}
-                    </ul>
+                    </Grid>
                   </div>
                 </Grid>
-  
+
                 {/* Requests Section */}
-                <Grid item xs={12} md={3} sx={{
-                    marginTop: "70px",
-                    // maxHeight: "500px",
-                    // overflowY: "scroll",
-                  }}>
-                  <div style={{ padding: "16px", borderRadius: "8px", boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)" }}>
-                    <Typography variant="h6" style={{ marginBottom: "16px", fontWeight: "bold", textAlign: "center" }}>
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  md={3}
+                  lg={2}
+                  sx={{ marginTop: "70px" }}
+                >
+                  <div
+                    style={{
+                      padding: "16px",
+                      borderRadius: "8px",
+                      boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+                      height: "calc(100vh - 100px)",
+                      overflowY: "auto",
+                    }}
+                  >
+                    <Typography
+                      variant="h6"
+                      style={{
+                        marginBottom: "16px",
+                        fontWeight: "bold",
+                        textAlign: "center",
+                      }}
+                    >
                       Requests
                     </Typography>
-                    <div style={{ maxHeight: "500px", overflowY: "auto" }}>
-                      {requests.map((request) => (
-                        <Card
-                          key={request._id}
+                    {requests.map((request) => (
+                      <Card
+                        key={request._id}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          marginBottom: "12px",
+                          padding: "8px",
+                          borderRadius: "8px",
+                          boxShadow: "0 2px 6px rgba(0, 0, 0, 0.1)",
+                          transition: "transform 0.2s",
+                        }}
+                        onMouseOver={(e) =>
+                          (e.currentTarget.style.transform = "scale(1.02)")
+                        }
+                        onMouseOut={(e) =>
+                          (e.currentTarget.style.transform = "scale(1)")
+                        }
+                      >
+                        <Avatar
+                          src={request.photo}
+                          alt={request.name}
                           style={{
-                            display: "flex",
-                            alignItems: "center",
-                            marginBottom: "12px",
-                            padding: "8px",
-                            borderRadius: "8px",
-                            boxShadow: "0 2px 6px rgba(0, 0, 0, 0.1)",
-                            transition: "transform 0.2s",
+                            marginRight: "16px",
+                            width: "50px",
+                            height: "50px",
                           }}
-                          onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.02)")}
-                          onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
-                        >
-                          <Avatar src={request.photo} alt={request.name} style={{ marginRight: "16px", width: "50px", height: "50px" }} />
-                          <CardContent style={{ flex: 1, padding: "0" }}>
-                            <Typography variant="body1" style={{ fontWeight: "500", marginBottom: "8px" }}>
-                              {request.name}
-                            </Typography>
-                            <Box>
-                              <Button
-                                variant="contained"
-                                color="success"
-                                size="small"
-                                onClick={() => handleAccept(request._id)}
-                                style={{ marginRight: "8px" }}
-                              >
-                                Accept
-                              </Button>
-                              <Button
-                                variant="contained"
-                                color="error"
-                                size="small"
-                                onClick={() => handleReject(request._id)}
-                              >
-                                Reject
-                              </Button>
-                            </Box>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
+                        />
+                        <CardContent style={{ flex: 1, padding: "0" }}>
+                          <Typography
+                            variant="body2"
+                            style={{ fontWeight: "500", marginBottom: "8px" }}
+                          >
+                            {request.name}
+                          </Typography>
+                          <Box>
+                            <Button
+                              variant="contained"
+                              color="success"
+                              size="small"
+                              onClick={() => handleAccept(request._id)}
+                              style={{ marginRight: "8px", fontSize: "0.7rem" }}
+                            >
+                              Accept
+                            </Button>
+                            <Button
+                              variant="contained"
+                              color="error"
+                              size="small"
+                              onClick={() => handleReject(request._id)}
+                              style={{ fontSize: "0.7rem" }}
+                            >
+                              Reject
+                            </Button>
+                          </Box>
+                        </CardContent>
+                      </Card>
+                    ))}
                   </div>
                 </Grid>
               </Grid>
@@ -1176,7 +1166,7 @@ useEffect(() => {
           </div>
         </section>
       </div>
-     <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 }
