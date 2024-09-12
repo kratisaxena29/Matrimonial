@@ -35,6 +35,7 @@ import UserProfile from "./components/steps/UserProfile";
 import Dashboard from "./components/Dashboard";
 import DashboardProfiles from "./components/DashboardProfile";
 import GalleryUpload from "./components/steps/GalleryUpload";
+import Interests from "./components/Interests";
 
 function App() {
   const [logedIn, setlogedIn] = useState(
@@ -95,6 +96,10 @@ function App() {
           <Route
             path="/PersonDetails"
             element={<PersonDetails setlogedIn={setlogedIn} />}
+          />
+          <Route
+            path="/interests"
+            element={<Interests setlogedIn={setlogedIn} />}
           />
         </Route>
       </Routes>

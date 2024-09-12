@@ -529,7 +529,7 @@ function Profiles({ setlogedIn }) {
   console.log("...caste..", caste);
   console.log("...religion...", religion);
 
-  const handleInterest = (profileId) => {
+  const handleInterests = (profileId) => {
     console.log("Interest button clicked for profile:", profileId);
 
     setInterestedProfiles((prevState) => {
@@ -862,6 +862,7 @@ function Profiles({ setlogedIn }) {
               <MenuItem onClick={triggerFileInput}>Edit Your Profile</MenuItem>
               <MenuItem onClick={handlePlans}>View Membership Plan</MenuItem>
               <MenuItem onClick={handleChat}>Chat</MenuItem>
+              <MenuItem onClick={handleInterestedProfiles}>Interests</MenuItem>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
             <StyledButton variant="outlined" onClick={handlePlans}>
@@ -892,6 +893,9 @@ function Profiles({ setlogedIn }) {
   };
   const handleChat = () => {
     navigate("/chat");
+  };
+  const handleInterestedProfiles = () => {
+    navigate("/interests");
   };
   useEffect(() => {
     console.log("..interestedProfiles after update..", interestedProfiles);
