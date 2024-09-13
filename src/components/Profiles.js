@@ -3,7 +3,7 @@ import mobileLogo from "../images/logo_maroon.png";
 import logo from "../images/logo.png";
 import noProfile from "../images/profiles/noProfile.jpg";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import {
   MenuItem,
@@ -24,7 +24,7 @@ import {
   CardContent,
 } from "@mui/material";
 import axios from "axios";
-import "../styles/profile.css"
+import "../styles/profile.css";
 function Profiles({ setlogedIn }) {
   const [selectedPhoto, setSelectedPhoto] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
@@ -35,9 +35,9 @@ function Profiles({ setlogedIn }) {
   const [interestedProfiles, setInterestedProfiles] = useState([]);
   const [subcaste, setSubCaste] = useState("");
   const [oneProfile, setOneProfiles] = useState("");
-  const [sendRequest,setSendRequest] = useState([]);
-  const[interestSent , setInterestSent] = useState("")
-  
+  const [sendRequest, setSendRequest] = useState([]);
+  const [interestSent, setInterestSent] = useState("");
+
   const navigate = useNavigate();
   const URL = process.env.REACT_APP_API_BASE_URL;
 
@@ -416,12 +416,12 @@ function Profiles({ setlogedIn }) {
 
   const handleAccept = async (id) => {
     console.log(`Accepted request with id: ${id}`);
-  
+
     try {
       const payload = {
-        AllprofilesId: [id],  // Wrap the ID in an array as expected by the backend
+        AllprofilesId: [id], // Wrap the ID in an array as expected by the backend
       };
-  
+
       // Add email or phoneno to the payload based on available user data
       const { email, phoneno } = user;
       if (email) {
@@ -432,50 +432,87 @@ function Profiles({ setlogedIn }) {
         console.log("Neither email nor phone number is available.");
         return;
       }
-  
+
       // Make API request
       const response = await axios.post(`${URL}/allProfileId`, payload, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-  
+
       console.log("API Response:", response.data);
-  
+
       // Remove the accepted request from the list (Optimistic update)
-      setRequests((prevRequests) => prevRequests.filter((request) => request._id !== id));
-  
+      setRequests((prevRequests) =>
+        prevRequests.filter((request) => request._id !== id)
+      );
+
       // Navigate to the chat page after successful API response
       // navigate("/chat");
-      toast.success("Hurry! Now we are able to chat")
-      handleReject(id)
+      toast.success("Hurry! Now we are able to chat");
+      handleReject(id);
     } catch (error) {
       console.log("..error...", error);
-  
+
       // Optional: Add user feedback for the error
       alert("An error occurred while processing the request.");
     }
   };
-  
+
   // Handle Reject Button Click
-  const handleReject = async(id) => {
+  const handleReject = async (id) => {
     console.log(`Rejected request with id: ${id}`);
-   console.log("...profileid...",oneProfile._id)
-   console.log("...id...",id)
+    console.log("...profileid...", oneProfile._id);
+    console.log("...id...", id);
     try {
       // POST request with the updatedProfiles in AllprofilesId
-      const response = await axios.get(`${URL}/deleteRequestById?id=${oneProfile._id}&requestId=${id}`);
-      console.log('delete request successfully:', response.data);
-      setRequests((prevRequests) => prevRequests.filter((request) => request._id !== id));
-  
+      const response = await axios.get(
+        `${URL}/deleteRequestById?id=${oneProfile._id}&requestId=${id}`
+      );
+      console.log("delete request successfully:", response.data);
+      setRequests((prevRequests) =>
+        prevRequests.filter((request) => request._id !== id)
+      );
     } catch (error) {
-      console.error('Error sending request:', error);
+      console.error("Error sending request:", error);
     }
-   
-  };  
-
- 
-
+  };
+  const ResponsiveButton = styled(Button)(({ theme }) => ({
+    fontSize: '0.7rem',
+    [theme.breakpoints.up('sm')]: {
+      fontSize: '0.8rem',
+    },
+    [theme.breakpoints.up('md')]: {
+      fontSize: '0.9rem',
+    },
+  }));
+  
+  const ResponsiveCard = styled(Card)(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: '12px',
+    padding: '8px',
+    borderRadius: '8px',
+    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)',
+    transition: 'transform 0.2s',
+    '&:hover': {
+      transform: 'scale(1.02)',
+    },
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+    },
+  }));
+  
+  const ResponsiveAvatar = styled(Avatar)(({ theme }) => ({
+    marginRight: '16px',
+    width: '50px',
+    height: '50px',
+    [theme.breakpoints.down('sm')]: {
+      marginRight: 0,
+      marginBottom: '8px',
+    },
+  }));
   const ReligionOptions = [
     "Hindu",
     "Muslim",
@@ -492,11 +529,7 @@ function Profiles({ setlogedIn }) {
   console.log("...caste..", caste);
   console.log("...religion...", religion);
 
-
-
-  
-
-  const handleInterest = (profileId) => {
+  const handleInterests = (profileId) => {
     console.log("Interest button clicked for profile:", profileId);
 
     setInterestedProfiles((prevState) => {
@@ -505,47 +538,45 @@ function Profiles({ setlogedIn }) {
       return updatedProfiles;
     });
   };
-//  const handleSendRequest = (profileId) => {
-//   setSendRequest((prevState) => {
-//     const updatedProfiles = [...prevState, profileId];
-//     console.log("..updatedsend ..", updatedProfiles);
-//     return updatedProfiles;
-//   });
+  //  const handleSendRequest = (profileId) => {
+  //   setSendRequest((prevState) => {
+  //     const updatedProfiles = [...prevState, profileId];
+  //     console.log("..updatedsend ..", updatedProfiles);
+  //     return updatedProfiles;
+  //   });
 
-//  }
+  //  }
 
+  const handleSendRequest = async (profileId) => {
+    // Update the state first and capture the updated profiles
+    let updatedProfiles = [];
+    setSendRequest((prevState) => {
+      updatedProfiles = [...prevState, profileId]; // Updated profiles
+      console.log("Updated send request:", updatedProfiles);
+      return updatedProfiles;
+    });
 
+    // Request body that includes updatedProfiles as AllprofilesId
+    const requestBody = {
+      email: user.email ? user.email : "",
+      phoneno: user.phoneno ? user.phoneno : "", // Replace with dynamic value if needed
+      profileId: oneProfile._id,
+      AllprofilesId: updatedProfiles, // Use updatedProfiles in request body
+    };
 
-const handleSendRequest = async (profileId) => {
-  // Update the state first and capture the updated profiles
-  let updatedProfiles = [];
-  setSendRequest((prevState) => {
-    updatedProfiles = [...prevState, profileId]; // Updated profiles
-    console.log("Updated send request:", updatedProfiles);
-    return updatedProfiles;
-  });
+    console.log("..requestBody..", requestBody);
 
-  // Request body that includes updatedProfiles as AllprofilesId
-  const requestBody = {
-    email : user.email ? user.email : "",
-    phoneno: user.phoneno ? user.phoneno : "", // Replace with dynamic value if needed
-    profileId: oneProfile._id, 
-    AllprofilesId: updatedProfiles // Use updatedProfiles in request body
+    try {
+      // POST request with the updatedProfiles in AllprofilesId
+      const response = await axios.post(
+        `${URL}/AlltheSendRequestId`,
+        requestBody
+      );
+      console.log("Request sent successfully:", response.data);
+    } catch (error) {
+      console.error("Error sending request:", error);
+    }
   };
-
-  console.log("..requestBody..", requestBody);
-
-  try {
-    // POST request with the updatedProfiles in AllprofilesId
-    const response = await axios.post(`${URL}/AlltheSendRequestId`, requestBody);
-    console.log('Request sent successfully:', response.data);
-
-  } catch (error) {
-    console.error('Error sending request:', error);
-  }
-};
-
-
 
   const uploadImage = (event) => {
     const file = event.target.files[0];
@@ -592,9 +623,9 @@ const handleSendRequest = async (profileId) => {
   };
 
   const handlegetImageUrl = async () => {
-    console.log("...handleImageUrl....")
-    const identifier = user.email  ? user.email : user.phoneno
-    
+    console.log("...handleImageUrl....");
+    const identifier = user.email ? user.email : user.phoneno;
+
     axios
       .get(`${URL}/getimagepath/${identifier}`)
       .then((response) => {
@@ -612,32 +643,32 @@ const handleSendRequest = async (profileId) => {
   useEffect(() => {
     handlegetImageUrl();
   }, []);
-console.log("..check...",user.phoneno)
+  console.log("..check...", user.phoneno);
 
-useEffect(() => {
-  let id = oneProfile._id;
-  console.log("...id...", id);
+  useEffect(() => {
+    let id = oneProfile._id;
+    console.log("...id...", id);
 
-  // Make the axios request without wrapping it inside a function
-  axios.get(`${URL}/getAllRequestById/${id}`)
-    .then((response) => {
-      console.log("..request...", response.data);
-      // Update state with the response data (uncomment this when you're ready to use it)
-      // setProfiles(response.data.response);
-      const fetchedRequests = response.data.data.map((item) => ({
-        _id: item._id,
-        name: item.name,
-        photo: item.fileUpload // Assuming fileUpload is the image URL
-      }));
-      setRequests(fetchedRequests);
-    })
-    .catch((error) => {
-      console.log("...error...", error);
-    });
+    // Make the axios request without wrapping it inside a function
+    axios
+      .get(`${URL}/getAllRequestById/${id}`)
+      .then((response) => {
+        console.log("..request...", response.data);
+        // Update state with the response data (uncomment this when you're ready to use it)
+        // setProfiles(response.data.response);
+        const fetchedRequests = response.data.data.map((item) => ({
+          _id: item._id,
+          name: item.name,
+          photo: item.fileUpload, // Assuming fileUpload is the image URL
+        }));
+        setRequests(fetchedRequests);
+      })
+      .catch((error) => {
+        console.log("...error...", error);
+      });
 
-  // No need to call request() since axios.get() is already executed
-}, [oneProfile._id]); // Assuming oneProfile._id is the dependency
-
+    // No need to call request() since axios.get() is already executed
+  }, [oneProfile._id]); // Assuming oneProfile._id is the dependency
 
   useEffect(() => {
     // Construct the API URL based on filters
@@ -676,7 +707,7 @@ useEffect(() => {
   }, [age, religion, caste, subcaste]);
 
   useEffect(() => {
-    let identifier = user.email ? user.email : user.phoneno
+    let identifier = user.email ? user.email : user.phoneno;
     axios
       .get(`${URL}/oneProfileByEmail/${identifier}`)
       .then((response) => {
@@ -691,14 +722,14 @@ useEffect(() => {
 
   useEffect(() => {
     const identifier = user.email ? user.email : user.phoneno;
-    axios.get(`${URL}/getSendRequestIds/${identifier}`)
-      .then(response => {
+    axios
+      .get(`${URL}/getSendRequestIds/${identifier}`)
+      .then((response) => {
         const sendResponse = response.data.data.AllprofilesId;
-        console.log("...sendResponse..",sendResponse)
-        setInterestSent(sendResponse)
-        
+        console.log("...sendResponse..", sendResponse);
+        setInterestSent(sendResponse);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log("Error fetching photos:", error);
       });
   }, [URL, user.email, user.phoneno]);
@@ -730,10 +761,10 @@ useEffect(() => {
   const StyledButton = styled(Button)(({ theme }) => ({
     color: "white",
     borderColor: "#F68C1E",
-    borderRadius:"8px",
+    borderRadius: "8px",
     padding: "13px 15px",
-    fontSize:"14px",
-    
+    fontSize: "14px",
+
     "&:hover": {
       backgroundColor: "#E57D0F",
     },
@@ -767,12 +798,12 @@ useEffect(() => {
     fontWeight: "bold",
     fontSize: "0.9rem",
     lineHeight: "1.2",
-    color : "white"
+    color: "white",
   });
 
   const UserId = styled(Typography)({
     fontSize: "0.75rem",
-    marginRight:6,
+    marginRight: 6,
     // opacity: 0.8,
     color: "white",
   });
@@ -821,18 +852,17 @@ useEffect(() => {
                 <UserName>{oneProfile?.name}</UserName>
                 {/* <UserId>ID: {oneProfile?.userId || "12345"}</UserId> */}
               </UserInfo>
-              <KeyboardArrowDownIcon sx={{marginBottom:0.2}} />
+              <KeyboardArrowDownIcon sx={{ marginBottom: 0.2 }} />
             </ProfileButton>
             <Menu
               anchorEl={anchorEl}
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={triggerFileInput}>
-                Edit Your Profile
-              </MenuItem>
+              <MenuItem onClick={triggerFileInput}>Edit Your Profile</MenuItem>
               <MenuItem onClick={handlePlans}>View Membership Plan</MenuItem>
               <MenuItem onClick={handleChat}>Chat</MenuItem>
+              <MenuItem onClick={handleInterestedProfiles}>Interests</MenuItem>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
             <StyledButton variant="outlined" onClick={handlePlans}>
@@ -862,13 +892,15 @@ useEffect(() => {
     navigate("/plan");
   };
   const handleChat = () => {
-    navigate("/chat")
-  }
+    navigate("/chat");
+  };
+  const handleInterestedProfiles = () => {
+    navigate("/interests");
+  };
   useEffect(() => {
     console.log("..interestedProfiles after update..", interestedProfiles);
   }, [interestedProfiles]);
-  const isMobile = useMediaQuery('(max-width:600px)');
-
+  const isMobile = useMediaQuery("(max-width:600px)");
 
   return (
     <div>
@@ -923,7 +955,7 @@ useEffect(() => {
                       </Select>
                     </div>
                   </div>
-  
+
                   <div className="filt-com lhs-cate">
                     <Typography variant="h6">
                       <i className="fa fa-bell-o" aria-hidden="true" />
@@ -944,7 +976,7 @@ useEffect(() => {
                       </Select>
                     </div>
                   </div>
-  
+
                   <div className="filt-com lhs-cate">
                     <Typography variant="h6">
                       <i className="fa fa-users" aria-hidden="true" />
@@ -965,7 +997,7 @@ useEffect(() => {
                       </Select>
                     </div>
                   </div>
-  
+
                   <div className="filt-com lhs-cate">
                     <Typography variant="h6">
                       <i className="fa fa-users" aria-hidden="true" />
@@ -986,7 +1018,7 @@ useEffect(() => {
                     </div>
                   </div>
                 </Grid>
-  
+
                 {/* Profiles Section */}
                 <Grid item xs={12} md={6}>
                   <div className="short-all">
@@ -994,7 +1026,10 @@ useEffect(() => {
                       Showing <b>{profiles.length}</b> profiles
                     </div>
                   </div>
-                  <div className="all-list-sh">
+                  <div
+                    className="all-list-sh"
+                    style={{ height: "calc(100vh - 200px)", overflowY: "auto" }}
+                  >
                     <ul>
                       {profiles.map((profile) => (
                         <li key={profile._id}>
@@ -1004,11 +1039,12 @@ useEffect(() => {
                             data-aviltxt="Available online"
                           >
                             <div className="pro-img">
-                              <a onClick={() => handleProfileDetails(profile._id)}>
-                                <img
-                                  src={profile.fileUpload || noProfile}
-                                  alt=""
-                                />
+                              <a
+                                onClick={() =>
+                                  handleProfileDetails(profile._id)
+                                }
+                              >
+                                <img src={profile.fileUpload} alt="" />
                               </a>
                               <div
                                 className="pro-ave"
@@ -1033,62 +1069,22 @@ useEffect(() => {
                                 <span>{profile.age}</span>
                                 <span>Height: {profile.height}</span>
                               </div>
-                              {/* <div className="links">
+                              <div className="links">
                                 <span
-                                  onClick={handleChat}
+                                  onClick={() => handleSendRequest(profile._id)}
                                   className="cta-chat"
-                                >
-                                  Chat now
-                                </span>
-                                <span
-                                  onClick={() => handleInterest(profile._id)}
-                                  className="cta-interest"
                                   style={{
                                     cursor: "pointer",
-                                    color: interestedProfiles.includes(
-                                      profile._id
-                                    )
+                                    color: sendRequest.includes(profile._id)
                                       ? "red"
                                       : "black",
                                   }}
                                 >
-                                  Interested
+                                  {sendRequest.includes(profile._id)
+                                    ? "Request Sent"
+                                    : "Send Request"}
                                 </span>
-                              </div> */}
-                               {/* <div className="links">
-                                <span
-                                 onClick={() => handleSendRequest(profile._id)}
-                        
-                                  className="cta-chat"
-                                  style={{
-                                    cursor: "pointer",
-                                    color: sendRequest.includes(
-                                      profile._id
-                                    )
-                                      ? "red"
-                                      : "black",
-                                  }}
-                                >
-                                  Send Request
-                                </span>
-                              
-                              </div> */}
-          
-  <div className="links">
-    <span
-      onClick={() => handleSendRequest(profile._id)}
-      className="cta-chat"
-      style={{
-        cursor: "pointer",
-        
-        color: sendRequest.includes(profile._id) ? "red" : "black", // Check if the request is already sent
-      }}
-    >
-      {sendRequest.includes(profile._id) ? "Request Sent" : "Send Request"} 
-    </span>
-  </div>
-
-
+                              </div>
                             </div>
                             <span
                               className="enq-sav"
@@ -1114,61 +1110,92 @@ useEffect(() => {
                     </ul>
                   </div>
                 </Grid>
-  
+
                 {/* Requests Section */}
-                <Grid item xs={12} md={3} sx={{
-                    marginTop: "70px",
-                    // maxHeight: "500px",
-                    // overflowY: "scroll",
-                  }}>
-                  <div style={{ padding: "16px", borderRadius: "8px", boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)" }}>
-                    <Typography variant="h6" style={{ marginBottom: "16px", fontWeight: "bold", textAlign: "center" }}>
+                <Grid
+                  item
+                  xs={12}
+                  md={3}
+                  sx={{ marginTop: "70px" }}
+                >
+                  <div
+                    style={{
+                      padding: "16px",
+                      borderRadius: "8px",
+                      boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+                      height: "calc(100vh - 100px)",
+                      overflowY: "auto",
+                    }}
+                  >
+                    <Typography
+                      variant="h6"
+                      style={{
+                        marginBottom: "16px",
+                        fontWeight: "bold",
+                        textAlign: "center",
+                      }}
+                    >
                       Requests
                     </Typography>
-                    <div style={{ maxHeight: "500px", overflowY: "auto" }}>
-                      {requests.map((request) => (
-                        <Card
-                          key={request._id}
+                    {requests.map((request) => (
+                      <Card
+                        key={request._id}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          marginBottom: "12px",
+                          padding: "8px",
+                          borderRadius: "8px",
+                          boxShadow: "0 2px 6px rgba(0, 0, 0, 0.1)",
+                          transition: "transform 0.2s",
+                          flexDirection: "row", // Ensures horizontal layout for card
+                        }}
+                        onMouseOver={(e) =>
+                          (e.currentTarget.style.transform = "scale(1.02)")
+                        }
+                        onMouseOut={(e) =>
+                          (e.currentTarget.style.transform = "scale(1)")
+                        }
+                      >
+                        <Avatar
+                          src={request.photo}
+                          alt={request.name}
                           style={{
-                            display: "flex",
-                            alignItems: "center",
-                            marginBottom: "12px",
-                            padding: "8px",
-                            borderRadius: "8px",
-                            boxShadow: "0 2px 6px rgba(0, 0, 0, 0.1)",
-                            transition: "transform 0.2s",
+                            marginRight: "16px",
+                            width: "50px",
+                            height: "50px",
                           }}
-                          onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.02)")}
-                          onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
-                        >
-                          <Avatar src={request.photo} alt={request.name} style={{ marginRight: "16px", width: "50px", height: "50px" }} />
-                          <CardContent style={{ flex: 1, padding: "0" }}>
-                            <Typography variant="body1" style={{ fontWeight: "500", marginBottom: "8px" }}>
-                              {request.name}
-                            </Typography>
-                            <Box>
-                              <Button
-                                variant="contained"
-                                color="success"
-                                size="small"
-                                onClick={() => handleAccept(request._id)}
-                                style={{ marginRight: "8px" }}
-                              >
-                                Accept
-                              </Button>
-                              <Button
-                                variant="contained"
-                                color="error"
-                                size="small"
-                                onClick={() => handleReject(request._id)}
-                              >
-                                Reject
-                              </Button>
-                            </Box>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
+                        />
+                        <CardContent style={{ flex: 1, padding: "0" }}>
+                          <Typography
+                            variant="body2"
+                            style={{ fontWeight: "500", marginBottom: "8px" }}
+                          >
+                            {request.name}
+                          </Typography>
+                          <Box>
+                            <Button
+                              variant="contained"
+                              color="success"
+                              size="small"
+                              onClick={() => handleAccept(request._id)}
+                              style={{ marginRight: "8px", fontSize: "0.7rem" }}
+                            >
+                              Accept
+                            </Button>
+                            <Button
+                              variant="contained"
+                              color="error"
+                              size="small"
+                              onClick={() => handleReject(request._id)}
+                              style={{ fontSize: "0.7rem" }}
+                            >
+                              Reject
+                            </Button>
+                          </Box>
+                        </CardContent>
+                      </Card>
+                    ))}
                   </div>
                 </Grid>
               </Grid>
@@ -1176,7 +1203,7 @@ useEffect(() => {
           </div>
         </section>
       </div>
-     <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 }

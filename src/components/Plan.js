@@ -163,7 +163,13 @@ function Plan() {
                       fontWeight: "normal",
                     }}
                   >
-                    {`₹${plan.amount}/month`}
+                    {/* {`₹${plan.amount}/month`} */}
+                    {plan.name === "Gold"
+            ? `₹${plan.amount} (3 months)`
+            : plan.name === "Diamond"
+            ? `₹${plan.amount} (6 months)`
+            : `₹${plan.amount} (8 months)`}
+
                   </Typography>
                   <Box
                     sx={{ display: "flex", flexDirection: "column", gap: "30px" }}
