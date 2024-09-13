@@ -226,7 +226,8 @@ function PartnerEducation() {
     "Self-Employed",
     "Business",
     "Student",
-    "Unemployed"
+    "Unemployed",
+    "Other"
   ];
 
   const ProfessionOption = [

@@ -112,6 +112,7 @@ function UserProfile({ setlogedIn }) {
       [name]: type === "checkbox" ? checked : value,
     });
   };
+  console.log("... checking profileData...",profileData)
 console.log("...profileData...",profileData.dateOfBirth)
   const handleSubmit = (e) => {
     console.log("....save...")

@@ -83,7 +83,7 @@ function PartnerLiving() {
   
         const formatDate = (date) => {
           const parsedDate = parseDate(date);
-          return parsedDate ? parsedDate.format('ddd MMM DD') : '';
+          return parsedDate ? parsedDate.format('MMM / DD / YYYY') : '';
         };
   
         const formatTime = (time) => {
