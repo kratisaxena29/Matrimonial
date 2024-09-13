@@ -25,9 +25,9 @@ const Login = ({ setlogedIn }) => {
       [name]: value,
     }));
 
-    if (name === "password") {
-      validatePassword(value);
-    }
+    // if (name === "password") {
+    //   validatePassword(value);
+    // }
   };
 
   const URL = process.env.REACT_APP_API_BASE_URL;
@@ -120,17 +120,17 @@ const Login = ({ setlogedIn }) => {
     }
   };
 
-  const validatePassword = (password) => {
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (!passwordRegex.test(password)) {
-      setPasswordError(
-        "Password must contain at least 8 characters, including uppercase letters, lowercase letters, numbers, and special characters."
-      );
-    } else {
-      setPasswordError("");
-    }
-  };
+  // const validatePassword = (password) => {
+  //   const passwordRegex =
+  //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  //   if (!passwordRegex.test(password)) {
+  //     setPasswordError(
+  //       "Password must contain at least 8 characters, including uppercase letters, lowercase letters, numbers, and special characters."
+  //     );
+  //   } else {
+  //     setPasswordError("");
+  //   }
+  // };
 
   const handleForgotPassword = async () => {
     navigate('/forgot-password');
