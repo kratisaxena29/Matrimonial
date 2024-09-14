@@ -13,6 +13,11 @@ import { Email, Facebook, Instagram, Twitter } from "@mui/icons-material";
 function TermsConditions() {
   const navRef = useRef(null);
 
+  const handleTermsCondition = () => {
+
+    navigate('/terms&conditions')
+  }
+
   const navigate = useNavigate();
   useEffect(() => {
     if (navRef.current) {
@@ -1605,36 +1610,47 @@ i. That threatens the unity, integrity, defense, security or sovereignty of Indi
         <p>This website is proudly powered by The Dreamy Trails.</p>*/}
       </div>
 
-      <footer
-        style={{
-          backgroundColor: "#530014",
-          padding: "20px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          color: "#fff",
-        }}
-      >
-        <div>
-          {/* <Facebook style={{ marginRight: "10px" }} />
-          <Instagram style={{ marginRight: "10px" }} />
-          <Twitter style={{ marginRight: "10px" }} /> */}
+      <section>
+        <div className="cr">
+          <div className="container">
+            <div className="footer-content">
+              <p
+                onClick={handleTermsCondition}
+                style={{
+                  textAlign: "center",
+                  fontSize: "18px",
+                  cursor: "pointer",
+                }}
+              >
+                Copyright © <span id="cry">2024</span>{" "}
+                <a
+                  style={{
+                    textDecoration: "none",
+                    color: "#FFBF00",
+                  }}
+                  // href="#!"
+                  target="_blank"
+                >
+                  SoulMatch
+                </a>{" "}
+                All rights reserved. | Terms and Conditions
+              </p>
+              <p style={{ fontSize: "20px" }}>
+                <strong>Contact Us: </strong>
+                <a
+                  href="mailto:soulmatchinfo@gmail.com"
+                  style={{
+                    textDecoration: "none",
+                    color: "#FFBF0E",
+                  }}
+                >
+                  soulmatchinfo@gmail.com
+                </a>
+              </p>
+            </div>
+          </div>
         </div>
-        <div>
-          &copy; 2024 <span style={{ color: "#FFBF00" }}>SoulMatch</span> All
-          rights reserved. {" "}
-          {/* <a
-            style={{ cursor: "pointer", color: "#FFBF00" }}
-            onClick={() => navigate("/plan")}
-          >
-            Pricing Policy
-          </a> */}
-        </div>
-        <div>
-          {/* <Email style={{ marginRight: "10px" }} /> */}
-          {/* <span style={{ color: "#FFF" }}>Email Address</span> */}
-        </div>
-      </footer>
+      </section>
     </div>
   );
 }

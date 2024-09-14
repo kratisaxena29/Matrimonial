@@ -34,7 +34,8 @@ function Home() {
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [registerMethod, setRegisterMethod] = useState(null);
-
+  const [termsAccepted, setTermsAccepted] = useState(false); // Track checkbox
+  const [termsError, setTermsError] = useState(false); // Track if checkbox validation failed
   const URL = process.env.REACT_APP_API_BASE_URL;
   const formContainerRef = useRef(null);
   const navigate = useNavigate();
@@ -45,10 +46,20 @@ function Home() {
   };
   const handleRegister = async (event) => {
     event.preventDefault();
+  
+    if (!termsAccepted) {
+      setTermsError(true);
+      return; // Exit if checkbox not selected
+    }
+  
+    setTermsError(false);
+  
+    // Your existing registration logic
     console.log("firstName:", firstName);
     console.log("lastName:", lastName);
     console.log("email:", email);
-    console.log("phoneno..", phone);
+    console.log("phone:", phone);
+  
     if (email) {
       console.log("..under email");
       try {
@@ -63,12 +74,12 @@ function Home() {
           {
             headers: {
               "Content-Type": "application/json",
-            },
+            }
           }
         );
         toast.success("User registered successfully!");
         console.log("API Response:", response.data.response.email);
-
+  
         navigate("/verify-otp", {
           state: { email: response.data.response.email },
         });
@@ -81,6 +92,7 @@ function Home() {
         toast.error(error.response?.data?.Error || "An error occurred");
       }
     }
+  
     if (phone) {
       console.log("..under phone");
       try {
@@ -95,12 +107,12 @@ function Home() {
           {
             headers: {
               "Content-Type": "application/json",
-            },
+            }
           }
         );
         toast.success("User registered successfully!");
         console.log("API Response:", response.data.response.email);
-
+  
         navigate("/verify-otp", {
           state: { phoneno: response.data.response.phoneno },
         });
@@ -464,6 +476,66 @@ function Home() {
                         }}
                       />
                     </div>
+                    <div className="form-group" style={{ marginBottom: "20px" }}>
+      <label
+        style={{
+          display: "flex",
+          alignItems: "center",
+          fontSize: "14px",
+          color: "#666"
+        }}
+      >
+        <input
+          type="checkbox"
+          checked={termsAccepted}
+          onChange={() => setTermsAccepted(!termsAccepted)}
+          style={{ 
+            marginRight: "10px",
+            width: "20px",
+            height: "20px"
+          }}
+        />
+        <span style={{ display: "flex", alignItems: "center" }}>
+          I agree to the
+          <a
+            style={{ 
+              color: "#EC184A", 
+              fontWeight: "bold", 
+              cursor: "pointer", 
+              marginLeft: "5px" 
+            }}
+            onClick={handleTermsCondition}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Terms and Conditions &nbsp;
+          </a>
+          and&nbsp;
+          <a
+            style={{ 
+              color: "#EC184A", 
+              fontWeight: "bold", 
+              cursor: "pointer", 
+              marginLeft: "5px" 
+            }}
+            onClick={handleTermsCondition}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+         Privacy Policy
+          </a>
+        </span>
+      </label>
+    </div>
+
+
+                    {/* Error message if checkbox is not selected */}
+                    {termsError && (
+                      <div style={{ color: "red", marginBottom: "10px" }}>
+                        Please accept the terms and conditions.
+                      </div>
+                    )}
+
                     <button
                       type="submit"
                       className="register-button"
@@ -642,43 +714,46 @@ function Home() {
         </div>
       </section>
       <section>
-  <div className="cr">
-    <div className="container">
-      <div className="footer-content">
-        <p  onClick={handleTermsCondition}
-        style={{ textAlign: "center", fontSize: "18px" , cursor : "pointer" }}>
-          Copyright © <span id="cry">2024</span>{" "}
-          <a
-            style={{
-              textDecoration: "none",
-              color: "#FFBF00",
-            }}
-           
-            // href="#!"
-            target="_blank"
-          >
-            SoulMatch
-          </a>{" "}
-          All rights reserved. | Terms and Conditions
-        </p>
-        <p style={{ fontSize: "20px" }}>
-          <strong>Contact Us: </strong>
-          <a
-            href="mailto:soulmatchinfo@gmail.com"
-            style={{
-              textDecoration: "none",
-              color: "#FFBF0E",
-            }}
-          >
-            soulmatchinfo@gmail.com
-          </a>
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
+        <div className="cr">
+          <div className="container">
+            <div className="footer-content">
+              <p
+                onClick={handleTermsCondition}
+                style={{
+                  textAlign: "center",
+                  fontSize: "18px",
+                  cursor: "pointer",
+                }}
+              >
+                Copyright © <span id="cry">2024</span>{" "}
+                <a
+                  style={{
+                    textDecoration: "none",
+                    color: "#FFBF00",
+                  }}
+                  // href="#!"
+                  target="_blank"
+                >
+                  SoulMatch
+                </a>{" "}
+                All rights reserved. | Terms and Conditions
+              </p>
+              <p style={{ fontSize: "20px" }}>
+                <strong>Contact Us: </strong>
+                <a
+                  href="mailto:soulmatchinfo@gmail.com"
+                  style={{
+                    textDecoration: "none",
+                    color: "#FFBF0E",
+                  }}
+                >
+                  soulmatchinfo@gmail.com
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
