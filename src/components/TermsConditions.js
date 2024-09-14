@@ -15,7 +15,7 @@ function TermsConditions() {
 
   const handleTermsCondition = () => {
 
-    navigate('/terms&conditions')
+    navigate('/privacy&policy')
   }
 
   const navigate = useNavigate();
@@ -1618,7 +1618,7 @@ i. That threatens the unity, integrity, defense, security or sovereignty of Indi
                 onClick={handleTermsCondition}
                 style={{
                   textAlign: "center",
-                  fontSize: "18px",
+                  fontSize: "15px",
                   cursor: "pointer",
                 }}
               >
@@ -1633,7 +1633,7 @@ i. That threatens the unity, integrity, defense, security or sovereignty of Indi
                 >
                   SoulMatch
                 </a>{" "}
-                All rights reserved. | Terms and Conditions
+                All rights reserved. | Privacy Policy
               </p>
               <p style={{ fontSize: "20px" }}>
                 <strong>Contact Us: </strong>

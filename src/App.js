@@ -36,6 +36,7 @@ import Dashboard from "./components/Dashboard";
 import DashboardProfiles from "./components/DashboardProfile";
 import GalleryUpload from "./components/steps/GalleryUpload";
 import Interests from "./components/Interests";
+import PrivacyandPolicy from "./components/PrivacyandPolicy";
 
 function App() {
   const [logedIn, setlogedIn] = useState(
@@ -73,6 +74,7 @@ function App() {
           <Route path="/forgot-otp" element={<ForgotOtp />} />
           <Route path="/success" element={<PasswordResetSuccess />} />
           <Route path="/terms&conditions" element={<TermsConditions />} />
+          <Route path="/privacy&policy" element={<PrivacyandPolicy />} />
           <Route path="/profile-completed" element={<ProfileCompleted />} />
           <Route path="/reset-password" element={<NewPassword />} />
           <Route path="/about-yourself" element={<AboutYourself />} />

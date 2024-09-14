@@ -171,7 +171,11 @@ function Home() {
 
     navigate('/terms&conditions')
   }
+  const handlePolicyAndPrivacy = () => {
 
+    navigate('/privacy&policy')
+  }
+  
   return (
     <div className="body">
       <ToastContainer />
@@ -481,7 +485,7 @@ function Home() {
         style={{
           display: "flex",
           alignItems: "center",
-          fontSize: "14px",
+          fontSize: "10px",
           color: "#666"
         }}
       >
@@ -491,7 +495,7 @@ function Home() {
           onChange={() => setTermsAccepted(!termsAccepted)}
           style={{ 
             marginRight: "10px",
-            width: "20px",
+            width: "15px",
             height: "20px"
           }}
         />
@@ -518,7 +522,7 @@ function Home() {
               cursor: "pointer", 
               marginLeft: "5px" 
             }}
-            onClick={handleTermsCondition}
+            onClick={handlePolicyAndPrivacy}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -526,6 +530,7 @@ function Home() {
           </a>
         </span>
       </label>
+      
     </div>
 
 
@@ -721,7 +726,7 @@ function Home() {
                 onClick={handleTermsCondition}
                 style={{
                   textAlign: "center",
-                  fontSize: "18px",
+                  fontSize: "15px",
                   cursor: "pointer",
                 }}
               >
