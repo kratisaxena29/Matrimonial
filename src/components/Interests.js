@@ -20,10 +20,42 @@ import {
   Card,
   Badge,
   CardContent,
+  CardMedia,
+  IconButton,
+  Chip,
+  Fade,
+  Grow,
+  Slide,
+  useTheme,
 } from "@mui/material";
 import axios from "axios";
 import "../styles/profile.css";
-import { ChevronLeft, ChevronRight, Clear, Close, FavoriteBorder, HeartBroken, X } from "@mui/icons-material";
+import {
+  AttributionOutlined,
+  Cancel,
+  CancelOutlined,
+  ChevronLeft,
+  ChevronRight,
+  Clear,
+  Close,
+  CurrencyRupee,
+  CurrencyRupeeOutlined,
+  Diversity3,
+  Diversity3Outlined,
+  Favorite,
+  FavoriteBorder,
+  HeartBroken,
+  Language,
+  LocationOn,
+  Person,
+  School,
+  Work,
+  X,
+} from "@mui/icons-material";
+import CancelIcon from "@mui/icons-material/Cancel";
+import image1 from "../images/gallery/couple-1.jpg";
+import image2 from "../images/gallery/couple-3.jpg";
+import image3 from "../images/gallery/couple-6.png";
 
 function Interests({ setlogedIn }) {
   const [selectedPhoto, setSelectedPhoto] = useState("");
@@ -35,7 +67,6 @@ function Interests({ setlogedIn }) {
   const [interestedProfiles, setInterestedProfiles] = useState([]);
   const [subcaste, setSubCaste] = useState("");
   const [oneProfile, setOneProfiles] = useState("");
-  const [sendRequest, setSendRequest] = useState([]);
   const [interestSent, setInterestSent] = useState("");
 
   const navigate = useNavigate();
@@ -53,6 +84,8 @@ function Interests({ setlogedIn }) {
     // document.getElementById('fileInput').click();
     navigate("/user-profile");
   };
+  const [hover, setHover] = useState(false);
+  const [hover2, setHover2] = useState(false);
 
   const handlegetImageUrl = async () => {
     console.log("...handleImageUrl....");
@@ -328,26 +361,29 @@ function Interests({ setlogedIn }) {
   useEffect(() => {
     console.log("..interestedProfiles after update..", interestedProfiles);
   }, [interestedProfiles]);
-  const isMobile = useMediaQuery("(max-width:600px)");
+  //   const isMobile = useMediaQuery("(max-width:600px)");
+  const theme = useTheme();
+
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const persons = [
     {
-      id: "YRST8794",
+      id: "YRST8795",
       name: "Priya Sharma",
       age: 28,
       location: "Gurgaon, India",
       profession: "Software Engineer",
       education: "Master's in Computer Science",
-      height: "5'5\"",
+      height: "5'10\"",
       religion: "Hindu",
       caste: "Khatri Sood",
       motherTongue: "Punjabi",
-      income: "Rs. 7.5 - 10 Lakh per Annum",
+      income: "7.5 LPA",
       maritalStatus: "Never Married",
       matchPercentage: 82,
       about:
-        "Looking for a companion for life to share everything and anything! Originally from Hoshiarpur in Punjab but born and brought up in Kolkata. I've done my schooling from Pratt Memorial School and Master's in English from Calcutta University.",
-      imageUrl: "/api/placeholder/400/500",
+        "Looking for a companion for life to share everything and anything! Originally from Hoshiarpur in Punjab but born and brought up in Kolkata.",
+      imageUrl: image1,
     },
     {
       id: "YRST8794",
@@ -355,20 +391,20 @@ function Interests({ setlogedIn }) {
       age: 22,
       location: "Mohali, India",
       profession: "Frontend Developer",
-      education: "Bachelor's in Computer Science",
+      education: "Bachelors in Computer Science",
       height: "5'9\"",
       religion: "Hindu",
       caste: "Brahmin",
       motherTongue: "Punjabi",
-      income: "Rs. 7.5 - 10 Lakh per Annum",
+      income: "10 LPA",
       maritalStatus: "Never Married",
-      matchPercentage: 82,
+      matchPercentage: 90,
       about:
-        "Looking for a companion for life to share everything and anything! Originally from Hoshiarpur in Punjab but born and brought up in Kolkata. I've done my schooling from Pratt Memorial School and Master's in English from Calcutta University.",
-      imageUrl: "/api/placeholder/400/500",
+        "Working in a startup company as Frontend Developer and UI/UX Designer. Developed and Designed websites and apps for varous projects",
+      imageUrl: image2,
     },
     {
-      id: "YRST8794",
+      id: "YRST8796",
       name: "Aneesh Kapoor",
       age: 25,
       location: "Toronto, Canada",
@@ -378,26 +414,34 @@ function Interests({ setlogedIn }) {
       religion: "Punjabi",
       caste: "Kaur",
       motherTongue: "Punjabi",
-      income: "Rs. 7.5 - 10 Lakh per Annum",
+      income: "15 LPA",
       maritalStatus: "Never Married",
-      matchPercentage: 82,
+      matchPercentage: 75,
       about:
-        "Looking for a companion for life to share everything and anything! Originally from Hoshiarpur in Punjab but born and brought up in Kolkata. I've done my schooling from Pratt Memorial School and Master's in English from Calcutta University.",
-      imageUrl: "/api/placeholder/400/500",
+        "Worked in TCS for 2 year as Full stack developer. I have build websites and application using technologies like Angular, Spring Boot. I also Worked on AWS and Python",
+      imageUrl: image3,
     },
     // Add more profile objects here...
   ];
-  const [currentProfile, setCurrentProfile] = useState(0);
+
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const nextProfile = () => {
-    setCurrentProfile((prev) => (prev + 1) % persons.length);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % persons.length);
   };
 
   const prevProfile = () => {
-    setCurrentProfile((prev) => (prev - 1 + persons.length) % persons.length);
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + persons.length) % persons.length
+    );
   };
 
-  const profile = persons[currentProfile];
+  const currentProfile = persons[currentIndex];
+
+  if (!currentProfile) {
+    return <div>No profiles available</div>;
+  }
+
   return (
     <div>
       <Navbar
@@ -410,61 +454,264 @@ function Interests({ setlogedIn }) {
         noProfile={noProfile}
         handleLogout={handleLogout}
       />
-      <div>
-        
-      <div>
-      <Card>
-        <>
-          <img
-            src={noProfile}
-            alt={profile.name}
-            className="w-full h-96 object-cover"
-          />
-          <div className="absolute top-4 left-4 bg-white rounded-full p-2 shadow-md">
-            <Badge variant="secondary" className="text-sm font-semibold">
-              {profile.matchPercentage}% Match
-            </Badge>
-          </div>
-          <Button
-            variant="ghost"
-            className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-white/50 hover:bg-white/75 rounded-full p-1"
-            onClick={prevProfile}
-          >
-            <ChevronLeft size={20} />
-          </Button>
-          <Button
-            variant="ghost"
-            className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white/50 hover:bg-white/75 rounded-full p-1"
-            onClick={nextProfile}
-          >
-            <ChevronRight size={20} />
-          </Button>
-        </>
-        <CardContent className="p-4">
-          <div className="text-center mb-4">
-            <h2 className="text-2xl font-bold text-gray-800">{profile.name}, {profile.age}</h2>
-            <p className="text-sm text-gray-600">{profile.location}</p>
-          </div>
-          <div className="flex justify-center space-x-2 mb-4">
-            <Button variant="outline" className="text-xs bg-pink-100 text-pink-600 hover:bg-pink-200 border-pink-300">
-              <FavoriteBorder className="mr-1 h-3 w-3" /> Interest
-            </Button>
-            <Button variant="outline" className="text-xs bg-gray-100 text-gray-600 hover:bg-gray-200 border-gray-300">
-              <Clear className="mr-1 h-3 w-3" /> Decline
-            </Button>
-          </div>
-          <div className="space-y-2 mb-4">
-            <p className="text-center text-sm"><span className="font-semibold">Profession:</span> {profile.profession}</p>
-            <p className="text-center text-sm"><span className="font-semibold">Education:</span> {profile.education}</p>
-            <p className="text-center text-sm"><span className="font-semibold">Religion:</span> {profile.religion}</p>
-            <p className="text-center text-sm"><span className="font-semibold">Mother Tongue:</span> {profile.motherTongue}</p>
-          </div>
-          <p className="text-xs text-gray-600 text-center italic line-clamp-3">{profile.about}</p>
-        </CardContent>
+      <Card
+        sx={{
+          maxWidth: "100%",
+          width: isMobile ? "100%" : "80%",
+          margin: "40px auto",
+          borderRadius: 4,
+          boxShadow: "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)",
+          overflow: "hidden",
+          transition: "transform 0.3s ease-in-out",
+          "&:hover": {
+            transform: "scale(1.01)",
+          },
+        }}
+      >
+        <Grid container>
+          <Grid item xs={12} md={6} sx={{ position: "relative" }}>
+            <CardMedia
+              component="img"
+              height={isMobile ? "300px" : "500px"}
+              image={currentProfile.imageUrl} // Updated to use dynamic image URL
+              alt={currentProfile.name}
+              sx={{ objectFit: "cover" }}
+            />
+
+            <Chip
+              label={`${currentProfile.matchPercentage}% Match`}
+              size="medium"
+              sx={{
+                position: "absolute",
+                top: 16,
+                left: 16,
+                fontWeight: "bold",
+                fontSize: "1rem",
+                padding: "8px",
+                color: "white",
+                backgroundColor: "#D8465C",
+                "& .MuiChip-label": {
+                  color: "white",
+                },
+              }}
+            />
+            <Box
+              sx={{
+                position: "absolute",
+                bottom: 16,
+                left: 16,
+                right: 16,
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <IconButton
+                sx={{
+                  backgroundColor: "rgba(255, 255, 255, 0.7)",
+                  "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.9)" },
+                }}
+                onClick={prevProfile}
+              >
+                <ChevronLeft />
+              </IconButton>
+              <IconButton
+                sx={{
+                  backgroundColor: "rgba(255, 255, 255, 0.7)",
+                  "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.9)" },
+                }}
+                onClick={nextProfile}
+              >
+                <ChevronRight />
+              </IconButton>
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <CardContent
+              sx={{
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                padding: 4,
+              }}
+            >
+              <Box>
+                <Typography
+                  variant="h4"
+                  component="div"
+                  fontWeight="bold"
+                  gutterBottom
+                >
+                  {currentProfile.name}, {currentProfile.age}
+                </Typography>
+                <Grid container spacing={3} sx={{ mb: 2 }}>
+                  <Grid item xs={12} sm={6}>
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      <LocationOn
+                        fontSize="medium"
+                        color="action"
+                        sx={{ mr: 1 }}
+                      />
+                      <Typography variant="body1">
+                        {currentProfile.location}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      <Person fontSize="medium" color="action" sx={{ mr: 1 }} />
+                      <Typography variant="body1">
+                        {currentProfile.maritalStatus}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+                <Grid container spacing={3} sx={{ mb: 3 }}>
+                  <Grid item xs={12} sm={6}>
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      <Work fontSize="medium" color="action" sx={{ mr: 1 }} />
+                      <Typography variant="body1">
+                        {currentProfile.profession}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      <School fontSize="medium" color="action" sx={{ mr: 1 }} />
+                      <Typography variant="body1">
+                        {currentProfile.education}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      <Diversity3
+                        fontSize="medium"
+                        color="action"
+                        sx={{ mr: 1 }}
+                      />
+                      <Typography variant="body1">
+                        {currentProfile.caste}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      <Language
+                        fontSize="medium"
+                        color="action"
+                        sx={{ mr: 1 }}
+                      />
+                      <Typography variant="body1">
+                        {currentProfile.motherTongue}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      <CurrencyRupeeOutlined
+                        fontSize="medium"
+                        color="action"
+                        sx={{ mr: 1 }}
+                      />
+                      <Typography variant="body1">
+                        {currentProfile.income}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      <AttributionOutlined
+                        fontSize="medium"
+                        color="action"
+                        sx={{ mr: 1 }}
+                      />
+                      <Typography variant="body1">
+                        {currentProfile.height}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+                <Typography
+                  variant="body1"
+                  paragraph
+                  sx={{ fontSize: "1.1rem", lineHeight: 1.6 }}
+                >
+                  {currentProfile.about}
+                </Typography>
+              </Box>
+              <Box
+                sx={{ display: "flex", justifyContent: "space-between", mt: 4 }}
+              >
+                <Button
+                  variant={hover ? "contained" : "outlined"} // Switch between contained and outlined based on hover
+                  startIcon={
+                    hover ? (
+                      <Favorite sx={{ color: "white" }} />
+                    ) : (
+                      <FavoriteBorder sx={{ color: "#D8465C" }} />
+                    )
+                  }
+                  sx={{
+                    flex: 1,
+                    mr: 2,
+                    borderRadius: 8,
+                    padding: "12px 24px",
+                    fontSize: "1.1rem",
+                    fontWeight: "bold",
+                    transition: "all 0.3s",
+                    backgroundColor: hover ? "#D8465C" : "transparent", // Change background color on hover
+                    color: hover ? "white" : "#D8465C", // Change text color on hover
+                    borderColor: "#D8465C", // Border color for outlined variant
+                    "&:hover": {
+                      transform: "translateY(-3px)",
+                      boxShadow: theme.shadows[8],
+                      backgroundColor: "#D8465C", // Ensure background stays the same on hover
+                    },
+                  }}
+                  onMouseEnter={() => setHover(true)}
+                  onMouseLeave={() => setHover(false)}
+                >
+                  Interest
+                </Button>
+
+                <Button
+                  variant={hover2 ? "contained" : "outlined"} // Switch between contained and outlined based on hover
+                  startIcon={
+                    hover2 ? (
+                      <Cancel sx={{ color: "white" }} />
+                    ) : (
+                      <CancelOutlined sx={{ color: "red" }} />
+                    )
+                  }
+                  sx={{
+                    flex: 1,
+                    ml: 2,
+                    borderRadius: 8,
+                    padding: "12px 24px",
+                    fontSize: "1.1rem",
+                    fontWeight: "bold",
+                    transition: "all 0.3s",
+                    backgroundColor: hover2 ? "#DC143C" : "transparent", // Change background color on hover
+                    color: hover2 ? "white" : "red", // Change text color on hover
+                    borderColor: "red", // Border color for outlined variant
+                    "&:hover": {
+                      transform: "translateY(-3px)",
+                      boxShadow: theme.shadows[4],
+                      backgroundColor: "red", // Ensure background stays red on hover
+                    },
+                  }}
+                  onMouseEnter={() => setHover2(true)}
+                  onMouseLeave={() => setHover2(false)}
+                >
+                  Decline
+                </Button>
+              </Box>
+            </CardContent>
+          </Grid>
+        </Grid>
       </Card>
-    </div>
-            </div>
-          {/* </div> */}
+      {/* </div> */}
       <ToastContainer />
     </div>
   );
