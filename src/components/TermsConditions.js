@@ -1622,13 +1622,13 @@ i. That threatens the unity, integrity, defense, security or sovereignty of Indi
         </div>
         <div>
           &copy; 2024 <span style={{ color: "#FFBF00" }}>SoulMatch</span> All
-          rights reserved. |{" "}
-          <a
+          rights reserved. {" "}
+          {/* <a
             style={{ cursor: "pointer", color: "#FFBF00" }}
             onClick={() => navigate("/plan")}
           >
             Pricing Policy
-          </a>
+          </a> */}
         </div>
         <div>
           {/* <Email style={{ marginRight: "10px" }} /> */}

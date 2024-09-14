@@ -155,6 +155,11 @@ function Home() {
     }
   };
 
+  const handleTermsCondition = () => {
+
+    navigate('/terms&conditions')
+  }
+
   return (
     <div className="body">
       <ToastContainer />
@@ -640,19 +645,21 @@ function Home() {
   <div className="cr">
     <div className="container">
       <div className="footer-content">
-        <p style={{ textAlign: "center", fontSize: "18px" }}>
+        <p  onClick={handleTermsCondition}
+        style={{ textAlign: "center", fontSize: "18px" , cursor : "pointer" }}>
           Copyright © <span id="cry">2024</span>{" "}
           <a
             style={{
               textDecoration: "none",
               color: "#FFBF00",
             }}
-            href="#!"
+           
+            // href="#!"
             target="_blank"
           >
             SoulMatch
           </a>{" "}
-          All rights reserved.
+          All rights reserved. | Terms and Conditions
         </p>
         <p style={{ fontSize: "20px" }}>
           <strong>Contact Us: </strong>
