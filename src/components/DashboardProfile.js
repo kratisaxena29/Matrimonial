@@ -447,6 +447,13 @@ console.log("...gallery...",gallery)
                         </div>
                         <div className="form-group">
                           {renderField(
+                            "Contact Detail",
+                            profileData.email || profileData.phoneNo,
+                            "Contact Detail"
+                          )}
+                        </div>
+                        <div className="form-group">
+                          {renderField(
                             "Date of Birth",
                             profileData.dateOfBirth,
                             "dateOfBirth",

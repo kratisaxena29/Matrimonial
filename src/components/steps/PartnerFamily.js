@@ -219,47 +219,17 @@ const [subcasteError,setSubCasteError] = useState(false)
   "Writer",
   "Others"
   ]
-  
   const heightOptions = [
-    "4'0''(1.22 mts)",
-    "4'1''(1.24 mts)",
-    "4'2''(1.28 mts)",
-    "4'3''(1.31 mts)",
-    "4'4''(1.34 mts)",
-    "4'5''(1.35 mts)",
-    "4'6''(1.37 mts)",
-    "4'7''(1.40 mts)",
-    "4'8''(1.42 mts)",
-    "4'9''(1.45 mts)",
-    "4'10''(1.47 mts)",
-    "4'11''(1.50 mts)",
-    "5'0''(1.52 mts)",
-    "5'1''(1.55 mts)",
-    "5'2''(1.58 mts)",
-    "5'3''(1.60 mts)",
-    "5'4''(1.63 mts)",
-    "5'5''(1.65 mts)",
-    "5'6''(1.68 mts)",
-    "5'7''(1.70 mts)",
-    "5'8''(1.73 mts)",
-    "5'9''(1.75 mts)",
-    "5'10''(1.78 mts)",
-    "5'11''(1.80 mts)",
-    "6'0''(1.83 mts)",
-    "6'1''(1.85 mts)",
-    "6'2''(1.88 mts)",
-    "6'3''(1.91 mts)",
-    "6'4''(1.93 mts)",
-    "6'5''(1.96 mts)",
-    "6'6''(1.98 mts)",
-    "6'7''(2.01 mts)",
-    "6'8''(2.03 mts)",
-    "6'9''(2.06 mts)",
-    "6'10''(2.08 mts)",
-    "6'11''(2.11 mts)",
-    "7' (2.13 mts) plus",
-   
-  ]
+    "4'0\" - 4'5\"",
+    "4'6\" - 4'11\"",
+    "5'0\" - 5'5\"",
+    "5'6\" - 5'11\"",
+    "6'0\" - 6'5\"",
+    "6'6\" - 6'11\"",
+    "7' plus"
+  ];
+  
+  
 
   const casteOptions = [
     "Agarwal", "Kanyakubj Brahmin", "Gaur Brahmin", "Brahmin" , 
@@ -267,7 +237,7 @@ const [subcasteError,setSubCasteError] = useState(false)
      "Kshatriya" , "Maratha" , "Rajput" , "Sindhi" , "Sunni" , "Oberoi",
      "Arora" , "Shwetamber" , "Yadav" , "Bania" , "Scheduled Caste" , 
      "Digamber"  , "Sikh Jat" , "Gupta","Scheduled Tribes",
-      "Tei" , "Vaishnav" ,"Kurmi kshatriya", "Other" ];
+      "Tei" , "Vaishnav" ,"Kurmi kshatriya", "Doesn't Matter" ];
   const subCasteOptions = [
     "Arora",
 "Baniya",
