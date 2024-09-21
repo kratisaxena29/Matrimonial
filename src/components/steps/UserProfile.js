@@ -50,34 +50,32 @@ function UserProfile({ setlogedIn }) {
   const [profiles, setProfiles] = useState([]);
   const [interestedProfiles, setInterestedProfiles] = useState([]);
   const [subcaste, setSubCaste] = useState("");
-  const [deletecount ,setDeleteCount] = useState("")
-  const[interestSent , setInterestSent] = useState("")
-  const[interestRecived , setInterestRecived] = useState("")
-  const[acceptRecived , setAcceptRecived] = useState("")
+  const [deletecount, setDeleteCount] = useState("")
+  const [otherDelete,setOtherDelete] = useState("")
+  const [interestSent, setInterestSent] = useState("")
+  const [interestRecived, setInterestRecived] = useState("")
+  const [acceptRecived, setAcceptRecived] = useState("")
+  const [otherAccept,setOtherAccept] = useState("")
   const navigate = useNavigate();
 
   const user = JSON.parse(sessionStorage.getItem("user"));
-  console.log("..user...", user);
-  console.log("..user email...", user.email);
-  console.log("...age..", age);
-  console.log("...caste..", caste);
-  console.log("...religion...", religion);
+
 
   const URL = process.env.REACT_APP_API_BASE_URL;
 
 
   const Interest = (profileId) => {
-    console.log("Interest button clicked for profile:", profileId);
+    
 
     setInterestedProfiles((prevState) => {
       const updatedProfiles = [...prevState, profileId];
-      console.log("..updatedProfile..", updatedProfiles);
+      
       return updatedProfiles;
     });
   };
   const [isEditMode, setIsEditMode] = useState(false);
   const [profileData, setProfileData] = useState({
-    _id : "",
+    _id: "",
     fullName: "",
     dateOfBirth: "",
     gender: "",
@@ -96,7 +94,7 @@ function UserProfile({ setlogedIn }) {
     ageRange: "",
     heightRange: "",
     aboutMe: "",
-    plan : "",
+    plan: "",
   });
 
 
@@ -112,124 +110,119 @@ function UserProfile({ setlogedIn }) {
       [name]: type === "checkbox" ? checked : value,
     });
   };
-  console.log("... checking profileData...",profileData)
-console.log("...profileData...",profileData.dateOfBirth)
+ 
   const handleSubmit = (e) => {
-    console.log("....save...")
+    
     e.preventDefault();
     // Submit updated profile data to API
-    console.log("Updated profile data:", profileData);
-    let data  = user.email ? user.email : user.phoneno
-      // if(data.includes('@')){
-      //   data = user.email
-      // }
-      // else{
-      //   data = user.phoneno
-      // }
-    axios.put(`${URL}/ProfileUpdate/${data}`,{
-      name : profileData.fullName,
-      aboutYourSelf :    profileData.aboutMe,
-      Part_ageFrom :profileData.ageRange,
-      annualIncome : profileData.annualIncome,
-      caste : profileData.caste,
-      dateOfBirth : profileData.dateOfBirth,
-      diet :   profileData.diet,
-      alcohol : profileData.drinking,
-      family_Type : profileData.familyType,
-      Fathers_prof : profileData.fatherOccupation,
-      gender : profileData.gender,
-      height : profileData.heightRange,
-      heighestEduction :profileData.highestEducation,
-      martialStatus :  profileData.maritalStatus,
-      Mothers_prof : profileData.motherOccupation,
-      profession :  profileData.occupation,
-      religion : profileData.religion,
-      smoke : profileData.smoking
-    }) 
-    .then((response) => {
-      console.log("Profile updated successfully:", response.data);
-      setIsEditMode(false);
+   
+    let data = user.email ? user.email : user.phoneno
+    // if(data.includes('@')){
+    //   data = user.email
+    // }
+    // else{
+    //   data = user.phoneno
+    // }
+    axios.put(`${URL}/ProfileUpdate/${data}`, {
+      name: profileData.fullName,
+      aboutYourSelf: profileData.aboutMe,
+      Part_ageFrom: profileData.ageRange,
+      annualIncome: profileData.annualIncome,
+      caste: profileData.caste,
+      dateOfBirth: profileData.dateOfBirth,
+      diet: profileData.diet,
+      alcohol: profileData.drinking,
+      family_Type: profileData.familyType,
+      Fathers_prof: profileData.fatherOccupation,
+      gender: profileData.gender,
+      height: profileData.heightRange,
+      heighestEduction: profileData.highestEducation,
+      martialStatus: profileData.maritalStatus,
+      Mothers_prof: profileData.motherOccupation,
+      profession: profileData.occupation,
+      religion: profileData.religion,
+      smoke: profileData.smoking
     })
-    .catch((error) => {
-      console.error("Error updating profile:", error);
-    });
-  
+      .then((response) => {
+    
+        setIsEditMode(false);
+      })
+      .catch((error) => {
+        console.error("Error updating profile:", error);
+      });
+
   };
   const [gallery, setGallery] = useState([]);
-console.log("...gallery...",gallery)
 
 
-const handleGalleryUpload = async (event) => {
-  console.log("...handlegallery...");
-  const identifier = user.email || user.phoneno;
 
-  if (!identifier) {
+  const handleGalleryUpload = async (event) => {
+   
+    const identifier = user.email || user.phoneno;
+
+    if (!identifier) {
       console.error("Identifier is undefined. Please check if the email or phone number is being passed correctly.");
       return;
-  }
+    }
 
-  const file = event.target.files[0];
-  if (file) {
+    const file = event.target.files[0];
+    if (file) {
       // Check file type and size (example: limit size to 5MB)
       if (file.size > 5 * 1024 * 1024) {
-         toast.error("File size exceeds the 5MB limit.")
-          console.error("File size exceeds the 5MB limit.");
-          return;
+        toast.error("File size exceeds the 5MB limit.")
+      
+        return;
       }
 
       const formData = new FormData();
       formData.append("file", file);
 
       try {
-          const response = await axios.post(`${URL}/upload-multiple-photo/${identifier}`, formData, {
-              headers: {
-                  'Content-Type': 'multipart/form-data',
-              },
-              timeout: 30000, // Set a timeout for the request (10 seconds)
-          });
-// toast.success("Photo uploaded successfully")
-          console.log("Photo uploaded successfully:", response.data);
-          fetchGallery();
+        const response = await axios.post(`${URL}/upload-multiple-photo/${identifier}`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+          timeout: 30000, // Set a timeout for the request (10 seconds)
+        });
+     
+        fetchGallery();
       } catch (error) {
-          if (error.code === 'ECONNABORTED') {
-            toast.error("Upload timed out. Please try again.")
-              console.error("Upload timed out. Please try again.");
-          } else if (error.response) {
-              console.error("Server error:", error.response.data.message);
-          } else {
-              console.error("Error uploading photo:", error.message);
-          }
+        if (error.code === 'ECONNABORTED') {
+          toast.error("Upload timed out. Please try again.")
+          console.error("Upload timed out. Please try again.");
+        } else if (error.response) {
+          console.error("Server error:", error.response.data.message);
+        } else {
+          console.error("Error uploading photo:", error.message);
+        }
       }
-  } else {
+    } else {
       console.error("No file selected for upload.");
-  }
-};
+    }
+  };
 
-const [openImage, setOpenImage] = useState(null);
+  const [openImage, setOpenImage] = useState(null);
 
-const fetchGallery = () => {
-  const profileIdentifier = user.email || user.phoneno;
-  axios.get(`${URL}/getphotosByEmailOrPhoneNo/${profileIdentifier}`)
+  const fetchGallery = () => {
+    const profileIdentifier = user.email || user.phoneno;
+    axios.get(`${URL}/getphotosByEmailOrPhoneNo/${profileIdentifier}`)
       .then(response => {
-          const photos = response.data.photoUrl;
-          setGallery(photos);
+        const photos = response.data.photoUrl;
+        setGallery(photos);
       })
       .catch(error => {
-          console.log("Error fetching photos:", error);
+        console.log("Error fetching photos:", error);
       });
-};
-useEffect(() => {
-  fetchGallery();
-}, [URL]);
+  };
+  useEffect(() => {
+    fetchGallery();
+  }, [URL]);
 
-  // const removePhoto = (index) => {
-  //   console.log("...removePhoto...",index)
-  //   setGallery(gallery.filter((_, i) => i !== index));
-  // };
+ 
 
   const removePhoto = async (index) => {
-    console.log("...removePhoto...", index);
-    
+   
+
     // Assuming gallery is an array of photo URLs
     const photoToDelete = gallery[index];
     const profileIdentifier = user.email || user.phoneno; // Replace with actual user data
@@ -243,16 +236,15 @@ useEffect(() => {
         { photoToDelete: photoToDelete }, // Request body
         { headers: { 'Content-Type': 'application/json' } }
       );
-  
+
       // Check if the API call was successful
       if (response.status === 200) {
-        console.log('Photo deleted successfully:', response.data);
-        
+       
+
         // Remove the photo from the gallery in the frontend
         // setGallery(gallery.filter((_, i) => i !== index));
       } else {
 
-        console.error('Failed to delete photo:', response.data.message);
         setGallery(gallery);
       }
     } catch (error) {
@@ -260,7 +252,7 @@ useEffect(() => {
       setGallery(gallery);
     }
   };
-  
+
   useEffect(() => {
     const profileIdentifier = user.email ? user.email : user.phoneno;
     axios.get(`${URL}/getphotosByEmailOrPhoneNo/${profileIdentifier}`)
@@ -272,13 +264,7 @@ useEffect(() => {
         console.log("Error fetching photos:", error);
       });
   }, [URL]);
-  const data = {
-    accepted: 1,
-    received: 6,
-    sent: 1075,
-    declined: deletecount,
-    shortlisted: 0, // you can add more cards if needed
-  };
+
   const renderField = (label, value, name, type = "text", options = []) => {
     if (isEditMode) {
       switch (type) {
@@ -363,7 +349,7 @@ useEffect(() => {
               value={value}
               onChange={handleInputChange}
               type={type}
-              //  margin="normal"
+            //  margin="normal"
             />
           );
       }
@@ -388,7 +374,7 @@ useEffect(() => {
   };
 
   const uploadImageToServer = async (file) => {
-    console.log("...upload image...");
+ 
 
     const formData = new FormData();
     formData.append("image", file);
@@ -398,7 +384,7 @@ useEffect(() => {
       if (user.email) {
         apiUrl += `email=${user.email}`;
       } else if (user.phoneno) {
-        console.log("...user.phoneno...", user.phoneno);
+     
         apiUrl += `phoneno=${user.phoneno}`;
       }
       const response = await fetch(apiUrl, {
@@ -408,7 +394,7 @@ useEffect(() => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("File uploaded successfully:", data.fileUpload);
+       
         handlegetImageUrl();
       } else {
         console.error("Error uploading file:", response.statusText);
@@ -524,19 +510,16 @@ useEffect(() => {
     { value: "Writer", label: "Writer" },
     { value: "Others", label: "Others" },
   ];
-  
+
 
   const handlegetImageUrl = async () => {
-    console.log("...handleImageUrl....")
-    const identifier = user.email  ? user.email : user.phoneno
     
+    const identifier = user.email ? user.email : user.phoneno
+
     axios
       .get(`${URL}/getimagepath/${identifier}`)
       .then((response) => {
-        console.log(
-          ".get image url response...",
-          response.data.response.imageUrl
-        );
+      
         setPhotoUrl(response.data.response.imageUrl);
       })
       .catch((error) => {
@@ -561,119 +544,192 @@ useEffect(() => {
   const handlePlans = () => {
     navigate("/plan");
   };
+
+    useEffect(() => {
+    const handleData = async () => {
+     
+      let data = user.email ? user.email : user.phoneno
+    
+      
+      try {
+        const response = await axios.get(`${URL}/profilebyid/${data}`);
+
+       
+        const dummyData = {
+          _id: response.data._id || "Not Available",
+          fullName: response.data.name || "Not Available",
+          dateOfBirth: response.data.dateOfBirth || "Not Available",
+          gender: response.data.gender || "Not Available",
+          maritalStatus: response.data.martialStatus || "Not Available",
+          religion: response.data.religion || "Not Available",
+          caste: response.data.caste || "Not Available",
+          fatherOccupation: response.data.Fathers_prof || "Not Available",
+          motherOccupation: response.data.Mothers_prof || "Not Available",
+          familyType: response.data.family_Type || "Not Available",
+          highestEducation: response.data.heighestEduction || "Not Available",
+          occupation: response.data.profession || "Not Available",
+          annualIncome: response.data.annualIncome || "Not Available",
+          diet: response.data.diet || "Not Available",
+          smoking: response.data.smoke || "Not Available",
+          drinking: response.data.drink || "Not Available",
+          ageRange: response.data.Part_ageFrom || "Not Available",
+          heightRange: response.data.Part_height || "Not Available",
+          aboutMe: response.data.aboutYourSelf || "Not Available",
+          plan: response.data.plan || "Not Available"
+        };
+        setProfileData(dummyData);
+      } catch (error) {
+        console.log("...error..", error);
+      }
+    };
+
+    handleData();
+  }, [user.email, user.phoneno]);
   useEffect(() => {
-    console.log("..interestedProfiles after update..", interestedProfiles);
+   
   }, [interestedProfiles]);
 
   useEffect(() => {
-    // const profileIdentifier = user.email ? user.email : user.phoneno;
-    // console.log("...deletekrati....",profileData._id)
+   
     axios.get(`${URL}/getDeleteRequest/${profileData._id}`)
       .then(response => {
-        const deleteResponse = response.data.count;
-        console.log("...deleteResponse..",deleteResponse)
-         setDeleteCount(deleteResponse);
+        const deleteResponse = response.data;
+        
+        setDeleteCount(deleteResponse);
       })
       .catch(error => {
         console.log("Error fetching photos:", error);
       });
-  }, [URL]);
+  }, [URL,profileData]);
+
+  const handleIDelete = () => {
+    navigate('/interests',{
+      state : {
+        response : deletecount
+      }
+    })
+  }
+
+  useEffect(() => {
+   
+    axios.get(`${URL}/getOtherDelete/${profileData._id}`)
+      .then(response => {
+        const deleteResponse = response.data;
+       
+        // setDeleteCount(deleteResponse);
+        setOtherDelete(deleteResponse)
+      })
+      .catch(error => {
+        console.log("Error fetching photos:", error);
+      });
+  }, [URL,profileData]);
+
+  const handleOtherDelete = () => {
+    navigate('/interests',{
+      state : {
+        response : otherDelete
+      }
+    })
+  }
 
   useEffect(() => {
     const identifier = user.email ? user.email : user.phoneno;
     axios.get(`${URL}/getSendRequestIds/${identifier}`)
       .then(response => {
-        const sendResponse = response.data.count;
-        console.log("...sendResponse..",sendResponse)
+        const sendResponse = response.data;
+       
         setInterestSent(sendResponse)
-        
+
       })
       .catch(error => {
         console.log("Error fetching photos:", error);
       });
   }, [URL]);
+
+const handleInterestSend = () => {
+  navigate('/interests',{
+    state : {
+      response : interestSent
+    }
+  })
+}
 
   useEffect(() => {
     const identifier = user.email ? user.email : user.phoneno;
     axios.get(`${URL}/getAcceptInterest/${identifier}`)
       .then(response => {
-        const responseRecived = response.data.count;
-        console.log("...accepted response received..",responseRecived)
+        const responseRecived = response.data;
+      
         setAcceptRecived(responseRecived)
-        
+
       })
       .catch(error => {
         console.log("Error fetching photos:", error);
       });
   }, [URL]);
+
+ 
+
+  const handleIAccept = async () => {
+    navigate('/interests',{
+      state : {
+        response : acceptRecived
+      }
+    })
+  }
 
   useEffect(() => {
     // const identifier = user.email ? user.email : user.phoneno;
-    // ${profileData?._id}
-    axios.get(`${URL}/getAllRequestById/66a9dd0a2f09a26ad9514521`)
+    axios.get(`${URL}/getOtherAccept/${profileData?._id}`)
       .then(response => {
-        const responseRecived = response.data.counts;
-        console.log("...interest response ..",responseRecived)
-          setInterestRecived(responseRecived)
+        const responseRecived = response.data;
         
+        setOtherAccept(responseRecived)
+        // setAcceptRecived(responseRecived)
+
       })
       .catch(error => {
         console.log("Error fetching photos:", error);
       });
-  }, [URL]);
+  }, [URL,profileData]);
+
+  const handleOtherAccept = async () => {
+    navigate('/interests',{
+      state : {
+        response : otherAccept
+      }
+    })
+  }
 
   useEffect(() => {
-    const handleData = async () => {
-      console.log("....user krati...",user.email)
-      let data  = user.email  ? user.email : user.phoneno
-      console.log("..data...", data)
-      // if(data.includes('@')){
-      //   data = user.email
-      // }
-      // else{
-      //   data = user.phoneno
-      // }
-      try {
-        const response = await axios.get(`${URL}/profilebyid/${data}`);
-     
-       console.log("...response...",response.data)
-      //  setUser(response.data)
-       const dummyData = {
-        _id : response.data._id || "Not Available", 
-        fullName: response.data.name || "Not Available",
-        dateOfBirth: response.data.dateOfBirth || "Not Available" ,
-        gender: response.data.gender || "Not Available" ,
-        maritalStatus: response.data.martialStatus || "Not Available" ,
-        religion: response.data.religion || "Not Available" ,
-        caste: response.data.caste || "Not Available" ,
-        fatherOccupation: response.data.Fathers_prof || "Not Available" ,
-        motherOccupation: response.data.Mothers_prof || "Not Available" ,
-        familyType: response.data.family_Type || "Not Available" ,
-        highestEducation: response.data.heighestEduction || "Not Available" ,
-        occupation: response.data.profession || "Not Available" ,
-        annualIncome: response.data.annualIncome || "Not Available" ,
-        diet: response.data.diet || "Not Available" ,
-        smoking: response.data.smoke || "Not Available" ,
-        drinking: response.data.drink || "Not Available" ,
-        ageRange: response.data.Part_ageFrom || "Not Available" ,
-        heightRange: response.data.Part_height || "Not Available" ,
-        aboutMe: response.data.aboutYourSelf || "Not Available" ,
-        plan : response.data.plan || "Not Available"
-      };
-      setProfileData(dummyData);
-      } catch (error) {
-        console.log("...error..", error);
-      }
-    };
-  
-    handleData();
-  }, [user.email, user.phoneno]);
-  
+    
+    axios.get(`${URL}/getAllRequestById/${profileData?._id}`)
+      .then(response => {
+        const responseRecived = response.data;
+        console.log("...interest response ..", responseRecived)
+        setInterestRecived(responseRecived)
+
+      })
+      .catch(error => {
+        console.log("Error fetching photos:", error);
+      });
+  }, [URL,profileData]);
+
+const handleInterestRecived = ()=> {
+ 
+  navigate('/interests',{
+    state : {
+      response : interestRecived
+    }
+  })
+
+}
+
   const handleLogo = () => {
     navigate('/profiles')
   }
   const getPlanName = () => {
-    console.log("...getplan...",profileData?.plan)
+    
     switch (profileData?.plan) {
       case "69900":
         return "Gold";
@@ -686,12 +742,12 @@ useEffect(() => {
     }
   };
   const isMobile = useMediaQuery('(max-width:600px)');
-  const statusData = [
-    { label: 'Accepted', icon: <CheckCircleIcon /> },
-    { label: 'Interest Received', icon: <MailIcon /> },
-    { label: 'Interest Sent', icon: <SendIcon /> },
-    { label: 'Declined Interest', icon: <BlockIcon /> },
-  ];
+  // const statusData = [
+  //   { label: 'Accepted', icon: <CheckCircleIcon /> },
+  //   { label: 'Interest Received', icon: <MailIcon /> },
+  //   { label: 'Interest Sent', icon: <SendIcon /> },
+  //   { label: 'Declined Interest', icon: <BlockIcon /> },
+  // ];
   return (
     <div>
       <nav
@@ -801,125 +857,182 @@ useEffect(() => {
       </section>
 
       <section>
-      <div className="login pro-edit-update" sx={{ marginTop: '00px' }}>
-        <div className="container">
-          <div className="row">
-            <Grid container spacing={2} sx={{ marginBottom: 2 }}>
-              {/* Accepted Interests */}
-              <Grid item xs={3}>
-                <Box
-                  component={Card}
-                  sx={{
-                    textAlign: 'center',
-                    backgroundColor: '#e0f7fa',
-                    cursor: 'pointer',
-                    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                    '&:hover': {
-                      transform: 'scale(1.05)',
-                      boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
-                    },
-                  }}
-                >
-                  <CardContent>
-                    <IconButton>
-                      <CheckCircleOutlineIcon sx={{ color: 'green', fontSize: 30 }} />
-                    </IconButton>
-                    <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                      {/* {data.accepted < 10 ? `0${data.accepted}` : data.accepted} */}
-                      {acceptRecived || 0}
-                    </Typography>
-                    <Typography variant="body2">Accepted Interests</Typography>
-                  </CardContent>
-                </Box>
-              </Grid>
+        <div className="login pro-edit-update" sx={{ marginTop: '00px' }}>
+          <div className="container">
+            <div className="row">
+              <Grid container spacing={2} sx={{ marginBottom: 2 }}>
+                {/* Accepted Interests */}
+                <Grid item xs={4}>
+                  <Box
+                    component={Card}
+                    sx={{
+                      textAlign: 'center',
+                      backgroundColor: '#e0f7fa',
+                      cursor: 'pointer',
+                      transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                      '&:hover': {
+                        transform: 'scale(1.05)',
+                        boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
+                      },
+                    }}
+                    onClick={handleIAccept}
+                  >
+                    <CardContent>
+                      <IconButton>
+                        <CheckCircleOutlineIcon sx={{ color: 'green', fontSize: 30 }} />
+                      </IconButton>
+                      <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                        {/* {data.accepted < 10 ? `0${data.accepted}` : data.accepted} */}
+                        {acceptRecived?.count || 0}
+                      </Typography>
+                      <Typography variant="body2">I Accepted Interests</Typography>
+                    </CardContent>
+                  </Box>
+                </Grid>
+                {/* They accept  */}
+                <Grid item xs={4}>
+                  <Box
+                    component={Card}
+                    sx={{
+                      textAlign: 'center',
+                      backgroundColor: '#e0f7fa',
+                      cursor: 'pointer',
+                      transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                      '&:hover': {
+                        transform: 'scale(1.05)',
+                        boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
+                      },
+                    }}
+                  onClick={handleOtherAccept}
+                  >
+                    <CardContent>
+                      <IconButton>
+                        <CheckCircleOutlineIcon sx={{ color: 'green', fontSize: 30 }} />
+                      </IconButton>
+                      <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                        {/* {data.accepted < 10 ? `0${data.accepted}` : data.accepted} */}
+                        {otherAccept?.count || 0}
+                      </Typography>
+                      <Typography variant="body2">They Accepted Interests</Typography>
+                    </CardContent>
+                  </Box>
+                </Grid>
+                {/* Interests Received */}
+                <Grid item xs={4}>
+                  <Box
+                    component={Card}
+                    sx={{
+                      textAlign: 'center',
+                      backgroundColor: '#fff3e0',
+                      cursor: 'pointer',
+                      transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                      '&:hover': {
+                        transform: 'scale(1.05)',
+                        boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
+                      },
+                    }}
+                    onClick={handleInterestRecived}
+                  >
+                    <CardContent>
+                      <IconButton>
+                        <FavoriteBorderIcon sx={{ color: 'orange', fontSize: 30 }} />
+                      </IconButton>
+                      <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                        {/* {data.received < 10 ? `0${data.received}` : data.received} */}
+                        {interestRecived?.counts || 0}
+                      </Typography>
+                      <Typography variant="body2">Interests Received</Typography>
+                    </CardContent>
+                  </Box>
+                </Grid>
 
-              {/* Interests Received */}
-              <Grid item xs={3}>
-                <Box
-                  component={Card}
-                  sx={{
-                    textAlign: 'center',
-                    backgroundColor: '#fff3e0',
-                    cursor: 'pointer',
-                    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                    '&:hover': {
-                      transform: 'scale(1.05)',
-                      boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
-                    },
-                  }}
-                >
-                  <CardContent>
-                    <IconButton>
-                      <FavoriteBorderIcon sx={{ color: 'orange', fontSize: 30 }} />
-                    </IconButton>
-                    <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                      {/* {data.received < 10 ? `0${data.received}` : data.received} */}
-                      {interestRecived || 0}
-                    </Typography>
-                    <Typography variant="body2">Interests Received</Typography>
-                  </CardContent>
-                </Box>
-              </Grid>
+                {/* Interests Sent */}
+                <Grid item xs={4}>
+                  <Box
+                    component={Card}
+                    sx={{
+                      textAlign: 'center',
+                      backgroundColor: '#f3e5f5',
+                      cursor: 'pointer',
+                      transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                      '&:hover': {
+                        transform: 'scale(1.05)',
+                        boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
+                      },
+                    }}
+                    onClick={handleInterestSend}
+                  >
+                    <CardContent>
+                      <IconButton>
+                        <SendIcon sx={{ color: 'purple', fontSize: 30 }} />
+                      </IconButton>
+                      <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                        {interestSent?.count || 0}
+                      </Typography>
+                      <Typography variant="body2">Interests Sent</Typography>
+                    </CardContent>
+                  </Box>
+                </Grid>
 
-              {/* Interests Sent */}
-              <Grid item xs={3}>
-                <Box
-                  component={Card}
-                  sx={{
-                    textAlign: 'center',
-                    backgroundColor: '#f3e5f5',
-                    cursor: 'pointer',
-                    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                    '&:hover': {
-                      transform: 'scale(1.05)',
-                      boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
-                    },
-                  }}
-                >
-                  <CardContent>
-                    <IconButton>
-                      <SendIcon sx={{ color: 'purple', fontSize: 30 }} />
-                    </IconButton>
-                    <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                      {interestSent || 0 }
-                    </Typography>
-                    <Typography variant="body2">Interests Sent</Typography>
-                  </CardContent>
-                </Box>
+                {/* Declined Interests */}
+                <Grid item xs={4}>
+                  <Box
+                    component={Card}
+                    sx={{
+                      textAlign: 'center',
+                      backgroundColor: '#ffebee',
+                      cursor: 'pointer',
+                      transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                      '&:hover': {
+                        transform: 'scale(1.05)',
+                        boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
+                      },
+                    }}
+                    onClick={handleIDelete}>
+                    <CardContent>
+                      <IconButton>
+                        <HighlightOffIcon sx={{ color: 'red', fontSize: 30 }} />
+                      </IconButton>
+                      <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                        {deletecount?.count || 0}
+                      </Typography>
+                      <Typography variant="body2">I Declined Interests</Typography>
+                    </CardContent>
+                  </Box>
+                </Grid>
+                {/* They Declined */}
+                <Grid item xs={4}>
+                  <Box
+                    component={Card}
+                    sx={{
+                      textAlign: 'center',
+                      backgroundColor: '#ffebee',
+                      cursor: 'pointer',
+                      transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                      '&:hover': {
+                        transform: 'scale(1.05)',
+                        boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
+                      },
+                    }}
+                    onClick={handleOtherDelete}
+                  >
+                    <CardContent>
+                      <IconButton>
+                        <HighlightOffIcon sx={{ color: 'red', fontSize: 30 }} />
+                      </IconButton>
+                      <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                        {otherDelete?.count || 0}
+                      </Typography>
+                      <Typography variant="body2">They Declined</Typography>
+                    </CardContent>
+                  </Box>
+                </Grid>
               </Grid>
-
-              {/* Declined Interests */}
-              <Grid item xs={3}>
-                <Box
-                  component={Card}
-                  sx={{
-                    textAlign: 'center',
-                    backgroundColor: '#ffebee',
-                    cursor: 'pointer',
-                    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                    '&:hover': {
-                      transform: 'scale(1.05)',
-                      boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
-                    },
-                  }}
-                >
-                  <CardContent>
-                    <IconButton>
-                      <HighlightOffIcon sx={{ color: 'red', fontSize: 30 }} />
-                    </IconButton>
-                    <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                      {deletecount || 0}
-                    </Typography>
-                    <Typography variant="body2">Declined Interests</Typography>
-                  </CardContent>
-                </Box>
-              </Grid>
-            </Grid>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-  );
+      </section>
+      );
       <section>
         <div className="login pro-edit-update" sx={{ marginTop: "00px" }}>
           <div className="container">

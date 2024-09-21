@@ -4,7 +4,7 @@ import logo from "../images/logo.png";
 import noProfile from "../images/profiles/noProfile.jpg";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { ToastContainer, toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   MenuItem,
   Button,
@@ -72,7 +72,9 @@ function Interests({ setlogedIn }) {
   const navigate = useNavigate();
   const URL = process.env.REACT_APP_API_BASE_URL;
   const [requests, setRequests] = useState([]);
-
+  const [profileData , setprofileData] = useState([]);
+  const location = useLocation()
+  console.log("...locationof response...", location.state.response.responseData || location.state.response.data.map(value => value._id))
   const user = JSON.parse(sessionStorage.getItem("user"));
   console.log("..user...", user);
   console.log("..user email...", user.email);
@@ -87,46 +89,24 @@ function Interests({ setlogedIn }) {
   const [hover, setHover] = useState(false);
   const [hover2, setHover2] = useState(false);
 
-  const handlegetImageUrl = async () => {
-    console.log("...handleImageUrl....");
-    const identifier = user.email ? user.email : user.phoneno;
 
+
+
+  useEffect(() => {
+// const idData  = location.state.response.responseData || location.state.response.data.map(value => value._id)
+const idData = 
+location.state?.response?.responseData || 
+(Array.isArray(location.state?.response?.data) ? location.state.response.data.map(value => value._id) : []);
+
+console.log("..iddata.",idData)
     axios
-      .get(`${URL}/getimagepath/${identifier}`)
-      .then((response) => {
-        console.log(
-          ".get image url response...",
-          response.data.response.imageUrl
-        );
-        setPhotoUrl(response.data.response.imageUrl);
+      .post(`${URL}/getIdProfile`, {
+        "ids": idData
       })
-      .catch((error) => {
-        console.log("...error..", error);
-      });
-  };
-
-  useEffect(() => {
-    handlegetImageUrl();
-  }, []);
-  console.log("..check...", user.phoneno);
-
-  useEffect(() => {
-    let id = oneProfile._id;
-    console.log("...id...", id);
-
-    // Make the axios request without wrapping it inside a function
-    axios
-      .get(`${URL}/getAllRequestById/${id}`)
       .then((response) => {
         console.log("..request...", response.data);
-        // Update state with the response data (uncomment this when you're ready to use it)
-        // setProfiles(response.data.response);
-        const fetchedRequests = response.data.data.map((item) => ({
-          _id: item._id,
-          name: item.name,
-          photo: item.fileUpload, // Assuming fileUpload is the image URL
-        }));
-        setRequests(fetchedRequests);
+        setprofileData(response.data)
+
       })
       .catch((error) => {
         console.log("...error...", error);
@@ -135,74 +115,13 @@ function Interests({ setlogedIn }) {
     // No need to call request() since axios.get() is already executed
   }, [oneProfile._id]); // Assuming oneProfile._id is the dependency
 
-  useEffect(() => {
-    // Construct the API URL based on filters
-    let apiUrl = `${URL}/getAllprofile?`;
-    if (user.email) {
-      apiUrl += `email=${user.email}`;
-    } else if (user.phoneno) {
-      console.log("...user.phoneno...", user.phoneno);
-      apiUrl += `phoneno=${user.phoneno}`;
-    }
 
-    if (age) {
-      apiUrl += `&ageRange=${age}`;
-    }
-    if (religion) {
-      apiUrl += `&religion=${religion}`;
-    }
-    if (caste) {
-      apiUrl += `&caste=${caste}`;
-    }
-    if (subcaste) {
-      apiUrl += `&subcaste=${subcaste}`;
-    }
 
-    console.log("Constructed API URL:", apiUrl);
 
-    axios
-      .get(apiUrl)
-      .then((response) => {
-        console.log("..response...", response.data);
-        setProfiles(response.data.response);
-      })
-      .catch((error) => {
-        console.log("...error..", error);
-      });
-  }, [age, religion, caste, subcaste]);
 
-  useEffect(() => {
-    let identifier = user.email ? user.email : user.phoneno;
-    axios
-      .get(`${URL}/oneProfileByEmail/${identifier}`)
-      .then((response) => {
-        console.log("..response...", response.data);
-        setOneProfiles(response.data);
-      })
-      .catch((error) => {
-        console.log("...error...", error);
-      });
-  }, []);
-  console.log("...krati...", oneProfile);
 
-  useEffect(() => {
-    const identifier = user.email ? user.email : user.phoneno;
-    axios
-      .get(`${URL}/getSendRequestIds/${identifier}`)
-      .then((response) => {
-        const sendResponse = response.data.data.AllprofilesId;
-        console.log("...sendResponse..", sendResponse);
-        setInterestSent(sendResponse);
-      })
-      .catch((error) => {
-        console.log("Error fetching photos:", error);
-      });
-  }, [URL, user.email, user.phoneno]);
 
-  const handleProfileDetails = async (profileId) => {
-    console.log("...handleProfileDetails for profileId...", profileId);
-    navigate("/PersonDetails", { state: { profileId } });
-  };
+
   const StyledAppBar = styled(AppBar)({
     backgroundColor: "#6D0B32",
   });
@@ -366,64 +285,78 @@ function Interests({ setlogedIn }) {
 
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const persons = [
-    {
-      id: "YRST8795",
-      name: "Priya Sharma",
-      age: 28,
-      location: "Gurgaon, India",
-      profession: "Software Engineer",
-      education: "Master's in Computer Science",
-      height: "5'10\"",
-      religion: "Hindu",
-      caste: "Khatri Sood",
-      motherTongue: "Punjabi",
-      income: "7.5 LPA",
-      maritalStatus: "Never Married",
-      matchPercentage: 82,
-      about:
-        "Looking for a companion for life to share everything and anything! Originally from Hoshiarpur in Punjab but born and brought up in Kolkata.",
-      imageUrl: image1,
-    },
-    {
-      id: "YRST8794",
-      name: "Vineet Vashist",
-      age: 22,
-      location: "Mohali, India",
-      profession: "Frontend Developer",
-      education: "Bachelors in Computer Science",
-      height: "5'9\"",
-      religion: "Hindu",
-      caste: "Brahmin",
-      motherTongue: "Punjabi",
-      income: "10 LPA",
-      maritalStatus: "Never Married",
-      matchPercentage: 90,
-      about:
-        "Working in a startup company as Frontend Developer and UI/UX Designer. Developed and Designed websites and apps for varous projects",
-      imageUrl: image2,
-    },
-    {
-      id: "YRST8796",
-      name: "Aneesh Kapoor",
-      age: 25,
-      location: "Toronto, Canada",
-      profession: "HR",
-      education: "MBA",
-      height: "5'5\"",
-      religion: "Punjabi",
-      caste: "Kaur",
-      motherTongue: "Punjabi",
-      income: "15 LPA",
-      maritalStatus: "Never Married",
-      matchPercentage: 75,
-      about:
-        "Worked in TCS for 2 year as Full stack developer. I have build websites and application using technologies like Angular, Spring Boot. I also Worked on AWS and Python",
-      imageUrl: image3,
-    },
-    // Add more profile objects here...
-  ];
+  // [
+  //   {
+  //     id: "YRST8795",
+  //     name: "Priya Sharma",
+  //     age: 28,
+  //     location: "Gurgaon, India",
+  //     profession: "Software Engineer",
+  //     education: "Master's in Computer Science",
+  //     height: "5'10\"",
+  //     religion: "Hindu",
+  //     caste: "Khatri Sood",
+  //     motherTongue: "Punjabi",
+  //     income: "7.5 LPA",
+  //     maritalStatus: "Never Married",
+  //     matchPercentage: 82,
+  //     about:
+  //       "Looking for a companion for life to share everything and anything! Originally from Hoshiarpur in Punjab but born and brought up in Kolkata.",
+  //     imageUrl: image1,
+  //   },
+  //   {
+  //     id: "YRST8794",
+  //     name: "Vineet Vashist",
+  //     age: 22,
+  //     location: "Mohali, India",
+  //     profession: "Frontend Developer",
+  //     education: "Bachelors in Computer Science",
+  //     height: "5'9\"",
+  //     religion: "Hindu",
+  //     caste: "Brahmin",
+  //     motherTongue: "Punjabi",
+  //     income: "10 LPA",
+  //     maritalStatus: "Never Married",
+  //     matchPercentage: 90,
+  //     about:
+  //       "Working in a startup company as Frontend Developer and UI/UX Designer. Developed and Designed websites and apps for varous projects",
+  //     imageUrl: image2,
+  //   },
+  //   {
+  //     id: "YRST8796",
+  //     name: "Aneesh Kapoor",
+  //     age: 25,
+  //     location: "Toronto, Canada",
+  //     profession: "HR",
+  //     education: "MBA",
+  //     height: "5'5\"",
+  //     religion: "Punjabi",
+  //     caste: "Kaur",
+  //     motherTongue: "Punjabi",
+  //     income: "15 LPA",
+  //     maritalStatus: "Never Married",
+  //     matchPercentage: 75,
+  //     about:
+  //       "Worked in TCS for 2 year as Full stack developer. I have build websites and application using technologies like Angular, Spring Boot. I also Worked on AWS and Python",
+  //     imageUrl: image3,
+  //   },
+  //   // Add more profile objects here...
+  // ];
 
+  useEffect(() => {
+    let identifier = user.email ? user.email : user.phoneno;
+    axios
+      .get(`${URL}/oneProfileByEmail/${identifier}`)
+      .then((response) => {
+        console.log("..check response...", response.data);
+        setOneProfiles(response.data);
+      })
+      .catch((error) => {
+        console.log("...error...", error);
+      });
+  }, []);
+
+  const persons = profileData
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const nextProfile = () => {
@@ -473,12 +406,12 @@ function Interests({ setlogedIn }) {
             <CardMedia
               component="img"
               height={isMobile ? "300px" : "500px"}
-              image={currentProfile.imageUrl} // Updated to use dynamic image URL
+              image={currentProfile.fileUpload} // Updated to use dynamic image URL
               alt={currentProfile.name}
               sx={{ objectFit: "cover" }}
             />
 
-            <Chip
+            {/* <Chip
               label={`${currentProfile.matchPercentage}% Match`}
               size="medium"
               sx={{
@@ -494,7 +427,7 @@ function Interests({ setlogedIn }) {
                   color: "white",
                 },
               }}
-            />
+            /> */}
             <Box
               sx={{
                 position: "absolute",
@@ -553,7 +486,7 @@ function Interests({ setlogedIn }) {
                         sx={{ mr: 1 }}
                       />
                       <Typography variant="body1">
-                        {currentProfile.location}
+                        {currentProfile.city || currentProfile.country || "Not Available"}
                       </Typography>
                     </Box>
                   </Grid>
@@ -561,7 +494,7 @@ function Interests({ setlogedIn }) {
                     <Box sx={{ display: "flex", alignItems: "center" }}>
                       <Person fontSize="medium" color="action" sx={{ mr: 1 }} />
                       <Typography variant="body1">
-                        {currentProfile.maritalStatus}
+                        {currentProfile.martialStatus || "Not Available"}
                       </Typography>
                     </Box>
                   </Grid>
@@ -571,7 +504,7 @@ function Interests({ setlogedIn }) {
                     <Box sx={{ display: "flex", alignItems: "center" }}>
                       <Work fontSize="medium" color="action" sx={{ mr: 1 }} />
                       <Typography variant="body1">
-                        {currentProfile.profession}
+                        {currentProfile.profession || "Not Available"}
                       </Typography>
                     </Box>
                   </Grid>
@@ -579,7 +512,7 @@ function Interests({ setlogedIn }) {
                     <Box sx={{ display: "flex", alignItems: "center" }}>
                       <School fontSize="medium" color="action" sx={{ mr: 1 }} />
                       <Typography variant="body1">
-                        {currentProfile.education}
+                        {currentProfile.heighestEduction || "Not Available"}
                       </Typography>
                     </Box>
                   </Grid>
@@ -591,7 +524,7 @@ function Interests({ setlogedIn }) {
                         sx={{ mr: 1 }}
                       />
                       <Typography variant="body1">
-                        {currentProfile.caste}
+                        {currentProfile.caste || "Not Available"}
                       </Typography>
                     </Box>
                   </Grid>
@@ -603,7 +536,7 @@ function Interests({ setlogedIn }) {
                         sx={{ mr: 1 }}
                       />
                       <Typography variant="body1">
-                        {currentProfile.motherTongue}
+                        {currentProfile.motherTongue || "Not Available"}
                       </Typography>
                     </Box>
                   </Grid>
@@ -615,7 +548,7 @@ function Interests({ setlogedIn }) {
                         sx={{ mr: 1 }}
                       />
                       <Typography variant="body1">
-                        {currentProfile.income}
+                        {currentProfile.annualIncome || "Not Available"}
                       </Typography>
                     </Box>
                   </Grid>
@@ -627,7 +560,7 @@ function Interests({ setlogedIn }) {
                         sx={{ mr: 1 }}
                       />
                       <Typography variant="body1">
-                        {currentProfile.height}
+                        {currentProfile.height || "Not Available"}
                       </Typography>
                     </Box>
                   </Grid>
@@ -637,10 +570,10 @@ function Interests({ setlogedIn }) {
                   paragraph
                   sx={{ fontSize: "1.1rem", lineHeight: 1.6 }}
                 >
-                  {currentProfile.about}
+                  {currentProfile.aboutYourSelf || "Not Available"}
                 </Typography>
               </Box>
-              <Box
+              {/* <Box
                 sx={{ display: "flex", justifyContent: "space-between", mt: 4 }}
               >
                 <Button
@@ -706,7 +639,7 @@ function Interests({ setlogedIn }) {
                 >
                   Decline
                 </Button>
-              </Box>
+              </Box> */}
             </CardContent>
           </Grid>
         </Grid>

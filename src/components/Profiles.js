@@ -711,7 +711,7 @@ function Profiles({ setlogedIn }) {
     axios
       .get(`${URL}/oneProfileByEmail/${identifier}`)
       .then((response) => {
-        console.log("..response...", response.data);
+        console.log("..check response...", response.data);
         setOneProfiles(response.data);
       })
       .catch((error) => {
@@ -862,7 +862,7 @@ function Profiles({ setlogedIn }) {
               <MenuItem onClick={triggerFileInput}>Edit Your Profile</MenuItem>
               <MenuItem onClick={handlePlans}>View Membership Plan</MenuItem>
               <MenuItem onClick={handleChat}>Chat</MenuItem>
-              <MenuItem onClick={handleInterestedProfiles}>Interests</MenuItem>
+              {/* <MenuItem onClick={handleInterestedProfiles}>Interests</MenuItem> */}
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
             <StyledButton variant="outlined" onClick={handlePlans}>
@@ -894,9 +894,9 @@ function Profiles({ setlogedIn }) {
   const handleChat = () => {
     navigate("/chat");
   };
-  const handleInterestedProfiles = () => {
-    navigate("/interests");
-  };
+  // const handleInterestedProfiles = () => {
+  //   navigate("/interests");
+  // };
   useEffect(() => {
     console.log("..interestedProfiles after update..", interestedProfiles);
   }, [interestedProfiles]);
