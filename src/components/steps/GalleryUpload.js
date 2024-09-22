@@ -167,6 +167,10 @@ const removePhoto = async (index) => {
       });
   }, [URL]);
 
+  useEffect(() => {
+    sessionStorage.removeItem('userData');
+  },[])
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <nav

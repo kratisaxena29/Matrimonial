@@ -20,16 +20,18 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 function PartnerFamily() {
   const location = useLocation()
-  const [part_ageFrom, setAgeFrom] = useState(location?.state?.part_ageFrom || "");
-  const [part_martialStatus, setMartialStatus] = useState(location?.state?.part_martialStatus ||"");
-  const [part_religion, setReligion] = useState(location?.state?.part_religion || "");
-  const [part_caste, setCaste] = useState(location?.state?.part_caste || "");
-  const [part_mothertongue, setMothertongue] = useState(location?.state?.part_mothertongue || "");
-  const [part_height, setHeight] = useState(location?.state?.part_height || "");
-  const [part_horoscopeMatch, setHoroscopeMatch] = useState(location?.state?.part_horoscopeMatch || "");
-  const [part_gender,setPartgender] = useState(location?.state?.part_gender)
-  const [part_petFriendly, setPetFriendly] = useState(location?.state?.part_petFriendly || "");
-  const [Part_subCaste,setPart_subCaste] = useState(location?.state?.Part_subCaste || "");
+  const storedData = JSON.parse(sessionStorage.getItem("userData"));
+
+  const [part_ageFrom, setAgeFrom] = useState(location?.state?.part_ageFrom || storedData?.part_ageFrom ||  "");
+  const [part_martialStatus, setMartialStatus] = useState(location?.state?.part_martialStatus || storedData?.part_martialStatus || "");
+  const [part_religion, setReligion] = useState(location?.state?.part_religion || storedData?.part_religion || "");
+  const [part_caste, setCaste] = useState(location?.state?.part_caste || storedData?.part_caste || "");
+  const [part_mothertongue, setMothertongue] = useState(location?.state?.part_mothertongue || storedData?.part_mothertongue ||  "");
+  const [part_height, setHeight] = useState(location?.state?.part_height || storedData?.part_height || "");
+  const [part_horoscopeMatch, setHoroscopeMatch] = useState(location?.state?.part_horoscopeMatch || storedData?.part_horoscopeMatch || "");
+  const [part_gender,setPartgender] = useState(location?.state?.part_gender || storedData?.part_gender || "")
+  const [part_petFriendly, setPetFriendly] = useState(location?.state?.part_petFriendly || storedData?.part_petFriendly || "");
+  const [Part_subCaste,setPart_subCaste] = useState(location?.state?.Part_subCaste || storedData?.Part_subCaste || "");
   const [ageError, setAgeError] = useState(false);
   const [martialStatusError, setMartialStatusError] = useState(false);
   const [religionError, setReligionError] = useState(false);
@@ -593,36 +595,50 @@ const [subcasteError,setSubCasteError] = useState(false)
 console.log("...partner...",location.state)
 const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const handleNext = async () => {
-    setAgeError(!part_ageFrom);
-    setMartialStatusError(!part_martialStatus);
-    setReligionError(!part_religion);
-    setCasteError(!part_caste);
-    setMotherTongueError(!part_mothertongue);
-    setHeightError(!part_height);
-    setHoroscopeMatchError(!part_horoscopeMatch);
-    setPetFriendlyError(!part_petFriendly);
-    setSubCasteError(!Part_subCaste)
-    setPartgenderError(!PartgenderError)
+const handleNext = async () => {
+  // Set errors for form validation
+  setAgeError(!part_ageFrom);
+  setMartialStatusError(!part_martialStatus);
+  setReligionError(!part_religion);
+  setCasteError(!part_caste);
+  setMotherTongueError(!part_mothertongue);
+  setHeightError(!part_height);
+  setHoroscopeMatchError(!part_horoscopeMatch);
+  setPetFriendlyError(!part_petFriendly);
+  setSubCasteError(!Part_subCaste);
+  setPartgenderError(!part_gender);
 
-    if (validateForm()) {
-      navigate("/partner-education", {
-        state: {
-          ...location.state,
-          part_ageFrom,
-          part_martialStatus,
-          part_religion,
-          part_caste,
-          Part_subCaste,
-          part_mothertongue,
-          part_height,
-          part_horoscopeMatch,
-          part_petFriendly,
-          part_gender
-        },
-      });
-    }
-  };
+  if (validateForm()) {
+    // Data for this page
+    const partnerDetailsData = {
+      part_ageFrom,
+      part_martialStatus,
+      part_religion,
+      part_caste,
+      Part_subCaste,
+      part_mothertongue,
+      part_height,
+      part_horoscopeMatch,
+      part_petFriendly,
+      part_gender
+    };
+
+    // Retrieve the existing data from sessionStorage
+    let existingData = JSON.parse(sessionStorage.getItem("userData")) || {};
+
+    // Merge previous data with new partner details
+    const updatedData = { ...existingData, ...location.state, ...partnerDetailsData };
+
+    // Save the merged data back to sessionStorage
+    sessionStorage.setItem("userData", JSON.stringify(updatedData));
+
+    // Navigate to the next page with the updated data
+    navigate("/partner-education", {
+      state: { ...updatedData },
+    });
+  }
+};
+
 
   return (
     <ThemeProvider theme={theme}>

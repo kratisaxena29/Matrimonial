@@ -33,6 +33,7 @@ function ProfileCompleted() {
       </Typography>
       <Button
        onClick={() => navigate('/plan')}
+   
         type="submit"
         variant="contained"
         sx={{

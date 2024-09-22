@@ -20,9 +20,11 @@ import dayjs from "dayjs";
 
 function PartnerLiving() {
   const location = useLocation()
+
   const [part_diet, setDiet] = useState(location?.state?.part_diet || "");
   const [part_alcohol, setAlcohol] = useState(location?.state?.part_alcohol || "");
   const [part_smoke, setSmoke] = useState(location?.state?.part_smoke ||"");
+  
   const [errors, setErrors] = useState({
     diet: "",
     alcohol: "",
@@ -65,13 +67,129 @@ function PartnerLiving() {
 
   const URL = process.env.REACT_APP_API_BASE_URL;
   console.log("...location state in living...",location.state)
-  const handleNext = async () => {
+  // const handleNext = async () => {
     
   
-    if (isFormValid) {
-      try {
+  //   if (isFormValid) {
+  //     try {
    
         
+  //       const parseDate = (date) => {
+  //         if (date && date.$d) {
+  //           return dayjs(date.$d); // Parse from the nested $d property
+  //         } else if (date) {
+  //           return dayjs(date); // Parse directly if possible
+  //         }
+  //         return null;
+  //       };
+  
+  //       const formatDate = (date) => {
+  //         const parsedDate = parseDate(date);
+  //         return parsedDate ? parsedDate.format('MMM / DD / YYYY') : '';
+  //       };
+  
+  //       const formatTime = (time) => {
+  //         const parsedTime = parseDate(time);
+  //         return parsedTime ? parsedTime.format('HH:mm') : '';
+  //       };
+  
+  //       const response = await axios.post(
+  //         `${URL}/profile-register`,
+  //         {
+  //           email: location.state.email,
+  //           name: location.state.name,
+  //           gender: location.state.gender,
+  //           age: location.state.age,
+  //           martialStatus: location.state.maritalStatus, // Fixed typo from "martialStatus"
+  //           nationality: location.state.nationality,
+  //           city: location.state.city,
+  //           country : location.state.country,
+  //           religion: location.state.religion,
+  //           drink : location.state.alcohol,
+  //           disability: location.state.disability,
+  //           disabilityDetail: location.state.disabilityDetails, // Fixed typo from "disabilityDetail"
+  //           caste: location.state.caste,
+  //           subCaste: location.state.subCaste,
+  //           origin: location.state.origin,
+  //           motherTongue: location.state.motherTongue,
+  //           height: location.state.height,
+  //           weight: location.state.weight,
+  //           gothra: location.state.gothra,
+  //           petFriendly: location.state.petFriendly,
+  //           heighestEduction: location.state.highestEducation,
+  //           currentEmployee: location.state.currentEmployment, // Fixed typo from "currentEmployee"
+  //           profession: location.state.profession,
+  //           annualIncome: location.state.annualIncome,
+  //           yearsofExperience: location.state.yearsOfExperience,
+  //           dateOfBirth: formatDate(location.state.dateofBirth), // Ensure date format
+  //           timeOfBirth: formatTime(location.state.timeofBirth), // Ensure time format
+  //           placeofBirth: location.state.placeofBirth, // Fixed typo from "placeOfBirth"
+  //           areYouManglik: location.state.areyouManglik, // Fixed typo from "areYouManglik"
+  //           diet: location.state.diet,
+  //           alcohol: location.state.alcohol,
+  //           smoke: location.state.smoke,
+  //           family_Type: location.state.familyType,
+  //           FathersName: location.state.fatherName,
+  //           Fathers_prof: location.state.fatherProf,
+  //           MothersName: location.state.motherName,
+  //           Mothers_prof: location.state.motherProf,
+  //           numSisters: location.state.numSisters,
+  //           sisterName: JSON.stringify(location.state.sisterNames), // Ensure data is in JSON format
+  //           sisterProfession: JSON.stringify(location.state.sisterProfs), // Ensure data is in JSON format
+  //           numBrothers: location.state.numBrothers,
+  //           brotherName: JSON.stringify(location.state.brotherNames), // Ensure data is in JSON format
+  //           brotherProfession: JSON.stringify(location.state.brotherProfs), // Ensure data is in JSON format
+  //           Part_ageFrom: location.state.part_ageFrom,
+  //           Part_martialStatus: location.state.part_martialStatus, // Ensure proper casing
+  //           Part_Religion: location.state.part_religion,
+  //           Part_Caste: location.state.part_caste,
+  //           Part_subCaste : location.state.Part_subCaste,
+  //           Part_motherTongue: location.state.part_mothertongue, // Ensure proper casing
+  //           Part_height: location.state.part_height,
+  //           Part_horoscopeMatch: location.state.part_horoscopeMatch,
+  //           Part_petFriendly: location.state.part_petFriendly,
+  //           Part_gender : location.state.part_gender,
+  //           Part_heighestEduction: location.state.part_highestEducation,
+  //           Part_currentEmployee: location.state.part_currentEmployment,
+  //           Part_profession: location.state.part_profession,
+  //           Part_annualIncome: location.state.part_annualIncome,
+  //           Part_yearsOfExpereience: location.state.part_yearsOfExperience,
+  //           Part_deit : part_diet,
+  //           Part_alcohol : part_alcohol,
+  //           Part_smoke : part_smoke,
+  //           hobbies: location.state.hobbies,
+  //           // address: location.state.address,
+  //           phoneNo:   location.state.phoneNo.startsWith('+91') ? location.state.phoneNo : `+91${location.state.phoneNo}`,
+            
+  //           aboutYourSelf: location.state.aboutYourself, // Ensure proper casing
+  //         },
+  //         {
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //         }
+  //       );
+  
+  //       console.log("Response:", response);
+  
+  //       // Navigate to the next page with the updated state
+  //       // navigate('/Confirmation-Profile', {
+  //       // navigate('/upload-document',{
+  //       navigate('/gallery-upload',{
+  //         state: {
+  //           ...location.state,
+  //         }
+  //       });
+  //     } catch (error) {
+  //       console.log("Error:", error);
+  //     }
+  //   }
+  // };
+  
+  const handleNext = async () => {
+    if (isFormValid) {
+      try {
+        // Function to parse and format dates and times
         const parseDate = (date) => {
           if (date && date.$d) {
             return dayjs(date.$d); // Parse from the nested $d property
@@ -91,76 +209,78 @@ function PartnerLiving() {
           return parsedTime ? parsedTime.format('HH:mm') : '';
         };
   
+        // Prepare the data to be sent in the POST request
+        const requestData = {
+          email: location.state.email,
+          name: location.state.name,
+          gender: location.state.gender,
+          age: location.state.age,
+          martialStatus: location.state.maritalStatus,
+          nationality: location.state.nationality,
+          city: location.state.city,
+          country: location.state.country,
+          religion: location.state.religion,
+          drink: location.state.alcohol,
+          disability: location.state.disability,
+          disabilityDetail: location.state.disabilityDetails,
+          caste: location.state.caste,
+          subCaste: location.state.subCaste,
+          origin: location.state.origin,
+          motherTongue: location.state.motherTongue,
+          height: location.state.height,
+          weight: location.state.weight,
+          gothra: location.state.gothra,
+          petFriendly: location.state.petFriendly,
+          heighestEduction: location.state.highestEducation,
+          currentEmployee: location.state.currentEmployment,
+          profession: location.state.profession,
+          annualIncome: location.state.annualIncome,
+          yearsofExperience: location.state.yearsOfExperience,
+          dateOfBirth: formatDate(location.state.dateofBirth),
+          timeOfBirth: formatTime(location.state.timeofBirth),
+          placeofBirth: location.state.placeofBirth,
+          areYouManglik: location.state.areyouManglik,
+          diet: location.state.diet,
+          alcohol: location.state.alcohol,
+          smoke: location.state.smoke,
+          family_Type: location.state.familyType,
+          FathersName: location.state.fatherName,
+          Fathers_prof: location.state.fatherProf,
+          MothersName: location.state.motherName,
+          Mothers_prof: location.state.motherProf,
+          numSisters: location.state.numSisters,
+          sisterName: JSON.stringify(location.state.sisterNames),
+          sisterProfession: JSON.stringify(location.state.sisterProfs),
+          numBrothers: location.state.numBrothers,
+          brotherName: JSON.stringify(location.state.brotherNames),
+          brotherProfession: JSON.stringify(location.state.brotherProfs),
+          Part_ageFrom: location.state.part_ageFrom,
+          Part_martialStatus: location.state.part_martialStatus,
+          Part_Religion: location.state.part_religion,
+          Part_Caste: location.state.part_caste,
+          Part_subCaste: location.state.Part_subCaste,
+          Part_motherTongue: location.state.part_mothertongue,
+          Part_height: location.state.part_height,
+          Part_horoscopeMatch: location.state.part_horoscopeMatch,
+          Part_petFriendly: location.state.part_petFriendly,
+          Part_gender: location.state.part_gender,
+          Part_heighestEduction: location.state.part_highestEducation,
+          Part_currentEmployee: location.state.part_currentEmployment,
+          Part_profession: location.state.part_profession,
+          Part_annualIncome: location.state.part_annualIncome,
+          Part_yearsOfExpereience: location.state.part_yearsOfExperience,
+          Part_deit: location.state.part_diet || part_diet,
+          Part_alcohol: location.state.part_alcohol || part_alcohol,
+          Part_smoke: location.state.part_smoke || part_smoke,
+          hobbies: location.state.hobbies,
+          phoneNo: location.state.phoneNo.startsWith('+91') ? location.state.phoneNo : `+91${location.state.phoneNo}`,
+          aboutYourSelf: location.state.aboutYourself,
+        };
+  
+        // Send the request to the API
         const response = await axios.post(
           `${URL}/profile-register`,
-          {
-            email: location.state.email,
-            name: location.state.name,
-            gender: location.state.gender,
-            age: location.state.age,
-            martialStatus: location.state.maritalStatus, // Fixed typo from "martialStatus"
-            nationality: location.state.nationality,
-            city: location.state.city,
-            country : location.state.country,
-            religion: location.state.religion,
-            drink : location.state.alcohol,
-            disability: location.state.disability,
-            disabilityDetail: location.state.disabilityDetails, // Fixed typo from "disabilityDetail"
-            caste: location.state.caste,
-            subCaste: location.state.subCaste,
-            origin: location.state.origin,
-            motherTongue: location.state.motherTongue,
-            height: location.state.height,
-            weight: location.state.weight,
-            gothra: location.state.gothra,
-            petFriendly: location.state.petFriendly,
-            heighestEduction: location.state.highestEducation,
-            currentEmployee: location.state.currentEmployment, // Fixed typo from "currentEmployee"
-            profession: location.state.profession,
-            annualIncome: location.state.annualIncome,
-            yearsofExperience: location.state.yearsOfExperience,
-            dateOfBirth: formatDate(location.state.dateofBirth), // Ensure date format
-            timeOfBirth: formatTime(location.state.timeofBirth), // Ensure time format
-            placeofBirth: location.state.placeofBirth, // Fixed typo from "placeOfBirth"
-            areYouManglik: location.state.areyouManglik, // Fixed typo from "areYouManglik"
-            diet: location.state.diet,
-            alcohol: location.state.alcohol,
-            smoke: location.state.smoke,
-            family_Type: location.state.familyType,
-            FathersName: location.state.fatherName,
-            Fathers_prof: location.state.fatherProf,
-            MothersName: location.state.motherName,
-            Mothers_prof: location.state.motherProf,
-            numSisters: location.state.numSisters,
-            sisterName: JSON.stringify(location.state.sisterNames), // Ensure data is in JSON format
-            sisterProfession: JSON.stringify(location.state.sisterProfs), // Ensure data is in JSON format
-            numBrothers: location.state.numBrothers,
-            brotherName: JSON.stringify(location.state.brotherNames), // Ensure data is in JSON format
-            brotherProfession: JSON.stringify(location.state.brotherProfs), // Ensure data is in JSON format
-            Part_ageFrom: location.state.part_ageFrom,
-            Part_martialStatus: location.state.part_martialStatus, // Ensure proper casing
-            Part_Religion: location.state.part_religion,
-            Part_Caste: location.state.part_caste,
-            Part_subCaste : location.state.Part_subCaste,
-            Part_motherTongue: location.state.part_mothertongue, // Ensure proper casing
-            Part_height: location.state.part_height,
-            Part_horoscopeMatch: location.state.part_horoscopeMatch,
-            Part_petFriendly: location.state.part_petFriendly,
-            Part_gender : location.state.part_gender,
-            Part_heighestEduction: location.state.part_highestEducation,
-            Part_currentEmployee: location.state.part_currentEmployment,
-            Part_profession: location.state.part_profession,
-            Part_annualIncome: location.state.part_annualIncome,
-            Part_yearsOfExpereience: location.state.part_yearsOfExperience,
-            Part_deit : part_diet,
-            Part_alcohol : part_alcohol,
-            Part_smoke : part_smoke,
-            hobbies: location.state.hobbies,
-            // address: location.state.address,
-            phoneNo:   location.state.phoneNo.startsWith('+91') ? location.state.phoneNo : `+91${location.state.phoneNo}`,
-            
-            aboutYourSelf: location.state.aboutYourself, // Ensure proper casing
-          },
+          requestData,
           {
             headers: {
               "Content-Type": "application/json",
@@ -170,20 +290,38 @@ function PartnerLiving() {
   
         console.log("Response:", response);
   
+        // Save the combined data to sessionStorage
+        let existingData = JSON.parse(sessionStorage.getItem("userData")) || {};
+        const updatedData = { ...existingData, ...location.state, ...requestData };
+        sessionStorage.setItem("userData", JSON.stringify(updatedData));
+  
         // Navigate to the next page with the updated state
-        // navigate('/Confirmation-Profile', {
-        // navigate('/upload-document',{
-        navigate('/gallery-upload',{
+        navigate('/gallery-upload', {
           state: {
-            ...location.state,
-          }
+            ...updatedData,
+          },
         });
       } catch (error) {
         console.log("Error:", error);
       }
     }
   };
-  
+
+
+  useEffect(() => {
+    const storedData = JSON.parse(sessionStorage.getItem("userData"));
+
+    if (storedData) {
+      setDiet(storedData.part_diet || "");
+      setAlcohol(storedData.part_alcohol || "");
+      setSmoke(storedData.part_smoke || "");
+    } else if (location?.state) {
+      // If no data in sessionStorage, use location.state as fallback
+      setDiet(location.state.part_diet || "");
+      setAlcohol(location.state.part_alcohol || "");
+      setSmoke(location.state.part_smoke || "");
+    }
+  }, []);
   
   const theme = createTheme({
     components: {

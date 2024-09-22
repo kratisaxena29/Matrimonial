@@ -24,10 +24,11 @@ import axios from "axios";
 
 function Horoscope() {
   const location = useLocation();
+  const storedData = JSON.parse(sessionStorage.getItem("userData"));
   const [dateofBirth, setDateofBirth] = useState(null);
   const [timeofBirth, setTimeofBirth] = useState(null);
-  const [placeofBirth, setPlaceofBirth] = useState(location?.state?.placeofBirth || "");
-  const [areyouManglik, setAreyouManglik] = useState(location?.state?.areyouManglik || "");
+  const [placeofBirth, setPlaceofBirth] = useState(location?.state?.placeofBirth ||storedData.placeofBirth  || "");
+  const [areyouManglik, setAreyouManglik] = useState(location?.state?.areyouManglik ||storedData.areyouManglik || "");
   const [message, setMessage] = useState("");
   const [indianCities, setIndianCities] = useState(location?.state?.indianCities || []);
   const [errors, setErrors] = useState({});
@@ -79,18 +80,31 @@ function Horoscope() {
 
   const handleNext = () => {
     if (isFormValid) {
+      // New lifestyle data fields
+      const lifestyleData = {
+        dateofBirth,
+        timeofBirth,
+        placeofBirth,
+        areyouManglik,
+        message,
+      };
+  
+      // Retrieve the existing data from sessionStorage
+      let existingData = JSON.parse(sessionStorage.getItem("userData")) || {};
+  
+      // Merge previous data with new lifestyle data
+      const updatedData = { ...existingData, ...location.state, ...lifestyleData };
+  
+      // Save the merged data back to sessionStorage
+      sessionStorage.setItem("userData", JSON.stringify(updatedData));
+  
+      // Navigate to the next page with the updated data
       navigate("/lifestyle", {
-        state: {
-          ...location.state,
-          dateofBirth,
-          timeofBirth,
-          placeofBirth,
-          areyouManglik,
-          message,
-        },
+        state: { ...updatedData },
       });
     }
   };
+  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;

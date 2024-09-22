@@ -39,17 +39,19 @@ const MotherprofessionOptions = [
 
 function FamilyDetails() {
   const location = useLocation()
-  const [familyType, setFamilyType] = useState(location?.state?.familyType || "");
-  const [fatherName, setFatherName] = useState(location?.state?.fatherName || "");
-  const [fatherProf, setFatherProf] = useState(location?.state?.fatherProf || "");
-  const [motherName, setMotherName] = useState(location?.state?.motherName || "");
-  const [motherProf, setMotherProf] = useState(location?.state?.motherProf || "");
-  const [numSisters, setNumSisters] = useState(location?.state?.numSisters || 0);
-  const [numBrothers, setNumBrothers] = useState(location?.state?.numBrothers || 0);
-  const [sisterNames, setSisterNames] = useState(location?.state?.sisterNames || []);
-  const [sisterProfs, setSisterProfs] = useState(location?.state?.sisterProfs || []);
-  const [brotherNames, setBrotherNames] = useState(location?.state?.brotherNames || []);
-  const [brotherProfs, setBrotherProfs] = useState(location?.state?.brotherProfs || []);
+  const storedData = JSON.parse(sessionStorage.getItem("userData"));
+  const [familyType, setFamilyType] = useState(location?.state?.familyType || storedData?.familyType ||  "");
+  const [fatherName, setFatherName] = useState(location?.state?.fatherName || storedData?.fatherName || "");
+  const [fatherProf, setFatherProf] = useState(location?.state?.fatherProf || storedData?.fatherProf || "");
+  const [motherName, setMotherName] = useState(location?.state?.motherName || storedData?.motherName || "");
+  const [motherProf, setMotherProf] = useState(location?.state?.motherProf || storedData?.motherProf || "");
+  const [numSisters, setNumSisters] = useState(location?.state?.numSisters || storedData?.numSisters || 0);
+  console.log("...sto...",storedData?.numBrothers)
+  const [numBrothers, setNumBrothers] = useState(location?.state?.numBrothers || Number(storedData?.numBrothers) || 0);
+  const [sisterNames, setSisterNames] = useState(location?.state?.sisterNames || storedData?.sisterNames || []);
+  const [sisterProfs, setSisterProfs] = useState(location?.state?.sisterProfs || storedData?.sisterProfs || []);
+  const [brotherNames, setBrotherNames] = useState(location?.state?.brotherNames ||  storedData?.brotherNames  || []);
+  const [brotherProfs, setBrotherProfs] = useState(location?.state?.brotherProfs || storedData?.brotherProfs || []);
   const [errors, setErrors] = useState({
     familyType: "",
     fatherName: "",
@@ -86,7 +88,8 @@ function FamilyDetails() {
 
   const handleBrotherChange = (event) => {
     const count = Number(event.target.value);
-    setNumBrothers(count);
+     console.log("..event.target...",event.target.value)
+    setNumBrothers(count || Number(storedData?.numBrothers));
     setBrotherNames(Array(count).fill(""));
     setBrotherProfs(Array(count).fill(""));
   };
@@ -182,27 +185,39 @@ function FamilyDetails() {
   //   return isValid;
   // };
 console.log("...family details ...",location.state)
-  const handleNext = async () => {
-    console.log('Previous page data:', location.state);
-    // if (validateForm()) {
-      navigate("/about-yourself", {
-        state: {
-          ...location.state,
-          familyType,
-          fatherName,
-          fatherProf,
-          motherName,
-          motherProf,
-          numSisters,
-          numBrothers,
-          sisterNames,
-          sisterProfs,
-          brotherNames,
-          brotherProfs
-        }
-      });
-    // }
+const handleNext = async () => {
+  console.log('Previous page data:', location.state);
+
+  // New family details fields
+  const aboutYourselfData = {
+    familyType,
+    fatherName,
+    fatherProf,
+    motherName,
+    motherProf,
+    numSisters,
+    numBrothers,
+    sisterNames,
+    sisterProfs,
+    brotherNames,
+    brotherProfs
   };
+
+  // Retrieve the existing data from sessionStorage
+  let existingData = JSON.parse(sessionStorage.getItem("userData")) || {};
+
+  // Merge previous data with new "about yourself" data
+  const updatedData = { ...existingData, ...location.state, ...aboutYourselfData };
+
+  // Save the merged data back to sessionStorage
+  sessionStorage.setItem("userData", JSON.stringify(updatedData));
+
+  // Navigate to the next page with the updated data
+  navigate("/about-yourself", {
+    state: { ...updatedData },
+  });
+};
+
 
   const renderSisterFields = () => {
     let sisterFields = [];

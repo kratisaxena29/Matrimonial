@@ -20,8 +20,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 function AboutYourself() {
   const location = useLocation();
+  const storedData = JSON.parse(sessionStorage.getItem("userData"));
   const [aboutYourself, setAboutYourself] = useState(
-    location?.state?.aboutYourself || ""
+    location?.state?.aboutYourself || storedData?.aboutYourself || ""
   );
   const [formValid, setFormValid] = useState(false);
 
@@ -38,14 +39,26 @@ function AboutYourself() {
   }, [aboutYourself]);
   console.log("...about your self ...", location.state);
   const handleAdditionalDetails = async () => {
+    // New "about yourself" data
+    const additionalDetailsData = {
+      aboutYourself,
+    };
+  
+    // Retrieve the existing data from sessionStorage
+    let existingData = JSON.parse(sessionStorage.getItem("userData")) || {};
+  
+    // Merge previous data with new "about yourself" data
+    const updatedData = { ...existingData, ...location.state, ...additionalDetailsData };
+  
+    // Save the merged data back to sessionStorage
+    sessionStorage.setItem("userData", JSON.stringify(updatedData));
+  
+    // Navigate to the next page with the updated data
     navigate("/partner-family", {
-      state: {
-        aboutYourself,
-        ...location.state,
-      },
+      state: { ...updatedData },
     });
   };
-
+  
   const theme = createTheme({
     components: {
       MuiPopover: {

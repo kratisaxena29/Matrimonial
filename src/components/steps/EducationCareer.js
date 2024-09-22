@@ -7,11 +7,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 function EducationCareer() {
   const location = useLocation()
-  const [highestEducation, setHighestEducation] = useState(location?.state?.highestEducation || "");
-  const [currentEmployment, setCurrentEmployment] = useState(location?.state?.currentEmployment || "");
-  const [profession, setProfession] = useState(location?.state?.profession || "");
-  const [annualIncome, setAnnualIncome] = useState(location?.state?.annualIncome || "");
-  const [yearsOfExperience, setYearsOfExperience] = useState(location?.state?.yearsOfExperience || "");
+  const storedData = JSON.parse(sessionStorage.getItem("userData"));
+  const [highestEducation, setHighestEducation] = useState(location?.state?.highestEducation ||storedData?.highestEducation |"");
+  const [currentEmployment, setCurrentEmployment] = useState(location?.state?.currentEmployment ||storedData?.currentEmployment || "");
+  const [profession, setProfession] = useState(location?.state?.profession || storedData?.currentEmployment ||"");
+  const [annualIncome, setAnnualIncome] = useState(location?.state?.annualIncome || storedData?.annualIncome ||"");
+  const [yearsOfExperience, setYearsOfExperience] = useState(location?.state?.yearsOfExperience || storedData?.yearsOfExperience || "");
   const [isFormValid, setIsFormValid] = useState(false);
 
 
@@ -368,17 +369,31 @@ function EducationCareer() {
 
   const handleNext = async () => {
     console.log('Previous page data:', location.state);
+  
+    // New horoscope data fields
+    const horoscopeData = {
+      highestEducation,
+      currentEmployment,
+      profession,
+      annualIncome,
+      yearsOfExperience,
+    };
+  
+    // Retrieve the existing data from sessionStorage
+    let existingData = JSON.parse(sessionStorage.getItem("userData")) || {};
+  
+    // Merge previous data with new horoscope data
+    const updatedData = { ...existingData, ...location.state, ...horoscopeData };
+  
+    // Save the merged data back to sessionStorage
+    sessionStorage.setItem("userData", JSON.stringify(updatedData));
+  
+    // Navigate to the next page with the updated data
     navigate('/horoscope', {
-      state: {
-        ...location.state,
-        highestEducation,
-        currentEmployment,
-        profession,
-        annualIncome,
-        yearsOfExperience,
-      }
+      state: { ...updatedData },
     });
   };
+  
   const isMobile = useMediaQuery('(max-width:768px)');
 
   return (

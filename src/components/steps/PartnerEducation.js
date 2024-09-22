@@ -20,12 +20,14 @@ function PartnerEducation() {
     },
   });
 
+  const storedData = JSON.parse(sessionStorage.getItem("userData"));
+
   // Initialize state with values from location.state or default to empty strings
-  const [part_highestEducation, setHighestEducation] = useState(location.state?.part_highestEducation || "");
-  const [part_currentEmployment, setCurrentEmployment] = useState(location.state?.part_currentEmployment || "");
-  const [part_profession, setProfession] = useState(location.state?.part_profession || "");
-  const [part_annualIncome, setAnnualIncome] = useState(location.state?.part_annualIncome || "");
-  const [part_yearsOfExperience, setYearsOfExperience] = useState(location.state?.part_yearsOfExperience || "");
+  const [part_highestEducation, setHighestEducation] = useState(location.state?.part_highestEducation || storedData?.part_highestEducation || "");
+  const [part_currentEmployment, setCurrentEmployment] = useState(location.state?.part_currentEmployment || storedData?.part_currentEmployment || "");
+  const [part_profession, setProfession] = useState(location.state?.part_profession || storedData?.part_profession || "");
+  const [part_annualIncome, setAnnualIncome] = useState(location.state?.part_annualIncome || storedData?.part_annualIncome || "");
+  const [part_yearsOfExperience, setYearsOfExperience] = useState(location.state?.part_yearsOfExperience || storedData?.part_yearsOfExperience || "");
   const [errors, setErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
 
@@ -390,21 +392,35 @@ console.log("...location state in education...",location.state)
   // Function to handle navigation to the next page
   const handleNext = () => {
     const errors = validateForm();
+  
     if (Object.keys(errors).length === 0) {
+      // New partner education and career data
+      const partnerEducationCareerData = {
+        part_highestEducation,
+        part_currentEmployment,
+        part_profession,
+        part_annualIncome,
+        part_yearsOfExperience,
+      };
+  
+      // Retrieve the existing data from sessionStorage
+      let existingData = JSON.parse(sessionStorage.getItem("userData")) || {};
+  
+      // Merge previous data with new education and career data
+      const updatedData = { ...existingData, ...location.state, ...partnerEducationCareerData };
+  
+      // Save the merged data back to sessionStorage
+      sessionStorage.setItem("userData", JSON.stringify(updatedData));
+  
+      // Navigate to the next page with the updated data
       navigate('/partner-living', {
-        state: {
-          ...location.state,
-          part_highestEducation,
-          part_currentEmployment,
-          part_profession,
-          part_annualIncome,
-          part_yearsOfExperience
-        }
+        state: { ...updatedData },
       });
     } else {
       setErrors(errors);
     }
   };
+  
 
   // Hook to check form validity
   useEffect(() => {

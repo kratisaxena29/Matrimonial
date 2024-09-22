@@ -57,7 +57,8 @@ const Login = ({ setlogedIn }) => {
       sessionStorage.setItem('token', token);
       sessionStorage.setItem('user', JSON.stringify(user));
       setlogedIn(true);
-      navigate('/plan');
+      // navigate('/plan');
+      navigate("/profiles")
 
       // if (isEmail && formData.emailOrPhone === "Krati123saxena@gmail.com") {
       //   console.log("...dashboard")

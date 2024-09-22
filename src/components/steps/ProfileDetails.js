@@ -23,34 +23,44 @@ import "react-toastify/dist/ReactToastify.css";
 
 function ProfileDetails() {
   const location = useLocation();
-  const [name, setName] = useState(location?.state?.name || "");
-  const [gender, setGender] = useState(location?.state?.gender || "");
-  const [age, setAge] = useState(location?.state?.age || "");
+  const storedData = JSON.parse(sessionStorage.getItem("userData"));
+  const [name, setName] = useState(location?.state?.name || storedData?.name ||"");
+  const [gender, setGender] = useState(location?.state?.gender || storedData?.gender || "");
+  const [age, setAge] = useState(location?.state?.age || storedData?.age || "");
   const [maritalStatus, setMaritalStatus] = useState(
-    location?.state?.maritalStatus || ""
+    location?.state?.maritalStatus || storedData?.maritalStatus || ""
   );
   const [nationality, setNationality] = useState(
-    location?.state?.nationality || ""
+    location?.state?.nationality || storedData?.nationality || ""
   );
-  const [city, setCity] = useState(location?.state?.city || "");
-  const [religion, setReligion] = useState(location?.state?.religion || "");
+  const [city, setCity] = useState(location?.state?.city || storedData?.city ||"");
+  const [religion, setReligion] = useState(location?.state?.religion || storedData?.religion || "");
   const [disability, setDisability] = useState(
-    location?.state?.disability || ""
+    location?.state?.disability || storedData?.disability || ""
   );
   const [disabilityDetails, setDisabilityDetails] = useState(
-    location?.state?.disabilityDetails || ""
+    location?.state?.disabilityDetails || storedData?.disabilityDetails ||""
   );
-  const [email, setEmail] = useState(location?.state?.email || "");
-  const [phoneNo, setPhoneNo] = useState(location?.state?.phoneno || "");
+  const [email, setEmail] = useState(location?.state?.email || storedData?.email || "");
+  const [phoneNo, setPhoneNo] = useState(() => {
+    if (location?.state?.phoneno) {
+      return location.state.phoneno;
+    } else if (storedData?.phoneNo) {
+      return storedData.phoneNo.startsWith('+91')
+        ? storedData.phoneNo
+        : `+91${storedData.phoneNo}`;
+    }
+    return ""; // Default value if neither is available
+  });
   // const [address, setAddress] = useState(location?.state?.address || "");
-  const [hobbies, setHobbies] = useState(location?.state?.hobbies || []);
+  const [hobbies, setHobbies] = useState(location?.state?.hobbies || storedData?.hobbies || []);
   const [indianCities, setIndianCities] = useState(
-    location?.state?.indianCities || []
+    location?.state?.indianCities ||  storedData?.indianCities || []
   );
   const [isNRI, setIsNRI] = useState(
     location?.state?.nationality && location?.state?.nationality !== "Indian"
   );
-  const [country, setCountry] = useState(location?.state?.country || "");
+  const [country, setCountry] = useState(location?.state?.country || storedData?.country || "");
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -152,60 +162,49 @@ function ProfileDetails() {
 
   const handleProfileNext = async () => {
     const allFieldsValid = Object.keys(errors).length === 0;
-
+  
     // if (!allFieldsValid) return;
-    if (location.state.email) {
-      console.log("...emiail...",email)
-      console.log("....location...",location.state.email)
-      if (email === location.state.email) {
-        navigate("/additional-details", {
-          state: {
-            name,
-            gender,
-            age,
-            maritalStatus,
-            nationality,
-            city,
-            religion,
-            disability,
-            disabilityDetails: disability === "Yes" ? disabilityDetails : "",
-            email,
-            phoneNo,
-            // address,
-            hobbies,
-            country,
-          },
-        });
+  
+    const profileData = {
+      name,
+      gender,
+      age,
+      maritalStatus,
+      nationality,
+      city,
+      religion,
+      disability,
+      disabilityDetails: disability === "Yes" ? disabilityDetails : "",
+      email,
+      phoneNo,
+      hobbies,
+      country,
+    };
+  
+    // Get the existing data from sessionStorage and merge it
+    let existingData = JSON.parse(sessionStorage.getItem("userData")) || {};
+    const updatedData = { ...existingData, ...profileData };
+  
+    // Save the merged data back to sessionStorage
+    sessionStorage.setItem("userData", JSON.stringify(updatedData));
+  
+    // Navigate with state
+    if (location.state.email || existingData.email) {
+      if (email === location.state.email || email === existingData.email) {
+        navigate("/additional-details", { state: { ...updatedData } });
       } else {
-        console.log("...email does not match with the registered one");
         toast.error("Email does not match with the registered one");
       }
-    } else if (location.state.phoneno) {
-      if (phoneNo === location.state.phoneno) {
-        navigate("/additional-details", {
-          state: {
-            name,
-            gender,
-            age,
-            maritalStatus,
-            nationality,
-            city,
-            religion,
-            disability,
-            disabilityDetails: disability === "Yes" ? disabilityDetails : "",
-            email,
-            phoneNo,
-            // address,
-            hobbies,
-            country,
-          },
-        });
+    } else if (location.state.phoneno || existingData.phoneNo) {
+      if (phoneNo === location.state.phoneno || phoneNo === existingData.phoneNo) {
+        
+        navigate("/additional-details", { state: { ...updatedData } });
       } else {
-        console.log("...email does not match with the registered one");
-        toast.error("Phone no does not match with the registered one");
+        toast.error("Phone number does not match with the registered one");
       }
     }
   };
+  
   const [hobbiesOpen, setHobbiesOpen] = useState(false);
 
   const handleHobbiesClose = () => {

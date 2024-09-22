@@ -20,9 +20,10 @@ import dayjs from "dayjs";
 
 function LifeStyle() {
   const location = useLocation();
-  const [diet, setDiet] = useState(location?.state?.diet || "");
-  const [alcohol, setAlcohol] = useState(location?.state?.alcohol || "");
-  const [smoke, setSmoke] = useState(location?.state?.smoke || "");
+  const storedData = JSON.parse(sessionStorage.getItem("userData"));
+  const [diet, setDiet] = useState(location?.state?.diet || storedData.diet || "");
+  const [alcohol, setAlcohol] = useState(location?.state?.alcohol || storedData.alcohol ||"");
+  const [smoke, setSmoke] = useState(location?.state?.smoke || storedData.smoke || "");
   const [errors, setErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
 
@@ -55,16 +56,29 @@ function LifeStyle() {
 
   const handleNext = () => {
     if (validate()) {
+      // New family details data fields
+      const familyDetailsData = {
+        diet,
+        alcohol,
+        smoke,
+      };
+  
+      // Retrieve the existing data from sessionStorage
+      let existingData = JSON.parse(sessionStorage.getItem("userData")) || {};
+  
+      // Merge previous data with new family details data
+      const updatedData = { ...existingData, ...location.state, ...familyDetailsData };
+  
+      // Save the merged data back to sessionStorage
+      sessionStorage.setItem("userData", JSON.stringify(updatedData));
+  
+      // Navigate to the next page with the updated data
       navigate("/family-details", {
-        state: {
-          ...location.state,
-          diet,
-          alcohol,
-          smoke,
-        },
+        state: { ...updatedData },
       });
     }
   };
+  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;

@@ -21,16 +21,17 @@ import axios from "axios";
 
 function AdditionalDetails() {
   const location = useLocation()
-  const [caste, setCaste] = useState(location?.state?.caste || "");
-  const [subCaste, setSubCaste] = useState(location?.state?.subCaste || "");
+  const storedData = JSON.parse(sessionStorage.getItem("userData"));
+  const [caste, setCaste] = useState(location?.state?.caste || storedData?.caste || "");
+  const [subCaste, setSubCaste] = useState(location?.state?.subCaste || storedData?.subCaste || "");
   const isMobile = useMediaQuery('(max-width:768px)');
 
-  const [motherTongue, setMotherTongue] = useState(location?.state?.motherTongue || "");
-  const [height, setHeight] = useState(location?.state?.height || "");
-  const [weight, setWeight] = useState(location?.state?.weight || "");
-  const [gothra, setGothra] = useState(location?.state?.gothra || "");
-  const [petFriendly, setPetFriendly] = useState(location?.state?.petFriendly || "");
-  const [indianCities, setIndianCities] = useState(location?.state?.indianCities || []);
+  const [motherTongue, setMotherTongue] = useState(location?.state?.motherTongue || storedData?.motherTongue || "");
+  const [height, setHeight] = useState(location?.state?.height || storedData?.height || "");
+  const [weight, setWeight] = useState(location?.state?.weight || storedData?.weight|| "");
+  const [gothra, setGothra] = useState(location?.state?.gothra || storedData?.gothra || "");
+  const [petFriendly, setPetFriendly] = useState(location?.state?.petFriendly || storedData?.petFriendly || "");
+  const [indianCities, setIndianCities] = useState(location?.state?.indianCities || storedData?.indianCities || []);
   const [formValid, setFormValid] = useState(false);
   const [showValidation, setShowValidation] = useState(false);
 
@@ -497,20 +498,34 @@ function AdditionalDetails() {
     }
   }, [caste, subCaste, motherTongue, height, weight, petFriendly]);
 console.log("...additional..",location.state)
-  const handleAdditionalDetails = async () => {
-    console.log('Previous page data:', location.state);
-    navigate('/education-career', {
-      state: {
-        ...location.state,
-        caste,
-        subCaste,
-        motherTongue,
-        height,
-        weight,
-        petFriendly,
-      }
-    });
+
+const handleAdditionalDetails = async () => {
+  console.log('Previous page data:', location.state);
+
+  const additionalData = {
+    caste,
+    subCaste,
+    motherTongue,
+    height,
+    weight,
+    petFriendly,
+  };
+
+  // Retrieve existing data from sessionStorage and merge with additional data
+  let existingData = JSON.parse(sessionStorage.getItem("userData")) || {};
+
+  // Merge previous data with new additional data
+  const updatedData = { ...existingData, ...location.state, ...additionalData };
+
+  // Save the merged data back to sessionStorage
+  sessionStorage.setItem("userData", JSON.stringify(updatedData));
+
+  // Navigate to the next page with the updated data
+  navigate('/education-career', {
+    state: { ...updatedData }
+  });
 };
+
 
   const theme = createTheme({
     components: {
