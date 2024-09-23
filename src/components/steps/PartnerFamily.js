@@ -579,19 +579,19 @@ const [subcasteError,setSubCasteError] = useState(false)
 "Yadav",
 "Other"
 ];
-  const validateForm = () => {
-    return (
-      part_ageFrom &&
-      part_martialStatus &&
-      part_religion &&
-      part_caste &&
-      part_mothertongue &&
-      part_height &&
-      part_horoscopeMatch &&
-      part_petFriendly &&
-      part_gender
-    );
-  };
+  // const validateForm = () => {
+  //   return (
+  //     part_ageFrom &&
+  //     part_martialStatus &&
+  //     part_religion &&
+  //     part_caste &&
+  //     part_mothertongue &&
+  //     part_height &&
+  //     part_horoscopeMatch &&
+  //     part_petFriendly &&
+  //     part_gender
+  //   );
+  // };
 console.log("...partner...",location.state)
 const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -608,7 +608,7 @@ const handleNext = async () => {
   setSubCasteError(!Part_subCaste);
   setPartgenderError(!part_gender);
 
-  if (validateForm()) {
+  // if (validateForm()) {
     // Data for this page
     const partnerDetailsData = {
       part_ageFrom,
@@ -636,7 +636,7 @@ const handleNext = async () => {
     navigate("/partner-education", {
       state: { ...updatedData },
     });
-  }
+  // }
 };
 
 
@@ -916,7 +916,7 @@ const handleNext = async () => {
                     backgroundColor: "#FB6A6B",
                   },
                 }}
-                disabled={!validateForm()} // Disable the button if the form is not valid
+                // disabled={!validateForm()} // Disable the button if the form is not valid
               >
                 Next
               </Button>

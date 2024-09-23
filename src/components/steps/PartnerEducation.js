@@ -369,31 +369,31 @@ function PartnerEducation() {
   ];
 
   // Function to validate form
-  const validateForm = () => {
-    const errors = {};
-    if (!part_highestEducation.trim()) {
-      errors.highestEducation = "Highest Education is required";
-    }
-    if (!part_currentEmployment.trim()) {
-      errors.currentEmployment = "Current Employment is required";
-    }
-    if (!part_profession.trim()) {
-      errors.profession = "Profession is required";
-    }
-    if (!part_annualIncome.trim()) {
-      errors.annualIncome = "Annual Income is required";
-    }
-    if (!part_yearsOfExperience.trim()) {
-      errors.yearsOfExperience = "Years of Experience is required";
-    }
-    return errors;
-  };
+  // const validateForm = () => {
+  //   const errors = {};
+  //   if (!part_highestEducation.trim()) {
+  //     errors.highestEducation = "Highest Education is required";
+  //   }
+  //   if (!part_currentEmployment.trim()) {
+  //     errors.currentEmployment = "Current Employment is required";
+  //   }
+  //   if (!part_profession.trim()) {
+  //     errors.profession = "Profession is required";
+  //   }
+  //   if (!part_annualIncome.trim()) {
+  //     errors.annualIncome = "Annual Income is required";
+  //   }
+  //   if (!part_yearsOfExperience.trim()) {
+  //     errors.yearsOfExperience = "Years of Experience is required";
+  //   }
+  //   return errors;
+  // };
 console.log("...location state in education...",location.state)
   // Function to handle navigation to the next page
   const handleNext = () => {
-    const errors = validateForm();
+    // const errors = validateForm();
   
-    if (Object.keys(errors).length === 0) {
+      // if (Object.keys(errors).length === 0) {
       // New partner education and career data
       const partnerEducationCareerData = {
         part_highestEducation,
@@ -403,29 +403,26 @@ console.log("...location state in education...",location.state)
         part_yearsOfExperience,
       };
   
-      // Retrieve the existing data from sessionStorage
       let existingData = JSON.parse(sessionStorage.getItem("userData")) || {};
   
-      // Merge previous data with new education and career data
       const updatedData = { ...existingData, ...location.state, ...partnerEducationCareerData };
   
-      // Save the merged data back to sessionStorage
       sessionStorage.setItem("userData", JSON.stringify(updatedData));
-  
-      // Navigate to the next page with the updated data
+
       navigate('/partner-living', {
         state: { ...updatedData },
       });
-    } else {
-      setErrors(errors);
-    }
+    // } 
+    // else {
+    //   setErrors(errors);
+    // }
   };
   
 
   // Hook to check form validity
   useEffect(() => {
     const isValid = part_highestEducation && part_currentEmployment && part_profession && part_annualIncome && part_yearsOfExperience;
-    setIsFormValid(isValid);
+    // setIsFormValid(isValid);
   }, [part_highestEducation, part_currentEmployment, part_profession, part_annualIncome, part_yearsOfExperience]);
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -709,7 +706,7 @@ console.log("...location state in education...",location.state)
                         backgroundColor: "#FB6A6B",
                       },
                     }}
-                    disabled={!isFormValid}
+                    // disabled={!isFormValid}
                   >
                     Next
                   </Button>

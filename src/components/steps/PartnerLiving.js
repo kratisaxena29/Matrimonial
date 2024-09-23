@@ -35,35 +35,35 @@ function PartnerLiving() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Validate the form whenever any field changes
-    const validateForm = () => {
-      let valid = true;
-      const newErrors = {
-        diet: "",
-        alcohol: "",
-        smoke: "",
-      };
+  // useEffect(() => {
+  //   // Validate the form whenever any field changes
+  //   const validateForm = () => {
+  //     let valid = true;
+  //     const newErrors = {
+  //       diet: "",
+  //       alcohol: "",
+  //       smoke: "",
+  //     };
 
-      if (!part_diet) {
-        // newErrors.diet = "Please select a diet";
-        valid = false;
-      }
-      if (!part_alcohol) {
-        // newErrors.alcohol = "Please select alcohol consumption";
-        valid = false;
-      }
-      if (!part_smoke) {
-        // newErrors.smoke = "Please select smoking status";
-        valid = false;
-      }
+  //     if (!part_diet) {
+  //       // newErrors.diet = "Please select a diet";
+  //       valid = false;
+  //     }
+  //     if (!part_alcohol) {
+  //       // newErrors.alcohol = "Please select alcohol consumption";
+  //       valid = false;
+  //     }
+  //     if (!part_smoke) {
+  //       // newErrors.smoke = "Please select smoking status";
+  //       valid = false;
+  //     }
 
-      setErrors(newErrors);
-      setIsFormValid(valid);
-    };
+  //     setErrors(newErrors);
+  //     setIsFormValid(valid);
+  //   };
 
-    validateForm();
-  }, [part_diet, part_alcohol, part_smoke]);
+  //   validateForm();
+  // }, [part_diet, part_alcohol, part_smoke]);
 
   const URL = process.env.REACT_APP_API_BASE_URL;
   console.log("...location state in living...",location.state)
@@ -187,7 +187,7 @@ function PartnerLiving() {
   // };
   
   const handleNext = async () => {
-    if (isFormValid) {
+    // if (isFormValid) {
       try {
         // Function to parse and format dates and times
         const parseDate = (date) => {
@@ -209,72 +209,73 @@ function PartnerLiving() {
           return parsedTime ? parsedTime.format('HH:mm') : '';
         };
   
+        let existingData = JSON.parse(sessionStorage.getItem("userData")) || {};
         // Prepare the data to be sent in the POST request
         const requestData = {
-          email: location.state.email,
-          name: location.state.name,
-          gender: location.state.gender,
-          age: location.state.age,
-          martialStatus: location.state.maritalStatus,
-          nationality: location.state.nationality,
-          city: location.state.city,
-          country: location.state.country,
-          religion: location.state.religion,
-          drink: location.state.alcohol,
-          disability: location.state.disability,
-          disabilityDetail: location.state.disabilityDetails,
-          caste: location.state.caste,
-          subCaste: location.state.subCaste,
-          origin: location.state.origin,
-          motherTongue: location.state.motherTongue,
-          height: location.state.height,
-          weight: location.state.weight,
-          gothra: location.state.gothra,
-          petFriendly: location.state.petFriendly,
-          heighestEduction: location.state.highestEducation,
-          currentEmployee: location.state.currentEmployment,
-          profession: location.state.profession,
-          annualIncome: location.state.annualIncome,
-          yearsofExperience: location.state.yearsOfExperience,
-          dateOfBirth: formatDate(location.state.dateofBirth),
-          timeOfBirth: formatTime(location.state.timeofBirth),
-          placeofBirth: location.state.placeofBirth,
-          areYouManglik: location.state.areyouManglik,
-          diet: location.state.diet,
-          alcohol: location.state.alcohol,
-          smoke: location.state.smoke,
-          family_Type: location.state.familyType,
-          FathersName: location.state.fatherName,
-          Fathers_prof: location.state.fatherProf,
-          MothersName: location.state.motherName,
-          Mothers_prof: location.state.motherProf,
-          numSisters: location.state.numSisters,
-          sisterName: JSON.stringify(location.state.sisterNames),
-          sisterProfession: JSON.stringify(location.state.sisterProfs),
-          numBrothers: location.state.numBrothers,
-          brotherName: JSON.stringify(location.state.brotherNames),
-          brotherProfession: JSON.stringify(location.state.brotherProfs),
-          Part_ageFrom: location.state.part_ageFrom,
-          Part_martialStatus: location.state.part_martialStatus,
-          Part_Religion: location.state.part_religion,
-          Part_Caste: location.state.part_caste,
-          Part_subCaste: location.state.Part_subCaste,
-          Part_motherTongue: location.state.part_mothertongue,
-          Part_height: location.state.part_height,
-          Part_horoscopeMatch: location.state.part_horoscopeMatch,
-          Part_petFriendly: location.state.part_petFriendly,
-          Part_gender: location.state.part_gender,
-          Part_heighestEduction: location.state.part_highestEducation,
-          Part_currentEmployee: location.state.part_currentEmployment,
-          Part_profession: location.state.part_profession,
-          Part_annualIncome: location.state.part_annualIncome,
-          Part_yearsOfExpereience: location.state.part_yearsOfExperience,
-          Part_deit: location.state.part_diet || part_diet,
-          Part_alcohol: location.state.part_alcohol || part_alcohol,
-          Part_smoke: location.state.part_smoke || part_smoke,
-          hobbies: location.state.hobbies,
+          email: location.state.email || existingData.email || "" ,
+          name: location.state.name || existingData.name || "",
+          gender: location.state.gender || existingData.gender || "",
+          age: location.state.age || existingData.age|| "",
+          martialStatus: location.state.maritalStatus || existingData.martialStatus|| "",
+          nationality: location.state.nationality || existingData.nationality|| "",
+          city: location.state.city || existingData.city|| "",
+          country: location.state.country || existingData.country|| "",
+          religion: location.state.religion || existingData.religion|| "",
+          drink: location.state.alcohol || existingData.drink|| "",
+          disability: location.state.disability || existingData.disability || "",
+          disabilityDetail: location.state.disabilityDetails || existingData.disabilityDetail || "",
+          caste: location.state.caste || existingData.caste || "",
+          subCaste: location.state.subCaste || existingData.subCaste || "",
+          origin: location.state.origin || existingData.origin || "",
+          motherTongue: location.state.motherTongue || existingData.motherTongue|| "",
+          height: location.state.height || existingData.height || "",
+          weight: location.state.weight || existingData.weight || "",
+          gothra: location.state.gothra || existingData.gothra || "",
+          petFriendly: location.state.petFriendly || existingData.petFriendly || "",
+          heighestEduction: location.state.highestEducation || existingData.heighestEduction || "",
+          currentEmployee: location.state.currentEmployment || existingData.currentEmployee || "",
+          profession: location.state.profession ||existingData.profession || "",
+          annualIncome: location.state.annualIncome || existingData.annualIncome || "",
+          yearsofExperience: location.state.yearsOfExperience || existingData.yearsofExperience || "",
+          dateOfBirth: formatDate(location.state.dateofBirth) || formatDate(existingData.dateofBirth) || "",
+          timeOfBirth: formatTime(location.state.timeofBirth) || formatTime(existingData.timeofBirth) || "",
+          placeofBirth: location.state.placeofBirth || existingData.placeofBirth || "",
+          areYouManglik: location.state.areyouManglik || existingData.areyouManglik || "",
+          diet: location.state.diet || existingData.diet || "",
+          alcohol: location.state.alcohol || existingData.alcohol || "",
+          smoke: location.state.smoke || existingData|| "",
+          family_Type: location.state.familyType || existingData.familyType || "",
+          FathersName: location.state.fatherName || existingData.fatherName || "",
+          Fathers_prof: location.state.fatherProf || existingData.fatherProf || "",
+          MothersName: location.state.motherName || existingData.motherName || "",
+          Mothers_prof: location.state.motherProf || existingData.motherProf || "",
+          numSisters: location.state.numSisters || existingData.numSisters || "",
+          sisterName: JSON.stringify(location.state.sisterNames) || JSON.stringify(existingData.sisterNames)|| "",
+          sisterProfession: JSON.stringify(location.state.sisterProfs) || JSON.stringify(existingData.sisterProfs) || "",
+          numBrothers: location.state.numBrothers || JSON.stringify(existingData.numBrothers) || "",
+          brotherName: JSON.stringify(location.state.brotherNames) || JSON.stringify(existingData.brotherNames) || "",
+          brotherProfession: JSON.stringify(location.state.brotherProfs) || JSON.stringify(existingData.brotherProfs) || "",
+          Part_ageFrom: location.state.part_ageFrom || existingData.part_ageFrom|| "",
+          Part_martialStatus: location.state.part_martialStatus || existingData.part_martialStatus || "",
+          Part_Religion: location.state.part_religion || existingData.part_religion || "",
+          Part_Caste: location.state.part_caste || existingData.part_caste || "",
+          Part_subCaste: location.state.Part_subCaste || existingData.Part_subCaste || "",
+          Part_motherTongue: location.state.part_mothertongue || existingData.part_mothertongue || "",
+          Part_height: location.state.part_height || existingData.part_height || "",
+          Part_horoscopeMatch: location.state.part_horoscopeMatch || existingData.part_horoscopeMatch || "",
+          Part_petFriendly: location.state.part_petFriendly || existingData.part_petFriendly || "",
+          Part_gender: location.state.part_gender || existingData.part_gender || "",
+          Part_heighestEduction: location.state.part_highestEducation || existingData.part_highestEducation || "",
+          Part_currentEmployee: location.state.part_currentEmployment || existingData.part_currentEmployment || "",
+          Part_profession: location.state.part_profession || existingData.part_profession || "",
+          Part_annualIncome: location.state.part_annualIncome || existingData.part_annualIncome || "",
+          Part_yearsOfExpereience: location.state.part_yearsOfExperience || existingData.part_yearsOfExperience || "",
+          Part_deit: location.state.part_diet || part_diet || "",
+          Part_alcohol: location.state.part_alcohol || part_alcohol || "" ,
+          Part_smoke: location.state.part_smoke || part_smoke || "",
+          hobbies: location.state.hobbies || existingData || "",
           phoneNo: location.state.phoneNo.startsWith('+91') ? location.state.phoneNo : `+91${location.state.phoneNo}`,
-          aboutYourSelf: location.state.aboutYourself,
+          aboutYourSelf: location.state.aboutYourself || existingData.aboutYourself || "",
         };
   
         // Send the request to the API
@@ -291,7 +292,7 @@ function PartnerLiving() {
         console.log("Response:", response);
   
         // Save the combined data to sessionStorage
-        let existingData = JSON.parse(sessionStorage.getItem("userData")) || {};
+        // let existingData = JSON.parse(sessionStorage.getItem("userData")) || {};
         const updatedData = { ...existingData, ...location.state, ...requestData };
         sessionStorage.setItem("userData", JSON.stringify(updatedData));
   
@@ -304,7 +305,7 @@ function PartnerLiving() {
       } catch (error) {
         console.log("Error:", error);
       }
-    }
+    // }
   };
 
 
@@ -450,7 +451,7 @@ function PartnerLiving() {
                         backgroundColor: "#FB6A6B",
                       },
                     }}
-                    disabled={!isFormValid}
+                    // disabled={!isFormValid}
                   >
                     Next
                   </Button>
