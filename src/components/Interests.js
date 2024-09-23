@@ -314,11 +314,13 @@ function Interests({ setlogedIn }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const galleryPhotos = [
-    [image1, image2, image3, image4],
-    [image5, image6, image7, image8],
-    [image3, image5, image1, image8],
-  ];
+  // const galleryPhotos = [
+  //   [image1, image2, image3, image4],
+  //   [image5, image6, image7, image8],
+  //   [image3, image5, image1, image8],
+  // ];
+
+  const galleryPhotos = profileData.map(profile => profile.photoSection?.photoUrl || []);
   const currentGallery = galleryPhotos[currentIndex % galleryPhotos.length] || [];
 
   useEffect(() => {

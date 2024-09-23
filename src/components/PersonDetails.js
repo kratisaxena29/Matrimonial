@@ -54,9 +54,11 @@ function PersonDetails({ setlogedIn }) {
   console.log("...personDetails....",profileData)
 
   useEffect(() => {
-    if (profileData && profileData.email) {
+   if(profileData){
+console.log("...photos phoneno...",profileData.phoneNo)
+const identifier = profileData.phoneNo || profileData.email
       axios
-        .get(`${URL}/getphotosByEmailOrPhoneNo/${profileData.email}`)
+        .get(`${URL}/getphotosByEmailOrPhoneNo/${identifier}`)
         .then(response => {
           console.log("..user profile response...", response.data);
           const photos = response.data.photoUrl;
@@ -67,7 +69,9 @@ function PersonDetails({ setlogedIn }) {
           console.log("...error...", error);
         });
     }
-  }, [profileData, URL]);
+  }, [
+    profileData, 
+    URL]);
   
 
   return (
