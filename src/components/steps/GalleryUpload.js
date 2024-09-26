@@ -16,6 +16,7 @@ import { ToastContainer, toast } from "react-toastify";
 function GalleryUpload({ setlogedIn }) {
   const location = useLocation();
   const [gallery, setGallery] = useState([]);
+  const [isGalleryFetched, setIsGalleryFetched] = useState(false);
   const navigate = useNavigate();
   console.log("...gallery-upload...",location.state)
   const email = location.state?.email;
@@ -24,39 +25,6 @@ function GalleryUpload({ setlogedIn }) {
 
  
 
-
-//   const handleGalleryUpload = (event) => {
-//       const identifier = location.state?.email || "+919871627742";
-
-//       if (!identifier) {
-//           console.error("Identifier is undefined. Please check if the email or phone number is being passed correctly.");
-//           return;
-//       }
-
-//     const file = event.target.files[0];
-//     if (file) {
-//         const reader = new FileReader();
-//         reader.onload = (e) => {
-//             setGallery([...gallery, e.target.result]);
-//         };
-//         reader.readAsDataURL(file);
-//     }
-
-//     const formData = new FormData();
-//     formData.append("file", file);
-
-//     axios.post(`${URL}/upload-multiple-photo/${identifier}`, formData, {
-//         headers: {
-//             'Content-Type': 'multipart/form-data',
-//         },
-//     })
-//     .then((response) => {
-//         console.log("Photo updated successfully:", response.data);
-//     })
-//     .catch((error) => {
-//         console.error("Error updating profile:", error);
-//     });
-// };
 
 const handleGalleryUpload = async (event) => {
   console.log("...handlegallery...");
@@ -110,9 +78,11 @@ const fetchGallery = () => {
       .then(response => {
           const photos = response.data.photoUrl;
           setGallery(photos);
+          setIsGalleryFetched(true);
       })
       .catch(error => {
           console.log("Error fetching photos:", error);
+          setIsGalleryFetched(false);
       });
 };
 
@@ -313,6 +283,7 @@ const removePhoto = async (index) => {
               mt:10
             }}
             onClick={handleConfirmation}
+            disabled={!isGalleryFetched} 
           >
             Next
           </Button>

@@ -168,6 +168,10 @@ const identifier = profileData.phoneNo || profileData.email
                     <ul>
                       <li>
                         <span>
+                        <i className="fa fa-mobile"/>
+                          {profileData?.phoneNo || "Not Available"}
+                        </span>
+                        {/* <span>
                           <i className="fa fa-mobile" aria-hidden="true" />
                           <b>Phone:</b>
                           {profileData?.phoneNo ? (
@@ -175,7 +179,7 @@ const identifier = profileData.phoneNo || profileData.email
                           ) : (
                             " Not Available"
                           )}
-                        </span>
+                        </span> */}
                       </li>
                       <li>
                         <span>

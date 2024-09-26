@@ -766,7 +766,7 @@ const handleInterestRecived = ()=> {
           style={{ height: "60px" }}
         />
         <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-          <Button
+          {/* <Button
             variant="contained"
             sx={{
               backgroundColor: "transparent",
@@ -784,7 +784,7 @@ const handleInterestRecived = ()=> {
             }}
           >
             {getPlanName()}
-          </Button>
+          </Button> */}
 
           <Button
             variant="contained"

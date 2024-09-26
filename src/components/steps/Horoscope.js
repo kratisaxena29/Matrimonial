@@ -69,7 +69,7 @@ function Horoscope() {
     if (!dateofBirth) newErrors.dateofBirth = "Date of Birth is required";
     // if (!timeofBirth) newErrors.timeofBirth = "Time of Birth is required";
     // if (!placeofBirth) newErrors.placeofBirth = "Place of Birth is required";
-    if (!areyouManglik) newErrors.areyouManglik = null;
+    // if (!areyouManglik) newErrors.areyouManglik = null;
     setErrors(newErrors);
     setIsFormValid(Object.keys(newErrors).length === 0);
   }, [dateofBirth, timeofBirth, placeofBirth, areyouManglik]);
@@ -283,6 +283,7 @@ function Horoscope() {
                     value={areyouManglik}
                     onChange={handleInputChange}
                   >
+                    <MenuItem value="Don't Know">Don't Know</MenuItem>
                     <MenuItem value="Yes">Yes</MenuItem>
                     <MenuItem value="No">No</MenuItem>
                   </Select>

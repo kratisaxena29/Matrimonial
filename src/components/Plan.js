@@ -344,7 +344,7 @@ function Plan() {
   }, [URL]);
 
   const plans = [
-    { name: "Free", amount: 1 },
+    { name: "Early bird offer", amount: 1 },
     { name: "Gold", amount: 699 },
     { name: "Diamond", amount: 999 },
     { name: "Platinum", amount: 1399 },
@@ -414,7 +414,7 @@ function Plan() {
                       fontWeight: "normal",
                     }}
                   >
-                      {plan.name === "Free" 
+                      {plan.name === "Early bird offer" 
                       ? `₹${plan.amount} (3 months)`
                       : plan.name === "Gold"
                       ? `₹${plan.amount} (3 months)`
@@ -433,7 +433,7 @@ function Plan() {
                         <Typography variant="body1" style={{ marginLeft: "5px" }}>
                           {/* Send unlimited messages */}
                           {
-                            plan.name === 'Free'
+                            plan.name === 'Early bird offer'
                             ? "Send limited message"
                             : "Send unlimited messages"
                           }

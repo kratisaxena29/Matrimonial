@@ -23,11 +23,11 @@ function PartnerEducation() {
   const storedData = JSON.parse(sessionStorage.getItem("userData"));
 
   // Initialize state with values from location.state or default to empty strings
-  const [part_highestEducation, setHighestEducation] = useState(location.state?.part_highestEducation || storedData?.part_highestEducation || "");
-  const [part_currentEmployment, setCurrentEmployment] = useState(location.state?.part_currentEmployment || storedData?.part_currentEmployment || "");
-  const [part_profession, setProfession] = useState(location.state?.part_profession || storedData?.part_profession || "");
-  const [part_annualIncome, setAnnualIncome] = useState(location.state?.part_annualIncome || storedData?.part_annualIncome || "");
-  const [part_yearsOfExperience, setYearsOfExperience] = useState(location.state?.part_yearsOfExperience || storedData?.part_yearsOfExperience || "");
+  const [part_highestEducation, setHighestEducation] = useState(location.state?.part_highestEducation || storedData?.part_highestEducation || []);
+  const [part_currentEmployment, setCurrentEmployment] = useState(location.state?.part_currentEmployment || storedData?.part_currentEmployment || []);
+  const [part_profession, setProfession] = useState(location.state?.part_profession || storedData?.part_profession || []);
+  const [part_annualIncome, setAnnualIncome] = useState(location.state?.part_annualIncome || storedData?.part_annualIncome || []);
+  const [part_yearsOfExperience, setYearsOfExperience] = useState(location.state?.part_yearsOfExperience || storedData?.part_yearsOfExperience || []);
   const [errors, setErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
 
@@ -224,15 +224,17 @@ function PartnerEducation() {
 ]
 
   const employmentOptions = [
+    "Doesn't matter",
     "Employed",
     "Self-Employed",
     "Business",
     "Student",
     "Unemployed",
-    "Other"
+    
   ];
 
   const ProfessionOption = [
+    "Doesn't matter",
     { label: "Administration", style: { color: "red", fontWeight: "bold" } },
     
    " Admin Professional",
@@ -356,8 +358,8 @@ function PartnerEducation() {
   "Social Services/ NGO/ Volunteer",
   "Sportsperson",
   "Travel Professional",
-  "Writer",
-  "Others"
+  "Writer"
+ 
   ]
 
   const experienceOptions = [
@@ -518,10 +520,12 @@ console.log("...location state in education...",location.state)
                     labelId="highest-education-label"
                     id="highest-education"
                     value={part_highestEducation}
+                    multiple
                     onChange={(event) =>
                       setHighestEducation(event.target.value)
                     }
                     error={Boolean(errors.highestEducation)}
+                    renderValue={(selected) => selected.join(', ')}
                   >
                     {highestEducationOtption.map((option, index) =>
                       typeof option === "string" ? (
@@ -555,10 +559,12 @@ console.log("...location state in education...",location.state)
                     labelId="current-employment-label"
                     id="current-employment"
                     value={part_currentEmployment}
+                    multiple
                     onChange={(event) =>
                       setCurrentEmployment(event.target.value)
                     }
                     error={Boolean(errors.currentEmployment)}
+                    renderValue={(selected) => selected.join(', ')}
                   >
                     {employmentOptions.map((option) => (
                       <MenuItem key={option} value={option}>
@@ -584,8 +590,10 @@ console.log("...location state in education...",location.state)
                     labelId="profession-label"
                     id="profession"
                     value={part_profession}
+                    multiple
                     onChange={(event) => setProfession(event.target.value)}
                     error={Boolean(errors.profession)}
+                    renderValue={(selected) => selected.join(', ')}
                   >
                     {ProfessionOption.map((option, index) =>
                       typeof option === "string" ? (
@@ -617,8 +625,10 @@ console.log("...location state in education...",location.state)
                     labelId="annual-income-label"
                     id="annual-income"
                     value={part_annualIncome}
+                    multiple
                     onChange={(event) => setAnnualIncome(event.target.value)}
                     error={Boolean(errors.annualIncome)}
+                    renderValue={(selected) => selected.join(', ')}
                   >
                     <MenuItem value="Rs 2-5 lakh">Rs 2-5 lakh</MenuItem>
                     <MenuItem value="Rs 5-7 lakh">Rs 5-7 lakh</MenuItem>
@@ -651,7 +661,9 @@ console.log("...location state in education...",location.state)
                     onChange={(event) =>
                       setYearsOfExperience(event.target.value)
                     }
+                    multiple
                     error={Boolean(errors.yearsOfExperience)}
+                    renderValue={(selected) => selected.join(', ')}
                   >
                     {experienceOptions.map((option) => (
                       <MenuItem key={option} value={option}>

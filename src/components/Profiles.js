@@ -860,14 +860,14 @@ function Profiles({ setlogedIn }) {
               onClose={handleClose}
             >
               <MenuItem onClick={triggerFileInput}>Edit Your Profile</MenuItem>
-              <MenuItem onClick={handlePlans}>View Membership Plan</MenuItem>
+              {/* <MenuItem onClick={handlePlans}>View Membership Plan</MenuItem> */}
               <MenuItem onClick={handleChat}>Chat</MenuItem>
               {/* <MenuItem onClick={handleInterestedProfiles}>Interests</MenuItem> */}
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
-            <StyledButton variant="outlined" onClick={handlePlans}>
+            {/* <StyledButton variant="outlined" onClick={handlePlans}>
               {getPlanName()}
-            </StyledButton>
+            </StyledButton> */}
           </ButtonGroup>
         </StyledToolbar>
         <input
@@ -943,15 +943,18 @@ function Profiles({ setlogedIn }) {
                         onChange={(event) => setAge(event.target.value)}
                         fullWidth
                       >
-                        <MenuItem value="">Select age</MenuItem>
-                        <MenuItem value="18-30">18 to 30</MenuItem>
-                        <MenuItem value="31-40">31 to 40</MenuItem>
-                        <MenuItem value="41-50">41 to 50</MenuItem>
-                        <MenuItem value="51-60">51 to 60</MenuItem>
-                        <MenuItem value="61-70">61 to 70</MenuItem>
-                        <MenuItem value="71-80">71 to 80</MenuItem>
-                        <MenuItem value="81-90">81 to 90</MenuItem>
-                        <MenuItem value="91-100">91 to 100</MenuItem>
+                        <MenuItem value="">Select Age</MenuItem>
+                       <MenuItem value="18-25">18-25 years</MenuItem>
+                      <MenuItem value="25-30">25-30 years</MenuItem>
+                      <MenuItem value="30-35">30-35 years</MenuItem>
+                      <MenuItem value="35-40">35-40 years</MenuItem>
+                      <MenuItem value="40-45">40-45 years</MenuItem>
+                      <MenuItem value="45-50">45-50 years</MenuItem>
+                      <MenuItem value="50-55">50-55 years</MenuItem>
+                      <MenuItem value="55-60">55-60 years</MenuItem>
+                      <MenuItem value="60-65">60-65 years</MenuItem>
+                      <MenuItem value="65-70">65-70 years</MenuItem>
+                      <MenuItem value="70-75">70-75 years</MenuItem>
                       </Select>
                     </div>
                   </div>

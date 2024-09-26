@@ -491,12 +491,12 @@ function AdditionalDetails() {
 
   // Validation logic
   useEffect(() => {
-    if (caste && subCaste  && motherTongue && height && weight  && petFriendly) {
+    if (caste && subCaste  && motherTongue && height && weight  ) {
       setFormValid(true);
     } else {
       setFormValid(false);
     }
-  }, [caste, subCaste, motherTongue, height, weight, petFriendly]);
+  }, [caste, subCaste, motherTongue, height, weight]);
 console.log("...additional..",location.state)
 
 const handleAdditionalDetails = async () => {

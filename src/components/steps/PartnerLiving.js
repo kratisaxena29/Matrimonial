@@ -21,9 +21,9 @@ import dayjs from "dayjs";
 function PartnerLiving() {
   const location = useLocation()
 
-  const [part_diet, setDiet] = useState(location?.state?.part_diet || "");
-  const [part_alcohol, setAlcohol] = useState(location?.state?.part_alcohol || "");
-  const [part_smoke, setSmoke] = useState(location?.state?.part_smoke ||"");
+  const [part_diet, setDiet] = useState(location?.state?.part_diet || []);
+  const [part_alcohol, setAlcohol] = useState(location?.state?.part_alcohol || []);
+  const [part_smoke, setSmoke] = useState(location?.state?.part_smoke || []);
   
   const [errors, setErrors] = useState({
     diet: "",
@@ -313,14 +313,14 @@ function PartnerLiving() {
     const storedData = JSON.parse(sessionStorage.getItem("userData"));
 
     if (storedData) {
-      setDiet(storedData.part_diet || "");
-      setAlcohol(storedData.part_alcohol || "");
-      setSmoke(storedData.part_smoke || "");
+      setDiet(storedData.part_diet || []);
+      setAlcohol(storedData.part_alcohol || []);
+      setSmoke(storedData.part_smoke || []);
     } else if (location?.state) {
       // If no data in sessionStorage, use location.state as fallback
-      setDiet(location.state.part_diet || "");
-      setAlcohol(location.state.part_alcohol || "");
-      setSmoke(location.state.part_smoke || "");
+      setDiet(location.state.part_diet || []);
+      setAlcohol(location.state.part_alcohol || []);
+      setSmoke(location.state.part_smoke || []);
     }
   }, []);
   
@@ -373,8 +373,10 @@ function PartnerLiving() {
                     labelId="diet-label"
                     id="diet-select"
                     value={part_diet}
+                    multiple
                     onChange={(event) => setDiet(event.target.value)}
                     error={!!errors.diet}
+                    renderValue={(selected) => selected.join(', ')}
                   >
                     <MenuItem value="Vegetarian">Vegetarian</MenuItem>
                     <MenuItem value="Vegan">Vegan</MenuItem>
@@ -392,8 +394,10 @@ function PartnerLiving() {
                     labelId="alcohol-label"
                     id="alcohol-select"
                     value={part_alcohol}
+                    multiple
                     onChange={(event) => setAlcohol(event.target.value)}
                     error={!!errors.alcohol}
+                    renderValue={(selected) => selected.join(', ')}
                   >
                     <MenuItem value="Occasionally">Occasionally</MenuItem>
                     <MenuItem value="Social Drinker">Social Drinker</MenuItem>
@@ -410,8 +414,10 @@ function PartnerLiving() {
                     labelId="smoke-label"
                     id="smoke-select"
                     value={part_smoke}
+                    multiple
                     onChange={(event) => setSmoke(event.target.value)}
                     error={!!errors.smoke}
+                    renderValue={(selected) => selected.join(', ')}
                   >
                     <MenuItem value="Yes">Non-smoker</MenuItem>
                     <MenuItem value="No">Social Smoker</MenuItem>
