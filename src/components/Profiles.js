@@ -73,7 +73,7 @@ function Profiles({ setlogedIn }) {
   ];
 
   const subCasteOptions = [
-    "Select Sub Caste",
+ 
     "Arora",
     "Baniya",
     "24 Manai Telugu Chettiar",
@@ -1012,6 +1012,7 @@ function Profiles({ setlogedIn }) {
                         onChange={(event) => setSubCaste(event.target.value)}
                         fullWidth
                       >
+                         <MenuItem value="">Select Sub Caste</MenuItem>
                         {subCasteOptions.map((option) => (
                           <MenuItem key={option} value={option}>
                             {option}
