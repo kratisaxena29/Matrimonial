@@ -7,7 +7,7 @@ import "../styles/home.css";
 import "../styles/animate.css";
 import "../styles/bootstrap.css";
 import "../styles/fontAwesome.css";
-import { useLocation, useNavigate } from "react-router-dom";
+import { json, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Button } from "@mui/material";
 
@@ -15,6 +15,7 @@ function PersonDetails({ setlogedIn }) {
   const location = useLocation();
   const [profileData, setProfileData] = useState(null);
   const [gallery , setGallery] = useState("")
+  const[identify,setidentify] = useState()
   console.log("...location.state...",location?.state?.profileId)
   const profileId = location?.state?.profileId;
  
@@ -73,7 +74,38 @@ const identifier = profileData.phoneNo || profileData.email
     profileData, 
     URL]);
   
+    // useEffect(() => {
+    //      axios
+    //        .get(`${URL}/identifytheId/66c366bb321f84270e3b9b5a/66a4ae94438808d74f1c51dc`)
+    //        .then(response => {
+    //          console.log("..user identify response...", response.data);
+    //          setidentify(response.data)
+             
+    //        })
+    //        .catch(error => {
+    //          console.log("...error...", error);
+    //        });
+       
+    //  }, [URL]);
+const userdata = JSON.parse(sessionStorage.getItem('user'))
+console.log("...userdata..",userdata?.id)
+ const checkingId = userdata?.id
+    useEffect(() => {
 
+     
+      if (URL && profileId && checkingId) {
+        axios
+          .get(`${URL}/identifytheId/${checkingId}/${profileId}`)
+          .then(response => {
+            console.log("..user identify response...", response.data);
+            setidentify(response.data); // Store response data in state
+          })
+          .catch(error => {
+            console.log("...error...", error);
+          });
+      }
+    }, [URL, profileId, checkingId]); // Add profileId and checkingId as dependencies
+  
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <nav
@@ -169,7 +201,16 @@ const identifier = profileData.phoneNo || profileData.email
                       <li>
                         <span>
                         <i className="fa fa-mobile"/>
-                          {profileData?.phoneNo || "Not Available"}
+                        <b>Phone:</b>
+                        {
+                          identify?.status == 200 ?
+                          (profileData?.phoneNo || "Not Available"):
+                          (
+
+                            ("User did not accept your request")
+                          )
+                        }
+                          
                         </span>
                         {/* <span>
                           <i className="fa fa-mobile" aria-hidden="true" />
@@ -184,7 +225,13 @@ const identifier = profileData.phoneNo || profileData.email
                       <li>
                         <span>
                           <i className="fa fa-envelope-o" aria-hidden="true" />
-                          <b>Email:</b> {profileData?.email || "Not Available"}
+                          <b>Email:</b>
+                          {identify?.status == 200 ?
+                          (profileData?.email || "Not Available")
+                        :
+                        
+                          ("User did not accept your request")
+                        } 
                         </span>
                       </li>
                       <li>
