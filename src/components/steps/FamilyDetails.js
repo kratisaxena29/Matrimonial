@@ -23,7 +23,7 @@ const professionOptions = [
   "Teacher",
   "Business",
   "Artist",
-  "Other",
+  "Others",
   
 ];
 const MotherprofessionOptions = [
@@ -33,7 +33,7 @@ const MotherprofessionOptions = [
   "Business",
   "Artist",
   "Home Maker",
-  "Other",
+  "Others",
   
 ];
 

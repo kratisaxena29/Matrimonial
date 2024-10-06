@@ -557,7 +557,7 @@ console.log("...gallery...",gallery)
                                 value: "Kurmi kshatriya",
                                 label: "Kurmi kshatriya",
                               },
-                              { value: "Other", label: "Other" },
+                              { value: "Others", label: "Others" },
                             ]
                           )}
                         </div>

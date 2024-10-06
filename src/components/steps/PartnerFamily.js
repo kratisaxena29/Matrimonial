@@ -901,7 +901,7 @@ function PartnerFamily() {
                       <MenuItem value=""><em>None</em></MenuItem>
                       <MenuItem value="Male">Male</MenuItem>
                       <MenuItem value="Female">Female</MenuItem>
-                      <MenuItem value="Other">Other</MenuItem>
+                      <MenuItem value="Other">Others</MenuItem>
                     </Select>
                     {PartgenderError && <FormHelperText error>Please select gender.</FormHelperText>}
                   </FormControl>

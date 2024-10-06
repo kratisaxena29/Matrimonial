@@ -382,7 +382,7 @@ function ProfileDetails() {
                     </MenuItem>
                     <MenuItem value="Male">Male</MenuItem>
                     <MenuItem value="Female">Female</MenuItem>
-                    <MenuItem value="Other">Other</MenuItem>
+                    <MenuItem value="Others">Others</MenuItem>
                   </Select>
                   {errors.gender && (
                     <FormHelperText>{errors.gender}</FormHelperText>

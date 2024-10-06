@@ -207,7 +207,7 @@ console.log("...userdata..",userdata?.id)
                           (profileData?.phoneNo || "Not Available"):
                           (
 
-                            ("User did not accept your request")
+                            ("Contact visible upon acceptance of interest")
                           )
                         }
                           
@@ -230,16 +230,16 @@ console.log("...userdata..",userdata?.id)
                           (profileData?.email || "Not Available")
                         :
                         
-                          ("User did not accept your request")
+                          ("Contact visible upon acceptance of interest")
                         } 
                         </span>
                       </li>
-                      <li>
+                      {/* <li>
                         <span>
                           <i className="fa fa fa-map-marker" aria-hidden="true" />
                           <b>Address:</b> {profileData?.address || "Not Available"}
                         </span>
-                      </li>
+                      </li> */}
                     </ul>
                   </div>
                   <div className="pr-bio-c pr-bio-hob">

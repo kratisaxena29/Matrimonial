@@ -1179,7 +1179,7 @@ const handleInterestRecived = ()=> {
                                 value: "Kurmi kshatriya",
                                 label: "Kurmi kshatriya",
                               },
-                              { value: "Other", label: "Other" },
+                              { value: "Others", label: "Others" },
                             ]
                           )}
                         </div>
@@ -1202,7 +1202,7 @@ const handleInterestRecived = ()=> {
                               { value: "Teacher", label: "Teacher" },
                               { value: "Business", label: "Business" },
                               { value: "Artist", label: "Artist" },
-                              { value: "Other", label: "Other" },
+                              { value: "Others", label: "Others" },
                             ]
                           )}
                         </div>
@@ -1218,7 +1218,7 @@ const handleInterestRecived = ()=> {
                               { value: "Teacher", label: "Teacher" },
                               { value: "Business", label: "Business" },
                               { value: "Artist", label: "Artist" },
-                              { value: "Other", label: "Other" },
+                              { value: "Others", label: "Others" },
                             ]
                           )}
                         </div>

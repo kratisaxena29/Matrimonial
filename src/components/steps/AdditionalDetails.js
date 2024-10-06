@@ -126,7 +126,7 @@ function AdditionalDetails() {
      "Kshatriya" , "Maratha" , "Rajput" , "Sindhi" , "Sunni" , "Oberoi",
      "Arora" , "Shwetamber" , "Yadav" , "Bania" , "Scheduled Caste" , 
      "Digamber"  , "Sikh Jat" , "Gupta","Scheduled Tribes",
-      "Tei" , "Vaishnav" ,"Kurmi kshatriya", "Other" ];
+      "Tei" , "Vaishnav" ,"Kurmi kshatriya", "Others" ];
   const subCasteOptions = [
     "Arora",
 "Baniya",
@@ -194,7 +194,7 @@ function AdditionalDetails() {
 "Brahmin - Namboodiri",
 "Brahmin - Niyogi",
 "Brahmin - Niyogi Nandavariki",
-"Brahmin - Other",
+"Brahmin - Others",
 "Brahmin - Paliwal",
 "Brahmin - Panda",
 "Brahmin - Pareek",
@@ -464,7 +464,7 @@ function AdditionalDetails() {
 "Thuluva Vellala",
 "Vysya",
 "Yadav",
-"Other"
+"Others"
 ];
   // const gothraOptions = ["Gothra1", "Gothra2", "Gothra3", "Gothra4"];
   const petFriendlyOptions = ["Yes", "No" , "Don't know"];

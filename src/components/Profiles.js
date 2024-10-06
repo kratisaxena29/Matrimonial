@@ -69,7 +69,7 @@ function Profiles({ setlogedIn }) {
     "Tei",
     "Vaishnav",
     "Kurmi kshatriya",
-    "Other",
+    "Others",
   ];
 
   const subCasteOptions = [
@@ -140,7 +140,7 @@ function Profiles({ setlogedIn }) {
     "Brahmin - Namboodiri",
     "Brahmin - Niyogi",
     "Brahmin - Niyogi Nandavariki",
-    "Brahmin - Other",
+    "Brahmin - Others",
     "Brahmin - Paliwal",
     "Brahmin - Panda",
     "Brahmin - Pareek",
@@ -410,7 +410,7 @@ function Profiles({ setlogedIn }) {
     "Thuluva Vellala",
     "Vysya",
     "Yadav",
-    "Other",
+    "Others",
   ];
   const [requests, setRequests] = useState([]);
 
