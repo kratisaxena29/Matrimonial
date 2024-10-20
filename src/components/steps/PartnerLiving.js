@@ -363,7 +363,7 @@ function PartnerLiving() {
                   Please fill your desired partner details
                 </Typography>
                 <Typography sx={{ textAlign: "center" }} variant="h5" gutterBottom>
-                  Style of Living
+                  Style of Living (optional)
                 </Typography>
 
                 {/* Diet */}

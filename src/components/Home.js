@@ -36,6 +36,7 @@ function Home() {
   const [registerMethod, setRegisterMethod] = useState(null);
   const [termsAccepted, setTermsAccepted] = useState(false); // Track checkbox
   const [termsError, setTermsError] = useState(false); // Track if checkbox validation failed
+  const [errorMessage, setErrorMessage] = useState("");
   const URL = process.env.REACT_APP_API_BASE_URL;
   const formContainerRef = useRef(null);
   const navigate = useNavigate();
@@ -47,6 +48,13 @@ function Home() {
   const handleRegister = async (event) => {
     event.preventDefault();
   
+    const passwordError = checkPasswordStrength(password);
+    if (passwordError) {
+      setErrorMessage(passwordError);  // Show the error message for weak password
+      toast.error(passwordError);      // Display the error in a toast notification
+      return; // Exit if password is weak
+    }
+
     if (!termsAccepted) {
       setTermsError(true);
       return; // Exit if checkbox not selected
@@ -175,6 +183,35 @@ function Home() {
 
     navigate('/privacy&policy')
   }
+
+  const checkPasswordStrength = (password) => {
+    // Basic strength validation
+    if (password.length < 8) {
+      return "Password is too short";
+    }
+    if (!/[A-Z]/.test(password)) {
+      return "Password must contain at least one uppercase letter";
+    }
+    if (!/[a-z]/.test(password)) {
+      return "Password must contain at least one lowercase letter";
+    }
+    if (!/[0-9]/.test(password)) {
+      return "Password must contain at least one number";
+    }
+    if (!/[@$!%*?&#]/.test(password)) {
+      return "Password must contain at least one special character";
+    }
+    return ""; // No errors, password is strong
+  };
+
+  const handlePasswordChange = (event) => {
+    const newPassword = event.target.value;
+    setPassword(newPassword);
+    
+    // Validate password strength
+    const validationMessage = checkPasswordStrength(newPassword);
+    setErrorMessage(validationMessage);
+  };
   
   return (
     <div className="body">
@@ -469,7 +506,8 @@ function Home() {
                         type="password"
                         id="password"
                         value={password}
-                        onChange={(event) => setPassword(event.target.value)}
+                        // onChange={(event) => setPassword(event.target.value)}
+                        onChange={handlePasswordChange}
                         required
                         style={{
                           width: "100%",
@@ -481,6 +519,11 @@ function Home() {
                       />
                     </div>
                     <div className="form-group" style={{ marginBottom: "20px" }}>
+                    {errorMessage && (
+        <p style={{ color: "red", fontSize: "14px", marginTop: "5px" }}>
+          {errorMessage}
+        </p>
+      )}
       <label
         style={{
           display: "flex",

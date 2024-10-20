@@ -472,7 +472,7 @@ function EducationCareer() {
             variant="h6" // Use a smaller font size for mobile
             gutterBottom
           >
-            Education and Career
+            Education and Career (optional)
           </Typography>
           <div
             style={{

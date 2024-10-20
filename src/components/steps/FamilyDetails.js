@@ -351,7 +351,7 @@ const handleNext = async () => {
           >
             <div>
               <Typography sx={{ textAlign: "center", fontSize: isMobile ? "20px" : "24px" }} variant="h5" gutterBottom>
-                Family Details
+                Family Details (optional)
               </Typography>
               <FormControl variant="standard" sx={{ width: "100%", marginBottom: "20px" }}>
                 <InputLabel id="family-type-label">Family Type</InputLabel>

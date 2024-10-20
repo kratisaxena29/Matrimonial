@@ -660,7 +660,7 @@ function PartnerFamily() {
                 Please fill your desired partner details
               </Typography>
               <Typography sx={{ textAlign: "center" }} variant="h5" gutterBottom>
-                Personal Details
+                Personal Details (optional)
               </Typography>
 
               <Grid container spacing={2} direction={isSmallScreen ? "column" : "row"} justifyContent="center">

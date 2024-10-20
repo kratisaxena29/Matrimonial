@@ -8,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import logo from "../images/logo_maroon.png";
 import bigImage from "../images/hero_image2.png";
+import flowers from "../images/leaf/7.png"
 
 const Login = ({ setlogedIn }) => {
   const [formData, setFormData] = useState({
@@ -271,12 +272,14 @@ const Login = ({ setlogedIn }) => {
             </p>
           </div>
         </Grid>
-        <Grid item xs={12} md={6} sx={{
+        <Grid item xs={10} md={6} sx={{
           display: { xs: 'none', md: 'flex' },
           justifyContent: 'center',
           alignItems: 'center',
-          background: `url(${bigImage}) no-repeat center center`,
-          backgroundSize: 'cover',
+          background : `url(${flowers})`,
+          // backgroud : `url(${flowers} no-repeat center center)`,
+          // background: `url(${bigImage}) no-repeat center center`,
+          // backgroundSize: 'cover',
         }} />
       </Grid>
       <ToastContainer />
