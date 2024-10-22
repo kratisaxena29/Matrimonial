@@ -12980,6 +12980,17 @@ h2.db-tit{
   .logo-brand {
     cursor: pointer;
   }
+
+  .leaf-soon {
+    content: '';
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 123px;
+    height: 300px;
+    background: url('../images/leaf/7.png') no-repeat;
+    background-size: 121px;
+}
   
   .ic-logo {
     height: 40px; /* Adjust as needed */
