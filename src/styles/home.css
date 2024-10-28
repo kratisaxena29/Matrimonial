@@ -12992,6 +12992,7 @@ h2.db-tit{
     background-size: 121px;
 }
   
+
   .ic-logo {
     height: 40px; /* Adjust as needed */
   }
@@ -12999,6 +13000,9 @@ h2.db-tit{
     .contact-info {
       display: none;
     }
+    .leaf-soon {
+    display: none;
+}
   }
   .footer-content {
     display: flex;
@@ -13007,6 +13011,8 @@ h2.db-tit{
     align-items: center;
     padding: 20px 0;
   }
+
+  
   
   @media (max-width: 768px) {
     .footer-content {

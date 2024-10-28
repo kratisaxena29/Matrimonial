@@ -284,16 +284,9 @@ const Login = ({ setlogedIn }) => {
             backgroundSize: "cover",
             borderRadius: "8px",
           }}
+          
         ></div>
-        {/* <Grid item xs={10} md={6} sx={{
-          display: { xs: 'none', md: 'flex' },
-          justifyContent: 'center',
-          alignItems: 'center',
-          background : `url(${flowers})`,
-          // backgroud : `url(${flowers} no-repeat center center)`,
-          // background: `url(${bigImage}) no-repeat center center`,
-          // backgroundSize: 'cover',
-        }} /> */}
+       
       </Grid>
       <ToastContainer />
     </Container>
